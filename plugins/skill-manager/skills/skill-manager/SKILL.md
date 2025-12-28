@@ -183,3 +183,7 @@ if [ -f ~/.claude/skills/skill-name/requirements.txt ]; then
   pip install -r ~/.claude/skills/skill-name/requirements.txt
 fi
 ```
+
+## Restart Required
+
+**Important:** After installing, updating, or removing skills, always tell the user they need to restart Claude Code for the changes to take effect.
