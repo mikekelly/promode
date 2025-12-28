@@ -5,97 +5,148 @@ description: Install, update, and manage Claude Code skills from GitHub reposito
 
 # Skill Manager
 
-Install and manage Claude Code skills from GitHub repositories.
+Manage Claude Code skills as git repositories cloned from GitHub.
+
+## Strategy
+
+Skills are git repositories containing a `SKILL.md` file. They can be installed in two locations:
+
+- **User skills** (`~/.claude/skills/<skill-name>/`) - available in all projects
+- **Project skills** (`<project>/.claude/skills/<skill-name>/`) - available only in that project
+
+Each skill is cloned from a GitHub repository. Updates are done via `git pull`. Versions are tracked by git commit SHA.
+
+**Important**: Most projects are already git repositories. When installing a skill into a project, it must be added as a **git submodule** so it can be tracked and shared with collaborators. User skills are regular clones since `~/.claude/skills/` is typically not a git repo.
 
 ## Important: Clarify Install Location First
 
-When installing a skill, you MUST ask the user whether they want:
-- **User install** (`--user`): Installs to `~/.claude/skills/` - skill will be available in ALL projects
-- **Project install** (`--project /path/to/project`): Installs to `<project>/.claude/skills/` - skill will only be available in that project
+When installing a skill, ALWAYS ask the user whether they want:
+- **User install** - available in ALL projects (regular git clone)
+- **Project install** - available only in the current project (git submodule)
 
 Do NOT proceed with installation until the user has specified which location they want.
 
-## Scripts
+## Helper Scripts
 
-All scripts are in the `scripts/` directory and should be run from there (they use relative imports).
+Run from the skill-manager directory.
 
-### install.py - Install a skill
+### resolve_url.py
 
-```bash
-# Install to user directory (~/.claude/skills/)
-python scripts/install.py --user user/skill-name
-
-# Install to project directory (requires explicit project path)
-python scripts/install.py --project /path/to/project user/skill-name
-
-# Force reinstall
-python scripts/install.py --user --force user/skill-name
-python scripts/install.py --project /path/to/project --force user/skill-name
-```
-
-### list.py - List installed skills
+Resolves GitHub shorthand to full URL. Returns: `<url> <repo-name>`
 
 ```bash
-# List user skills (default when no args)
-python scripts/list.py
-
-# List user skills explicitly
-python scripts/list.py --user
-
-# List project skills
-python scripts/list.py --project /path/to/project
-
-# List both user and project skills
-python scripts/list.py --user --project /path/to/project
+python scripts/resolve_url.py user/repo
+# Output: https://github.com/user/repo repo
 ```
 
-### update.py - Update skills
+**Note**: The repo name is used as the default skill directory name. If a skill with that name already exists, ask the user for an alternative name to avoid conflicts.
+
+### list_skills.py
+
+Lists installed skills with absolute paths, origin URLs, and git SHA versions.
 
 ```bash
-# Update a skill in user directory
-python scripts/update.py --user skill-name
+# User skills only
+python scripts/list_skills.py
 
-# Update a skill in project directory
-python scripts/update.py --project /path/to/project skill-name
-
-# Update all skills in user directory
-python scripts/update.py --all skill-name
+# User and project skills
+python scripts/list_skills.py /path/to/project
 ```
 
-### remove.py - Remove a skill
+Example output:
+```
+User skills:
+  /Users/name/.claude/skills/react-native-debugger
+    origin: https://github.com/mikekelly/react-native-debugger
+    sha: 8c27ac5
+
+Project skills:
+  /path/to/project/.claude/skills/my-skill
+    origin: https://github.com/user/my-skill
+    sha: abc1234
+```
+
+## Install a Skill (User)
+
+1. Resolve the repository URL:
+```bash
+python scripts/resolve_url.py user/repo
+```
+
+2. Create the skills directory if needed:
+```bash
+mkdir -p ~/.claude/skills
+```
+
+3. Clone the repository:
+```bash
+git clone https://github.com/user/repo ~/.claude/skills/repo
+```
+
+4. Check for dependencies:
+```bash
+cat ~/.claude/skills/repo/requirements.txt
+```
+If the file exists, install with:
+```bash
+pip install -r ~/.claude/skills/repo/requirements.txt
+```
+
+## Install a Skill (Project)
+
+1. Resolve the repository URL:
+```bash
+python scripts/resolve_url.py user/repo
+```
+
+2. Create the skills directory if needed:
+```bash
+mkdir -p /path/to/project/.claude/skills
+```
+
+3. Add as a git submodule:
+```bash
+git -C /path/to/project submodule add https://github.com/user/repo .claude/skills/repo
+```
+
+4. Check for dependencies:
+```bash
+cat /path/to/project/.claude/skills/repo/requirements.txt
+```
+If the file exists, install with:
+```bash
+pip install -r /path/to/project/.claude/skills/repo/requirements.txt
+```
+
+## Update a Skill (User)
 
 ```bash
-# Remove a skill from user directory
-python scripts/remove.py --user skill-name
-
-# Remove a skill from project directory
-python scripts/remove.py --project /path/to/project skill-name
+git -C ~/.claude/skills/skill-name pull
 ```
 
-### version.py - Get skill version
+## Update a Skill (Project)
 
 ```bash
-# Get version of a user skill
-python scripts/version.py --user skill-name
-
-# Get version of a project skill
-python scripts/version.py --project /path/to/project skill-name
+git -C /path/to/project/.claude/skills/skill-name pull
+git -C /path/to/project add .claude/skills/skill-name
 ```
 
-## How It Works
-
-- **User skills** (`~/.claude/skills/`) - available in all projects
-- **Project skills** (`<project>/.claude/skills/`) - only in that specific project
-- If the skills directory is inside a git repo, skills are added as submodules
-- Otherwise, skills are cloned as standalone repos
-- Version is tracked via short git SHA
-
-## After Installing
-
-If a skill has a `requirements.txt`, install dependencies:
+## Remove a Skill (User)
 
 ```bash
-pip install -r ~/.claude/skills/<skill-name>/requirements.txt
+rm -rf ~/.claude/skills/skill-name
 ```
 
-The installer will remind you when dependencies are needed.
+## Remove a Skill (Project)
+
+```bash
+git -C /path/to/project submodule deinit -f .claude/skills/skill-name
+git -C /path/to/project rm -f .claude/skills/skill-name
+rm -rf /path/to/project/.git/modules/.claude/skills/skill-name
+```
+
+## Check Skill Version
+
+```bash
+git -C ~/.claude/skills/skill-name rev-parse --short HEAD
+```
