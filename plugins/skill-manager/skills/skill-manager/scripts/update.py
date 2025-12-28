@@ -7,10 +7,8 @@ from pathlib import Path
 
 from utils import (
     USER_SKILLS_DIR,
-    PROJECT_SKILLS_DIR,
     run_git,
     is_skills_dir_a_repo,
-    find_skill,
 )
 
 
@@ -19,10 +17,10 @@ def update_skill(skill_name: str, skills_dir: Path):
     skill_path = skills_dir / skill_name
 
     if not skill_path.exists():
-        print(f"Skill '{skill_name}' is not installed.", file=sys.stderr)
+        print(f"Skill '{skill_name}' is not installed in {skills_dir}.", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Updating {skill_name}...")
+    print(f"Updating {skill_name}...", flush=True)
 
     if is_skills_dir_a_repo(skills_dir):
         # Update submodule
@@ -32,6 +30,7 @@ def update_skill(skill_name: str, skills_dir: Path):
         result = run_git(["pull", "--ff-only"], cwd=skill_path)
 
     if result.returncode != 0:
+        print(f"Error: Failed to update {skill_name}", file=sys.stderr)
         sys.exit(1)
 
     if "Already up to date" in result.stdout or "Already up-to-date" in result.stdout:
@@ -72,35 +71,42 @@ def main():
     )
     parser.add_argument(
         "skill",
-        nargs="?",
-        help="Skill name to update (omit to update all)"
+        help="Skill name to update"
     )
-    parser.add_argument(
+
+    location = parser.add_mutually_exclusive_group(required=True)
+    location.add_argument(
+        "--user",
+        action="store_true",
+        help="Update skill in user directory (~/.claude/skills/)"
+    )
+    location.add_argument(
+        "--project",
+        metavar="PATH",
+        type=str,
+        help="Update skill in project directory (PATH/.claude/skills/)"
+    )
+    location.add_argument(
         "--all", "-a",
         action="store_true",
-        help="Update all installed skills"
+        help="Update all installed skills in user directory"
     )
 
     args = parser.parse_args()
 
-    if args.skill:
-        # Update specific skill
-        skill_path = find_skill(args.skill)
-        if skill_path:
-            update_skill(args.skill, skill_path.parent)
-        else:
-            print(f"Skill '{args.skill}' not found in user or project skills.", file=sys.stderr)
-            sys.exit(1)
-    elif args.all:
-        # Update all skills in both directories
-        found_any = False
-        for label, skills_dir in [("Project", PROJECT_SKILLS_DIR), ("User", USER_SKILLS_DIR)]:
-            if update_all_in_dir(skills_dir, label):
-                found_any = True
-        if not found_any:
-            print("No skills installed.")
+    if args.all:
+        # Update all skills in user directory
+        if not update_all_in_dir(USER_SKILLS_DIR, "User"):
+            print("No skills installed in user directory.")
+    elif args.user:
+        update_skill(args.skill, USER_SKILLS_DIR)
     else:
-        parser.print_help()
+        project_path = Path(args.project).resolve()
+        if not project_path.exists():
+            print(f"Error: Project path does not exist: {project_path}", file=sys.stderr)
+            sys.exit(1)
+        skills_dir = project_path / ".claude" / "skills"
+        update_skill(args.skill, skills_dir)
 
 
 if __name__ == "__main__":

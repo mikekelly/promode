@@ -11,7 +11,7 @@ Install and manage Claude Code skills from GitHub repositories.
 
 When installing a skill, you MUST ask the user whether they want:
 - **User install** (`--user`): Installs to `~/.claude/skills/` - skill will be available in ALL projects
-- **Project install** (`--project`): Installs to `./.claude/skills/` - skill will only be available in the current project
+- **Project install** (`--project /path/to/project`): Installs to `<project>/.claude/skills/` - skill will only be available in that project
 
 Do NOT proceed with installation until the user has specified which location they want.
 
@@ -25,48 +25,67 @@ All scripts are in the `scripts/` directory and should be run from there (they u
 # Install to user directory (~/.claude/skills/)
 python scripts/install.py --user user/skill-name
 
-# Install to project directory (./.claude/skills/)
-python scripts/install.py --project user/skill-name
+# Install to project directory (requires explicit project path)
+python scripts/install.py --project /path/to/project user/skill-name
 
 # Force reinstall
 python scripts/install.py --user --force user/skill-name
+python scripts/install.py --project /path/to/project --force user/skill-name
 ```
 
 ### list.py - List installed skills
 
 ```bash
-# List all installed skills (shows version SHA)
+# List user skills (default when no args)
 python scripts/list.py
+
+# List user skills explicitly
+python scripts/list.py --user
+
+# List project skills
+python scripts/list.py --project /path/to/project
+
+# List both user and project skills
+python scripts/list.py --user --project /path/to/project
 ```
 
 ### update.py - Update skills
 
 ```bash
-# Update a specific skill
-python scripts/update.py skill-name
+# Update a skill in user directory
+python scripts/update.py --user skill-name
 
-# Update all installed skills
-python scripts/update.py --all
+# Update a skill in project directory
+python scripts/update.py --project /path/to/project skill-name
+
+# Update all skills in user directory
+python scripts/update.py --all skill-name
 ```
 
 ### remove.py - Remove a skill
 
 ```bash
-# Remove a skill (auto-finds location)
-python scripts/remove.py skill-name
+# Remove a skill from user directory
+python scripts/remove.py --user skill-name
+
+# Remove a skill from project directory
+python scripts/remove.py --project /path/to/project skill-name
 ```
 
 ### version.py - Get skill version
 
 ```bash
-# Get the git SHA and details for a skill
-python scripts/version.py skill-name
+# Get version of a user skill
+python scripts/version.py --user skill-name
+
+# Get version of a project skill
+python scripts/version.py --project /path/to/project skill-name
 ```
 
 ## How It Works
 
 - **User skills** (`~/.claude/skills/`) - available in all projects
-- **Project skills** (`./.claude/skills/`) - only in current project
+- **Project skills** (`<project>/.claude/skills/`) - only in that specific project
 - If the skills directory is inside a git repo, skills are added as submodules
 - Otherwise, skills are cloned as standalone repos
 - Version is tracked via short git SHA

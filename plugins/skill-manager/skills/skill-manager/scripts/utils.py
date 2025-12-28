@@ -6,7 +6,6 @@ import sys
 from pathlib import Path
 
 USER_SKILLS_DIR = Path.home() / ".claude" / "skills"
-PROJECT_SKILLS_DIR = Path.cwd() / ".claude" / "skills"
 
 
 def run_git(args: list[str], cwd: Path = None, check: bool = True) -> subprocess.CompletedProcess:
@@ -51,10 +50,3 @@ def get_short_sha(skill_path: Path) -> str | None:
     return None
 
 
-def find_skill(skill_name: str) -> Path | None:
-    """Find a skill in user or project directories."""
-    for skills_dir in [PROJECT_SKILLS_DIR, USER_SKILLS_DIR]:
-        skill_path = skills_dir / skill_name
-        if skill_path.exists():
-            return skill_path
-    return None

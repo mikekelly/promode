@@ -7,9 +7,9 @@ import sys
 from pathlib import Path
 
 from utils import (
+    USER_SKILLS_DIR,
     run_git,
     is_skills_dir_a_repo,
-    find_skill,
 )
 
 
@@ -18,10 +18,10 @@ def remove_skill(skill_name: str, skills_dir: Path):
     skill_path = skills_dir / skill_name
 
     if not skill_path.exists():
-        print(f"Skill '{skill_name}' is not installed.", file=sys.stderr)
+        print(f"Skill '{skill_name}' is not installed in {skills_dir}.", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Removing {skill_name}...")
+    print(f"Removing {skill_name}...", flush=True)
 
     if is_skills_dir_a_repo(skills_dir):
         # Remove submodule
@@ -43,14 +43,30 @@ def main():
         help="Name of the skill to remove"
     )
 
+    location = parser.add_mutually_exclusive_group(required=True)
+    location.add_argument(
+        "--user",
+        action="store_true",
+        help="Remove skill from user directory (~/.claude/skills/)"
+    )
+    location.add_argument(
+        "--project",
+        metavar="PATH",
+        type=str,
+        help="Remove skill from project directory (PATH/.claude/skills/)"
+    )
+
     args = parser.parse_args()
 
-    skill_path = find_skill(args.skill)
-    if skill_path:
-        remove_skill(args.skill, skill_path.parent)
+    if args.user:
+        remove_skill(args.skill, USER_SKILLS_DIR)
     else:
-        print(f"Skill '{args.skill}' not found in user or project skills.", file=sys.stderr)
-        sys.exit(1)
+        project_path = Path(args.project).resolve()
+        if not project_path.exists():
+            print(f"Error: Project path does not exist: {project_path}", file=sys.stderr)
+            sys.exit(1)
+        skills_dir = project_path / ".claude" / "skills"
+        remove_skill(args.skill, skills_dir)
 
 
 if __name__ == "__main__":

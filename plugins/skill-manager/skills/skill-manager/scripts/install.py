@@ -9,7 +9,6 @@ from pathlib import Path
 
 from utils import (
     USER_SKILLS_DIR,
-    PROJECT_SKILLS_DIR,
     run_git,
     is_skills_dir_a_repo,
 )
@@ -61,18 +60,20 @@ def install_skill(url: str, skills_dir: Path, force: bool = False):
             print(f"Use update.py {skill_name} to update, or --force to reinstall", file=sys.stderr)
             sys.exit(1)
 
-    print(f"Installing {skill_name} from {url}...")
+    print(f"Installing {skill_name} from {url}...", flush=True)
 
     if is_skills_dir_a_repo(skills_dir):
         # Add as submodule
         result = run_git(["submodule", "add", "--depth", "1", url, skill_name], cwd=skills_dir)
         if result.returncode != 0:
+            print(f"Error: Failed to add {skill_name} as submodule", file=sys.stderr)
             sys.exit(1)
-        print(f"Added as git submodule")
+        print(f"Added as git submodule", flush=True)
     else:
         # Regular clone
         result = run_git(["clone", "--depth", "1", url, str(skill_path)])
         if result.returncode != 0:
+            print(f"Error: Failed to clone {skill_name}", file=sys.stderr)
             sys.exit(1)
 
     # Verify SKILL.md exists
@@ -110,8 +111,9 @@ def main():
     )
     location.add_argument(
         "--project",
-        action="store_true",
-        help="Install to project directory (./.claude/skills/)"
+        metavar="PATH",
+        type=str,
+        help="Install to project directory (PATH/.claude/skills/)"
     )
 
     args = parser.parse_args()
@@ -119,7 +121,11 @@ def main():
     if args.user:
         skills_dir = USER_SKILLS_DIR
     else:
-        skills_dir = PROJECT_SKILLS_DIR
+        project_path = Path(args.project).resolve()
+        if not project_path.exists():
+            print(f"Error: Project path does not exist: {project_path}", file=sys.stderr)
+            sys.exit(1)
+        skills_dir = project_path / ".claude" / "skills"
 
     install_skill(args.url, skills_dir, force=args.force)
 
