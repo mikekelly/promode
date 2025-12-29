@@ -4,7 +4,7 @@ Promode enhances Claude Code to make advanced usage more convenient.
 
 Promode v1 provides a Skill Manager that takes away the pain of managing skills:
 
-- "Install the skill mikekelly/react-native-debugger"
+- "Install the skill mikekelly/debugging-react-native"
 - "Update the typescript-review skill"
 
 ## Why Skills Matter
@@ -36,7 +36,7 @@ Currently, managing Claude Code skills is awkward. You either need to:
 
 Skill Manager takes all of this away and you can just tell Claude Code to manage specific skills for you:
 
-- "Install the skill mikekelly/react-native-debugger"
+- "Install the skill mikekelly/debugging-react-native"
 - "Install the skill https://github.com/metabase/metabase/tree/master/.claude/skills/typescript-review"
 - "Update my installed skills"
 - "Remove the pdf skill"
