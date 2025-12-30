@@ -1,31 +1,62 @@
 ---
-name: skill-manager
-description: Install, update, and manage Claude Code skills. Supports GitHub repositories (user/repo), GitHub subdirectory URLs (github.com/user/repo/tree/branch/path), and .skill zip files. Use when user wants to install, update, list, or remove skills.
+name: managing-skills
+description: Install, update, list, and remove Claude Code skills. Supports GitHub repositories (user/repo), GitHub subdirectory URLs (github.com/user/repo/tree/branch/path), and .skill zip files. Use when user wants to install, add, download, update, sync, list, remove, uninstall, or delete skills.
 ---
 
-# Skill Manager
+<objective>
+Manage Claude Code skills from multiple source types. This skill handles the full lifecycle of skill management: installation, updates, listing, and removal.
+</objective>
 
-Manage Claude Code skills from multiple source types.
-
-## Install Locations
-
+<install_locations>
 Skills can be installed in two locations:
 
 - **User skills** (`~/.claude/skills/<skill-name>/`) - available in all projects
 - **Project skills** (`<project>/.claude/skills/<skill-name>/`) - available only in that project
 
-**Important:** Always ask the user which location they want before installing.
+<decision_criteria>
+**Suggest user location when:**
+- Skill is general-purpose (not project-specific)
+- User wants skill available across all projects
+- Default choice if user doesn't specify
 
-## Skill Reference Types
+**Suggest project location when:**
+- Skill is specific to this project's tech stack
+- Team needs shared access via version control
+- Skill contains project-specific customizations
+</decision_criteria>
 
-### Type 1: GitHub Repository
+**Always ask the user which location they want before installing.**
+</install_locations>
 
+<quick_start>
+**Install from GitHub repo:**
+```bash
+mkdir -p ~/.claude/skills
+git clone https://github.com/user/repo ~/.claude/skills/repo
+```
+
+**List installed skills:**
+```bash
+ls ~/.claude/skills/
+ls .claude/skills/
+```
+
+**Remove a skill:**
+```bash
+rm -rf ~/.claude/skills/skill-name
+```
+
+After any operation, remind user to restart Claude Code.
+</quick_start>
+
+<skill_reference_types>
+<type name="github_repository">
 A dedicated GitHub repo containing a skill.
 
 **How to recognize:**
 - Shorthand: `user/repo`
 - Full URL: `https://github.com/user/repo`
-- May contain `/tree/<branch>` but NO path after the branch (e.g., `https://github.com/user/repo/tree/main`)
+- May contain `/tree/<branch>` but NO path after the branch
 
 **Install (User):**
 ```bash
@@ -49,17 +80,15 @@ git -C ~/.claude/skills/skill-name pull
 git -C .claude/skills/skill-name pull
 git add .claude/skills/skill-name
 ```
+</type>
 
----
-
-### Type 2: GitHub Subdirectory URL
-
+<type name="github_subdirectory">
 A skill living as a subdirectory within a larger repository.
 
 **How to recognize:**
 - Contains `/tree/<branch>/` followed by a path within the repo
 - Example: `https://github.com/org/repo/tree/main/skills/my-skill`
-- Differs from Type 1 in that there's a path AFTER the branch name
+- Differs from github_repository: has path AFTER the branch name
 
 **Parse the URL:**
 - Repository: `https://github.com/org/repo`
@@ -89,11 +118,9 @@ SOURCE_URL=$(cat ~/.claude/skills/my-skill/.skill-manager-ref)
 
 # Re-run installation (same steps as above, overwrites existing)
 ```
+</type>
 
----
-
-### Type 3: Skill Zip URL
-
+<type name="skill_zip">
 A `.skill` zip file hosted at any URL.
 
 **How to recognize:**
@@ -132,11 +159,10 @@ SOURCE_URL=$(cat ~/.claude/skills/my-skill/.skill-manager-ref)
 
 # Re-run installation (same steps as above, overwrites existing)
 ```
+</type>
+</skill_reference_types>
 
----
-
-## Remove a Skill
-
+<remove_skill>
 **User skill:**
 ```bash
 rm -rf ~/.claude/skills/skill-name
@@ -153,16 +179,9 @@ rm -rf .git/modules/.claude/skills/skill-name
 ```bash
 rm -rf .claude/skills/skill-name
 ```
+</remove_skill>
 
-## List Installed Skills
-
-```bash
-ls ~/.claude/skills/
-ls .claude/skills/
-```
-
-## Check Skill Source
-
+<check_skill_source>
 **GitHub repo:**
 ```bash
 git -C ~/.claude/skills/skill-name remote get-url origin
@@ -173,9 +192,9 @@ git -C ~/.claude/skills/skill-name rev-parse --short HEAD
 ```bash
 cat ~/.claude/skills/skill-name/.skill-manager-ref
 ```
+</check_skill_source>
 
-## Post-Install: Check for Dependencies
-
+<post_install>
 After installing any skill, check for and install dependencies:
 
 ```bash
@@ -183,7 +202,41 @@ if [ -f ~/.claude/skills/skill-name/requirements.txt ]; then
   pip install -r ~/.claude/skills/skill-name/requirements.txt
 fi
 ```
+</post_install>
 
-## Restart Required
+<error_handling>
+**Network failure during clone/download:**
+- Check internet connectivity
+- Verify URL is accessible
+- Retry with `--depth 1` for large repos
 
-**Important:** After installing, updating, or removing skills, always tell the user they need to restart Claude Code for the changes to take effect.
+**Permission denied:**
+- Check write permissions on target directory
+- Use `sudo` only if installing to system location (not recommended)
+
+**Skill already exists:**
+- Ask user: overwrite, rename, or cancel
+- For updates, overwrite is expected behavior
+
+**Invalid skill structure:**
+- Verify SKILL.md exists in the skill directory
+- Check for valid YAML frontmatter
+</error_handling>
+
+<success_criteria>
+Installation is successful when:
+- Skill directory exists at target location
+- SKILL.md file is present and readable
+- Dependencies installed (if requirements.txt exists)
+- User reminded to restart Claude Code
+
+Update is successful when:
+- Latest version pulled/downloaded
+- No merge conflicts (for git repos)
+- User reminded to restart Claude Code
+
+Removal is successful when:
+- Skill directory no longer exists
+- Submodule fully removed (if applicable)
+- User reminded to restart Claude Code
+</success_criteria>
