@@ -1,7 +1,7 @@
 {
-  "name": "skill-manager",
-  "description": "Manage Claude Code skills - install, update, list, and remove skills from GitHub repositories",
-  "version": "1.2.0",
+  "name": "managing-skills",
+  "description": "Install, update, list, and remove Claude Code skills. Supports GitHub repositories, subdirectory URLs, and .skill zip files.",
+  "version": "1.3.0",
   "author": {
     "name": "promode"
   },
