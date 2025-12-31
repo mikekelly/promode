@@ -7,6 +7,61 @@ description: Install, update, list, and remove Claude Code skills. Supports GitH
 Manage Claude Code skills from multiple source types. This skill handles the full lifecycle of skill management: installation, updates, listing, and removal.
 </objective>
 
+<first_action>
+When invoked for skill management:
+1. Parse the user's request to identify operation type
+2. If URL/reference provided, classify the source type
+3. If install operation, ask which location (user vs project)
+4. Only then proceed to execution
+</first_action>
+
+<classify_request>
+Before any operation, classify what the user wants:
+
+**Operation type:**
+- INSTALL: User wants to add a new skill
+- UPDATE: User wants to refresh an existing skill
+- LIST: User wants to see installed skills
+- REMOVE: User wants to delete a skill
+- CHECK: User wants to verify skill source/status
+
+**Source type (for INSTALL/UPDATE):**
+- GITHUB_REPO: `user/repo` or `github.com/user/repo` without path after branch
+- GITHUB_SUBDIR: URL contains `/tree/<branch>/` followed by a path
+- SKILL_ZIP: URL ends with `.skill`
+
+State both classifications before proceeding.
+</classify_request>
+
+<workflow>
+## Phase 1: Understand Request
+- Classify operation and source type
+- Identify target skill name
+- Determine install location (user vs project)
+
+**Exit criteria:** Operation type, source type, skill name, and location all known.
+
+## Phase 2: Validate
+- Check if skill already exists (for install)
+- Check if skill exists (for update/remove)
+- Verify URL is accessible (for install/update)
+
+**Exit criteria:** Preconditions verified, conflicts identified.
+
+## Phase 3: Execute
+- Run appropriate commands from reference sections
+- Handle errors per `<error_handling>`
+
+**Exit criteria:** Commands completed without error.
+
+## Phase 4: Verify
+- Confirm SKILL.md exists in target location
+- Install dependencies if requirements.txt exists
+- Report success per `<success_criteria>`
+
+**Exit criteria:** Success criteria met, user reminded to restart.
+</workflow>
+
 <install_locations>
 Skills can be installed in two locations:
 
@@ -223,6 +278,28 @@ fi
 - Check for valid YAML frontmatter
 </error_handling>
 
+<escalation>
+Stop and ask the user when:
+- URL format doesn't match any known source type
+- Skill already exists and operation is install (not update)
+- Git clone fails after 2 retries
+- SKILL.md is missing from the installed content
+- Multiple skills have the same name in different locations
+- User hasn't specified install location (user vs project)
+</escalation>
+
+<never_do>
+## NEVER DO
+- Never install without asking user for install location first
+- Never overwrite existing skill without user confirmation
+- Never skip the restart reminder
+- Never use `sudo` for skill installation
+- Never clone to final location directly (use temp dir for subdirectory/zip sources)
+- Never assume source type - parse and verify the URL format
+- Never skip dependency installation if requirements.txt exists
+- Never proceed with ambiguous or unrecognized URL formats
+</never_do>
+
 <success_criteria>
 Installation is successful when:
 - Skill directory exists at target location
@@ -240,3 +317,18 @@ Removal is successful when:
 - Submodule fully removed (if applicable)
 - User reminded to restart Claude Code
 </success_criteria>
+
+<output_format>
+Every skill management response MUST include:
+
+```
+<operation>INSTALL|UPDATE|LIST|REMOVE|CHECK</operation>
+<skill_name>name of skill</skill_name>
+<location>~/.claude/skills/ or .claude/skills/</location>
+<status>SUCCESS|FAILED|BLOCKED</status>
+<action_taken>What was done</action_taken>
+<next_steps>Restart Claude Code / Additional steps needed</next_steps>
+```
+
+Responses missing any section are incomplete.
+</output_format>
