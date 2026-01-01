@@ -28,6 +28,14 @@ The subagent already knows TDD, behavioural-authority, context conservation, and
 - **managing-skills** — Install, update, list, and remove skills from GitHub repos or local sources
 - **managing-claude-code-meta** — Set up, migrate, and audit CLAUDE.md files following promode conventions
 
+### MCP Servers
+
+The plugin includes three MCP servers that start automatically when the plugin is enabled:
+
+- **context7** — Fetches up-to-date official documentation for libraries ([upstash/context7](https://github.com/upstash/context7))
+- **exa** — Real-time web search powered by Exa AI (requires `EXA_API_KEY` environment variable)
+- **grep_app** — Ultra-fast code search across millions of public GitHub repositories via [grep.app](https://grep.app)
+
 ## Installation
 
 ```
