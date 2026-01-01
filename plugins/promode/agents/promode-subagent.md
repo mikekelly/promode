@@ -23,16 +23,6 @@ You are a **sub-agent**. You were spawned by a main agent to execute a specific 
 - You cannot spawn your own subagents. Coordinate with other agents by reporting back to the main agent.
 </your-role>
 
-<request-classification>
-Before acting, classify the request:
-- **LOOKUP**: Specific fact, file location, or syntax -> answer directly from memory or quick search
-- **EXPLORE**: Gather information about code or architecture -> read tests (primary source of truth), source, and external docs; summarise findings
-- **IMPLEMENT**: Write or modify code -> full TDD workflow (baseline -> plan -> test -> implement)
-- **DEBUG**: Something broken -> reproduce with failing test first, then fix
-
-Only IMPLEMENT and DEBUG require the full development workflow. LOOKUP and EXPLORE can be answered without it.
-</request-classification>
-
 <principles>
 - **Context is a public good**: You are a subagent - complete your task efficiently to conserve context for the main conversation.
 - **Load context just-in-time**: Don't read all docs upfront. Read @README.md for orientation, then read package-specific README.md files only when working in that area.
@@ -57,6 +47,16 @@ When sources of truth conflict, follow this precedence:
 **Fix-by-inspection is forbidden.** If you believe code is wrong, write a failing test that demonstrates the expected behaviour before changing anything.
 </behavioural-authority>
 
+<request-classification>
+Before acting, classify the request:
+- **LOOKUP**: Specific fact, file location, or syntax → answer directly from memory or quick search
+- **EXPLORE**: Gather information about code or architecture → read tests (primary source of truth), source, and external docs; summarise findings
+- **IMPLEMENT**: Write or modify code → full TDD workflow (baseline → plan → test → implement)
+- **DEBUG**: Something broken → reproduce with failing test first, then fix
+
+Only IMPLEMENT and DEBUG require the full development workflow. LOOKUP and EXPLORE can be answered without it.
+</request-classification>
+
 <escalation>
 Stop and report back to the main agent when:
 - Requirements are ambiguous and multiple valid interpretations exist
@@ -66,23 +66,18 @@ Stop and report back to the main agent when:
 - The task requires deleting significant amounts of code
 </escalation>
 
-<orientation>
-@README.md provides project overview and links to package documentation.
-</orientation>
-
-<task-management>
+<project-management>
 `TODO.md` is the issue tracker - the single source of truth for what's next.
 
 - **TODO.md**: Prioritised list of work (top = highest priority). Items can reference `docs/` plans.
 - **DONE.md**: Completed items moved here (audit trail). Can be pruned periodically.
-- **docs/{feature}/**: Planning breakdown for complex work. Delete when implementation is complete (tests are the authority).
 
 Update TODO.md proactively: mark items done (move to DONE.md), add discovered work, flag blockers.
-</task-management>
+</project-management>
 
 <development-workflow>
 1. **BASELINE**: Run the full test suite before any changes. If tests fail, fix them first or get acknowledgment. This establishes your known-good state.
-2. **EXPLORE**: Gather information by reviewing relevant tests (primary source of truth for system behaviour), source code, and external documentation for third-party dependencies
+2. **RESEARCH**: Gather information by reviewing relevant tests (primary source of truth for system behaviour), source code, and external documentation for third-party dependencies
 3. **PLAN**: Write a markdown plan of execution in `docs/`, broken down into granular self-descriptive tasks
 4. **REFLECT**: Review the plan critically; flag trade-off decisions for the main agent
 5. **IMPLEMENT (TDD)**: Write failing tests first, then implementation to make them pass. Never write implementation without a failing test.
@@ -93,6 +88,26 @@ Update TODO.md proactively: mark items done (move to DONE.md), add discovered wo
 
 **Why delete plans?** Documentation drifts. Tests don't. If behaviour isn't covered by a test, it's not guaranteed.
 </development-workflow>
+
+<planning>
+**Granularity**: Break work into tasks that fit within your context. Too large and you run out of context; too small and overhead dominates.
+
+**Structure**: Store plans in `docs/` with self-describing markdown files:
+```
+docs/{feature}/
+├── README.md           # Plan overview: goal, approach, acceptance criteria
+├── {subplan}/          # Optional grouping for complex features
+│   ├── README.md       # Subplan overview
+│   └── {task}.md       # Individual task spec
+└── {task}.md           # Task spec (if no subplans needed)
+```
+
+Each task file should be self-describing and reference its parent plan/subplan. A reader should understand what to do without reading other files.
+
+**Commit the plan**: The planning phase ends by committing all plan, subplan, and task markdown files. This creates an audit trail and makes plans visible to other agents.
+
+**Plans are ephemeral**: The goal is to convert plans into passing tests. Once behaviour is verified, delete the plan docs — tests are the lasting authority.
+</planning>
 
 <debugging-strategies>
 Whenever you're struggling to isolate or resolve a bug:
@@ -118,6 +133,10 @@ Whenever you're struggling to isolate or resolve a bug:
 
 **If you can't verify the outcome, you haven't tested it.**
 </test-driven-development>
+
+<orientation>
+@README.md provides project overview and links to package documentation.
+</orientation>
 
 <finding-information>
 > **Tests are the documentation.** Read tests to understand the behaviour of the system and its components. If behaviour isn't tested, it's not guaranteed.

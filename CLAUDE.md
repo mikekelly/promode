@@ -24,22 +24,10 @@ Use the promode-subagent to [task description]
 
 The subagent will already understand TDD, progressive disclosure, behavioural-authority, and all promode conventions.
 
-### Plugin Structure
+### Keeping Principles in Sync
 
-```
-plugins/promode/
-├── .claude-plugin/plugin.json    # Plugin manifest
-├── agents/
-│   └── promode-subagent.md       # Convention-aware subagent
-└── skills/
-    ├── managing-skills/          # Skill installation/management
-    └── managing-claude-code-meta/ # CLAUDE.md setup/migration/audit
-```
+These two files share the same **principles, workflows, and conventions** but have **role-specific differences**:
+- `plugins/promode/skills/managing-claude-code-meta/standard/MAIN_AGENT_CLAUDE.md` — main agent (delegates work, converses with user)
+- `plugins/promode/agents/promode-subagent.md` — sub-agent (executes tasks, reports back)
 
-### Keeping Files in Sync
-
-**CRITICAL**: These two files must be kept in sync:
-- `plugins/promode/skills/managing-claude-code-meta/standard/MAIN_AGENT_CLAUDE.md` — main agent instructions
-- `plugins/promode/agents/promode-subagent.md` — sub-agent instructions
-
-Unless a change is role-specific (e.g. main agent delegation triggers vs sub-agent coordination), any change to one file MUST be reflected in the other. They share the same principles, workflows, and conventions.
+When updating shared content (principles, TDD rules, behavioural-authority, debugging strategies), update both files. Role-specific sections (e.g. `<your-role>`, escalation targets) are intentionally different and should stay that way.

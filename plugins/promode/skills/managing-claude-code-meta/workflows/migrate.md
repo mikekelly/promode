@@ -1,14 +1,14 @@
 <required_reading>
 Read these before proceeding:
 1. The existing CLAUDE.md in the target project
-2. standard/MAIN_AGENT_CLAUDE.md — The promode CLAUDE.md for main agents
+2. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 3. references/progressive-disclosure.md — Principles for content distribution
 </required_reading>
 
 <never_do>
 - NEVER delete content without first confirming its destination (MOVE or DELETE must be explicit)
 - NEVER leave content orphaned — every section must be categorised as KEEP, MOVE, or DELETE
-- NEVER modify standard/CLAUDE.md content when replacing the old file
+- NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when replacing the old file
 - NEVER create circular references between README files
 - NEVER skip the navigation test (Step 6)
 </never_do>
@@ -17,7 +17,7 @@ Read these before proceeding:
 Stop and ask the user when:
 - Content doesn't clearly fit KEEP/MOVE/DELETE categories
 - Migration would delete substantial content (>50 lines) without a clear destination
-- Existing README.md files are already bloated (>200 lines)
+- Existing README.md files are already bloated (>150 lines)
 - You find conflicting information across files
 </escalation>
 
@@ -27,7 +27,6 @@ Stop and ask the user when:
 Read the existing file:
 ```bash
 cat {project_path}/CLAUDE.md
-wc -l {project_path}/CLAUDE.md
 ```
 
 Categorise each section into:
@@ -39,7 +38,7 @@ Categorise each section into:
 - Definition of done
 - Orientation pointers to README.md
 
-**Note**: Even if the existing CLAUDE.md has good agent behaviour content, it will be replaced with `standard/CLAUDE.md`. The standard is comprehensive and should not be modified.
+**Note**: Even if the existing CLAUDE.md has good agent behaviour content, it will be replaced with `standard/MAIN_AGENT_CLAUDE.md`. The standard is comprehensive and should not be modified.
 
 **MOVE to README.md** (project knowledge):
 - Tech stack details
@@ -92,7 +91,6 @@ This installs the promode methodology for the main agent. The standard CLAUDE.md
 
 Check the result:
 ```bash
-wc -l {project_path}/CLAUDE.md
 wc -l {project_path}/README.md
 find {project_path} -name "README.md" | wc -l
 ```

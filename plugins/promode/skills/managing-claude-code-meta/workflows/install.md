@@ -1,11 +1,11 @@
 <required_reading>
 Read these before proceeding:
-1. standard/MAIN_AGENT_CLAUDE.md — The promode CLAUDE.md for main agents
+1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 2. references/progressive-disclosure.md — Context on README distribution
 </required_reading>
 
 <never_do>
-- NEVER modify standard/CLAUDE.md content when copying to target project
+- NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when copying to target project
 - NEVER proceed if CLAUDE.md already exists (route to migrate workflow instead)
 - NEVER create README.md files over 150 lines
 - NEVER skip the verification step (Step 6)
@@ -56,7 +56,7 @@ If no README.md exists, create one with:
 - Project structure overview with links to package READMEs
 - Links to key documentation
 
-**Keep it under 50 lines.** Deep details go in package READMEs.
+**Keep it under 150 lines.** Deep details go in package READMEs.
 
 ## Step 5: Create Package READMEs
 
@@ -68,19 +68,17 @@ Create a README.md with:
 - Domain-specific patterns or conventions
 - Links to related packages
 
-**Each README should be 20-50 lines.**
+**Each README should be under 150 lines.**
 
 ## Step 6: Verify Installation
 
 Run a quick check:
 ```bash
-wc -l {project_path}/CLAUDE.md
 cat {project_path}/CLAUDE.md | head -5
 ```
 
 Confirm:
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
-- [ ] First line contains the "Keep this file under 150 lines" reminder
 </process>
 
 <success_criteria>

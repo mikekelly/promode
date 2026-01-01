@@ -1,6 +1,6 @@
 <required_reading>
 Read these before proceeding:
-1. standard/MAIN_AGENT_CLAUDE.md — The promode CLAUDE.md (project should match exactly)
+1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md (project should match exactly)
 2. references/progressive-disclosure.md — Principles being audited against
 </required_reading>
 
@@ -23,9 +23,6 @@ Stop and ask the user when:
 
 Collect key metrics:
 ```bash
-# CLAUDE.md line count
-wc -l {project_path}/CLAUDE.md
-
 # README.md presence
 find {project_path} -name "README.md" -type f | head -20
 
@@ -67,9 +64,8 @@ ls {package_path}/README.md 2>/dev/null || echo "MISSING"
 | packages/web | Yes/No | Good/Sparse/Bloated |
 
 **README quality criteria:**
-- **Good**: 20-150 lines, covers purpose + key files + patterns
-- **Sparse**: <20 lines, missing essential context
-- **Bloated**: >200 lines, should be split or moved to tests
+- **Good**: Under 150 lines, covers purpose + key files + patterns
+- **Bloated**: Over 150 lines, should be split or content moved to tests
 
 ## Step 4: Check Navigation Chain
 
@@ -138,7 +134,7 @@ Based on findings, recommend:
 - [ ] Root README under 150 lines
 - [ ] Each major package has README.md
 - [ ] Package READMEs cover purpose + key files
-- [ ] No README over 200 lines (should split)
+- [ ] No README over 150 lines (should split)
 
 **Navigation:**
 - [ ] CLAUDE.md → README.md link works

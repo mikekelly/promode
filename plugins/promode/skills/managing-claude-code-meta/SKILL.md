@@ -19,11 +19,11 @@ Each package/directory can have a README.md with domain-specific context. Agents
 Long-lived markdown should cover architecture and principles only. Detailed behaviour documentation belongs in executable tests. If behaviour isn't tested, it's not guaranteed.
 
 **5. CLAUDE.md is standardised**
-The standard CLAUDE.md (`standard/CLAUDE.md`) should be copied exactly into projects. It is designed to work universally. All project-specific content belongs in README.md files.
+The standard CLAUDE.md (`standard/MAIN_AGENT_CLAUDE.md`) should be copied exactly into projects. It is designed to work universally. All project-specific content belongs in README.md files.
 </essential_principles>
 
 <never_do>
-- NEVER modify `standard/CLAUDE.md` content — it must be copied exactly into projects
+- NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content — it must be copied exactly into projects
 - NEVER add project-specific content to CLAUDE.md (use README.md files instead)
 - NEVER duplicate content between CLAUDE.md and README.md — single source of truth
 - NEVER skip verifying CLAUDE.md matches the standard after installation or migration

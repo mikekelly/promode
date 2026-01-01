@@ -108,7 +108,7 @@ npm run build   # Production build
 </content_migration_examples>
 
 <readme_structure_guidelines>
-**Root README.md** (~50-150 lines):
+**Root README.md** (under 150 lines):
 ```markdown
 # Project Name
 
@@ -126,7 +126,7 @@ How to run locally (3-5 steps max).
 Key commands for developers.
 ```
 
-**Package README.md** (~20-50 lines):
+**Package README.md** (under 150 lines):
 ```markdown
 # Package Name
 
