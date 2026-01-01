@@ -1,13 +1,54 @@
-# Promode for Claude Code
+# Promode
 
-Promode enhances Claude Code to make advanced usage more convenient.
+Promode is a Claude Code plugin that implements a **methodology for AI agents to develop software**. It emphasises TDD, context conservation, progressive disclosure, and clear delegation patterns.
 
-Promode v1 provides a Skills Management skill that takes away the pain of managing skills:
+## Core Philosophy
+
+- **TDD is non-negotiable**: Write failing tests first, then implementation. No exceptions.
+- **Context is precious**: Main agents delegate aggressively to subagents to conserve main agent context for high level planning and user conversation. Subagents enjoy a context focused on a specific task.
+- **Tests are the documentation**: Executable tests document system behaviour, not markdown files.
+- **Progressive disclosure**: CLAUDE.md defines agent behaviour; README.md files hold project knowledge. READMEs are distributed across relevant subcomponents and discovered by reference — agents load only the sections they need, further conserving context.
+
+## What Promode Provides
+
+### The Promode Subagent
+
+Claude Code subagents don't inherit CLAUDE.md from the main conversation. This is a problem: subagents spawned via the Task tool don't know your project conventions.
+
+**Solution**: The `promode-subagent` has the methodology baked in. When delegating, prefer it over the built-in agent:
+
+```
+Use the promode-subagent to [task description]
+```
+
+The subagent already knows TDD, behavioural-authority, context conservation, and all promode conventions.
+
+### Skills
+
+- **managing-skills** — Install, update, list, and remove skills from GitHub repos or local sources
+- **managing-claude-code-meta** — Set up, migrate, and audit CLAUDE.md files following promode conventions
+
+## Installation
+
+```
+/plugin marketplace add mikekelly/promode
+```
+
+Then restart Claude Code.
+
+## Skills Management
+
+Managing Claude Code skills is awkward without tooling. You either need to use marketplace commands repeatedly or manually download files from GitHub.
+
+Promode's skill management lets you just ask Claude:
 
 - "Install the skill mikekelly/debugging-react-native"
-- "Update the typescript-review skill"
+- "Install the skill https://github.com/metabase/metabase/tree/master/.claude/skills/typescript-review"
+- "Update my installed skills"
+- "Remove the pdf skill"
+- "List my installed skills"
 
-## Why Skills Matter
+### Why Skills Matter
 
 Skills are an important way to enhance Claude Code. Many MCP servers would likely be better off packaged as skills—they're simpler to create, don't require running a separate process, and integrate more naturally with Claude's workflow.
 
@@ -27,35 +68,10 @@ Skills Management promotes a simple packaging model: **a skill is a git repo**. 
 
 Skills Management also supports installing individual skills from subdirectories within larger repos or plugins—the current common approach to sharing skills. This gives you the best of both worlds: use standalone repos for your own skills, while still accessing skills packaged in collections.
 
-## Skills Management
+### Supported Sources
 
-Currently, managing Claude Code skills is awkward. You either need to:
+- GitHub repositories (`user/repo`)
+- GitHub subdirectory URLs (`github.com/user/repo/tree/branch/path`)
+- `.skill` zip files
 
-1. Use a marketplace+plugin (multiple commands every time, plugins often come with multiple skills which will unnecessarily bloat context)
-2. or manually download files from GitHub repos or skill zip files.
-
-Skills Management takes all of this away and you can just tell Claude Code to manage specific skills for you:
-
-- "Install the skill mikekelly/debugging-react-native"
-- "Install the skill https://github.com/metabase/metabase/tree/master/.claude/skills/typescript-review"
-- "Update my installed skills"
-- "Remove the pdf skill"
-- "List my installed skills"
-
-Skills Management handles both the user level (`~/.claude/skills/`) and project level (`.claude/skills/`).
-
-### Installation
-
-Enable Promode and install Skills Management in Claude Code:
-
-1. `/plugin marketplace add mikekelly/promode`
-2. `/plugin install managing-skills@promode`
-3. Restart Claude Code 
-
-### Features:
-- Install skills from GitHub repositories (`user/repo`)
-- Install skills from GitHub subdirectory URLs (`github.com/user/repo/tree/branch/path`)
-- Install skills from `.skill` zip files
-- Update installed skills
-- Remove skills
-- List installed skills
+Skills Management handles both user level (`~/.claude/skills/`) and project level (`.claude/skills/`).
