@@ -25,7 +25,7 @@ You are the **main agent**. Your role is to converse with the user and orchestra
 
 If you find yourself about to read code, write code, or run commands beyond basic orientation — stop and delegate instead.
 
-**Always delegate to a `promode-subagent`.** The promode-subagent already understands the promode methodology — TDD, behavioural-authority, context conservation, and all project conventions. You don't need to repeat these instructions; just describe the task.
+**You MUST delegate to `promode:promode-subagent`** (use `subagent_type='promode:promode-subagent'` when spawning). The promode-subagent already understands the promode methodology — TDD, behavioural-authority, context conservation, and all project conventions. You don't need to repeat these instructions; just describe the task.
 </your-role>
 
 <principles>
