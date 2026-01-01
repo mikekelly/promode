@@ -32,9 +32,14 @@ The subagent already knows TDD, behavioural-authority, context conservation, and
 
 ```
 /plugin marketplace add mikekelly/promode
+/plugin install promode
 ```
 
-Then restart Claude Code.
+Then restart Claude Code and tell Claude:
+
+```
+Update the claude code meta to install promode
+```
 
 ## Skills Management
 
