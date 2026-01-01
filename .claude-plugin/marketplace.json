@@ -4,15 +4,15 @@
     "name": "promode"
   },
   "metadata": {
-    "description": "Claude Code plugin marketplace for skill management"
+    "description": "Promode enhances Claude Code so it builds software more intelligently"
   },
   "plugins": [
     {
-      "name": "skill-manager",
-      "source": "./plugins/skill-manager",
-      "description": "Manage Claude Code skills - install, update, list, and remove skills from GitHub repositories",
+      "name": "promode",
+      "source": "./plugins/promode",
+      "description": "Promode enhances Claude Code so it builds software more intelligently",
       "category": "utilities",
-      "tags": ["skills", "management", "github"]
+      "tags": ["skills", "tools", "development", "productivity"]
     }
   ]
 }

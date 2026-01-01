@@ -1,9 +1,0 @@
-{
-  "name": "managing-skills",
-  "description": "Install, update, list, and remove Claude Code skills. Supports GitHub repositories, subdirectory URLs, and .skill zip files.",
-  "version": "1.4.0",
-  "author": {
-    "name": "promode"
-  },
-  "keywords": ["skills", "management", "install", "github"]
-}
