@@ -1,7 +1,7 @@
 <required_reading>
 Read these before proceeding:
 1. The existing CLAUDE.md in the target project
-2. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
+2. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md
 3. references/progressive-disclosure.md — Principles for content distribution
 </required_reading>
 
@@ -33,7 +33,6 @@ Categorise each section into:
 
 **KEEP in CLAUDE.md** (promode methodology — but will be replaced by standard):
 - Critical instructions about communication style
-- Main agent role and delegation patterns
 - Workflow patterns (TDD, task management)
 - Definition of done
 - Orientation pointers to README.md
@@ -83,9 +82,7 @@ For each destination identified:
 
 Replace the existing CLAUDE.md with an exact copy of `standard/MAIN_AGENT_CLAUDE.md`. Do not modify it.
 
-This installs the promode methodology for the main agent. The standard CLAUDE.md is designed to work universally — all project-specific content belongs in README.md files.
-
-**Note**: Sub-agents don't inherit CLAUDE.md. Main agents should delegate to `promode-subagent`, which already understands the methodology.
+This installs the promode methodology. The standard CLAUDE.md is designed to work universally — all project-specific content belongs in README.md files.
 
 ## Step 5: Verify Migration
 

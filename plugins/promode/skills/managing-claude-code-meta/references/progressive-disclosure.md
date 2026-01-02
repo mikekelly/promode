@@ -20,7 +20,6 @@ Every agent conversation loads CLAUDE.md into context. If CLAUDE.md contains 500
 <what_belongs_where>
 **CLAUDE.md (agent behaviour)**:
 - Communication style and tone
-- How to interact with user vs sub-agents
 - Workflow patterns (planning, implementing, reviewing)
 - Task management approach (TODO.md usage)
 - Test-driven development philosophy

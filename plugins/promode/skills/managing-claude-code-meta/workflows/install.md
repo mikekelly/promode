@@ -1,6 +1,6 @@
 <required_reading>
 Read these before proceeding:
-1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
+1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md
 2. references/progressive-disclosure.md — Context on README distribution
 </required_reading>
 
@@ -44,9 +44,7 @@ Note packages/modules that have distinct domains and will benefit from their own
 
 Copy `standard/MAIN_AGENT_CLAUDE.md` to the project root exactly as-is. Do not modify it.
 
-This installs the promode methodology for the main agent. The standard CLAUDE.md is designed to work universally — it defines agent behaviour, not project knowledge. Project-specific information belongs in README.md files.
-
-**Note**: Sub-agents don't inherit CLAUDE.md. Main agents should delegate to `promode-subagent`, which already understands the methodology.
+This installs the promode methodology. The standard CLAUDE.md is designed to work universally — it defines agent behaviour, not project knowledge. Project-specific information belongs in README.md files.
 
 ## Step 4: Create Root README.md (if missing)
 

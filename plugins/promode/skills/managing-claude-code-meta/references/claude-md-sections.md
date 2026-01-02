@@ -21,10 +21,10 @@ This reference explains the purpose of each section in the standard CLAUDE.md. T
 
 **Standard content**:
 ```
-This project follows the **promode methodology** — a set of principles and workflows for AI agents to develop software. The methodology emphasises TDD, context conservation, progressive disclosure, and clear delegation patterns.
+This project follows the **promode methodology** — principles and workflows for AI agents to develop software. The core idea: **the repo is always ready for a fresh agent**. Any agent should be able to pick up the work with zero context from previous conversations.
 ```
 
-**Why it matters**: Naming the methodology creates a conceptual anchor. When agents see "promode", they understand they're applying a coherent system rather than following arbitrary rules. This also enables the `promode-subagent` pattern — subagents that already understand the methodology without needing CLAUDE.md.
+**Why it matters**: Naming the methodology creates a conceptual anchor. When agents see "promode", they understand they're applying a coherent system rather than following arbitrary rules.
 </section>
 
 <section name="request-classification">
@@ -41,45 +41,20 @@ This project follows the **promode methodology** — a set of principles and wor
 **Why it matters**: Only IMPLEMENT and DEBUG require the full development workflow. Without this classification, agents may run the entire baseline → plan → implement cycle for simple questions like "where is the config file?" This wastes context and time.
 </section>
 
-<section name="your-role">
-**Tag**: `<your-role>`
-
-**Purpose**: Defines the main agent's role and delegation behaviour.
-
-**Main agent responsibilities**:
-- Interacts with user, delegates execution
-- Never does execution work itself
-- Always delegates to a `promode-subagent`
-
-**Delegation triggers** — when to spawn sub-agents:
-- Reading more than ~3 files
-- Any code changes
-- Running tests or builds
-- Any task generating substantial output
-
-**Key instruction**: "Always delegate to a `promode-subagent`." The promode-subagent already understands the promode methodology — TDD, behavioural-authority, context conservation, and all project conventions. Main agents don't need to repeat these instructions; they just describe the task.
-
-**Why it matters**: Strongly encourages main agents to delegate rather than doing everything themselves. Main agents that do execution work themselves will exhaust their context.
-
-**Note**: Sub-agent role instructions are defined in the `promode-subagent` agent definition, not in CLAUDE.md. This keeps CLAUDE.md focused on the main agent.
-</section>
-
 <section name="principles">
 **Tag**: `<principles>`
 
 **Purpose**: Core values that guide agent decision-making across all tasks.
 
 **Standard principles**:
-- **Context is a public good**: Delegate to conserve context
-- **Load context just-in-time**: Don't read everything upfront
+- **Repo as single source of truth**: All state lives in committed files
+- **Continuous handoff readiness**: Work so any agent can pick up with zero context
 - **Tests are the documentation**: Trust tests over markdown
-- **Markdown is ephemeral**: Working docs get deleted
-- **Permanent docs are minimal**: Only architecture in markdown
+- **Load context just-in-time**: Don't read everything upfront
 - **KISS**: Don't over-engineer
 - **Small diffs**: Focused changes
 - **Always explain the why**: Include reasoning
 - **Leave it tidier**: Fix problems you encounter rather than working around them
-- **Consider backwards compatibility**: Before changing public interfaces, data schemas, or API contracts, consider who depends on them
 </section>
 
 <section name="behavioural-authority">
@@ -129,8 +104,8 @@ This project follows the **promode methodology** — a set of principles and wor
 **Note**: This assumes README.md is at the project root, which is the standard convention.
 </section>
 
-<section name="task-management">
-**Tag**: `<task-management>`
+<section name="project-management">
+**Tag**: `<project-management>`
 
 **Purpose**: Defines how tasks are tracked and coordinated.
 
@@ -139,7 +114,7 @@ This project follows the **promode methodology** — a set of principles and wor
 - `DONE.md` as the audit trail
 - `docs/{feature}/` for planning breakdowns
 
-**Why TODO.md over external tools**: Keeps task state in the repo, visible to agents without API calls, version-controlled alongside code.
+**Why TODO.md over external tools**: Keeps task state in the repo, visible to agents without API calls, version-controlled alongside code. A fresh agent can read TODO.md and immediately know what needs to happen next.
 </section>
 
 <section name="development-workflow">
@@ -150,13 +125,14 @@ This project follows the **promode methodology** — a set of principles and wor
 **Standard steps**:
 1. **Baseline first** — Run full test suite before any changes (this is step 1, not optional)
 2. Research — Read tests to understand current behaviour
-3. Plan — Write plan in `docs/`
-4. Reflect — Review critically, get user input on trade-offs
-5. Implement (TDD) — Write failing tests first, then implementation
-6. Verify — Run full test suite again before considering work complete
-7. Clean up — Delete plan, tests are the authority
+3. Plan — Write plan in `docs/`, commit before implementing
+4. Implement (TDD) — Write failing tests first, then implementation
+5. Verify — Run full test suite again before considering work complete
+6. Clean up — Delete plan, tests are the authority
 
 **Key insight**: Baseline first ensures you know the system works before changing it. A failing test suite is a blocker. Plans are deleted because tests are the lasting documentation.
+
+**Commit frequently**: Each commit should leave the repo in a state where a fresh agent could continue.
 </section>
 
 <section name="debugging-strategies">
@@ -191,6 +167,8 @@ This project follows the **promode methodology** — a set of principles and wor
 - Tag slow tests for fast feedback, but always run full suite before commit
 
 **Why emphasised so strongly**: Agents tend to skip straight to implementation. This section makes clear that writing implementation without a failing test is not acceptable.
+
+**A failing test is a commitment**: It tells the next agent exactly what behaviour is expected.
 </section>
 
 <section name="finding-information">
@@ -214,8 +192,9 @@ This project follows the **promode methodology** — a set of principles and wor
 **Standard criteria**:
 1. Tests pass
 2. Task is completed
-3. No documentation that should be a test remains
-4. Code is committed (and pushed if remote exists)
+3. TODO.md is updated
+4. Code is committed
+5. A fresh agent could continue from here
 </section>
 
 <section_checklist>

@@ -4,22 +4,24 @@ description: "MUST be loaded when setting up, installing, migrating, reviewing, 
 ---
 
 <essential_principles>
-This skill manages projects that adopt the **promode methodology** — a set of principles and workflows for AI agents to develop software. The methodology emphasises TDD, context conservation, progressive disclosure, and clear delegation patterns.
+This skill manages projects that adopt the **promode methodology**.
 
-**1. CLAUDE.md is for main agent behaviour**
-CLAUDE.md defines the main agent's role: conversing with users, delegating to sub-agents, and following the promode methodology. It does NOT contain project-specific technical details — those belong in README.md files.
+**The core idea: the repo is always ready for a fresh agent.**
 
-**2. Sub-agents use the promode-subagent**
-Claude Code sub-agents don't inherit CLAUDE.md. The `promode-subagent` mirrors the same methodology so sub-agents apply the same principles. Main agents delegate to promode-subagent rather than instructing sub-agents to read CLAUDE.md.
+Any agent should be able to pick up the work with zero context from previous conversations. The human decides when to bring in a fresh agent; the methodology ensures that's always possible.
 
-**3. README.md files are the knowledge graph**
-Each package/directory can have a README.md with domain-specific context. Agents read these just-in-time when working in that area. This keeps initial context lean while making deep knowledge available.
+**How handoff works:**
+1. `TODO.md` always answers "what's next?" — this is the primary handoff mechanism
+2. Failing tests capture intended behaviour — the next agent knows what to implement
+3. Plan docs in `docs/` explain approach — the next agent continues where you left off
 
-**4. Tests are the documentation**
-Long-lived markdown should cover architecture and principles only. Detailed behaviour documentation belongs in executable tests. If behaviour isn't tested, it's not guaranteed.
+**File responsibilities:**
+- **CLAUDE.md** — How the agent works (the promode methodology). Standardised, not project-specific.
+- **README.md** — What the project is. Project-specific knowledge.
+- **TODO.md** — What to do next. Always current.
+- **Tests** — What behaviour is expected. The authoritative documentation.
 
-**5. CLAUDE.md is standardised**
-The standard CLAUDE.md (`standard/MAIN_AGENT_CLAUDE.md`) should be copied exactly into projects. It is designed to work universally. All project-specific content belongs in README.md files.
+**CLAUDE.md is standardised**: Copy `standard/MAIN_AGENT_CLAUDE.md` exactly into projects. It works universally. All project-specific content belongs in README.md files.
 </essential_principles>
 
 <never_do>
@@ -64,17 +66,15 @@ What would you like to do?
 </routing>
 
 <quick_reference>
-**CLAUDE.md**: Copy `standard/MAIN_AGENT_CLAUDE.md` exactly. Do not modify. This configures the main agent with promode methodology.
-
-**Sub-agents**: Main agents delegate to `promode-subagent`, which already knows the methodology.
+**CLAUDE.md**: Copy `standard/MAIN_AGENT_CLAUDE.md` exactly. Do not modify. This configures the agent with promode methodology.
 
 **README.md distribution:**
 ```
 project/
-├── CLAUDE.md           # Main agent behaviour (promode methodology)
-├── README.md           # Project overview, links to main components of system, etc
+├── CLAUDE.md           # Agent behaviour (promode methodology)
+├── README.md           # Project overview, links to main components
 └── docs/
-    └── {feature}/      # Ephemeral planning docs, and task specs
+    └── {feature}/      # Ephemeral planning docs and task specs
 ```
 </quick_reference>
 

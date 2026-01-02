@@ -34,7 +34,7 @@ find {project_path} -type d -name "src" -o -name "packages" -o -name "lib" -o -n
 
 **Exact match check:**
 
-The project's CLAUDE.md should be an exact copy of this skill's `standard/MAIN_AGENT_CLAUDE.md` (the promode methodology for main agents). Read both files and compare them:
+The project's CLAUDE.md should be an exact copy of this skill's `standard/MAIN_AGENT_CLAUDE.md` (the promode methodology). Read both files and compare them:
 
 1. Read the project's CLAUDE.md: `{project_path}/CLAUDE.md`
 2. Read this skill's standard: `standard/MAIN_AGENT_CLAUDE.md` (relative to this skill's directory)
@@ -45,8 +45,6 @@ The project's CLAUDE.md should be an exact copy of this skill's `standard/MAIN_A
 | Differences found | FAIL | Replace with exact copy of `standard/MAIN_AGENT_CLAUDE.md` |
 
 If there are differences, note what was added/changed. Any project-specific content should be moved to README.md files.
-
-**Note**: Sub-agents don't inherit CLAUDE.md. The promode-subagent (separate from this file) handles sub-agent behaviour.
 
 ## Step 3: Audit README Distribution
 

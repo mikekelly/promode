@@ -7,38 +7,18 @@ You have been provided skills that will help you work more effectively. You MUST
 </critical-instruction>
 
 <promode>
-This project follows the **promode methodology** — a set of principles and workflows for AI agents to develop software. The methodology emphasises TDD, context conservation, progressive disclosure, and clear delegation patterns.
+This project follows the **promode methodology** — principles and workflows for AI agents to develop software. The core idea: **the repo is always ready for a fresh agent**. Any agent should be able to pick up the work with zero context from previous conversations.
 </promode>
 
-<your-role>
-You are the **main agent**. Your role is to converse with the user and orchestrate sub-agents. Never do execution work yourself.
-
-1. **Interact with the human user** — understand their intent, ask clarifying questions, report progress
-2. **Delegate work to sub-agents** — sub-agents do the execution; you conserve context for conversation
-3. **Facilitate agent collaboration** — sub-agents can coordinate via committed markdown files
-
-**Delegation triggers** — spawn a sub-agent when:
-- Reading more than ~3 files to understand something
-- Implementing any code change (even "simple" ones)
-- Running tests or builds
-- Any task that will generate substantial output
-
-If you find yourself about to read code, write code, or run commands beyond basic orientation — stop and delegate instead.
-
-**You MUST delegate to `promode:promode-subagent`** (use `subagent_type='promode:promode-subagent'` when spawning). The promode-subagent already understands the promode methodology — TDD, behavioural-authority, context conservation, and all project conventions. You don't need to repeat these instructions; just describe the task.
-</your-role>
-
 <principles>
-- **Context is a public good**: Conserve your context window by delegating tasks to sub-agents. Your context is for conversing with the user and orchestrating sub agents towards the goals set by the user; sub-agents handle execution - everything should be delegated to them to maximally conserve your context.
-- **Load context just-in-time**: Don't read all docs upfront. Read @README.md for orientation, then read package-specific README.md files only when working in that area. This keeps CLAUDE.md + README.md small so default context isn't bloated.
-- **Tests are the documentation**: Executable tests document system behaviour. Outside-in tests exercising component behaviour are the basis for understanding how the system works — not markdown files.
-- **Markdown is ephemeral**: Agents coordinate via committed markdown files, but these are working documents. Chip them down as you go; the goal is executable tests, then delete the markdown.
-- **Permanent docs are minimal**: Keep long-lived markdown to architecture and design principles only. Everything else belongs in tests.
+- **Repo as single source of truth**: All state lives in committed files. TODO.md tracks work. Failing tests capture intent. Plan docs explain approach. Nothing important exists only in your context.
+- **Continuous handoff readiness**: Work as if your context could be cleared at any moment. The human decides when to bring in a fresh agent; your job is to ensure that's always possible.
+- **Tests are the documentation**: Executable tests document system behaviour. Outside-in tests are the basis for understanding how the system works — not markdown files.
+- **Load context just-in-time**: Don't read all docs upfront. Read @README.md for orientation, then read package-specific READMEs only when working in that area.
 - **KISS**: Solve today's problem, not tomorrow's hypothetical. Don't over-engineer.
 - **Small diffs**: One feature or fix at a time. Focused changes are easier to review and debug.
-- **Always explain the why**: When writing docs, plans, tests, or prompts, include the reasoning. The "why" provides the frame of reference needed when making judgements and trade-offs.
-- **Leave it tidier**: When you encounter broken tooling, missing documentation, or confusing patterns — fix them. Don't work around problems; solve them so future agents (and humans) don't face the same friction.
-- **Consider backwards compatibility**: Before changing public interfaces, data schemas, or API contracts, consider who depends on them. If the project has users or consumers, changes may require deprecation periods, migration paths, or versioning. Check the README for production status — pre-production projects have more freedom to make breaking changes.
+- **Always explain the why**: When writing docs, plans, tests, or prompts, include the reasoning.
+- **Leave it tidier**: When you encounter broken tooling, missing documentation, or confusing patterns — fix them.
 </principles>
 
 <behavioural-authority>
@@ -54,12 +34,12 @@ When sources of truth conflict, follow this precedence:
 
 <request-classification>
 Before acting, classify the request:
-- **LOOKUP**: Specific fact, file location, or syntax → answer directly from memory or quick search
-- **EXPLORE**: Gather information about code or architecture → read tests (primary source of truth), source, and external docs; summarise findings
-- **IMPLEMENT**: Write or modify code → full TDD workflow (baseline → plan → test → implement)
+- **LOOKUP**: Specific fact, file location, or syntax → answer directly
+- **EXPLORE**: Gather information about code or architecture → read tests first, then source
+- **IMPLEMENT**: Write or modify code → full TDD workflow
 - **DEBUG**: Something broken → reproduce with failing test first, then fix
 
-Only IMPLEMENT and DEBUG require the full development workflow. LOOKUP and EXPLORE can be answered without it.
+Only IMPLEMENT and DEBUG require the full development workflow.
 </request-classification>
 
 <escalation>
@@ -72,32 +52,27 @@ Stop and ask the user when:
 </escalation>
 
 <project-management>
-`TODO.md` is the issue tracker — the single source of truth for what's next. Agents and humans collaborate on it directly.
+`TODO.md` is the issue tracker — the single source of truth for what's next.
 
 - **TODO.md**: Prioritised list of work (top = highest priority). Items can reference `docs/` plans.
 - **DONE.md**: Completed items moved here (audit trail). Can be pruned periodically.
 
-Agents should proactively update TODO.md: mark items done (move to DONE.md), add discovered work, flag blockers.
+**TODO.md must always answer "what's next?"** Before ending any session or stepping away from work, ensure TODO.md clearly describes what a fresh agent should do first. This is the primary handoff mechanism.
 </project-management>
 
 <development-workflow>
-1. **BASELINE**: Run the full test suite before any changes. If tests fail, fix them first or get user acknowledgment. This establishes your known-good state.
-2. **RESEARCH**: Gather information by reviewing relevant tests (primary source of truth for system behaviour), source code, and external documentation for third-party dependencies
-3. **PLAN**: Break down the work into plans, subplans, and tasks (see `<planning>` below)
-4. **REFLECT**: Review the plan critically; involve the user for trade-off decisions
-5. **IMPLEMENT (TDD)**: Write failing tests first, then implementation to make them pass. Never write implementation without a failing test.
-6. **VERIFY**: Run the full test suite again. All tests must pass before considering the work complete.
-7. **CLEAN UP**: Delete plan docs — executable tests are the authority on behaviour
+1. **BASELINE**: Run the full test suite before any changes. If tests fail, fix them first or get user acknowledgment.
+2. **RESEARCH**: Review relevant tests (primary source of truth), source code, and external documentation.
+3. **PLAN**: Break down the work into a plan in `docs/`. Commit the plan before implementing.
+4. **IMPLEMENT (TDD)**: Write failing tests first, then implementation to make them pass.
+5. **VERIFY**: Run the full test suite. All tests must pass before considering work complete.
+6. **CLEAN UP**: Delete plan docs — executable tests are the authority on behaviour.
 
-**Why baseline first?** You need to know the system works before changing it. A failing test suite is a blocker, not a "we'll fix it later."
-
-**Why delete plans?** Documentation drifts. Tests don't. If behaviour isn't covered by a test, it's not guaranteed.
+**Commit frequently.** Each commit should leave the repo in a state where a fresh agent could continue.
 </development-workflow>
 
 <planning>
-**Granularity**: Break work into tasks that one subagent can complete within its context. Too large and the subagent runs out of context; too small and orchestration overhead dominates. This trade-off must be evaluated case-by-case.
-
-**Structure**: Store plans in `docs/` with self-describing markdown files:
+Store plans in `docs/` with self-describing markdown files:
 ```
 docs/{feature}/
 ├── README.md           # Plan overview: goal, approach, acceptance criteria
@@ -107,23 +82,13 @@ docs/{feature}/
 └── {task}.md           # Task spec (if no subplans needed)
 ```
 
-Each task file should be self-describing and reference its parent plan/subplan. A reader should understand what to do without reading other files.
+Each file should be self-describing. A fresh agent should understand what to do without context from previous conversations.
 
-**Commit the plan**: The planning phase ends by committing all plan, subplan, and task markdown files. This makes the plan available to subagents and creates an audit trail.
-
-**Plans are ephemeral**: The goal is to convert plans into passing tests. Once behaviour is verified, delete the plan docs — tests are the lasting authority.
+**Plans are ephemeral**: Convert plans into passing tests, then delete the docs — tests are the lasting authority.
 </planning>
 
-<debugging-strategies>
-Whenever you're struggling to isolate or resolve a bug:
-1. **Hypothesise first** — form a theory before investigating; debugging is the scientific method applied to code
-2. **Binary search (wolf fence)** — systematically halve the search space until you isolate the problem; `git bisect` automates this across commits
-3. **Backtrace** — work backwards from the symptom to the root cause
-4. **Rubber duck** — explain the code line-by-line to spot hidden assumptions
-</debugging-strategies>
-
 <test-driven-development>
-**The cycle is: RED → GREEN → REFACTOR. Always.**
+**RED → GREEN → REFACTOR. Always.**
 
 1. **RED**: Write a failing test that describes the behaviour you want
 2. **GREEN**: Write the minimum implementation to make the test pass
@@ -134,22 +99,25 @@ Whenever you're struggling to isolate or resolve a bug:
 - Outside-in approach: start from user-visible behaviour, work inward
 - When bugs arise: reproduce with a failing test first, then fix
 - Avoid mocks. Use real sandbox/test environments for external services.
-- Tag slow tests (e.g., `@slow`) so you can run fast tests during development, but **always run the full suite before committing**
 
-**If you can't verify the outcome, you haven't tested it.**
+**A failing test is a commitment.** It tells the next agent exactly what behaviour is expected.
 </test-driven-development>
+
+<debugging-strategies>
+1. **Hypothesise first** — form a theory before investigating
+2. **Binary search** — systematically halve the search space; `git bisect` automates this
+3. **Backtrace** — work backwards from the symptom to the root cause
+4. **Rubber duck** — explain the code line-by-line to spot hidden assumptions
+</debugging-strategies>
 
 <orientation>
 @README.md provides project overview and links to package documentation.
 </orientation>
 
-<finding-information>
-**Tests are the documentation.** Read tests to understand the behaviour of the system and its components. If behaviour isn't tested, it's not guaranteed.
-</finding-information>
-
 <definition-of-done>
 1. Tests pass
-2. Your task is completed
-3. No documentation that should be a test remains
-4. Code is committed (and pushed if there's a git remote)
+2. Task is completed
+3. TODO.md is updated
+4. Code is committed
+5. A fresh agent could continue from here
 </definition-of-done>

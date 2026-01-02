@@ -1,33 +1,23 @@
-> Keep this file under 50 lines. This is a plugin repository - see plugins/promode/ for the actual plugin.
+Keep this file under 50 lines. This is a plugin repository - see plugins/promode/ for the actual plugin.
 
 ## What is Promode?
 
-Promode is a Claude Code plugin that enhances how Claude builds software. It provides:
+Promode is a Claude Code plugin that provides a methodology for AI agents to develop software. The core principle: **the repo is always ready for a fresh agent**.
 
-- **Skills** — Domain knowledge that loads just-in-time (managing CLAUDE.md files, installing skills)
-- **Agents** — Pre-configured subagents that understand promode conventions
+- **TDD is non-negotiable** — write failing tests first, then implementation
+- **Repo as source of truth** — all state lives in committed files (TODO.md, plan docs, tests)
+- **Continuous handoff readiness** — work so that any agent can pick up with zero prior context
+- **Tests are the documentation** — executable tests document behaviour, not markdown
 
-The core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, and agents should delegate aggressively to conserve it.
+### Standard CLAUDE.md
 
-### The promode-subagent Pattern
+The methodology is defined in `plugins/promode/skills/managing-claude-code-meta/standard/MAIN_AGENT_CLAUDE.md`. This file gets installed into projects that adopt promode.
 
-Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This creates a problem: subagents spawned via the Task tool don't know project conventions, TDD practices, or behavioural-authority rules.
+### Skills
 
-**Solution**: The `promode-subagent` (`plugins/promode/agents/promode-subagent.md`) mirrors the standard CLAUDE.md content that would normally be in a project's CLAUDE.md. When the main agent delegates work, it should prefer `promode-subagent` over the built-in `general-purpose` agent.
+- **managing-skills** — Install, update, list, and remove skills
+- **managing-claude-code-meta** — Set up and audit CLAUDE.md files
 
-**Why this works**: The promode-subagent's system prompt contains the same principles, workflows, and conventions that would be in a properly configured CLAUDE.md. The subagent "boots up" with this knowledge already loaded.
+### Keeping Files in Sync
 
-**Usage**: When delegating, the main agent can say:
-```
-Use the promode-subagent to [task description]
-```
-
-The subagent will already understand TDD, progressive disclosure, behavioural-authority, and all promode conventions.
-
-### Keeping Principles in Sync
-
-These two files share the same **principles, workflows, and conventions** but have **role-specific differences**:
-- `plugins/promode/skills/managing-claude-code-meta/standard/MAIN_AGENT_CLAUDE.md` — main agent (delegates work, converses with user)
-- `plugins/promode/agents/promode-subagent.md` — sub-agent (executes tasks, reports back)
-
-When updating shared content (principles, TDD rules, behavioural-authority, debugging strategies), update both files. Role-specific sections (e.g. `<your-role>`, escalation targets) are intentionally different and should stay that way.
+When updating shared methodology content, update `MAIN_AGENT_CLAUDE.md`. The root CLAUDE.md (this file) is just a pointer.
