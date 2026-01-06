@@ -3,6 +3,7 @@ Read these before proceeding:
 1. The existing CLAUDE.md in the target project
 2. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 3. references/progressive-disclosure.md — Principles for content distribution
+4. references/mcp-servers.md — Required MCP server configuration
 </required_reading>
 
 <never_do>
@@ -10,7 +11,7 @@ Read these before proceeding:
 - NEVER leave content orphaned — every section must be categorised as KEEP, MOVE, or DELETE
 - NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when replacing the old file
 - NEVER create circular references between README files
-- NEVER skip the navigation test (Step 6)
+- NEVER skip the navigation test (Step 7)
 </never_do>
 
 <escalation>
@@ -87,7 +88,37 @@ This installs the promode methodology for the main agent. The standard CLAUDE.md
 
 **Note**: Sub-agents don't inherit CLAUDE.md. Main agents should delegate to `promode-subagent`, which already understands the methodology.
 
-## Step 5: Verify Migration
+## Step 5: Install MCP Servers
+
+Create `.mcp.json` in the project root with the required MCP servers (see `references/mcp-servers.md`):
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "exa": {
+      "command": "npx",
+      "args": ["-y", "exa-mcp-server"],
+      "env": {
+        "EXA_API_KEY": "${EXA_API_KEY}"
+      }
+    },
+    "grep_app": {
+      "type": "http",
+      "url": "https://mcp.grep.app"
+    }
+  }
+}
+```
+
+If `.mcp.json` already exists, merge the `mcpServers` section (preserving any existing servers).
+
+**Note**: The `EXA_API_KEY` is provided by the user's environment, not stored in the file.
+
+## Step 6: Verify Migration
 
 Check the result:
 ```bash
@@ -97,10 +128,11 @@ find {project_path} -name "README.md" | wc -l
 
 Confirm:
 - [ ] New CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
+- [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
 - [ ] All moved content is accessible via README.md chain
 - [ ] No orphaned content (everything moved or deliberately deleted)
 
-## Step 6: Test Agent Navigation
+## Step 7: Test Agent Navigation
 
 Simulate an agent's path:
 1. Read CLAUDE.md — Get agent behaviour instructions
@@ -164,6 +196,7 @@ Run specific test: npm test -- --grep "pattern"
 Migration is complete when:
 - [ ] Old CLAUDE.md content fully categorised (keep/move/delete)
 - [ ] New CLAUDE.md installed (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
+- [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
 - [ ] Moved content placed in appropriate README.md files
 - [ ] Content navigation tested (CLAUDE.md → README.md → package READMEs)
 </success_criteria>

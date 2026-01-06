@@ -2,13 +2,14 @@
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 2. references/progressive-disclosure.md — Context on README distribution
+3. references/mcp-servers.md — Required MCP server configuration
 </required_reading>
 
 <never_do>
 - NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when copying to target project
 - NEVER proceed if CLAUDE.md already exists (route to migrate workflow instead)
 - NEVER create README.md files over 150 lines
-- NEVER skip the verification step (Step 6)
+- NEVER skip the verification step (Step 7)
 </never_do>
 
 <escalation>
@@ -48,7 +49,37 @@ This installs the promode methodology for the main agent. The standard CLAUDE.md
 
 **Note**: Sub-agents don't inherit CLAUDE.md. Main agents should delegate to `promode-subagent`, which already understands the methodology.
 
-## Step 4: Create Root README.md (if missing)
+## Step 4: Install MCP Servers
+
+Create `.mcp.json` in the project root with the required MCP servers (see `references/mcp-servers.md`):
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "exa": {
+      "command": "npx",
+      "args": ["-y", "exa-mcp-server"],
+      "env": {
+        "EXA_API_KEY": "${EXA_API_KEY}"
+      }
+    },
+    "grep_app": {
+      "type": "http",
+      "url": "https://mcp.grep.app"
+    }
+  }
+}
+```
+
+If `.mcp.json` already exists, merge the `mcpServers` section (preserving any existing servers).
+
+**Note**: The `EXA_API_KEY` is provided by the user's environment, not stored in the file.
+
+## Step 5: Create Root README.md (if missing)
 
 If no README.md exists, create one with:
 - Project name and one-line description
@@ -58,7 +89,7 @@ If no README.md exists, create one with:
 
 **Keep it under 150 lines.** Deep details go in package READMEs.
 
-## Step 5: Create Package READMEs
+## Step 6: Create Package READMEs
 
 For each significant package/directory identified in Step 2:
 
@@ -70,20 +101,23 @@ Create a README.md with:
 
 **Each README should be under 150 lines.**
 
-## Step 6: Verify Installation
+## Step 7: Verify Installation
 
 Run a quick check:
 ```bash
 cat {project_path}/CLAUDE.md | head -5
+cat {project_path}/.mcp.json
 ```
 
 Confirm:
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
+- [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
 </process>
 
 <success_criteria>
 Installation is complete when:
 - [ ] CLAUDE.md installed at project root (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
+- [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
 - [ ] Root README.md exists with project overview
 - [ ] At least one package README.md created (if packages exist)
 - [ ] Agent can navigate from CLAUDE.md → README.md → package READMEs
