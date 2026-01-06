@@ -83,7 +83,20 @@ Detect languages by file extension:
 
 ## Installation Requirements
 
-LSP plugins only configure the connection — **you must install the language server binary separately**:
+LSP plugins only configure the connection — **you must install the language server binary separately**.
+
+### Verify Installation
+
+```bash
+# Check if language servers are installed
+which typescript-language-server  # TypeScript
+which pyright                      # Python
+which rust-analyzer                # Rust
+which gopls                        # Go
+which elixir-ls                    # Elixir
+```
+
+### Install Missing Servers
 
 ```bash
 # TypeScript
@@ -98,6 +111,9 @@ pip install pyright
 
 # Go
 go install golang.org/x/tools/gopls@latest
+
+# Elixir
+# Build from https://github.com/elixir-lsp/elixir-ls
 ```
 
 ## Notes

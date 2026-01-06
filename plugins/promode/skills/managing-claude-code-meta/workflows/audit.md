@@ -111,10 +111,22 @@ cat {project_path}/.lsp.json 2>/dev/null || echo "No custom LSP config"
 | Go | Yes/No | gopls in .lsp.json | Configured/Missing |
 | Elixir | Yes/No | elixir-ls in .lsp.json | Configured/Missing |
 
+**Step 4c: Verify language server binaries are installed**
+
+For each configured LSP, check that the binary exists:
+
+```bash
+which typescript-language-server 2>/dev/null || echo "MISSING: typescript-language-server"
+which pyright 2>/dev/null || echo "MISSING: pyright"
+which rust-analyzer 2>/dev/null || echo "MISSING: rust-analyzer"
+which gopls 2>/dev/null || echo "MISSING: gopls"
+```
+
 | Result | Status | Action |
 |--------|--------|--------|
-| All detected languages have LSP | PASS | LSP configuration complete |
-| Missing LSP for some languages | WARN | Add LSP config for uncovered languages |
+| All detected languages have LSP + binaries | PASS | LSP configuration complete |
+| LSP configured but binary missing | WARN | Install missing language server binary |
+| Missing LSP config for some languages | WARN | Add LSP config for uncovered languages |
 | No LSP configured at all | FAIL | Configure LSP servers for code intelligence |
 
 **Note**: LSP is a warning (WARN) not a hard failure — projects can function without it, but code intelligence significantly improves agent effectiveness.

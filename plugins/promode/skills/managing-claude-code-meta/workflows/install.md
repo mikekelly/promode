@@ -125,7 +125,19 @@ For Go, Elixir, or other languages, create or update `.lsp.json`:
 }
 ```
 
-**Note**: LSP plugins require the language server binary to be installed separately (gopls, pyright, etc.).
+**Step 5d: Verify language server binaries are installed**
+
+Check that the required binaries are available:
+
+```bash
+# For each detected language, verify the binary exists
+which typescript-language-server 2>/dev/null || echo "MISSING: typescript-language-server (npm install -g typescript-language-server typescript)"
+which pyright 2>/dev/null || echo "MISSING: pyright (pip install pyright)"
+which rust-analyzer 2>/dev/null || echo "MISSING: rust-analyzer (see https://rust-analyzer.github.io)"
+which gopls 2>/dev/null || echo "MISSING: gopls (go install golang.org/x/tools/gopls@latest)"
+```
+
+If any required binaries are missing, inform the user they need to install them for LSP to work.
 
 ## Step 6: Create Root README.md (if missing)
 
