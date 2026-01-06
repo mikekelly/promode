@@ -4,6 +4,7 @@ Read these before proceeding:
 2. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 3. references/progressive-disclosure.md — Principles for content distribution
 4. references/mcp-servers.md — Required MCP server configuration
+5. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
 <never_do>
@@ -11,7 +12,7 @@ Read these before proceeding:
 - NEVER leave content orphaned — every section must be categorised as KEEP, MOVE, or DELETE
 - NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when replacing the old file
 - NEVER create circular references between README files
-- NEVER skip the navigation test (Step 7)
+- NEVER skip the navigation test (Step 8)
 </never_do>
 
 <escalation>
@@ -118,7 +119,54 @@ If `.mcp.json` already exists, merge the `mcpServers` section (preserving any ex
 
 **Note**: The `EXA_API_KEY` is provided by the user's environment, not stored in the file.
 
-## Step 6: Verify Migration
+## Step 6: Install LSP Servers
+
+Configure LSP servers for languages detected in the project (see `references/lsp-servers.md`).
+
+**Step 6a: Detect languages**
+
+```bash
+# Check for common language files
+find {project_path} -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | head -3
+find {project_path} -type f -name "*.py" | head -3
+find {project_path} -type f -name "*.go" | head -3
+find {project_path} -type f -name "*.rs" | head -3
+find {project_path} -type f \( -name "*.ex" -o -name "*.exs" \) | head -3
+```
+
+**Step 6b: Configure official LSP plugins**
+
+For TypeScript, Python, or Rust, add to `.claude/settings.local.json`:
+
+```json
+{
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "rust-lsp@claude-plugins-official": true
+  }
+}
+```
+
+Only include plugins for languages actually used in the project. Merge with existing settings if the file exists.
+
+**Step 6c: Configure custom LSP servers**
+
+For Go, Elixir, or other languages, create or update `.lsp.json`:
+
+```json
+{
+  "go": {
+    "command": "gopls",
+    "args": ["serve"],
+    "extensionToLanguage": {".go": "go"}
+  }
+}
+```
+
+**Note**: LSP plugins require the language server binary to be installed separately (gopls, pyright, etc.).
+
+## Step 7: Verify Migration
 
 Check the result:
 ```bash
@@ -129,10 +177,11 @@ find {project_path} -name "README.md" | wc -l
 Confirm:
 - [ ] New CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
 - [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
+- [ ] LSP configured for detected languages (plugins in settings.local.json and/or .lsp.json)
 - [ ] All moved content is accessible via README.md chain
 - [ ] No orphaned content (everything moved or deliberately deleted)
 
-## Step 7: Test Agent Navigation
+## Step 8: Test Agent Navigation
 
 Simulate an agent's path:
 1. Read CLAUDE.md — Get agent behaviour instructions
@@ -197,6 +246,7 @@ Migration is complete when:
 - [ ] Old CLAUDE.md content fully categorised (keep/move/delete)
 - [ ] New CLAUDE.md installed (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
 - [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
+- [ ] LSP servers configured for detected languages
 - [ ] Moved content placed in appropriate README.md files
 - [ ] Content navigation tested (CLAUDE.md → README.md → package READMEs)
 </success_criteria>

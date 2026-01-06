@@ -3,11 +3,12 @@ Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md (project should match exactly)
 2. references/progressive-disclosure.md — Principles being audited against
 3. references/mcp-servers.md — Required MCP server configuration
+4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
 <never_do>
 - NEVER report PASS if CLAUDE.md doesn't match standard/MAIN_AGENT_CLAUDE.md exactly
-- NEVER skip navigation chain testing (Step 5)
+- NEVER skip navigation chain testing (Step 6)
 - NEVER auto-fix issues — audit reports findings, does not modify files
 - NEVER ignore missing README.md files in significant packages
 </never_do>
@@ -73,7 +74,52 @@ cat {project_path}/.mcp.json 2>/dev/null || echo "MISSING"
 
 **Note**: The `EXA_API_KEY` environment variable is user-provided and should NOT be in the file — only the `${EXA_API_KEY}` reference.
 
-## Step 4: Audit README Distribution
+## Step 4: Audit LSP Servers
+
+Check that LSP servers are configured for languages used in the project.
+
+**Step 4a: Detect languages used**
+
+```bash
+# Find language files in the project
+find {project_path} -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | head -5
+find {project_path} -type f -name "*.py" | head -5
+find {project_path} -type f -name "*.go" | head -5
+find {project_path} -type f -name "*.rs" | head -5
+find {project_path} -type f \( -name "*.ex" -o -name "*.exs" \) | head -5
+```
+
+**Step 4b: Check LSP configuration**
+
+For official plugins, check `.claude/settings.local.json`:
+```bash
+cat {project_path}/.claude/settings.local.json 2>/dev/null | grep -E "typescript-lsp|pyright-lsp|rust-lsp"
+```
+
+For custom LSP servers, check `.lsp.json`:
+```bash
+cat {project_path}/.lsp.json 2>/dev/null || echo "No custom LSP config"
+```
+
+**Required LSP by language** (see `references/lsp-servers.md`):
+
+| Language | Files Found | LSP Required | Status |
+|----------|-------------|--------------|--------|
+| TypeScript/JS | Yes/No | typescript-lsp plugin | Configured/Missing |
+| Python | Yes/No | pyright-lsp plugin | Configured/Missing |
+| Rust | Yes/No | rust-lsp plugin | Configured/Missing |
+| Go | Yes/No | gopls in .lsp.json | Configured/Missing |
+| Elixir | Yes/No | elixir-ls in .lsp.json | Configured/Missing |
+
+| Result | Status | Action |
+|--------|--------|--------|
+| All detected languages have LSP | PASS | LSP configuration complete |
+| Missing LSP for some languages | WARN | Add LSP config for uncovered languages |
+| No LSP configured at all | FAIL | Configure LSP servers for code intelligence |
+
+**Note**: LSP is a warning (WARN) not a hard failure — projects can function without it, but code intelligence significantly improves agent effectiveness.
+
+## Step 5: Audit README Distribution
 
 For each significant package/directory:
 
@@ -92,7 +138,7 @@ ls {package_path}/README.md 2>/dev/null || echo "MISSING"
 - **Good**: Under 150 lines, covers purpose + key files + patterns
 - **Bloated**: Over 150 lines, should be split or content moved to tests
 
-## Step 5: Check Navigation Chain
+## Step 6: Check Navigation Chain
 
 Test the agent navigation path:
 
@@ -108,7 +154,7 @@ Test the agent navigation path:
    - Do READMEs reference actual files?
    - Are key entry points documented?
 
-## Step 6: Generate Audit Report
+## Step 7: Generate Audit Report
 
 Create a summary:
 
@@ -118,6 +164,7 @@ Create a summary:
 ## Summary
 - **CLAUDE.md**: {PASS/FAIL} (exact match with standard)
 - **MCP Servers**: {PASS/FAIL} ({count}/3 servers configured)
+- **LSP Servers**: {PASS/WARN/FAIL} ({count}/{total} languages covered)
 - **README coverage**: {count}/{total} packages have READMEs
 - **Navigation**: {COMPLETE/INCOMPLETE}
 
@@ -137,7 +184,7 @@ Create a summary:
 2. ...
 ```
 
-## Step 7: Provide Recommendations
+## Step 8: Provide Recommendations
 
 Based on findings, recommend:
 
@@ -146,6 +193,10 @@ Based on findings, recommend:
 
 **If MCP servers missing:**
 → Add missing servers to `.mcp.json`. See `references/mcp-servers.md` for configuration.
+
+**If LSP servers missing for detected languages:**
+→ For TypeScript/Python/Rust: Enable official plugins in `.claude/settings.local.json`
+→ For Go/Elixir/others: Add custom config to `.lsp.json`. See `references/lsp-servers.md`.
 
 **If READMEs missing:**
 → List specific packages needing documentation
@@ -162,6 +213,13 @@ Based on findings, recommend:
 - [ ] context7 server configured
 - [ ] exa server configured
 - [ ] grep_app server configured
+
+**LSP Servers (for detected languages):**
+- [ ] TypeScript/JS → typescript-lsp plugin enabled
+- [ ] Python → pyright-lsp plugin enabled
+- [ ] Rust → rust-lsp plugin enabled
+- [ ] Go → gopls configured in .lsp.json
+- [ ] Other languages → appropriate LSP in .lsp.json
 
 **README Distribution:**
 - [ ] Root README.md exists
@@ -181,6 +239,7 @@ Audit is complete when:
 - [ ] All metrics gathered
 - [ ] CLAUDE.md analysed against checklist
 - [ ] MCP servers checked in .mcp.json
+- [ ] LSP servers checked for detected languages
 - [ ] README distribution assessed
 - [ ] Navigation chain tested
 - [ ] Audit report generated
