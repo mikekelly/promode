@@ -35,6 +35,33 @@ rm -rf ~/.cc-mirror/mclaude/config/skills/orchestration
 rm -rf ~/.cc-mirror/mclaude/config/skills/task-manage
 ```
 
+---
+
+## Installation
+
+Start your patched install of Claude Code with team mode enabled:
+
+```bash
+mclaude
+```
+
+Run two commands to get the plugin setup:
+
+```
+/plugin marketplace add mikekelly/team-mode-promode
+```
+
+```
+/plugin install promode
+```
+
+Then restart Claude Code.
+
+After the restart, prompt Claude to install promode (update your CLAUDE.md, etc):
+
+```
+Update the claude code meta to install promode
+```
 
 ---
 
@@ -67,20 +94,6 @@ Tasks can run in parallel when independent, improving throughput on larger featu
 - **exa** — Web search (requires `EXA_API_KEY`)
 - **grep_app** — Code search via [grep.app](https://grep.app)
 
----
-
-## Installation
-
-```
-/plugin marketplace add mikekelly/team-mode-promode
-/plugin install promode
-```
-
-Then restart Claude Code and tell Claude:
-
-```
-Update the claude code meta to install promode
-```
 
 ---
 
