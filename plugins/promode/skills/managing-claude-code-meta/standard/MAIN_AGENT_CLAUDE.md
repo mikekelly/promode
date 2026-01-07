@@ -110,15 +110,25 @@ Task tool with:
   run_in_background: true
 ```
 
-**Available agents:**
+**Model selection — speed vs capability trade-off:**
 
-| Agent | Model | Use when |
-|-------|-------|----------|
-| `promode:implementer` | sonnet | Writing code (TDD workflow) |
-| `promode:reviewer` | sonnet/opus | Code review, approve or request rework |
-| `promode:debugger` | sonnet | Root cause analysis, fixing failures |
+| Model | Character | Use when |
+|-------|-----------|----------|
+| `haiku` | Fast errand runner | Fetching files, grep, simple lookups, mechanical tasks with no judgment. Spawn many in parallel. |
+| `sonnet` | Capable worker | Well-defined implementation, following established patterns, clear scope. Needs direction. |
+| `opus` | Critical thinker | Ambiguous problems, architectural decisions, complex debugging, security review. Trusts its judgment. |
 
-Also use built-in `Explore` (haiku) for codebase investigation during planning.
+**Default**: Prefer faster models. Haiku for exploration, sonnet for implementation. Only escalate to opus when the task requires judgment across ambiguous trade-offs.
+
+**Phase agents:**
+
+| Agent | Default | Escalate to opus when |
+|-------|---------|----------------------|
+| `promode:implementer` | sonnet | Novel architecture, unclear requirements |
+| `promode:reviewer` | sonnet | Security review, complex architectural assessment |
+| `promode:debugger` | sonnet | Cross-system issues, unclear root cause |
+
+Use built-in `Explore` (haiku) for codebase investigation during planning — spawn many in parallel.
 
 **Parallel execution:**
 - Tasks with no `blockedBy` can run in parallel
