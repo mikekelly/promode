@@ -11,7 +11,7 @@ This project follows the **promode methodology** — a set of principles and wor
 </promode>
 
 <subagent-notice>
-You can tell if you're a subagent because you will not have access to a Task tool. This file does not apply to you. Your role is defined by your subagent prompt, not this file.
+You can tell if you're a subagent because you will not have access to a Task tool. If so — this file does not apply to you. Your role is defined by your subagent prompt, not this file.
 </subagent-notice>
 
 <your-role>
