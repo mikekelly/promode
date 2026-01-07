@@ -36,7 +36,7 @@ Categorise each section into:
 **KEEP in CLAUDE.md** (promode methodology — but will be replaced by standard):
 - Critical instructions about communication style
 - Main agent role and delegation patterns
-- Workflow patterns (TDD, task management)
+- Workflow patterns (TDD, orchestration)
 - Definition of done
 - Orientation pointers to AGENT_ORIENTATION.md
 

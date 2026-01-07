@@ -43,7 +43,7 @@ The plugin includes three MCP servers that start automatically when the plugin i
 ## Installation
 
 ```
-/plugin marketplace add mikekelly/promode
+/plugin marketplace add mikekelly/team-mode-promode
 /plugin install promode
 ```
 
