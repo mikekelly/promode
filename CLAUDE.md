@@ -5,29 +5,28 @@
 Promode is a Claude Code plugin that enhances how Claude builds software. It provides:
 
 - **Skills** — Domain knowledge that loads just-in-time (managing CLAUDE.md files, installing skills)
-- **Agents** — Pre-configured subagents that understand promode conventions
+- **Agents** — Phase-specific subagents for planning, research, implementation, review, and debugging
 
 The core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, and agents should delegate aggressively to conserve it.
 
-### The promode-subagent Pattern
+### Phase Agents
 
 Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This creates a problem: subagents spawned via the Task tool don't know project conventions, TDD practices, or behavioural-authority rules.
 
-**Solution**: The `promode-subagent` (`plugins/promode/agents/promode-subagent.md`) mirrors the standard CLAUDE.md content that would normally be in a project's CLAUDE.md. When the main agent delegates work, it should prefer `promode-subagent` over the built-in `general-purpose` agent.
+**Solution**: Phase-specific agents in `plugins/promode/agents/` each have promode methodology baked in:
 
-**Why this works**: The promode-subagent's system prompt contains the same principles, workflows, and conventions that would be in a properly configured CLAUDE.md. The subagent "boots up" with this knowledge already loaded.
+| Agent | Purpose | Model |
+|-------|---------|-------|
+| `promode:implementer` | TDD workflow, write code | sonnet |
+| `promode:reviewer` | Code review, approve or request rework | sonnet/opus |
+| `promode:debugger` | Root cause analysis, fix failures | sonnet |
 
-**Usage**: When delegating, the main agent can say:
-```
-Use the promode-subagent to [task description]
-```
+**Note**: Brainstorming, planning, and orchestration are done by the main agent. Use built-in `Explore` agents for codebase research during planning.
 
-The subagent will already understand TDD, progressive disclosure, behavioural-authority, and all promode conventions.
+### Keeping Agents in Sync
 
-### Keeping Principles in Sync
+All phase agents share the same **principles and conventions** but have **phase-specific workflows**:
+- `plugins/promode/skills/managing-claude-code-meta/standard/MAIN_AGENT_CLAUDE.md` — main agent (orchestrates, converses with user)
+- `plugins/promode/agents/*.md` — phase agents (execute specific tasks, report back)
 
-These two files share the same **principles, workflows, and conventions** but have **role-specific differences**:
-- `plugins/promode/skills/managing-claude-code-meta/standard/MAIN_AGENT_CLAUDE.md` — main agent (delegates work, converses with user)
-- `plugins/promode/agents/promode-subagent.md` — sub-agent (executes tasks, reports back)
-
-When updating shared content (principles, TDD rules, behavioural-authority, debugging strategies), update both files. Role-specific sections (e.g. `<your-role>`, escalation targets) are intentionally different and should stay that way.
+When updating shared content (principles, TDD rules, behavioural-authority), update the main agent file and relevant phase agents.

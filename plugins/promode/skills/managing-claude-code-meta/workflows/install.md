@@ -1,7 +1,7 @@
 <required_reading>
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
-2. references/progressive-disclosure.md — Context on README distribution
+2. references/progressive-disclosure.md — Context on AGENT_ORIENTATION.md distribution
 3. references/mcp-servers.md — Required MCP server configuration
 4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
@@ -9,15 +9,15 @@ Read these before proceeding:
 <never_do>
 - NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when copying to target project
 - NEVER proceed if CLAUDE.md already exists (route to migrate workflow instead)
-- NEVER create README.md files over 150 lines
+- NEVER include secrets or credentials in AGENT_ORIENTATION.md files
 - NEVER skip the verification step (Step 8)
 </never_do>
 
 <escalation>
 Stop and ask the user when:
 - Project has unconventional structure (no src/, packages/, lib/, or apps/)
-- Existing README.md has substantial content that might conflict
-- You're unsure which directories warrant their own README.md
+- Existing AGENT_ORIENTATION.md has substantial content that might conflict
+- You're unsure which directories warrant their own AGENT_ORIENTATION.md
 </escalation>
 
 <process>
@@ -31,24 +31,24 @@ ls -la {project_path}
 Confirm:
 - [ ] Project directory exists
 - [ ] No existing CLAUDE.md (if exists, suggest migrate workflow instead)
-- [ ] README.md exists (or will need to create one)
+- [ ] AGENT_ORIENTATION.md exists or will need to be created
 
 ## Step 2: Assess Project Structure
 
-Identify key directories that will need README.md files:
+Identify key directories that will need AGENT_ORIENTATION.md files:
 ```bash
 find {project_path} -type d -name "src" -o -name "packages" -o -name "lib" -o -name "apps" | head -20
 ```
 
-Note packages/modules that have distinct domains and will benefit from their own README.md.
+Note packages/modules that have distinct domains and will benefit from their own AGENT_ORIENTATION.md.
 
 ## Step 3: Install CLAUDE.md
 
 Copy `standard/MAIN_AGENT_CLAUDE.md` to the project root exactly as-is. Do not modify it.
 
-This installs the promode methodology for the main agent. The standard CLAUDE.md is designed to work universally — it defines agent behaviour, not project knowledge. Project-specific information belongs in README.md files.
+This installs the promode methodology for the main agent. The standard CLAUDE.md is designed to work universally — it defines agent behaviour, not project knowledge. Project-specific information belongs in AGENT_ORIENTATION.md files.
 
-**Note**: Sub-agents don't inherit CLAUDE.md. Main agents should delegate to `promode-subagent`, which already understands the methodology.
+**Note**: Sub-agents don't inherit CLAUDE.md. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to phase-specific agents (implementer, reviewer, debugger).
 
 ## Step 4: Install MCP Servers
 
@@ -139,27 +139,62 @@ which gopls 2>/dev/null || echo "MISSING: gopls (go install golang.org/x/tools/g
 
 If any required binaries are missing, inform the user they need to install them for LSP to work.
 
-## Step 6: Create Root README.md (if missing)
+## Step 6: Create Root AGENT_ORIENTATION.md (if missing)
 
-If no README.md exists, create one with:
-- Project name and one-line description
-- Quick start (how to run locally)
-- Project structure overview with links to package READMEs
-- Links to key documentation
+If no AGENT_ORIENTATION.md exists at the project root, create one with:
+- Project structure overview (key directories)
+- How to run tests and build
+- Common gotchas across the codebase
+- Links to package AGENT_ORIENTATION.md files
 
-**Keep it under 150 lines.** Deep details go in package READMEs.
+Keep it compact — every line should save more tokens than it costs.
 
-## Step 7: Create Package READMEs
+Example:
+```markdown
+# Agent Orientation
+
+## Structure
+- `packages/api/` — Backend API
+- `packages/web/` — Frontend app
+- `docs/` — Architecture decisions
+
+## Commands
+- `npm test` — Run tests
+- `npm run dev` — Start dev server
+
+## Gotchas
+- {any known issues}
+
+See package AGENT_ORIENTATION.md files for domain-specific guidance.
+```
+
+## Step 7: Create Package AGENT_ORIENTATION.md Files
 
 For each significant package/directory identified in Step 2:
 
-Create a README.md with:
-- What this package does (1-2 sentences)
+Create an AGENT_ORIENTATION.md with:
+- What this package does (1 sentence)
 - Key files and their purposes
 - Domain-specific patterns or conventions
-- Links to related packages
+- Gotchas
 
-**Each README should be under 150 lines.**
+Keep it compact. Example:
+```markdown
+# {Package} Agent Orientation
+
+## Purpose
+{One sentence description}
+
+## Key Files
+- `src/index.ts` — Entry point
+- `src/routes/` — API routes
+
+## Patterns
+- {pattern}: {when to use}
+
+## Gotchas
+- {issue}: {workaround}
+```
 
 ## Step 8: Verify Installation
 
@@ -169,12 +204,14 @@ cat {project_path}/CLAUDE.md | head -5
 cat {project_path}/.mcp.json
 cat {project_path}/.claude/settings.local.json 2>/dev/null | grep -E "lsp"
 cat {project_path}/.lsp.json 2>/dev/null
+cat {project_path}/AGENT_ORIENTATION.md 2>/dev/null | head -10
 ```
 
 Confirm:
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
 - [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
 - [ ] LSP configured for detected languages (plugins in settings.local.json and/or .lsp.json)
+- [ ] Root AGENT_ORIENTATION.md exists with project overview
 </process>
 
 <success_criteria>
@@ -182,7 +219,7 @@ Installation is complete when:
 - [ ] CLAUDE.md installed at project root (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
 - [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
 - [ ] LSP servers configured for detected languages
-- [ ] Root README.md exists with project overview
-- [ ] At least one package README.md created (if packages exist)
-- [ ] Agent can navigate from CLAUDE.md → README.md → package READMEs
+- [ ] Root AGENT_ORIENTATION.md exists with compact project guidance
+- [ ] Package AGENT_ORIENTATION.md files created for significant packages
+- [ ] Agent can navigate from CLAUDE.md → AGENT_ORIENTATION.md → package AGENT_ORIENTATION.md
 </success_criteria>

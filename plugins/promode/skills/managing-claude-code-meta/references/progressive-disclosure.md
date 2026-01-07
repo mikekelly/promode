@@ -1,5 +1,5 @@
 <overview>
-Progressive disclosure keeps agent context lean by loading information just-in-time. CLAUDE.md provides essential behaviour instructions; README.md files provide domain knowledge when needed.
+Progressive disclosure keeps agent context lean by loading information just-in-time. CLAUDE.md provides essential behaviour instructions; AGENT_ORIENTATION.md files provide compact agent guidance when needed.
 </overview>
 
 <why_progressive_disclosure>
@@ -10,36 +10,62 @@ Every agent conversation loads CLAUDE.md into context. If CLAUDE.md contains 500
 **The solution**: Separate agent behaviour from project knowledge.
 
 - **CLAUDE.md** (~100 lines): HOW the agent should work — loads every time, kept minimal
-- **README.md files** (distributed): WHAT the project contains — loaded only when working in that area
+- **AGENT_ORIENTATION.md files** (distributed): WHAT the agent needs to know — loaded only when working in that area
 
 **Token economics**:
 - Bloated CLAUDE.md: ~2000 tokens every conversation
-- Lean CLAUDE.md + just-in-time READMEs: ~400 tokens + only what's needed
+- Lean CLAUDE.md + just-in-time orientation files: ~400 tokens + only what's needed
 </why_progressive_disclosure>
+
+<agent_orientation_vs_readme>
+**AGENT_ORIENTATION.md** — compact, token-efficient guidance for agents:
+- Tools and how to use them
+- Patterns and conventions
+- Gotchas and workarounds
+- Entry points and key files
+- Anything an agent would otherwise waste time rediscovering
+
+**README.md** — documentation for humans:
+- Project overview and purpose
+- Installation and setup instructions
+- Usage examples
+- API documentation
+- Contributing guidelines
+- Links to external resources
+
+**Key distinction**: AGENT_ORIENTATION.md is optimised for agent context windows. Every line should save more tokens than it costs. README.md is optimised for human readability and can be as verbose as needed.
+</agent_orientation_vs_readme>
 
 <what_belongs_where>
 **CLAUDE.md (agent behaviour)**:
 - Communication style and tone
 - How to interact with user vs sub-agents
-- Workflow patterns (planning, implementing, reviewing)
-- Task management approach (TODO.md usage)
+- Workflow patterns (brainstorming, planning, orchestrating)
+- Task management approach
 - Test-driven development philosophy
 - Definition of done
-- Pointers to README.md for orientation
+- Pointers to AGENT_ORIENTATION.md for project-specific guidance
 
-**Root README.md (project overview)**:
-- Project name and purpose (1-2 sentences)
-- Quick start (how to run locally)
-- Tech stack summary
-- Project structure with links to package READMEs
-- Links to documentation
+**Root AGENT_ORIENTATION.md (agent knowledge)**:
+- Project structure overview (key directories)
+- How to run tests and build
+- Tech stack summary (terse)
+- Links to package AGENT_ORIENTATION.md files
+- Common gotchas across the codebase
 
-**Package README.md files (domain knowledge)**:
-- What this package does
+**Package AGENT_ORIENTATION.md files (domain knowledge)**:
+- What this package does (1 sentence)
 - Key files and entry points
 - Domain-specific patterns and conventions
-- Related packages and dependencies
-- API documentation for that module
+- API gotchas
+- Related packages
+
+**README.md (human documentation)**:
+- Detailed project description
+- Installation steps for humans
+- Usage examples
+- API reference
+- Contributing guidelines
 </what_belongs_where>
 
 <content_migration_examples>
@@ -49,13 +75,11 @@ Every agent conversation loads CLAUDE.md into context. If CLAUDE.md contains 500
 The frontend uses React 18 with TypeScript. State management is
 handled by Zustand. Styling uses Tailwind CSS with custom theme.
 
-# TO README.md
-## Tech Stack
-- React 18, TypeScript
-- Zustand for state
-- Tailwind CSS
+# TO AGENT_ORIENTATION.md
+## Stack
+React 18 + TypeScript, Zustand (state), Tailwind CSS
 
-See `packages/web/README.md` for frontend details.
+See `packages/web/AGENT_ORIENTATION.md` for frontend patterns.
 ```
 
 **API endpoints**:
@@ -67,13 +91,11 @@ Available endpoints:
 - GET /users/:id
 ...
 
-# TO packages/api/README.md
+# TO packages/api/AGENT_ORIENTATION.md
 ## Routes
-See `src/routes/` for endpoint definitions.
-
-Key modules:
-- `auth.ts` — Authentication (login, register, logout)
-- `users.ts` — User management
+Routes in `src/routes/`:
+- auth.ts — login, register, logout
+- users.ts — CRUD operations
 ```
 
 **Environment setup**:
@@ -84,9 +106,8 @@ DATABASE_URL=postgresql://...
 JWT_SECRET=...
 API_KEY=...
 
-# TO README.md
+# TO AGENT_ORIENTATION.md
 ## Environment
-Copy `.env.example` to `.env` and fill in values.
 See `.env.example` for required variables.
 ```
 
@@ -97,53 +118,51 @@ Run tests: npm test
 Run specific test: npm test -- --grep "pattern"
 Watch mode: npm test -- --watch
 
-# TO README.md
-## Development
-```bash
-npm test        # Run test suite
-npm run dev     # Start dev server
-npm run build   # Production build
-```
+# TO AGENT_ORIENTATION.md
+## Commands
+- `npm test` — run test suite
+- `npm run dev` — start dev server
 ```
 </content_migration_examples>
 
-<readme_structure_guidelines>
-**Root README.md** (under 150 lines):
+<orientation_structure_guidelines>
+**Root AGENT_ORIENTATION.md**:
 ```markdown
-# Project Name
+# Agent Orientation
 
-Brief description.
-
-## Quick Start
-How to run locally (3-5 steps max).
-
-## Project Structure
-- `packages/api/` — Backend API ([README](packages/api/README.md))
-- `packages/web/` — Frontend app ([README](packages/web/README.md))
+## Structure
+- `packages/api/` — Backend API
+- `packages/web/` — Frontend app
 - `docs/` — Architecture decisions
 
-## Development
-Key commands for developers.
+## Commands
+- `npm test` — Run tests
+- `npm run dev` — Start dev server
+
+## Gotchas
+- {issue}: {workaround}
+
+See package AGENT_ORIENTATION.md files for domain-specific guidance.
 ```
 
-**Package README.md** (under 150 lines):
+**Package AGENT_ORIENTATION.md**:
 ```markdown
-# Package Name
+# {Package} Agent Orientation
 
-What this package does.
+## Purpose
+{One sentence description}
 
 ## Key Files
 - `src/index.ts` — Entry point
 - `src/routes/` — API routes
-- `src/services/` — Business logic
 
 ## Patterns
-Domain-specific conventions used here.
+- {pattern}: {when and how to use}
 
-## Related
-- [Other Package](../other/README.md)
+## Gotchas
+- {issue}: {workaround}
 ```
-</readme_structure_guidelines>
+</orientation_structure_guidelines>
 
 <anti_patterns>
 **Don't do this**:
@@ -151,29 +170,35 @@ Domain-specific conventions used here.
 ❌ **Single massive CLAUDE.md**
 Everything in one file — wastes context on every conversation.
 
-❌ **No README.md files**
+❌ **No AGENT_ORIENTATION.md files**
 Agent has no way to learn project knowledge without reading source code.
 
 ❌ **Deep nesting**
-CLAUDE.md → README.md → docs/guide.md → docs/details/api.md
+CLAUDE.md → AGENT_ORIENTATION.md → docs/guide.md → docs/details/api.md
 Too many hops; agent may not follow the chain.
 
 ❌ **Duplicate content**
-Same information in CLAUDE.md and README.md — drifts over time.
+Same information in CLAUDE.md and AGENT_ORIENTATION.md — drifts over time.
 
-❌ **README.md with code examples for everything**
-READMEs should point to tests and source files, not duplicate code.
+❌ **Verbose AGENT_ORIENTATION.md**
+These files load into agent context. Verbosity defeats the purpose.
+
+❌ **AGENT_ORIENTATION.md with code examples for everything**
+Point to tests and source files, not duplicate code.
 
 **Do this instead**:
 
-✅ **Lean CLAUDE.md + distributed READMEs**
-Agent behaviour in CLAUDE.md, domain knowledge in READMEs.
+✅ **Lean CLAUDE.md + distributed AGENT_ORIENTATION.md**
+Agent behaviour in CLAUDE.md, domain knowledge in AGENT_ORIENTATION.md files.
 
-✅ **One level of README navigation**
-CLAUDE.md → README.md → package READMEs (max 2 hops).
+✅ **One level of navigation**
+CLAUDE.md → AGENT_ORIENTATION.md → package AGENT_ORIENTATION.md (max 2 hops).
+
+✅ **Terse orientation files**
+Every line should save more tokens than it costs.
 
 ✅ **Tests as documentation**
-READMEs describe purpose; tests document behaviour.
+AGENT_ORIENTATION.md describes purpose; tests document behaviour.
 </anti_patterns>
 
 <navigation_chain>
@@ -185,11 +210,11 @@ The ideal agent navigation path:
 2. Load CLAUDE.md (~100 lines)
    Learn: how to behave, workflow patterns, where to find info
    ↓
-3. Read README.md for orientation
-   Learn: project structure, how to navigate
+3. Read AGENT_ORIENTATION.md for project context
+   Learn: structure, commands, gotchas
    ↓
 4. Working in packages/api/?
-   Read packages/api/README.md for domain context
+   Read packages/api/AGENT_ORIENTATION.md for domain context
    ↓
 5. Need to understand specific behaviour?
    Read the tests

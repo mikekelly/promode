@@ -11,17 +11,21 @@ Promode is a Claude Code plugin that implements a **methodology for AI agents to
 
 ## What Promode Provides
 
-### The Promode Subagent
+### Phase Agents
 
 Claude Code subagents don't inherit CLAUDE.md from the main conversation. This is a problem: subagents spawned via the Task tool don't know your project conventions.
 
-**Solution**: The `promode-subagent` has the methodology baked in. When delegating, prefer it over the built-in agent:
+**Solution**: Promode provides phase-specific agents with the methodology baked in:
 
-```
-Use the promode-subagent to [task description]
-```
+| Agent | Purpose |
+|-------|---------|
+| `promode:implementer` | TDD workflow, write code |
+| `promode:reviewer` | Code review, approve or request rework |
+| `promode:debugger` | Root cause analysis, fix failures |
 
-The subagent already knows TDD, behavioural-authority, context conservation, and all promode conventions.
+**Note**: The main agent handles brainstorming, planning, and orchestration directly. Use built-in `Explore` agents for codebase research.
+
+Each agent already knows TDD, behavioural-authority, context conservation, and all promode conventions.
 
 ### Skills
 

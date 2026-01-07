@@ -10,7 +10,7 @@ Read these before proceeding:
 - NEVER report PASS if CLAUDE.md doesn't match standard/MAIN_AGENT_CLAUDE.md exactly
 - NEVER skip navigation chain testing (Step 6)
 - NEVER auto-fix issues — audit reports findings, does not modify files
-- NEVER ignore missing README.md files in significant packages
+- NEVER ignore missing AGENT_ORIENTATION.md files in significant packages
 </never_do>
 
 <escalation>
@@ -25,8 +25,8 @@ Stop and ask the user when:
 
 Collect key metrics:
 ```bash
-# README.md presence
-find {project_path} -name "README.md" -type f | head -20
+# AGENT_ORIENTATION.md presence
+find {project_path} -name "AGENT_ORIENTATION.md" -type f | head -20
 
 # Package/module structure
 find {project_path} -type d -name "src" -o -name "packages" -o -name "lib" -o -name "apps" 2>/dev/null | head -10
@@ -46,9 +46,9 @@ The project's CLAUDE.md should be an exact copy of this skill's `standard/MAIN_A
 | No differences | PASS | CLAUDE.md correctly implements promode methodology |
 | Differences found | FAIL | Replace with exact copy of `standard/MAIN_AGENT_CLAUDE.md` |
 
-If there are differences, note what was added/changed. Any project-specific content should be moved to README.md files.
+If there are differences, note what was added/changed. Any project-specific content should be moved to AGENT_ORIENTATION.md files.
 
-**Note**: Sub-agents don't inherit CLAUDE.md. The promode-subagent (separate from this file) handles sub-agent behaviour.
+**Note**: Sub-agents don't inherit CLAUDE.md. Phase-specific agents (implementer, reviewer, debugger) handle execution; main agents handle brainstorming, planning, and orchestration directly.
 
 ## Step 3: Audit MCP Servers
 
@@ -131,39 +131,40 @@ which gopls 2>/dev/null || echo "MISSING: gopls"
 
 **Note**: LSP is a warning (WARN) not a hard failure — projects can function without it, but code intelligence significantly improves agent effectiveness.
 
-## Step 5: Audit README Distribution
+## Step 5: Audit AGENT_ORIENTATION.md Distribution
 
 For each significant package/directory:
 
 ```bash
-# Check if README exists
-ls {package_path}/README.md 2>/dev/null || echo "MISSING"
+# Check if AGENT_ORIENTATION.md exists
+ls {package_path}/AGENT_ORIENTATION.md 2>/dev/null || echo "MISSING"
 ```
 
-| Package | Has README | Content Quality |
-|---------|------------|-----------------|
-| root | Yes/No | Good/Sparse/Bloated |
-| packages/api | Yes/No | Good/Sparse/Bloated |
-| packages/web | Yes/No | Good/Sparse/Bloated |
+| Package | Has AGENT_ORIENTATION.md | Content Quality |
+|---------|--------------------------|-----------------|
+| root | Yes/No | Good/Sparse/Verbose |
+| packages/api | Yes/No | Good/Sparse/Verbose |
+| packages/web | Yes/No | Good/Sparse/Verbose |
 
-**README quality criteria:**
-- **Good**: Under 150 lines, covers purpose + key files + patterns
-- **Bloated**: Over 150 lines, should be split or content moved to tests
+**AGENT_ORIENTATION.md quality criteria:**
+- **Good**: Compact, covers purpose + key files + patterns + gotchas
+- **Sparse**: Missing key information an agent would need
+- **Verbose**: Too much detail — should be more compact or split into package files
 
 ## Step 6: Check Navigation Chain
 
 Test the agent navigation path:
 
-1. **CLAUDE.md → README.md**
-   - Does CLAUDE.md point to README.md?
+1. **CLAUDE.md → AGENT_ORIENTATION.md**
+   - Does CLAUDE.md point to AGENT_ORIENTATION.md?
    - Is the path correct?
 
-2. **README.md → Package READMEs**
-   - Does root README link to package docs?
+2. **AGENT_ORIENTATION.md → Package AGENT_ORIENTATION.md**
+   - Does root AGENT_ORIENTATION.md link to package docs?
    - Are links valid?
 
-3. **Package READMEs → Code**
-   - Do READMEs reference actual files?
+3. **Package AGENT_ORIENTATION.md → Code**
+   - Do package orientation files reference actual files?
    - Are key entry points documented?
 
 ## Step 7: Generate Audit Report
@@ -177,7 +178,7 @@ Create a summary:
 - **CLAUDE.md**: {PASS/FAIL} (exact match with standard)
 - **MCP Servers**: {PASS/FAIL} ({count}/3 servers configured)
 - **LSP Servers**: {PASS/WARN/FAIL} ({count}/{total} languages covered)
-- **README coverage**: {count}/{total} packages have READMEs
+- **AGENT_ORIENTATION.md coverage**: {count}/{total} packages have orientation files
 - **Navigation**: {COMPLETE/INCOMPLETE}
 
 ## Issues Found
@@ -201,7 +202,7 @@ Create a summary:
 Based on findings, recommend:
 
 **If CLAUDE.md doesn't match standard:**
-→ Replace with exact copy of `standard/MAIN_AGENT_CLAUDE.md`. Move any project-specific content to README.md files.
+→ Replace with exact copy of `standard/MAIN_AGENT_CLAUDE.md`. Move any project-specific content to AGENT_ORIENTATION.md files.
 
 **If MCP servers missing:**
 → Add missing servers to `.mcp.json`. See `references/mcp-servers.md` for configuration.
@@ -210,8 +211,8 @@ Based on findings, recommend:
 → For TypeScript/Python/Rust: Enable official plugins in `.claude/settings.local.json`
 → For Go/Elixir/others: Add custom config to `.lsp.json`. See `references/lsp-servers.md`.
 
-**If READMEs missing:**
-→ List specific packages needing documentation
+**If AGENT_ORIENTATION.md files missing:**
+→ List specific packages needing orientation files
 
 **If navigation broken:**
 → Identify broken links and suggest fixes
@@ -233,16 +234,16 @@ Based on findings, recommend:
 - [ ] Go → gopls configured in .lsp.json
 - [ ] Other languages → appropriate LSP in .lsp.json
 
-**README Distribution:**
-- [ ] Root README.md exists
-- [ ] Root README under 150 lines
-- [ ] Each major package has README.md
-- [ ] Package READMEs cover purpose + key files
-- [ ] No README over 150 lines (should split)
+**AGENT_ORIENTATION.md Distribution:**
+- [ ] Root AGENT_ORIENTATION.md exists
+- [ ] Root AGENT_ORIENTATION.md is compact (not verbose)
+- [ ] Each major package has AGENT_ORIENTATION.md
+- [ ] Package orientation files cover purpose + key files + patterns + gotchas
+- [ ] Orientation files reference tests rather than duplicating code examples
 
 **Navigation:**
-- [ ] CLAUDE.md → README.md link works
-- [ ] README.md → package READMEs linked
+- [ ] CLAUDE.md → AGENT_ORIENTATION.md link works
+- [ ] AGENT_ORIENTATION.md → package orientation files linked
 - [ ] All links valid
 </audit_checklist>
 
@@ -252,7 +253,7 @@ Audit is complete when:
 - [ ] CLAUDE.md analysed against checklist
 - [ ] MCP servers checked in .mcp.json
 - [ ] LSP servers checked for detected languages
-- [ ] README distribution assessed
+- [ ] AGENT_ORIENTATION.md distribution assessed
 - [ ] Navigation chain tested
 - [ ] Audit report generated
 - [ ] Actionable recommendations provided
