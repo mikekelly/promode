@@ -2,12 +2,25 @@
 
 Promode is a Claude Code plugin that implements a **methodology for AI agents to develop software**. It emphasises TDD, context conservation, progressive disclosure, and clear delegation patterns.
 
+## Requirements: Claude Code with Team Mode
+
+This plugin requires **Claude Code with team mode enabled** — a hidden feature that provides Task tools for multi-agent orchestration.
+
+Team mode is not yet publicly available in standard Claude Code. To use this plugin, install a parallel Claude Code instance with team mode using [cc-mirror](https://github.com/numman-ali/cc-mirror):
+
+```bash
+# Create a Mirror Claude variant with team mode
+npx cc-mirror create --provider mirror --name mclaude
+```
+
+This creates a separate `mclaude` command that runs alongside your standard `claude` installation. See the [cc-mirror documentation](https://github.com/numman-ali/cc-mirror/blob/main/docs/features/mirror-claude.md) for details.
+
 ## Core Philosophy
 
 - **TDD is non-negotiable**: Write failing tests first, then implementation. No exceptions.
 - **Context is precious**: Main agents delegate aggressively to subagents to conserve main agent context for high level planning and user conversation. Subagents enjoy a context focused on a specific task.
 - **Tests are the documentation**: Executable tests document system behaviour, not markdown files.
-- **Progressive disclosure**: CLAUDE.md defines agent behaviour; README.md files hold project knowledge. READMEs are distributed across relevant subcomponents and discovered by reference — agents load only the sections they need, further conserving context.
+- **Progressive disclosure**: CLAUDE.md defines agent behaviour; AGENT_ORIENTATION.md files hold compact agent guidance. Orientation files are distributed across packages and loaded just-in-time — agents load only what they need, further conserving context.
 
 ## What Promode Provides
 
@@ -64,31 +77,5 @@ Promode's skill management lets you just ask Claude:
 - "Update my installed skills"
 - "Remove the pdf skill"
 - "List my installed skills"
-
-### Why Skills Matter
-
-Skills are an important way to enhance Claude Code. Many MCP servers would likely be better off packaged as skills—they're simpler to create, don't require running a separate process, and integrate more naturally with Claude's workflow.
-
-### Skills vs MCPs
-
-MCPs provide deterministic tools that the model calls—useful, but limited. Skills offer something more powerful: the ability to blend the determinism of scripts with the advanced reasoning of the model. A skill can guide Claude through a complex workflow, injecting structured steps where needed while letting the model apply judgment at decision points.
-
-This hybrid approach makes more efficient use of both context and model capabilities. Instead of burning tokens on rigid back-and-forth tool calls, skills let you encode expertise directly into prompts that the model can interpret and adapt.
-
-One reason more capabilities aren't packaged as skills is that MCP has better tooling for packaging and distribution. Skills Management is an attempt to fix this gap.
-
-Skills Management promotes a simple packaging model: **a skill is a git repo**. This allows for:
-- Clean forking of skills to customize them
-- Issue tracking for bugs and feature requests
-- Pull requests for community contributions
-- Version history and release management
-
-Skills Management also supports installing individual skills from subdirectories within larger repos or plugins—the current common approach to sharing skills. This gives you the best of both worlds: use standalone repos for your own skills, while still accessing skills packaged in collections.
-
-### Supported Sources
-
-- GitHub repositories (`user/repo`)
-- GitHub subdirectory URLs (`github.com/user/repo/tree/branch/path`)
-- `.skill` zip files
 
 Skills Management handles both user level (`~/.claude/skills/`) and project level (`.claude/skills/`).
