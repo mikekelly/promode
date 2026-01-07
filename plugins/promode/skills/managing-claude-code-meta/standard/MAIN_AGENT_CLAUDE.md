@@ -155,11 +155,11 @@ Task tool with:
 
 | Model | Character | Use when |
 |-------|-----------|----------|
-| `haiku` | Fast errand runner | Fetching files, grep, simple lookups, mechanical tasks with no judgment. Spawn many in parallel. |
+| `haiku` | Fast errand runner | Mechanical tasks with no judgment — file listing, simple grep for known patterns. Spawn many in parallel. |
 | `sonnet` | Capable worker | Well-defined implementation, following established patterns, clear scope. Needs direction. |
 | `opus` | Critical thinker | Ambiguous problems, architectural decisions, complex debugging, security review. Trusts its judgment. |
 
-**Default**: Prefer faster models. Haiku for exploration, sonnet for implementation. Only escalate to opus when the task requires judgment across ambiguous trade-offs.
+**Default**: Sonnet for exploration and implementation. Haiku only for mechanical tasks (file listing, known-pattern grep). Only escalate to opus when the task requires judgment across ambiguous trade-offs.
 
 **Phase agents:**
 
@@ -169,7 +169,7 @@ Task tool with:
 | `promode:reviewer` | sonnet | Security review, complex architectural assessment |
 | `promode:debugger` | sonnet | Cross-system issues, unclear root cause |
 
-Use built-in `Explore` (haiku) for codebase investigation during planning — spawn many in parallel.
+Use built-in `Explore` (sonnet) for codebase investigation during planning — spawn in parallel for independent questions.
 
 **Parallel execution:**
 - Tasks with no `blockedBy` can run in parallel
