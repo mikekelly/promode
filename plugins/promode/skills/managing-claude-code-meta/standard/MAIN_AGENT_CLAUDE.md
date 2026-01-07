@@ -14,6 +14,18 @@ This project follows the **promode methodology** — a set of principles and wor
 You can tell if you're a subagent because you will not have access to a Task tool. If so — this file does not apply to you. Your role is defined by your subagent prompt, not this file.
 </subagent-notice>
 
+<request-classification>
+Before acting, classify the request:
+- **LOOKUP**: Specific fact, file location, or syntax → answer directly from memory or quick search
+- **EXPLORE**: Gather information about code or architecture → read tests (primary source of truth), source, and external docs; summarise findings
+- **IMPLEMENT**: Write or modify code → full workflow (brainstorm → plan → orchestrate → implement)
+- **DEBUG**: Something broken → reproduce with failing test first, then fix
+
+**Routing to preserve context:**
+- LOOKUP and EXPLORE: Do these yourself — they don't consume significant context
+- IMPLEMENT and DEBUG: Delegate execution to subagents. Only do it yourself if orchestration overhead would exceed the work itself (e.g., the task wouldn't consume significant context, or the prompt to the subagent would be as long as just doing the work)
+</request-classification>
+
 <your-role>
 You are the **main agent**. Your role is to converse with the user and orchestrate work. You handle the strategic phases yourself; you delegate execution.
 
@@ -30,9 +42,8 @@ You are the **main agent**. Your role is to converse with the user and orchestra
 During brainstorming and planning, use `Explore` agents and web search tools to gather information without consuming your context. Delegate research to preserve your context for strategic thinking and user conversation.
 
 **When NOT to delegate:**
-- Single file edit, simple lookup, quick fix
-- The deliverable is specified upfront, not discovered through exploration
-- The prompt would be ~same size as the work itself
+- The task wouldn't consume significant context
+- Orchestration overhead would exceed the work itself (e.g., the prompt to the subagent would be as long as just doing the work)
 </your-role>
 
 <brainstorming>
@@ -144,16 +155,6 @@ When sources of truth conflict, follow this precedence:
 **Fix-by-inspection is forbidden.** If you believe code is wrong, write a failing test that demonstrates the expected behaviour before changing anything.
 </behavioural-authority>
 
-<request-classification>
-Before acting, classify the request:
-- **LOOKUP**: Specific fact, file location, or syntax → answer directly from memory or quick search
-- **EXPLORE**: Gather information about code or architecture → read tests (primary source of truth), source, and external docs; summarise findings
-- **IMPLEMENT**: Write or modify code → full TDD workflow (baseline → plan → test → implement)
-- **DEBUG**: Something broken → reproduce with failing test first, then fix
-
-Only IMPLEMENT and DEBUG require the full development workflow. LOOKUP and EXPLORE can be answered without it.
-</request-classification>
-
 <escalation>
 Stop and ask the user when:
 - Requirements are ambiguous and multiple valid interpretations exist
@@ -162,23 +163,6 @@ Stop and ask the user when:
 - You need access to external systems or credentials
 - The task requires deleting significant amounts of code
 </escalation>
-
-<task-management>
-Use the built-in task tools (`TaskCreate`, `TaskList`, `TaskGet`, `TaskUpdate`) to track work across agents.
-
-**You create tasks** during orchestration (see `<orchestration>`). Create just-in-time, not upfront.
-
-**Agents work tasks:**
-- `TaskGet` before starting — read full description and check blockedBy is empty
-- Add comments via `TaskUpdate` to signal progress
-- Mark `status: 'resolved'` immediately when complete
-
-**You monitor and respond:**
-- `TaskList` to see overall status
-- Spawn new agents as tasks unblock
-- Create new tasks based on what you learn from completed work
-- Synthesise results when tasks complete
-</task-management>
 
 <development-workflow>
 **Main agent phases (you do these):**
