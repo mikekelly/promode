@@ -21,13 +21,20 @@ The methodology is designed for efficiency: conservative use of context, intelli
 
 Promode requires **Team Mode**—a hidden Claude Code feature that enables multi-agent orchestration.
 
-To get Team Mode, install a parallel Claude Code instance using [cc-mirror](https://github.com/numman-ali/cc-mirror):
+To get Team Mode, install a parallel Claude Code instance using [cc-mirror](https://github.com/numman-ali/cc-mirror). 
+See the [cc-mirror docs](https://github.com/numman-ali/cc-mirror/blob/main/docs/features/mirror-claude.md) for details.
 
 ```bash
 npx cc-mirror create --provider mirror --name mclaude
 ```
 
-See the [cc-mirror docs](https://github.com/numman-ali/cc-mirror/blob/main/docs/features/mirror-claude.md) for details.
+Remove the cc-mirror packaged skills (as they will conflict with promode skills):
+
+```bash
+rm -rf ~/.cc-mirror/mclaude/config/skills/orchestration
+rm -rf ~/.cc-mirror/mclaude/config/skills/task-manage
+```
+
 
 ---
 
