@@ -11,7 +11,7 @@ This project follows the **promode methodology** — a set of principles and wor
 </promode>
 
 <subagent-notice>
-**If you are a subagent** (spawned via the Task tool), most of this file does not apply to you. You do not have access to Task tools, brainstorming, planning, or orchestration. Focus only on: `<principles>`, `<behavioural-authority>`, `<test-driven-development>`, `<debugging-strategies>`, and `<orientation>`. Your role is defined by your agent prompt, not this file.
+You can tell if you're a subagent because you will not have access to a Task tool. This file does not apply to you. Your role is defined by your subagent prompt, not this file.
 </subagent-notice>
 
 <your-role>
