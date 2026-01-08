@@ -50,7 +50,32 @@ This installs the promode methodology for the main agent. The standard CLAUDE.md
 
 **Note**: Sub-agents don't inherit CLAUDE.md. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to phase-specific agents (implementer, reviewer, debugger).
 
-## Step 4: Install MCP Servers
+## Step 4: Create KANBAN_BOARD.md
+
+Create `KANBAN_BOARD.md` at the project root with the standard structure:
+
+```markdown
+# Project Kanban
+
+## Ideas
+<!-- Raw thoughts, not yet evaluated -->
+
+## Designed
+<!-- Has clear outcomes/spec -->
+
+## Ready
+<!-- Designed + planned, can be picked up -->
+
+## In Progress
+<!-- Currently being worked on -->
+
+## Done
+<!-- Shipped — archive periodically -->
+```
+
+This provides persistent project tracking across sessions. The main agent maintains this board as part of the promode methodology.
+
+## Step 5: Install MCP Servers
 
 Create `.mcp.json` in the project root with the required MCP servers (see `references/mcp-servers.md`):
 
@@ -80,11 +105,11 @@ If `.mcp.json` already exists, merge the `mcpServers` section (preserving any ex
 
 **Note**: The `EXA_API_KEY` is provided by the user's environment, not stored in the file.
 
-## Step 5: Install LSP Servers
+## Step 6: Install LSP Servers
 
 Configure LSP servers for languages detected in the project (see `references/lsp-servers.md`).
 
-**Step 5a: Detect languages**
+**Step 6a: Detect languages**
 
 ```bash
 # Check for common language files
@@ -95,7 +120,7 @@ find {project_path} -type f -name "*.rs" | head -3
 find {project_path} -type f \( -name "*.ex" -o -name "*.exs" \) | head -3
 ```
 
-**Step 5b: Configure official LSP plugins**
+**Step 6b: Configure official LSP plugins**
 
 For TypeScript, Python, or Rust, add to `.claude/settings.local.json`:
 
@@ -111,7 +136,7 @@ For TypeScript, Python, or Rust, add to `.claude/settings.local.json`:
 
 Only include plugins for languages actually used in the project. Merge with existing settings if the file exists.
 
-**Step 5c: Configure custom LSP servers**
+**Step 6c: Configure custom LSP servers**
 
 For Go, Elixir, or other languages, create or update `.lsp.json`:
 
@@ -125,7 +150,7 @@ For Go, Elixir, or other languages, create or update `.lsp.json`:
 }
 ```
 
-**Step 5d: Verify language server binaries are installed**
+**Step 6d: Verify language server binaries are installed**
 
 Check that the required binaries are available:
 
@@ -139,7 +164,7 @@ which gopls 2>/dev/null || echo "MISSING: gopls (go install golang.org/x/tools/g
 
 If any required binaries are missing, inform the user they need to install them for LSP to work.
 
-## Step 6: Create Root AGENT_ORIENTATION.md (if missing)
+## Step 7: Create Root AGENT_ORIENTATION.md (if missing)
 
 If no AGENT_ORIENTATION.md exists at the project root, create one with:
 - Project structure overview (key directories)
@@ -168,7 +193,7 @@ Example:
 See package AGENT_ORIENTATION.md files for domain-specific guidance.
 ```
 
-## Step 7: Create Package AGENT_ORIENTATION.md Files
+## Step 8: Create Package AGENT_ORIENTATION.md Files
 
 For each significant package/directory identified in Step 2:
 
@@ -196,11 +221,12 @@ Keep it compact. Example:
 - {issue}: {workaround}
 ```
 
-## Step 8: Verify Installation
+## Step 9: Verify Installation
 
 Run a quick check:
 ```bash
 cat {project_path}/CLAUDE.md | head -5
+cat {project_path}/KANBAN_BOARD.md | head -10
 cat {project_path}/.mcp.json
 cat {project_path}/.claude/settings.local.json 2>/dev/null | grep -E "lsp"
 cat {project_path}/.lsp.json 2>/dev/null
@@ -209,6 +235,7 @@ cat {project_path}/AGENT_ORIENTATION.md 2>/dev/null | head -10
 
 Confirm:
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
+- [ ] KANBAN_BOARD.md exists with standard columns (Ideas, Designed, Ready, In Progress, Done)
 - [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
 - [ ] LSP configured for detected languages (plugins in settings.local.json and/or .lsp.json)
 - [ ] Root AGENT_ORIENTATION.md exists with project overview
@@ -217,6 +244,7 @@ Confirm:
 <success_criteria>
 Installation is complete when:
 - [ ] CLAUDE.md installed at project root (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
+- [ ] KANBAN_BOARD.md created with standard columns
 - [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
 - [ ] LSP servers configured for detected languages
 - [ ] Root AGENT_ORIENTATION.md exists with compact project guidance

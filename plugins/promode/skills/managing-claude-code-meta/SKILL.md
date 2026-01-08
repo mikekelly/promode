@@ -41,9 +41,10 @@ Stop and ask the user when:
 <intake>
 What would you like to do?
 
-1. **Install** — Set up the standard CLAUDE.md in a new project
-2. **Migrate** — Refactor an existing CLAUDE.md, moving content to AGENT_ORIENTATION.md
-3. **Audit** — Check if a project follows progressive disclosure principles
+1. **Install** — Set up promode in a new project (no existing CLAUDE.md)
+2. **Update** — Update an existing promode installation to the latest version
+3. **Migrate** — Refactor a non-promode CLAUDE.md, moving content to AGENT_ORIENTATION.md
+4. **Audit** — Check if a project follows progressive disclosure principles
 
 **Wait for response before proceeding.**
 </intake>
@@ -52,13 +53,21 @@ What would you like to do?
 | Response | Next Action | Workflow |
 |----------|-------------|----------|
 | 1, "install", "setup", "new", "create" | Confirm project path | workflows/install.md |
-| 2, "migrate", "refactor", "move", "convert" | Analyze existing CLAUDE.md | workflows/migrate.md |
-| 3, "audit", "check", "review", "assess" | Scan project structure | workflows/audit.md |
+| 2, "update", "upgrade", "latest", "refresh" | Check existing installation | workflows/update.md |
+| 3, "migrate", "refactor", "move", "convert" | Analyze existing CLAUDE.md | workflows/migrate.md |
+| 4, "audit", "check", "review", "assess" | Scan project structure | workflows/audit.md |
 
 **Intent-based routing:**
-- "set up CLAUDE.md", "add agent config" → workflows/install.md
-- "CLAUDE.md is too big", "slim down", "refactor" → workflows/migrate.md
-- "is this right?", "check conformance" → workflows/audit.md
+- "set up CLAUDE.md", "add agent config", "install promode" → workflows/install.md
+- "update promode", "get latest", "upgrade", "update CLAUDE.md" → workflows/update.md
+- "CLAUDE.md is too big", "slim down", "refactor existing" → workflows/migrate.md
+- "is this right?", "check conformance", "audit" → workflows/audit.md
+
+**Key distinction:**
+- **Install** = No promode yet, start fresh
+- **Update** = Promode exists, bring to latest version and ensure all components present
+- **Migrate** = Has CLAUDE.md but it's not promode (contains project-specific content)
+- **Audit** = Read-only check, no modifications
 
 **After reading the workflow, follow it exactly.**
 </routing>
@@ -68,11 +77,13 @@ What would you like to do?
 
 **Sub-agents**: Main agents delegate execution to phase-specific agents (implementer, reviewer, debugger), which already know the methodology. Brainstorming, planning, and orchestration are done by the main agent.
 
-**Agent orientation structure:**
+**Promode project structure:**
 ```
 project/
 ├── CLAUDE.md              # Main agent behaviour (promode methodology)
+├── KANBAN_BOARD.md        # Project tracking across sessions
 ├── AGENT_ORIENTATION.md   # Compact agent guidance (tools, patterns, gotchas)
+├── .mcp.json              # MCP server configuration
 ├── README.md              # Human documentation (optional, for GitHub etc)
 └── packages/
     └── {package}/
@@ -90,17 +101,24 @@ All in `workflows/`:
 
 | Workflow | Purpose |
 |----------|---------|
-| install.md | Install standard CLAUDE.md into new project |
-| migrate.md | Migrate existing CLAUDE.md content to AGENT_ORIENTATION.md |
+| install.md | Install promode into new project |
+| update.md | Update existing promode installation to latest version |
+| migrate.md | Migrate non-promode CLAUDE.md content to AGENT_ORIENTATION.md |
 | audit.md | Audit project for progressive disclosure conformance |
 </workflows_index>
 
 <success_criteria>
-A well-configured project:
+A well-configured project has these components:
 
-- CLAUDE.md is an exact copy of `standard/MAIN_AGENT_CLAUDE.md`
-- AGENT_ORIENTATION.md at project root with compact agent guidance
+**Required:**
+- CLAUDE.md — exact copy of `standard/MAIN_AGENT_CLAUDE.md`
+- KANBAN_BOARD.md — project tracking across sessions
+- AGENT_ORIENTATION.md — compact agent guidance at project root
+- .mcp.json — MCP servers configured (context7, exa, grep_app)
+
+**Recommended:**
 - Package AGENT_ORIENTATION.md files for domain-specific context
+- LSP configured for detected languages
 - Tests document system behaviour, not markdown files
 - README.md exists for humans (GitHub, etc) but is not agent-oriented
 </success_criteria>
