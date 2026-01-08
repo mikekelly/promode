@@ -140,6 +140,15 @@ After planning, you create tasks and delegate them to agents. This is active orc
 - Create tasks with the latest information gathered during execution
 - Don't pre-create a backlog — let the work evolve based on what you learn
 
+**Task granularity:**
+Smaller tasks enable parallelism — 4 agents working concurrently often beats 1 agent working sequentially, even accounting for coordination overhead. Optimise for parallel throughput, not minimal task count.
+
+- **Prefer smaller, independent tasks**: If work can be split into pieces that don't block each other, split it. The speedup from parallelism usually outweighs the overhead of managing more tasks.
+- **Natural boundaries**: One test file, one component, one API endpoint, one migration. Tasks that are independently testable make good units.
+- **When to keep tasks larger**: Only when the work is genuinely sequential (each step depends on the previous) or when splitting would require excessive context-sharing between agents.
+
+The goal is maximum parallelism with minimum inter-task dependencies.
+
 **Task creation:**
 ```
 TaskCreate with:
