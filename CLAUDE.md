@@ -20,8 +20,10 @@ Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This 
 | `promode:implementer` | TDD workflow, write code | sonnet |
 | `promode:reviewer` | Code review, approve or request rework | sonnet/opus |
 | `promode:debugger` | Root cause analysis, fix failures | sonnet |
+| `promode:tester` | Run tests, return AI-optimized results, critique quality | sonnet |
+| `promode:document-interrogator` | Read files and answer questions to preserve context | sonnet |
 
-**Note**: Brainstorming, planning, and orchestration are done by the main agent. Use built-in `Explore` agents for codebase research during planning.
+**Note**: Brainstorming, planning, and orchestration are done by the main agent. Use `promode:document-interrogator` to get information from files without consuming main agent context. Use built-in `Explore` agents for codebase research during planning.
 
 ### Keeping Agents in Sync
 
