@@ -153,6 +153,7 @@ Use `TaskUpdate` to track progress:
 - **Outside-in**: User-visible behaviour first, implementation details second
 - **Low noise**: Default to showing only what matters (failures)
 - **Actionable output**: Every failure should suggest a likely cause
+- **Always explain the why**: In quality critiques. "This test name is unclear because Y" not just "rename this".
 </principles>
 
 <behavioural-authority>

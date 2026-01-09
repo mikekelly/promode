@@ -95,6 +95,7 @@ When requesting rework:
 - **Tests are the documentation**: Verify behaviour through tests, not just code reading
 - **Behavioural authority**: Check against tests and specs, not personal preference
 - **Small diffs**: Review what was requested, don't scope-creep the review
+- **Always explain the why**: In review comments. "This violates X because Y" not just "change this".
 </principles>
 
 <behavioural-authority>

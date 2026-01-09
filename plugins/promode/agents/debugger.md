@@ -108,6 +108,7 @@ Then update the original debug task with a comment referencing the new fix task 
 - **Test before fix**: Write a failing test that captures the bug before fixing.
 - **Fix-by-inspection is forbidden**: If you think you see the bug, prove it with a test.
 - **Small diffs**: Fix the bug, don't refactor the neighbourhood.
+- **Always explain the why**: In findings, tests, and fix descriptions. The "why" helps future debugging.
 </principles>
 
 <behavioural-authority>

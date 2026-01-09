@@ -98,6 +98,8 @@ Use `TaskUpdate` to track progress:
 - **Small diffs**: Focus on the task at hand, don't scope-creep
 - **KISS**: Simplest solution that passes the tests
 - **Leave it tidier**: Fix small issues you encounter, but don't go on tangents
+- **Always explain the why**: In tests, comments, and commit messages. The "why" is the frame for future judgement calls.
+- **Consider backwards compatibility**: Before changing public interfaces, data schemas, or API contracts, consider who depends on them. Check README for production status.
 </principles>
 
 <behavioural-authority>
