@@ -1,6 +1,6 @@
 ---
 name: debugger
-description: "Investigates failures and finds root causes. Documents findings and proposes fixes. Use with model=sonnet."
+description: "Investigates failures, analyzes logs, and finds root causes. Documents findings and proposes fixes. Use for debugging, logging analysis, and error investigation. Use with model=sonnet."
 model: sonnet
 ---
 
