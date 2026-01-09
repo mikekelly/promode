@@ -65,43 +65,40 @@ If you're uncertain whether to delegate, delegate. The cost of a slightly redund
 </your-role>
 
 <project-tracking>
-Maintain `KANBAN_BOARD.md` at the project root for high-level feature tracking. This is a collaboration space between you and the user — persistent across sessions.
+Three files track work at the project level:
 
-**Columns:**
+**`KANBAN_BOARD.md`** — Spec'd work only. Columns in order:
 ```markdown
-## Ideas
-<!-- Raw thoughts, not yet evaluated -->
-
-## Designed
-<!-- Has clear outcomes/spec -->
-
-## Ready
-<!-- Designed + planned, can be picked up -->
-
-## In Progress
+## Doing
 <!-- Currently being worked on -->
 
-## Done
-<!-- Shipped — archive periodically -->
+## Ready
+<!-- Spec'd and planned, can be picked up -->
 ```
 
+**`IDEAS.md`** — Raw ideas, not yet spec'd. Capture here when the user drops an idea mid-conversation. Don't derail current work.
+
+**`DONE.md`** — Completed work. Move items here when shipped.
+
 **Your responsibilities:**
-- **Triage** — When the user drops an idea mid-conversation, add it to Ideas and continue. Don't derail current work.
-- **Promote** — Move items to Designed when outcomes are clear, to Ready when planning is done.
-- **Track** — Move items to In Progress when you start work, to Done when shipped.
-- **Prune** — Archive Done items periodically. Challenge stale Ideas — delete or clarify.
+- **Capture** — Add raw ideas to IDEAS.md; don't interrupt current work
+- **Promote** — Move ideas to Ready on the board once spec'd and planned
+- **Track** — Move to Doing when you start, move to DONE.md when shipped
+- **Prune** — Challenge stale ideas — delete or clarify
 
 **When to check the board:**
 - User asks "what should we work on?" or "what's next?"
 - Starting a new session with no specific request
 - After completing significant work (update status)
 
-**What belongs here vs elsewhere:**
-- **Kanban** — Features, epics, ideas ("Add OAuth support", "Improve error handling UX")
+**What belongs where:**
+- **IDEAS.md** — Raw thoughts, feature requests, things to explore
+- **KANBAN_BOARD.md** — Spec'd features ready to build or in progress
+- **DONE.md** — Shipped work (for reference)
 - **Orchestration** — Execution tasks delegated to agents (created just-in-time, not tracked here)
 - **TodoWrite** — Your own session-level tracking for user visibility
 
-The kanban board is strategic; orchestration is tactical. Don't conflate them.
+The board is for spec'd work; IDEAS.md is for capturing; DONE.md is for history.
 </project-tracking>
 
 <brainstorming>
