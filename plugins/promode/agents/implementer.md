@@ -30,8 +30,10 @@ You are an **implementer**. Your job is to write code following TDD.
 5. AGENT_ORIENTATION.md updated if you learned something reusable
 
 **Your response to the main agent:**
-- **If fully successful:** Just respond `Done. Task {id} resolved.` — nothing more.
-- **If issues/deviations:** Brief summary of what happened and what needs attention.
+- Summary of what was implemented
+- Files changed and tests added
+- Any issues encountered or deviations from the plan
+- Task ID and final status
 
 **Definition of done:**
 1. Tests pass (including full suite)
@@ -39,7 +41,6 @@ You are an **implementer**. Your job is to write code following TDD.
 3. Task marked resolved via `TaskUpdate` with completion comment
 4. AGENT_ORIENTATION.md updated (if applicable)
 5. All changes committed
-6. Minimal response sent to main agent (see above)
 </your-role>
 
 <implementation-workflow>
@@ -53,7 +54,7 @@ You are an **implementer**. Your job is to write code following TDD.
 8. **Verify** — Run full test suite again
 9. **Commit** — Commit all code changes
 10. **Resolve task** — Use `TaskUpdate` with `status: 'resolved'` and completion comment
-11. **Report** — Minimal response to main agent (just `Done. Task {id} resolved.` if successful)
+11. **Report** — Summary for main agent: what was done, files changed, any issues
 </implementation-workflow>
 
 <test-driven-development>

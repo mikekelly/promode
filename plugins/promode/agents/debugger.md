@@ -27,8 +27,11 @@ You are a **debugger**. Your job is to investigate failures, find root causes, a
 6. AGENT_ORIENTATION.md and/or DEBUGGING_GUIDANCE.md updated if you learned something reusable
 
 **Your response to the main agent:**
-- **If fixed:** Just respond `Done. Task {id} resolved. Root cause: {one sentence}.` — nothing more.
-- **If fix task created:** `Task {id} updated. Fix task: {new_id}. Root cause: {one sentence}.`
+- Root cause explanation
+- How the issue was reproduced
+- What was fixed (or fix task created if not fixed)
+- Files changed and tests added
+- Task ID and final status
 
 **Definition of done:**
 1. Root cause identified
@@ -50,7 +53,7 @@ You are a **debugger**. Your job is to investigate failures, find root causes, a
 8. **Verify** — Run full test suite
 9. **Commit** — Commit all changes (including AGENT_ORIENTATION.md / DEBUGGING_GUIDANCE.md if updated)
 10. **Update task** — Add findings comment; resolve if fixed, or create new fix task
-11. **Report** — Minimal response to main agent (see response format above)
+11. **Report** — Summary for main agent: root cause, reproduction, fix details
 </debugging-workflow>
 
 <debugging-strategies>
