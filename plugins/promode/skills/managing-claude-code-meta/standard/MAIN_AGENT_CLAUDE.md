@@ -88,7 +88,13 @@ Unknowns that might affect the approach.
 </planning>
 
 <orchestration>
-Create tasks just-in-time and delegate to agents.
+**Create all tasks upfront, then delegate.** Don't create tasks just-in-time — that leads to poor granularity as context fills up.
+
+**Phase workflow:**
+1. Create ALL tasks for the phase before starting any agents
+2. Set up task dependencies (blockedBy/blocks)
+3. Kick off agents for unblocked tasks in parallel
+4. Wait patiently for agents to complete — don't poll
 
 **Task creation:**
 ```
@@ -113,6 +119,8 @@ Task tool:
   prompt: "Work on task {id}: {subject}"
   run_in_background: true
 ```
+
+**Waiting for agents:** Background agents return when done — you don't need to poll. Only use `TaskOutput` with `block: false` if you genuinely need to check on a long-running agent. Unnecessary polling wastes tokens.
 
 **Model selection:**
 - `haiku` — Mechanical tasks only (file listing, known-pattern grep)

@@ -2,7 +2,7 @@
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The latest promode CLAUDE.md
 2. references/progressive-disclosure.md — Context on AGENT_ORIENTATION.md distribution
-3. references/mcp-servers.md — Required MCP server configuration
+3. references/mcp-servers.md — Recommended MCP server configuration (optional)
 4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
@@ -81,24 +81,27 @@ ls {project_path}/AGENT_ORIENTATION.md 2>/dev/null || echo "MISSING"
 
 If missing, create a minimal one (see install workflow Step 6 for template).
 
-### .mcp.json
+### .mcp.json (Optional)
 ```bash
 cat {project_path}/.mcp.json 2>/dev/null || echo "MISSING"
 ```
 
-Ensure all 3 required servers are present: context7, exa, grep_app.
-If missing servers, add them (merge with existing config).
+Note which MCP servers are present — these are optional optimisations.
 
-## Step 4: Update MCP Configuration
+## Step 4: Check MCP Configuration (Optional)
 
-Check current MCP servers and add any missing required servers:
+MCP servers are **optional optimisations** that improve information access:
+- **context7** — Documentation lookup (faster than web search for common libraries)
+- **exa** — Real-time web search (requires EXA_API_KEY)
+- **grep_app** — GitHub code search (find examples across public repos)
 
-**Required servers:**
-- context7 (documentation lookup)
-- exa (web search)
-- grep_app (GitHub code search)
+Check which servers are currently configured and which are missing.
 
-If any are missing, add them to `.mcp.json`. See `references/mcp-servers.md` for configuration.
+**If any recommended servers are missing, ask the user:** "The following MCP servers are not configured: {list}. Would you like to add them? They're optional but improve agent effectiveness for documentation lookup and code search."
+
+If the user wants them, add to `.mcp.json`. See `references/mcp-servers.md` for configuration.
+
+If the user declines, skip — promode works without MCP servers.
 
 ## Step 5: Update LSP Configuration
 
@@ -148,14 +151,16 @@ cat {project_path}/CLAUDE.md | head -5
 # Required components exist
 ls {project_path}/KANBAN_BOARD.md
 ls {project_path}/AGENT_ORIENTATION.md
-cat {project_path}/.mcp.json | grep -E "context7|exa|grep_app"
+
+# Optional: check MCP servers if configured
+cat {project_path}/.mcp.json 2>/dev/null | grep -E "context7|exa|grep_app" || echo "No MCP servers configured (optional)"
 ```
 
 **Verification checklist:**
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
 - [ ] KANBAN_BOARD.md exists with standard columns
 - [ ] Root AGENT_ORIENTATION.md exists
-- [ ] .mcp.json has all 3 required servers
+- [ ] MCP servers offered if missing (optional — user may decline)
 - [ ] LSP configured for detected languages
 
 ## Step 8: Report Update Summary
@@ -186,7 +191,7 @@ Every promode project should have these components:
 | CLAUDE.md | project root | Main agent behaviour (exact copy of standard) |
 | KANBAN_BOARD.md | project root | Project tracking across sessions |
 | AGENT_ORIENTATION.md | project root | Compact agent guidance for the project |
-| .mcp.json | project root | MCP server configuration |
+| .mcp.json | project root | MCP server configuration (optional) |
 | .claude/settings.local.json | project root | LSP plugin configuration |
 | Package AGENT_ORIENTATION.md | each significant package | Domain-specific agent guidance |
 </required_components>
@@ -194,8 +199,8 @@ Every promode project should have these components:
 <success_criteria>
 Update is complete when:
 - [ ] CLAUDE.md updated to latest `standard/MAIN_AGENT_CLAUDE.md`
-- [ ] All required components exist (KANBAN_BOARD.md, AGENT_ORIENTATION.md, .mcp.json)
-- [ ] MCP servers configured (context7, exa, grep_app)
+- [ ] Required components exist (KANBAN_BOARD.md, AGENT_ORIENTATION.md)
+- [ ] MCP servers offered if missing (optional — user may decline)
 - [ ] LSP configured for detected languages
 - [ ] Progressive disclosure gaps identified and reported
 </success_criteria>

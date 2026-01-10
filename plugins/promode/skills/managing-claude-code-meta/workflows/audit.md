@@ -2,7 +2,7 @@
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md (project should match exactly)
 2. references/progressive-disclosure.md — Principles being audited against
-3. references/mcp-servers.md — Required MCP server configuration
+3. references/mcp-servers.md — Recommended MCP server configuration (optional)
 4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
@@ -80,27 +80,29 @@ cat {project_path}/KANBAN_BOARD.md 2>/dev/null | head -30
 | Missing columns | WARN | Add missing columns to match standard structure |
 | File missing | FAIL | Create KANBAN_BOARD.md with standard structure |
 
-## Step 4: Audit MCP Servers
+## Step 4: Audit MCP Servers (Optional)
 
-Check that required MCP servers are installed in the project's `.mcp.json`:
+MCP servers are **optional optimisations** that improve information access. Check what's configured:
 
 ```bash
-cat {project_path}/.mcp.json 2>/dev/null || echo "MISSING"
+cat {project_path}/.mcp.json 2>/dev/null || echo "No .mcp.json"
 ```
 
-**Required servers** (see `references/mcp-servers.md` for full config):
+**Recommended servers** (see `references/mcp-servers.md` for full config):
 
-| Server | Status | Notes |
-|--------|--------|-------|
-| context7 | Present/Missing | Documentation lookup |
-| exa | Present/Missing | Web search |
+| Server | Status | Purpose |
+|--------|--------|---------|
+| context7 | Present/Missing | Documentation lookup (faster than web search) |
+| exa | Present/Missing | Real-time web search |
 | grep_app | Present/Missing | GitHub code search |
 
-| Result | Status | Action |
-|--------|--------|--------|
-| All 3 servers present | PASS | MCP configuration correct |
-| Missing servers | FAIL | Add missing servers to `.mcp.json` |
-| No .mcp.json | FAIL | Create file with MCP configuration |
+| Result | Status | Notes |
+|--------|--------|-------|
+| All 3 servers present | PASS | Full MCP optimisations enabled |
+| Some servers present | INFO | Partial MCP — suggest adding missing servers |
+| No .mcp.json | INFO | No MCP servers — suggest if user wants enhanced search |
+
+**Note**: MCP servers are optional. Promode works without them — they just optimise documentation and code search. If missing, note it as a suggestion, not a failure.
 
 **Note**: The `EXA_API_KEY` environment variable is user-provided and should NOT be in the file — only the `${EXA_API_KEY}` reference.
 
@@ -251,7 +253,7 @@ Create a summary:
 |-----------|--------|-------|
 | CLAUDE.md | {PASS/FAIL} | {exact match with standard?} |
 | KANBAN_BOARD.md | {PASS/WARN/FAIL} | {exists with standard columns?} |
-| .mcp.json | {PASS/FAIL} | {count}/3 servers configured |
+| .mcp.json | {PASS/INFO} | {count}/3 recommended servers (optional) |
 | LSP Servers | {PASS/WARN/FAIL} | {count}/{total} languages covered |
 | Root AGENT_ORIENTATION.md | {PASS/FAIL} | {exists and quality?} |
 | Progressive Disclosure | {GOOD/NEEDS_WORK} | {coverage}/{total} packages |
@@ -286,8 +288,8 @@ Based on findings, recommend:
 **If KANBAN_BOARD.md missing or malformed:**
 → Create/fix with standard columns: Ideas, Designed, Ready, In Progress, Done.
 
-**If MCP servers missing:**
-→ Add missing servers to `.mcp.json`. See `references/mcp-servers.md` for configuration.
+**If MCP servers missing (optional):**
+→ MCP servers are optional optimisations. If the user wants enhanced documentation/code search, add servers to `.mcp.json`. See `references/mcp-servers.md` for configuration.
 
 **If LSP servers missing for detected languages:**
 → For TypeScript/Python/Rust: Enable official plugins in `.claude/settings.local.json`
@@ -309,12 +311,12 @@ Based on findings, recommend:
 - [ ] CLAUDE.md — Exact match with `standard/MAIN_AGENT_CLAUDE.md`
 - [ ] KANBAN_BOARD.md — Exists with standard columns (Ideas, Designed, Ready, In Progress, Done)
 - [ ] Root AGENT_ORIENTATION.md — Exists and is compact
-- [ ] .mcp.json — Contains context7, exa, grep_app servers
 
-**MCP Servers (in .mcp.json):**
-- [ ] context7 server configured
-- [ ] exa server configured
-- [ ] grep_app server configured
+**MCP Servers (optional optimisations):**
+- [ ] context7 server configured (documentation lookup)
+- [ ] exa server configured (web search)
+- [ ] grep_app server configured (GitHub code search)
+- Note: These are optional — promode works without them
 
 **LSP Servers (for detected languages):**
 - [ ] TypeScript/JS → typescript-lsp plugin enabled
@@ -338,10 +340,10 @@ Based on findings, recommend:
 
 <success_criteria>
 Audit is complete when:
-- [ ] All required components checked (CLAUDE.md, KANBAN_BOARD.md, AGENT_ORIENTATION.md, .mcp.json)
+- [ ] All required components checked (CLAUDE.md, KANBAN_BOARD.md, AGENT_ORIENTATION.md)
 - [ ] CLAUDE.md compared against standard
 - [ ] KANBAN_BOARD.md structure verified
-- [ ] MCP servers checked in .mcp.json
+- [ ] MCP servers noted (optional — suggest if missing)
 - [ ] LSP servers checked for detected languages
 - [ ] README and project structure analyzed for progressive disclosure gaps
 - [ ] AGENT_ORIENTATION.md coverage and quality assessed

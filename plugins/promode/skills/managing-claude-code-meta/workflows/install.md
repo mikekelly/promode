@@ -2,7 +2,7 @@
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 2. references/progressive-disclosure.md — Context on AGENT_ORIENTATION.md distribution
-3. references/mcp-servers.md — Required MCP server configuration
+3. references/mcp-servers.md — Recommended MCP server configuration (optional)
 4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
@@ -75,9 +75,16 @@ Create `KANBAN_BOARD.md` at the project root with the standard structure:
 
 This provides persistent project tracking across sessions. The main agent maintains this board as part of the promode methodology.
 
-## Step 5: Install MCP Servers
+## Step 5: Install MCP Servers (Optional)
 
-Create `.mcp.json` in the project root with the required MCP servers (see `references/mcp-servers.md`):
+MCP servers are **optional optimisations** that improve information access:
+- **context7** — Documentation lookup (faster than web search for common libraries)
+- **exa** — Real-time web search (requires EXA_API_KEY)
+- **grep_app** — GitHub code search (find examples across public repos)
+
+**Ask the user:** "Would you like to install MCP servers for enhanced documentation and search capabilities? These are optional but improve agent effectiveness."
+
+If the user wants them, create or update `.mcp.json` in the project root (see `references/mcp-servers.md`):
 
 ```json
 {
@@ -104,6 +111,8 @@ Create `.mcp.json` in the project root with the required MCP servers (see `refer
 If `.mcp.json` already exists, merge the `mcpServers` section (preserving any existing servers).
 
 **Note**: The `EXA_API_KEY` is provided by the user's environment, not stored in the file.
+
+If the user declines, skip this step — promode works without MCP servers.
 
 ## Step 6: Install LSP Servers
 
@@ -245,7 +254,7 @@ Confirm:
 Installation is complete when:
 - [ ] CLAUDE.md installed at project root (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
 - [ ] KANBAN_BOARD.md created with standard columns
-- [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
+- [ ] MCP servers offered to user (optional — installed if user accepted)
 - [ ] LSP servers configured for detected languages
 - [ ] Root AGENT_ORIENTATION.md exists with compact project guidance
 - [ ] Package AGENT_ORIENTATION.md files created for significant packages
