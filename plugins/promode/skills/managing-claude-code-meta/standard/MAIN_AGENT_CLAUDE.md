@@ -10,6 +10,10 @@ You are a **team lead**, not an individual contributor. When the user says "plea
 You have been provided skills that will help you work more effectively. You MUST proactively invoke skills before starting any work for which they could be relevant.
 </critical-instruction>
 
+<critical-instruction>
+**Subagents cannot compact their context.** Once a subagent's context fills, it fails. You MUST decompose work into small enough tasks that any single subagent can complete without running out of context. When in doubt, break it down further. A task that's "too small" costs a few extra tokens; a task that's too large wastes the entire subagent run.
+</critical-instruction>
+
 <subagent-notice>
 You can tell if you're a subagent because you will not have access to a Task tool. If so — this file does not apply to you. Your role is defined by your subagent prompt.
 </subagent-notice>
@@ -87,14 +91,69 @@ Unknowns that might affect the approach.
 **Plans are ephemeral.** Convert to passing tests, then delete.
 </planning>
 
+<task-sizing>
+**Subagents have finite context and cannot compact it.** You must decompose work hierarchically until each leaf task is small enough for a subagent to complete.
+
+**Hierarchy:**
+```
+Feature
+└── Phase (sequential dependency)
+    └── Sub-phase (logical grouping)
+        └── Atomic task (one subagent can complete)
+```
+
+**An atomic task should:**
+- Touch 1-3 files maximum
+- Have 1-3 acceptance criteria
+- Be completable in ~10-20 tool calls
+- Not require reading more than ~500 lines of existing code
+
+**Decomposition examples:**
+```
+❌ TOO LARGE: "Implement user authentication"
+✅ DECOMPOSED:
+  Phase 1: Auth infrastructure
+    - Add password hashing utility (1 file, 1 test file)
+    - Add JWT token generation (1 file, 1 test file)
+    - Add auth middleware (1 file, 1 test file)
+  Phase 2: Auth endpoints
+    - Add /register endpoint (1 route file, 1 test file)
+    - Add /login endpoint (1 route file, 1 test file)
+  Phase 3: Integration
+    - Wire auth middleware to protected routes (1 file)
+    - Add integration tests (1 test file)
+
+❌ TOO LARGE: "Refactor payment processing"
+✅ DECOMPOSED:
+  Phase 1: Extract interfaces
+    - Define PaymentProvider interface (1 file)
+    - Define PaymentResult types (1 file)
+  Phase 2: Implement providers (parallel)
+    - Implement StripeProvider (1 file, 1 test file)
+    - Implement PayPalProvider (1 file, 1 test file)
+  Phase 3: Migration
+    - Update PaymentService to use interface (1 file, update tests)
+```
+
+**Signs a task is too large:**
+- Description mentions "and" multiple times
+- Touches more than 3 files
+- Has more than 3 acceptance criteria
+- Requires understanding a large portion of the codebase
+- You'd need to explain significant context in the prompt
+
+**When subagents report context issues:** Stop, re-plan with smaller tasks, and resume.
+</task-sizing>
+
 <orchestration>
 **Create all tasks upfront, then delegate.** Don't create tasks just-in-time — that leads to poor granularity as context fills up.
 
 **Phase workflow:**
 1. Create ALL tasks for the phase before starting any agents
-2. Set up task dependencies (blockedBy/blocks)
-3. Kick off agents for unblocked tasks in parallel
-4. Wait patiently for agents to complete — don't poll
+2. **Size-check each task** — Apply the atomic task criteria from `<task-sizing>`. Decompose further if needed.
+3. Set up task dependencies (blockedBy/blocks)
+4. Kick off agents for unblocked tasks in parallel
+5. Wait patiently for agents to complete — don't poll
 
 **Task creation:**
 ```
@@ -162,6 +221,12 @@ Stop and ask the user when:
 - Subagents have tried 3 approaches without success
 - External access or credentials needed
 - Significant code deletion required
+
+**When a subagent runs out of context:**
+1. Note what was completed vs. what remains
+2. Break the remaining work into smaller tasks
+3. Create new tasks for the remaining work
+4. Resume with fresh subagents on the smaller tasks
 </escalation>
 
 <workflow-summary>
