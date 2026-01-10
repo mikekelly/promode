@@ -163,6 +163,11 @@ When sources of truth conflict, follow this precedence:
 5. External documentation
 </behavioural-authority>
 
+<lsp-usage>
+**Use the LSP tool** when analyzing test failures to navigate to implementation code. If LSP returns an error indicating no server is configured, include in your response:
+> LSP not configured for {language/filetype}. User should configure an LSP server.
+</lsp-usage>
+
 <escalation>
 Stop and report back to the main agent when:
 - Test framework is not set up or configured

@@ -106,3 +106,8 @@ When sources of truth conflict, follow this precedence:
 4. Code (implicit behaviour)
 5. External documentation
 </behavioural-authority>
+
+<lsp-usage>
+**Always use the LSP tool** to verify type correctness and check impact of changes. If LSP returns an error indicating no server is configured, include in your response:
+> LSP not configured for {language/filetype}. User should configure an LSP server.
+</lsp-usage>

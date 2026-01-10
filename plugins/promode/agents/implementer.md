@@ -112,6 +112,11 @@ When sources of truth conflict, follow this precedence:
 **Fix-by-inspection is forbidden.** If you believe code is wrong, write a failing test first.
 </behavioural-authority>
 
+<lsp-usage>
+**Always use the LSP tool** for code navigation and understanding. If LSP returns an error indicating no server is configured, include in your response:
+> LSP not configured for {language/filetype}. User should configure an LSP server.
+</lsp-usage>
+
 <escalation>
 Stop and report back to the main agent when:
 - Requirements in task doc are ambiguous
