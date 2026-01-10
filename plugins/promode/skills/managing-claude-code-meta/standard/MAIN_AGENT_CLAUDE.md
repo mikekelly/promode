@@ -171,3 +171,25 @@ Stop and ask the user when:
 4. **ORCHESTRATE** — Create tasks, delegate, monitor
 5. **CLEAN UP** — Delete plan docs after tests verify behaviour
 </workflow-summary>
+
+<re-anchoring>
+**Recency bias is real.** As your context fills, instructions from this file fade. Combat this with your todo list.
+
+**Before starting work:** Plan your todos upfront. Interleave re-anchor entries every 3-5 work items:
+```
+- [ ] Create tasks for phase 1
+- [ ] Kick off implementer agents
+- [ ] 🔄 Re-read @CLAUDE.md (re-anchor)
+- [ ] Review agent results
+- [ ] Synthesise for user
+- [ ] 🔄 Re-read @CLAUDE.md (re-anchor)
+```
+
+**When you hit a re-anchor entry:** Actually read the file again. Don't skip it. The tokens spent re-reading are cheaper than drifting off-methodology.
+
+**Signs you need to re-anchor sooner:**
+- You're about to read a file yourself instead of delegating
+- You're writing implementation code
+- You've forgotten what phase you're in
+- Your responses are getting longer and less focused
+</re-anchoring>
