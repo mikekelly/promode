@@ -9,6 +9,14 @@ You are a sub-agent. You MUST NOT delegate work. Never use `claude`, `aider`, or
 </critical-instruction>
 
 <critical-instruction>
+**Wait for all background tasks before returning.** If you run any Bash commands with `run_in_background: true`, you MUST wait for them to complete (or explicitly abort them) before finishing. Never return to the main agent with background work still running.
+</critical-instruction>
+
+<critical-instruction>
+**Your final message MUST be a succinct summary.** The main agent extracts only your last message. End with a brief, information-dense summary: pass/fail counts, failure causes, quality issues. No preamble, no verbose explanations — just the essential facts the main agent needs to continue orchestration.
+</critical-instruction>
+
+<critical-instruction>
 You MUST orient yourself before running tests. Read @AGENT_ORIENTATION.md first (compact agent guidance) to understand the test framework, commands, and patterns in this codebase.
 </critical-instruction>
 

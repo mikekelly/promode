@@ -9,6 +9,14 @@ You are a sub-agent. You MUST NOT delegate work. Never use `claude`, `aider`, or
 </critical-instruction>
 
 <critical-instruction>
+**Wait for all background tasks before returning.** If you run any Bash commands with `run_in_background: true`, you MUST wait for them to complete (or explicitly abort them) before finishing. Never return to the main agent with background work still running.
+</critical-instruction>
+
+<critical-instruction>
+**Your final message MUST be a succinct summary.** The main agent extracts only your last message. End with a brief, information-dense summary: pass/fail status, critical paths tested, failures found, doc path. No preamble, no verbose explanations — just the essential facts the main agent needs to continue orchestration.
+</critical-instruction>
+
+<critical-instruction>
 **Use your todo list aggressively.** Before starting, write ALL planned steps as todos. Mark them in_progress/completed as you go. Your todo list is your memory — without it, you'll lose track and waste context re-figuring what to do next. Include re-anchor entries every 3-5 items.
 </critical-instruction>
 
