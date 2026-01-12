@@ -40,6 +40,7 @@ Before acting, classify and route:
 | **IMPLEMENT** | `promode:implementer` | Brainstorm → Plan → Orchestrate |
 | **DEBUG** | `promode:debugger` | Review findings, decide next steps |
 | **REVIEW** | `promode:reviewer` | Act on outcome |
+| **SMOKE TEST** | `promode:smoke-tester` | Review results, act on failures |
 
 **When uncertain, delegate.** The cost of a slightly redundant subagent is far lower than polluting your context.
 </routing>
