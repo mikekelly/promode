@@ -50,30 +50,43 @@ This installs the promode methodology for the main agent. The standard CLAUDE.md
 
 **Note**: Sub-agents don't inherit CLAUDE.md. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to phase-specific agents (implementer, reviewer, debugger).
 
-## Step 4: Create KANBAN_BOARD.md
+## Step 4: Create Project Tracking Files
 
-Create `KANBAN_BOARD.md` at the project root with the standard structure:
+Create three files at the project root for project tracking:
 
+### KANBAN_BOARD.md
 ```markdown
-# Project Kanban
+# Kanban Board
 
-## Ideas
-<!-- Raw thoughts, not yet evaluated -->
-
-## Designed
-<!-- Has clear outcomes/spec -->
+## Doing
+<!-- Currently being worked on -->
 
 ## Ready
 <!-- Designed + planned, can be picked up -->
-
-## In Progress
-<!-- Currently being worked on -->
-
-## Done
-<!-- Shipped — archive periodically -->
 ```
 
-This provides persistent project tracking across sessions. The main agent maintains this board as part of the promode methodology.
+### IDEAS.md
+```markdown
+# Ideas
+
+Raw thoughts and ideas, not yet spec'd or evaluated.
+
+<!-- Add ideas here as they come up -->
+```
+
+### DONE.md
+```markdown
+# Done
+
+Completed work. Archive periodically.
+
+<!-- Move completed items here from Kanban -->
+```
+
+These three files provide persistent project tracking across sessions. The main agent maintains them as part of the promode methodology:
+- **IDEAS.md** — Capture raw ideas without derailing current work
+- **KANBAN_BOARD.md** — Spec'd work ready to be picked up or in progress
+- **DONE.md** — Archive of completed work
 
 ## Step 5: Install MCP Servers (Optional)
 
@@ -236,6 +249,8 @@ Run a quick check:
 ```bash
 cat {project_path}/CLAUDE.md | head -5
 cat {project_path}/KANBAN_BOARD.md | head -10
+cat {project_path}/IDEAS.md | head -5
+cat {project_path}/DONE.md | head -5
 cat {project_path}/.mcp.json
 cat {project_path}/.claude/settings.local.json 2>/dev/null | grep -E "lsp"
 cat {project_path}/.lsp.json 2>/dev/null
@@ -244,7 +259,9 @@ cat {project_path}/AGENT_ORIENTATION.md 2>/dev/null | head -10
 
 Confirm:
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
-- [ ] KANBAN_BOARD.md exists with standard columns (Ideas, Designed, Ready, In Progress, Done)
+- [ ] KANBAN_BOARD.md exists with columns (Doing, Ready)
+- [ ] IDEAS.md exists for raw ideas
+- [ ] DONE.md exists for completed work archive
 - [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
 - [ ] LSP configured for detected languages (plugins in settings.local.json and/or .lsp.json)
 - [ ] Root AGENT_ORIENTATION.md exists with project overview
@@ -253,7 +270,9 @@ Confirm:
 <success_criteria>
 Installation is complete when:
 - [ ] CLAUDE.md installed at project root (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
-- [ ] KANBAN_BOARD.md created with standard columns
+- [ ] KANBAN_BOARD.md created with Doing and Ready columns
+- [ ] IDEAS.md created for raw ideas
+- [ ] DONE.md created for completed work archive
 - [ ] MCP servers offered to user (optional — installed if user accepted)
 - [ ] LSP servers configured for detected languages
 - [ ] Root AGENT_ORIENTATION.md exists with compact project guidance

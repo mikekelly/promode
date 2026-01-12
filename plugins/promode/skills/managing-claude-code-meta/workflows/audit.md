@@ -28,6 +28,8 @@ Collect key metrics:
 # Required components
 ls {project_path}/CLAUDE.md 2>/dev/null || echo "MISSING: CLAUDE.md"
 ls {project_path}/KANBAN_BOARD.md 2>/dev/null || echo "MISSING: KANBAN_BOARD.md"
+ls {project_path}/IDEAS.md 2>/dev/null || echo "MISSING: IDEAS.md"
+ls {project_path}/DONE.md 2>/dev/null || echo "MISSING: DONE.md"
 ls {project_path}/AGENT_ORIENTATION.md 2>/dev/null || echo "MISSING: AGENT_ORIENTATION.md"
 ls {project_path}/.mcp.json 2>/dev/null || echo "MISSING: .mcp.json"
 
@@ -59,26 +61,44 @@ If there are differences, note what was added/changed. Any project-specific cont
 
 **Note**: Sub-agents don't inherit CLAUDE.md. Phase-specific agents (implementer, reviewer, debugger) handle execution; main agents handle brainstorming, planning, and orchestration directly.
 
-## Step 3: Audit KANBAN_BOARD.md
+## Step 3: Audit Project Tracking Files
 
-Check if KANBAN_BOARD.md exists and has the correct structure:
+Check if the three project tracking files exist with correct structure:
 
+### KANBAN_BOARD.md
 ```bash
-cat {project_path}/KANBAN_BOARD.md 2>/dev/null | head -30
+cat {project_path}/KANBAN_BOARD.md 2>/dev/null | head -20
 ```
 
 **Required structure:**
-- `## Ideas` — Raw thoughts, not yet evaluated
-- `## Designed` — Has clear outcomes/spec
+- `## Doing` — Currently being worked on
 - `## Ready` — Designed + planned, can be picked up
-- `## In Progress` — Currently being worked on
-- `## Done` — Shipped (archive periodically)
 
 | Result | Status | Action |
 |--------|--------|--------|
-| All 5 columns present | PASS | KANBAN_BOARD.md correctly structured |
-| Missing columns | WARN | Add missing columns to match standard structure |
-| File missing | FAIL | Create KANBAN_BOARD.md with standard structure |
+| Both columns present | PASS | KANBAN_BOARD.md correctly structured |
+| Missing columns | WARN | Add missing columns |
+| File missing | FAIL | Create KANBAN_BOARD.md |
+
+### IDEAS.md
+```bash
+cat {project_path}/IDEAS.md 2>/dev/null | head -10
+```
+
+| Result | Status | Action |
+|--------|--------|--------|
+| File exists | PASS | IDEAS.md present |
+| File missing | FAIL | Create IDEAS.md for raw ideas |
+
+### DONE.md
+```bash
+cat {project_path}/DONE.md 2>/dev/null | head -10
+```
+
+| Result | Status | Action |
+|--------|--------|--------|
+| File exists | PASS | DONE.md present |
+| File missing | FAIL | Create DONE.md for completed work archive |
 
 ## Step 4: Audit MCP Servers (Optional)
 
@@ -252,7 +272,9 @@ Create a summary:
 | Component | Status | Notes |
 |-----------|--------|-------|
 | CLAUDE.md | {PASS/FAIL} | {exact match with standard?} |
-| KANBAN_BOARD.md | {PASS/WARN/FAIL} | {exists with standard columns?} |
+| KANBAN_BOARD.md | {PASS/WARN/FAIL} | {exists with Doing/Ready columns?} |
+| IDEAS.md | {PASS/FAIL} | {exists?} |
+| DONE.md | {PASS/FAIL} | {exists?} |
 | .mcp.json | {PASS/INFO} | {count}/3 recommended servers (optional) |
 | LSP Servers | {PASS/WARN/FAIL} | {count}/{total} languages covered |
 | Root AGENT_ORIENTATION.md | {PASS/FAIL} | {exists and quality?} |
@@ -286,7 +308,13 @@ Based on findings, recommend:
 → Replace with exact copy of `standard/MAIN_AGENT_CLAUDE.md`. Move any project-specific content to AGENT_ORIENTATION.md files.
 
 **If KANBAN_BOARD.md missing or malformed:**
-→ Create/fix with standard columns: Ideas, Designed, Ready, In Progress, Done.
+→ Create/fix with standard columns: Doing, Ready.
+
+**If IDEAS.md missing:**
+→ Create IDEAS.md for capturing raw ideas without derailing current work.
+
+**If DONE.md missing:**
+→ Create DONE.md for archiving completed work.
 
 **If MCP servers missing (optional):**
 → MCP servers are optional optimisations. If the user wants enhanced documentation/code search, add servers to `.mcp.json`. See `references/mcp-servers.md` for configuration.
@@ -309,7 +337,9 @@ Based on findings, recommend:
 <audit_checklist>
 **Required Components:**
 - [ ] CLAUDE.md — Exact match with `standard/MAIN_AGENT_CLAUDE.md`
-- [ ] KANBAN_BOARD.md — Exists with standard columns (Ideas, Designed, Ready, In Progress, Done)
+- [ ] KANBAN_BOARD.md — Exists with columns (Doing, Ready)
+- [ ] IDEAS.md — Exists for raw ideas
+- [ ] DONE.md — Exists for completed work archive
 - [ ] Root AGENT_ORIENTATION.md — Exists and is compact
 
 **MCP Servers (optional optimisations):**
@@ -340,9 +370,10 @@ Based on findings, recommend:
 
 <success_criteria>
 Audit is complete when:
-- [ ] All required components checked (CLAUDE.md, KANBAN_BOARD.md, AGENT_ORIENTATION.md)
+- [ ] All required components checked (CLAUDE.md, KANBAN_BOARD.md, IDEAS.md, DONE.md, AGENT_ORIENTATION.md)
 - [ ] CLAUDE.md compared against standard
-- [ ] KANBAN_BOARD.md structure verified
+- [ ] KANBAN_BOARD.md structure verified (Doing, Ready columns)
+- [ ] IDEAS.md and DONE.md existence verified
 - [ ] MCP servers noted (optional — suggest if missing)
 - [ ] LSP servers checked for detected languages
 - [ ] README and project structure analyzed for progressive disclosure gaps

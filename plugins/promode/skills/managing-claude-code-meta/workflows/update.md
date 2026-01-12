@@ -25,9 +25,11 @@ Stop and ask the user when:
 Confirm promode is already installed:
 ```bash
 ls -la {project_path}/CLAUDE.md
+ls -la {project_path}/KANBAN_BOARD.md 2>/dev/null
+ls -la {project_path}/IDEAS.md 2>/dev/null
+ls -la {project_path}/DONE.md 2>/dev/null
 ls -la {project_path}/AGENT_ORIENTATION.md 2>/dev/null
 ls -la {project_path}/.mcp.json 2>/dev/null
-ls -la {project_path}/KANBAN_BOARD.md 2>/dev/null
 ```
 
 **Routing:**
@@ -56,22 +58,41 @@ ls {project_path}/KANBAN_BOARD.md 2>/dev/null || echo "MISSING"
 
 If missing, create with standard structure:
 ```markdown
-# Project Kanban
+# Kanban Board
 
-## Ideas
-<!-- Raw thoughts, not yet evaluated -->
-
-## Designed
-<!-- Has clear outcomes/spec -->
+## Doing
+<!-- Currently being worked on -->
 
 ## Ready
 <!-- Designed + planned, can be picked up -->
+```
 
-## In Progress
-<!-- Currently being worked on -->
+### IDEAS.md
+```bash
+ls {project_path}/IDEAS.md 2>/dev/null || echo "MISSING"
+```
 
-## Done
-<!-- Shipped — archive periodically -->
+If missing, create:
+```markdown
+# Ideas
+
+Raw thoughts and ideas, not yet spec'd or evaluated.
+
+<!-- Add ideas here as they come up -->
+```
+
+### DONE.md
+```bash
+ls {project_path}/DONE.md 2>/dev/null || echo "MISSING"
+```
+
+If missing, create:
+```markdown
+# Done
+
+Completed work. Archive periodically.
+
+<!-- Move completed items here from Kanban -->
 ```
 
 ### Root AGENT_ORIENTATION.md
@@ -79,7 +100,7 @@ If missing, create with standard structure:
 ls {project_path}/AGENT_ORIENTATION.md 2>/dev/null || echo "MISSING"
 ```
 
-If missing, create a minimal one (see install workflow Step 6 for template).
+If missing, create a minimal one (see install workflow Step 7 for template).
 
 ### .mcp.json (Optional)
 ```bash
@@ -150,6 +171,8 @@ cat {project_path}/CLAUDE.md | head -5
 
 # Required components exist
 ls {project_path}/KANBAN_BOARD.md
+ls {project_path}/IDEAS.md
+ls {project_path}/DONE.md
 ls {project_path}/AGENT_ORIENTATION.md
 
 # Optional: check MCP servers if configured
@@ -158,7 +181,9 @@ cat {project_path}/.mcp.json 2>/dev/null | grep -E "context7|exa|grep_app" || ec
 
 **Verification checklist:**
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
-- [ ] KANBAN_BOARD.md exists with standard columns
+- [ ] KANBAN_BOARD.md exists with Doing/Ready columns
+- [ ] IDEAS.md exists
+- [ ] DONE.md exists
 - [ ] Root AGENT_ORIENTATION.md exists
 - [ ] MCP servers offered if missing (optional — user may decline)
 - [ ] LSP configured for detected languages
@@ -189,7 +214,9 @@ Every promode project should have these components:
 | Component | Location | Purpose |
 |-----------|----------|---------|
 | CLAUDE.md | project root | Main agent behaviour (exact copy of standard) |
-| KANBAN_BOARD.md | project root | Project tracking across sessions |
+| KANBAN_BOARD.md | project root | Kanban board (Doing, Ready columns) |
+| IDEAS.md | project root | Raw ideas, not yet spec'd |
+| DONE.md | project root | Completed work archive |
 | AGENT_ORIENTATION.md | project root | Compact agent guidance for the project |
 | .mcp.json | project root | MCP server configuration (optional) |
 | .claude/settings.local.json | project root | LSP plugin configuration |
@@ -199,7 +226,7 @@ Every promode project should have these components:
 <success_criteria>
 Update is complete when:
 - [ ] CLAUDE.md updated to latest `standard/MAIN_AGENT_CLAUDE.md`
-- [ ] Required components exist (KANBAN_BOARD.md, AGENT_ORIENTATION.md)
+- [ ] Required components exist (KANBAN_BOARD.md, IDEAS.md, DONE.md, AGENT_ORIENTATION.md)
 - [ ] MCP servers offered if missing (optional — user may decline)
 - [ ] LSP configured for detected languages
 - [ ] Progressive disclosure gaps identified and reported
