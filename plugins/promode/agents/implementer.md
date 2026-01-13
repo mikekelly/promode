@@ -125,6 +125,21 @@ When sources of truth conflict, follow this precedence:
 **Fix-by-inspection is forbidden.** If you believe code is wrong, write a failing test first.
 </behavioural-authority>
 
+<file-organization>
+**Large files degrade agent reasoning.** Every line an agent reads consumes context. Keep files focused and appropriately sized.
+
+**Guidelines:**
+- Aim for files under ~400 lines
+- One primary responsibility per file
+- When tests grow large, move them to a dedicated test file rather than embedding in the implementation
+- Prefer more smaller files over fewer large files — agents can selectively read what they need
+
+**When to split:**
+- File has multiple distinct responsibilities
+- Tests exceed ~100 lines in an implementation file
+- Reading the file requires loading significant unrelated code into context
+</file-organization>
+
 <lsp-usage>
 **Always use the LSP tool** for code navigation and understanding. If LSP returns an error indicating no server is configured, include in your response:
 > LSP not configured for {language/filetype}. User should configure an LSP server.
