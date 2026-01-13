@@ -29,6 +29,14 @@ You have been provided skills that will help you work more effectively. You MUST
 **Subagents cannot compact their context.** Once a subagent's context fills, it fails. You MUST decompose work into small enough tasks that any single subagent can complete without running out of context. When in doubt, break it down further. A task that's "too small" costs a few extra tokens; a task that's too large wastes the entire subagent run.
 </critical-instruction>
 
+<critical-instruction>
+**No plan, no execution.** Before delegating ANY implementation work, you MUST have:
+1. A committed plan doc (`docs/{feature}/plan.md`) with phases and approach
+2. A complete task tree in `dot` with all phases broken down to atomic tasks
+
+This is non-negotiable. The `dot` task tree persists to disk — it survives crashes, context clears, and session restarts. Without it, work is not recoverable or resumable. Your context will eventually compact or clear; the task tree is how the next agent (or you after compaction) picks up where you left off.
+</critical-instruction>
+
 <subagent-notice>
 You can tell if you're a subagent because you will not have access to a Task tool. If so — this file does not apply to you. Your role is defined by your subagent prompt.
 </subagent-notice>
@@ -129,7 +137,9 @@ Before non-trivial work, brainstorm with the user. Your job is to keep them focu
 <planning>
 After brainstorming, design the approach. Delegate research to `Explore` agents — don't read files yourself.
 
-**Output:** `docs/{feature}/plan.md` committed before orchestration:
+**Two outputs required before orchestration:**
+
+1. **Plan doc** — `docs/{feature}/plan.md`, committed:
 ```markdown
 # {Feature}
 
@@ -149,7 +159,20 @@ Independent work within each phase.
 Unknowns that might affect the approach.
 ```
 
-**Plans are ephemeral.** Convert to passing tests, then delete.
+2. **Task tree in `dot`** — The plan's phases and tasks, structured for delegation:
+```bash
+dot add "Feature name"
+dot add "Phase 1: description" --parent 1
+dot add "Atomic task A" --parent 2
+dot add "Atomic task B" --parent 2
+dot add "Phase 2: description" --parent 1
+# ... continue until all work is captured
+dot tree  # verify structure
+```
+
+**Why both?** The plan doc captures the *reasoning* (why this approach). The task tree captures the *work* (what to do). The plan doc helps humans understand; the task tree enables recovery. If your context clears mid-feature, the next agent reads the plan doc for context and `dot tree` for progress.
+
+**Plans are ephemeral.** Convert to passing tests, then delete (both plan doc and completed tasks).
 </planning>
 
 <task-sizing>
@@ -284,11 +307,11 @@ Stop and ask the user when:
 </escalation>
 
 <workflow-summary>
-1. **BRAINSTORM** — Clarify outcomes → committed docs
-2. **PLAN** — Design approach → committed docs
+1. **BRAINSTORM** — Clarify outcomes → `docs/{feature}/outcomes.md` committed
+2. **PLAN** — Design approach → `docs/{feature}/plan.md` committed + task tree in `dot`
 3. **BASELINE** — Delegate to `promode:tester` to verify tests pass before changes
-4. **ORCHESTRATE** — Create tasks, delegate, monitor
-5. **CLEAN UP** — Delete plan docs after tests verify behaviour
+4. **ORCHESTRATE** — Delegate tasks, monitor progress via `dot tree`
+5. **CLEAN UP** — Delete plan docs and completed tasks after tests verify behaviour
 </workflow-summary>
 
 <re-anchoring>
