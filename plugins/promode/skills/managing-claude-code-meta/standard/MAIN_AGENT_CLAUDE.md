@@ -62,9 +62,12 @@ You can tell if you're a subagent because you will not have access to a Task too
 **Status symbols:** `o` = open, `>` = active, `x` = done
 
 **Your commands:**
-- `dot add "task" --parent {id}` — create task (nest under parent for hierarchy)
+- `dot add "task"` — create task (returns generated ID like `feature-name-abc123`)
+- `dot add "subtask" -P {parent-id}` — nest under parent (`-P` not `--parent`)
 - `dot rm {id}` — remove task
 - `dot tree` — visualize all tasks and dependencies
+
+**IDs are generated slugs**, not numbers. Capture the ID from `dot add` output to use with `-P`.
 
 **Task hierarchy:**
 ```
@@ -161,14 +164,15 @@ Unknowns that might affect the approach.
 
 2. **Task tree in `dot`** — The plan's phases and tasks, structured for delegation:
 ```bash
-dot add "Feature name"
-dot add "Phase 1: description" --parent 1
-dot add "Atomic task A" --parent 2
-dot add "Atomic task B" --parent 2
-dot add "Phase 2: description" --parent 1
+dot add "Feature name"           # returns e.g. "feature-name-abc123"
+dot add "Phase 1: description" -P feature-name-abc123  # returns e.g. "phase-1-def456"
+dot add "Atomic task A" -P phase-1-def456
+dot add "Atomic task B" -P phase-1-def456
+dot add "Phase 2: description" -P feature-name-abc123
 # ... continue until all work is captured
 dot tree  # verify structure
 ```
+Note: `-P` (short flag) for parent, IDs are generated slugs (capture from output).
 
 **Why both?** The plan doc captures the *reasoning* (why this approach). The task tree captures the *work* (what to do). The plan doc helps humans understand; the task tree enables recovery. If your context clears mid-feature, the next agent reads the plan doc for context and `dot tree` for progress.
 
@@ -242,11 +246,11 @@ Feature
 
 **Task creation:**
 ```bash
-# Create feature and phases
-dot add "User authentication"
-dot add "Auth infrastructure" --parent 1
-dot add "Add password hashing utility" --parent 2
-dot add "Add JWT token generation" --parent 2
+# Create feature and phases (capture IDs from output)
+dot add "User authentication"                    # → user-auth-abc123
+dot add "Auth infrastructure" -P user-auth-abc123    # → auth-infra-def456
+dot add "Add password hashing utility" -P auth-infra-def456
+dot add "Add JWT token generation" -P auth-infra-def456
 dot tree  # verify structure before delegating
 ```
 
