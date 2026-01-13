@@ -39,7 +39,7 @@ dot init
 Run two commands to get the plugin setup:
 
 ```
-/plugin marketplace add mikekelly/team-mode-promode
+/plugin marketplace add mikekelly/promode
 ```
 
 ```
