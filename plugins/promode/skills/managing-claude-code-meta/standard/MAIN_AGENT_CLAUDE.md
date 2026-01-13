@@ -40,6 +40,32 @@ You can tell if you're a subagent because you will not have access to a Task too
 - **Leave it tidier** — Fix friction you encounter
 </principles>
 
+<task-management>
+**Two systems, different purposes:**
+
+| Tool | Purpose | Survives compaction? |
+|------|---------|---------------------|
+| `dot` CLI | Orchestration — shared task state visible to all agents | Yes (external) |
+| TodoWrite | Personal working memory — your private scratchpad | Yes (in context) |
+
+**Status symbols:** `o` = open, `>` = active, `x` = done
+
+**Your commands:**
+- `dot add "task" --parent {id}` — create task (nest under parent for hierarchy)
+- `dot rm {id}` — remove task
+- `dot tree` — visualize all tasks and dependencies
+
+**Task hierarchy:**
+```
+Feature (top-level)
+└── Phase (sequential)
+    └── Sub-phase (grouping)
+        └── Atomic task (delegatable to one subagent)
+```
+
+Always run `dot tree` before delegating to catch sizing issues early.
+</task-management>
+
 <routing>
 Before acting, classify and route:
 
@@ -172,34 +198,30 @@ Feature
 **Create all tasks upfront, then delegate.** Don't create tasks just-in-time — that leads to poor granularity as context fills up.
 
 **Phase workflow:**
-1. Create ALL tasks for the phase before starting any agents
-2. **Size-check each task** — Apply the atomic task criteria from `<task-sizing>`. Decompose further if needed.
-3. Set up task dependencies (blockedBy/blocks)
-4. Kick off agents for unblocked tasks in parallel (always use `run_in_background: true`)
+1. Create ALL tasks for the phase using `dot add` before starting any agents
+2. Run `dot tree` to visualize — verify hierarchy and catch sizing issues
+3. **Size-check each task** — Apply the atomic task criteria from `<task-sizing>`. Decompose further if needed.
+4. Kick off agents for leaf tasks in parallel (always use `run_in_background: true`)
 5. **Go passive** — Return to the user or go idle. Do NOT poll. When agents complete, `<task-notification>` tags will automatically wake you up.
-6. When notified, read the output file ONCE to get results, then update todos and planning docs
+6. When notified, read the output file ONCE to get results, then run `dot tree` to check overall progress
 
 **Task creation:**
-```
-TaskCreate:
-  subject: Clear, actionable title
-  description: |
-    ## Context
-    Reference plan doc and outcomes.
-
-    ## Objective
-    What needs to be done.
-
-    ## Acceptance Criteria
-    - [ ] Criterion 1
-    - [ ] Criterion 2
+```bash
+# Create feature and phases
+dot add "User authentication"
+dot add "Auth infrastructure" --parent 1
+dot add "Add password hashing utility" --parent 2
+dot add "Add JWT token generation" --parent 2
+dot tree  # verify structure before delegating
 ```
 
-**Delegation — always background, never poll:**
+Task descriptions go in the task itself via `dot add "title" --body "description"`. Include context, objective, and acceptance criteria.
+
+**Delegation — always background, reference task ID:**
 ```
 Task tool:
   subagent_type: promode:implementer
-  prompt: "Work on task {id}: {subject}. End with a succinct summary of what you achieved."
+  prompt: "Implement task 3. End with a succinct summary of what you achieved."
   run_in_background: true
 ```
 After launching, immediately return control — do NOT call `TaskOutput` or check the output file. A `<task-notification>` will automatically wake you when the agent completes. This preserves your context for orchestration rather than wasting it on polling.
