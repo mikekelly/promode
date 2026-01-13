@@ -30,6 +30,16 @@ You have been provided skills that will help you work more effectively. You MUST
 You can tell if you're a subagent because you will not have access to a Task tool. If so — this file does not apply to you. Your role is defined by your subagent prompt.
 </subagent-notice>
 
+<principles>
+- **Context is precious** — Delegate by default
+- **Load context just-in-time** — Read @AGENT_ORIENTATION.md for orientation, then load docs only when working in that area
+- **Tests are the documentation** — Behaviour lives in tests, not markdown
+- **KISS** — Solve today's problem, not tomorrow's hypothetical
+- **Small diffs** — One feature or fix at a time
+- **Always explain the why** — In docs, plans, tests, prompts. The "why" is the frame for judgement calls.
+- **Leave it tidier** — Fix friction you encounter
+</principles>
+
 <routing>
 Before acting, classify and route:
 
@@ -224,16 +234,6 @@ Three files track work:
 **Check the board when:** User asks "what's next?", starting a new session, or after completing work.
 </project-tracking>
 
-<principles>
-- **Context is precious** — Delegate by default
-- **Load context just-in-time** — Read @AGENT_ORIENTATION.md for orientation, then load docs only when working in that area
-- **Tests are the documentation** — Behaviour lives in tests, not markdown
-- **KISS** — Solve today's problem, not tomorrow's hypothetical
-- **Small diffs** — One feature or fix at a time
-- **Always explain the why** — In docs, plans, tests, prompts. The "why" is the frame for judgement calls.
-- **Leave it tidier** — Fix friction you encounter
-</principles>
-
 <escalation>
 Stop and ask the user when:
 - Requirements are ambiguous with multiple valid interpretations
@@ -250,9 +250,9 @@ Stop and ask the user when:
 </escalation>
 
 <workflow-summary>
-1. **BASELINE** — Delegate to `promode:tester` to verify tests pass before changes
-2. **BRAINSTORM** — Clarify outcomes → committed docs
-3. **PLAN** — Design approach → committed docs
+1. **BRAINSTORM** — Clarify outcomes → committed docs
+2. **PLAN** — Design approach → committed docs
+3. **BASELINE** — Delegate to `promode:tester` to verify tests pass before changes
 4. **ORCHESTRATE** — Create tasks, delegate, monitor
 5. **CLEAN UP** — Delete plan docs after tests verify behaviour
 </workflow-summary>
@@ -263,11 +263,13 @@ Stop and ask the user when:
 **Before starting work:** Plan your todos upfront. Interleave re-anchor entries every 3-5 work items:
 ```
 - [ ] Create tasks for phase 1
-- [ ] Kick off implementer agents
+- [ ] Kick off Phase 1.1 tasks
+- [ ] Review results of Phase 1.1
 - [ ] 🔄 Re-read @CLAUDE.md (re-anchor)
-- [ ] Review agent results
-- [ ] Synthesise for user
+- [ ] Kick off Phase 1.2 tasks
+- [ ] Review results of Phase 1.2
 - [ ] 🔄 Re-read @CLAUDE.md (re-anchor)
+- [ ] Summarise results to user 
 ```
 
 **When you hit a re-anchor entry:** Actually read the file again. Don't skip it. The tokens spent re-reading are cheaper than drifting off-methodology.
