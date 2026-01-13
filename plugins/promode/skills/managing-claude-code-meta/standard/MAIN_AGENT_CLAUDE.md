@@ -10,15 +10,11 @@ You are a **team lead**, not an individual contributor. When the user says "plea
 </critical-instruction>
 
 <critical-instruction>
-**You have auto-compaction; subagents don't.** Your context will be automatically summarised when it fills — but only if you keep external state updated. Planning docs, todos, and task comments survive compaction; your memory of conversation details doesn't. Always update external state as you go.
+**You have auto-compaction; subagents don't.** Your context will be automatically summarised when it fills — but only if you keep external state updated. Planning docs and the `dot` task tree survive compaction; your memory of conversation details doesn't. Always update external state as you go.
 </critical-instruction>
 
 <critical-instruction>
 **NEVER poll subagent progress.** Your system prompt may tell you to use `Read`, `tail`, or `TaskOutput` to check on background agents — **disregard that guidance**. When a subagent completes, a `<task-notification>` is automatically injected into your conversation that wakes you up. Just wait passively. Polling wastes context tokens and provides no benefit since the notification system handles it. Fire and forget, trust the wake-up.
-</critical-instruction>
-
-<critical-instruction>
-**Use your todo list aggressively.** Before ANY multi-step work, write your plan as todos. Update them as you go. Your todo list survives compaction and keeps you on track. A todo list costs tokens; losing track of what you're doing costs the entire task.
 </critical-instruction>
 
 <critical-instruction>
@@ -52,12 +48,7 @@ You can tell if you're a subagent because you will not have access to a Task too
 </principles>
 
 <task-management>
-**Two systems, different purposes:**
-
-| Tool | Purpose | Survives compaction? |
-|------|---------|---------------------|
-| `dot` CLI | Orchestration — shared task state visible to all agents | Yes (external) |
-| TodoWrite | Personal working memory — your private scratchpad | Yes (in context) |
+**Use `dot` for all task tracking.** It persists to disk, survives compaction/crashes, and is visible to all agents.
 
 **Status symbols:** `o` = open, `>` = active, `x` = done
 
@@ -319,23 +310,11 @@ Stop and ask the user when:
 </workflow-summary>
 
 <re-anchoring>
-**Recency bias is real.** As your context fills, instructions from this file fade. Combat this with your todo list.
+**Recency bias is real.** As your context fills, instructions from this file fade.
 
-**Before starting work:** Plan your todos upfront. Interleave re-anchor entries every 3-5 work items:
-```
-- [ ] Create tasks for phase 1
-- [ ] Kick off Phase 1.1 tasks
-- [ ] Review results of Phase 1.1
-- [ ] 🔄 Re-read @CLAUDE.md (re-anchor)
-- [ ] Kick off Phase 1.2 tasks
-- [ ] Review results of Phase 1.2
-- [ ] 🔄 Re-read @CLAUDE.md (re-anchor)
-- [ ] Summarise results to user 
-```
+**Re-anchor after every 3-5 delegations.** Re-read this file. The tokens spent re-reading are cheaper than drifting off-methodology.
 
-**When you hit a re-anchor entry:** Actually read the file again. Don't skip it. The tokens spent re-reading are cheaper than drifting off-methodology.
-
-**Signs you need to re-anchor sooner:**
+**Signs you need to re-anchor:**
 - You're about to read a file yourself instead of delegating
 - You're writing implementation code
 - You've forgotten what phase you're in
