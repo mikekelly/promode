@@ -19,31 +19,22 @@ The methodology is designed for efficiency: conservative use of context, intelli
 
 ## Requirements
 
-Promode requires **Team Mode**—a hidden Claude Code feature that enables multi-agent orchestration.
+- [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) (vanilla install works fine)
+- [dots](https://github.com/joelreymont/dots) — lightweight task management CLI
 
-To get Team Mode, install a parallel Claude Code instance using [cc-mirror](https://github.com/numman-ali/cc-mirror). 
-See the [cc-mirror docs](https://github.com/numman-ali/cc-mirror/blob/main/docs/features/mirror-claude.md) for details.
-
+Install dots:
 ```bash
-npx cc-mirror create --provider mirror --name mclaude
-```
+# Install dots (see https://github.com/joelreymont/dots for other methods)
+go install github.com/joelreymont/dots@latest
 
-Remove the cc-mirror packaged skills (as they will conflict with promode skills):
-
-```bash
-rm -rf ~/.cc-mirror/mclaude/config/skills/orchestration
-rm -rf ~/.cc-mirror/mclaude/config/skills/task-manage
+# Initialize in your project
+cd your-project
+dot init
 ```
 
 ---
 
 ## Installation
-
-Start your patched install of Claude Code with team mode enabled:
-
-```bash
-mclaude
-```
 
 Run two commands to get the plugin setup:
 
@@ -55,9 +46,7 @@ Run two commands to get the plugin setup:
 /plugin install promode
 ```
 
-Then restart Claude Code.
-
-After the restart, prompt Claude to install promode (update your CLAUDE.md, etc):
+Then restart Claude Code and prompt Claude to install promode (update your CLAUDE.md, etc):
 
 ```
 Update the claude code meta to install promode

@@ -1,4 +1,4 @@
-- Add dependency on dots (https://github.com/joelreymont/dots) - audit, install, update must check that it's installed
 - Lookup needs clarifying that it depends on the activity not invovling significant amounts of output (that a subagent should summarise for the main agent)
 - Do the subagents know they key principles (tests are the documentation)
 - Should the principles be framed as key ideals that it is the responsibility of the agents to help the repo move towards?
+- Does Explore inherit the main agent's context? If not, the main agent must be conscious that it (and other subagents) don't have this and should be prompted with appropriate info and references in the spirit of progressive disclosure 
