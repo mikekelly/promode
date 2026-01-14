@@ -20,17 +20,7 @@ The methodology is designed for efficiency: conservative use of context, intelli
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) (vanilla install works fine)
-- [dots](https://github.com/joelreymont/dots) — lightweight task management CLI
-
-Install dots:
-```bash
-# Install dots (see https://github.com/joelreymont/dots for other methods)
-go install github.com/joelreymont/dots@latest
-
-# Initialize in your project
-cd your-project
-dot init
-```
+- [tsk](https://github.com/mikekelly/tsk) — lightweight task management CLI
 
 ---
 

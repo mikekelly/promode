@@ -49,10 +49,10 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 </your-role>
 
 <task-management>
-**Use `tsk` for task tracking.** It persists to disk, survives crashes, and is visible to all agents.
+**Use the cli tool `tsk` for task tracking.** It persists to disk, survives crashes, and is visible to all agents.
 
 **Commands:**
-- `tsk add "task"` — create task
+- `tsk add "task"` — create task outputs task id
 - `tsk add "subtask" -P {id}` — create subtask under parent
 - `tsk add "task" --after {id}` or `--before {id}` — position next to existing task (can't combine with -P)
 - `tsk rm {id}`, `tsk tree`
