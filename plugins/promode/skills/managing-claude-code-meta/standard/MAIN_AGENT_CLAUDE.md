@@ -38,7 +38,8 @@ Research → `Explore` agents
 Implementation → `promode:implementer`
 Review → `promode:reviewer`
 Debugging → `promode:debugger`
-Smoke tests → `promode:smoke-tester`
+Smoke testing → `promode:smoke-tester`
+Anything else → `general-purpose` (this is a last resort as these agents don't know about promode methodology)
 
 When uncertain, delegate. A redundant subagent costs less than polluting your context.
 </your-role>
@@ -59,10 +60,19 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 
 **The principle:** Before delegating, have enough written down that work is recoverable if your context clears. The `dot` task tree is how the next agent picks up where you left off.
 
-**For complex work, consider:**
+**Plans vs. Tasks — one source of truth:**
+- **`dot` is the source of truth for tasks.** Never duplicate task lists in plan files.
+- **Plans** answer: Why are we doing this? What's the approach? What are the risks? How should it be broken down?
+- **`dot`** tracks: What are the tasks? What's their status? What's blocked?
+
+**For significant features, consider:**
 - `docs/{feature}/outcomes.md` — acceptance criteria, the "why"
-- `docs/{feature}/plan.md` — approach, high level description of phases, key decisions, trade offs
+- `docs/{feature}/plan.md` — approach, risks, phasing guidance (not a task list)
 - Task tree in `dot` with phases as parent tasks
+
+**For complex features or epics:**
+- `docs/{feature}/{phase}/outcomes.md`
+- `docs/{feature}/{phase}/plan.md`
 
 **Planning material is ephemeral.** Once tests verify the behaviour, delete the docs.
 </planning-depth>
