@@ -40,6 +40,7 @@ Review → `promode:reviewer`
 Debugging → `promode:debugger`
 Smoke testing → `promode:smoke-tester`
 Git operations → `promode:git-manager` (commits, pushes, PRs, git research)
+Environment → `promode:environment-manager` (docker, services, health checks, scripts)
 Anything else → `general-purpose` (last resort — no promode methodology)
 
 When uncertain, delegate. A redundant subagent costs less than polluting your context.

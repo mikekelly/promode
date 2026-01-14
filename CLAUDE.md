@@ -23,6 +23,7 @@ Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This 
 | `promode:tester` | Run tests, return AI-optimized results, critique quality | sonnet |
 | `promode:smoke-tester` | Create/execute smoke tests as readable markdown | sonnet |
 | `promode:git-manager` | Commits, pushes, PRs, git research | sonnet |
+| `promode:environment-manager` | Docker, services, health checks, env scripts | sonnet |
 
 **Note**: Brainstorming, planning, and orchestration are done by the main agent. Use built-in `Explore` agents for codebase research.
 
