@@ -22,9 +22,9 @@ Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This 
 | `promode:debugger` | Root cause analysis, fix failures | sonnet |
 | `promode:tester` | Run tests, return AI-optimized results, critique quality | sonnet |
 | `promode:smoke-tester` | Create/execute smoke tests as readable markdown | sonnet |
-| `promode:document-interrogator` | Read files and answer questions to preserve context | sonnet |
+| `promode:git-manager` | Commits, pushes, PRs, git research | sonnet |
 
-**Note**: Brainstorming, planning, and orchestration are done by the main agent. Use `promode:document-interrogator` to get information from files without consuming main agent context. Use built-in `Explore` agents for codebase research during planning.
+**Note**: Brainstorming, planning, and orchestration are done by the main agent. Use built-in `Explore` agents for codebase research.
 
 ### Keeping Agents in Sync
 

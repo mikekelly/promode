@@ -1,2 +1,5 @@
+- Add workflow section back in from previous versions
+- Researcher agent - Prefer Exa if available. etc etc (main agent must know to call this)
+- Implementer, tester, reviewer, debugger should also know that they can use context7, grep_app, exa
 - Do the subagents know the key principles (tests are the documentation)
 - Should the principles be framed as key ideals that it is the responsibility of the agents to help the repo move towards? 

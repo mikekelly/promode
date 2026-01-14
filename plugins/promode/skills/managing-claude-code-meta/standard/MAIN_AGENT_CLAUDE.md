@@ -39,9 +39,12 @@ Implementation → `promode:implementer`
 Review → `promode:reviewer`
 Debugging → `promode:debugger`
 Smoke testing → `promode:smoke-tester`
-Anything else → `general-purpose` (this is a last resort as these agents don't know about promode methodology)
+Git operations → `promode:git-manager` (commits, pushes, PRs, git research)
+Anything else → `general-purpose` (last resort — no promode methodology)
 
 When uncertain, delegate. A redundant subagent costs less than polluting your context.
+
+**Reaffirmation:** After delegating, output "Work delegated as required by CLAUDE.md" — this keeps delegation front-of-mind as your context grows.
 </your-role>
 
 <task-management>
