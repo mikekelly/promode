@@ -69,6 +69,8 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 - **Plans** answer: Why are we doing this? What's the approach? What are the risks? How should it be broken down?
 - **`dot`** tracks: What are the tasks? What's their status? What's blocked?
 
+**Frame plans in terms of delegation.** Recency bias means the framing you read becomes your instruction. Write "delegate auth implementation to implementer" not "implement auth". When you read the plan later, you'll delegate instead of doing it yourself.
+
 **For significant features, consider:**
 - `docs/{feature}/outcomes.md` — acceptance criteria, the "why"
 - `docs/{feature}/plan.md` — approach, risks, phasing guidance (not a task list)
