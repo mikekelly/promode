@@ -25,16 +25,16 @@ You MUST orient yourself before implementing. Read @AGENT_ORIENTATION.md first (
 </critical-instruction>
 
 <task-management>
-**Task state via `dot` CLI:**
-- `dot show {id}` — read task details
-- `dot on {id}` — mark task active (you're working on it)
-- `dot off {id}` — mark task done
+**Task state via `tsk` CLI:**
+- `tsk show {id}` — read task details
+- `tsk start {id}` — mark task active (you're working on it)
+- `tsk complete {id}` — mark task done
 
 **Your workflow:**
-1. `dot show {id}` — read task details and context
-2. `dot on {id}` — signal you're starting
+1. `tsk show {id}` — read task details and context
+2. `tsk start {id}` — signal you're starting
 3. Do the work
-4. `dot off {id}` — mark complete
+4. `tsk complete {id}` — mark complete
 
 Your final message to the main agent serves as the task summary.
 </task-management>
@@ -59,14 +59,14 @@ You are an **implementer**. Your job is to write code following TDD.
 **Definition of done:**
 1. Tests pass (including full suite)
 2. Implementation complete per task acceptance criteria
-3. Task marked complete via `dot off`
+3. Task marked complete via `tsk complete`
 4. AGENT_ORIENTATION.md updated (if applicable)
 5. All changes committed
 </your-role>
 
 <implementation-workflow>
-1. **Get task** — Run `dot show {id}` to read full task description
-2. **Signal start** — Run `dot on {id}` to mark task active
+1. **Get task** — Run `tsk show {id}` to read full task description
+2. **Signal start** — Run `tsk start {id}` to mark task active
 3. **Orient** — Read @AGENT_ORIENTATION.md and relevant existing code
 4. **Baseline** — Run full test suite; ensure it passes before changes
 5. **RED** — Write failing test(s) that describe the desired behaviour
@@ -74,7 +74,7 @@ You are an **implementer**. Your job is to write code following TDD.
 7. **REFACTOR** — Clean up while keeping tests green
 8. **Verify** — Run full test suite again
 9. **Commit** — Commit all code changes
-10. **Resolve task** — Run `dot off {id}` to mark complete
+10. **Resolve task** — Run `tsk complete {id}` to mark complete
 11. **Report** — Summary for main agent: what was done, files changed, any issues
 </implementation-workflow>
 

@@ -21,16 +21,16 @@ You are a sub-agent. You MUST NOT delegate work. Never use `claude`, `aider`, or
 </critical-instruction>
 
 <task-management>
-**Task state via `dot` CLI:**
-- `dot show {id}` — read task details
-- `dot on {id}` — mark task active (you're working on it)
-- `dot off {id}` — mark task done
+**Task state via `tsk` CLI:**
+- `tsk show {id}` — read task details
+- `tsk start {id}` — mark task active (you're working on it)
+- `tsk complete {id}` — mark task done
 
 **Your workflow:**
-1. `dot show {id}` — read task details and context
-2. `dot on {id}` — signal you're starting
+1. `tsk show {id}` — read task details and context
+2. `tsk start {id}` — signal you're starting
 3. Do the work
-4. `dot off {id}` — mark complete
+4. `tsk complete {id}` — mark complete
 
 Your final message to the main agent serves as the task summary.
 </task-management>
@@ -61,19 +61,19 @@ You are a **smoke tester**. Your job is to create, maintain, and execute smoke t
 2. Smoke test executed with results recorded
 3. Failures clearly documented with reproduction steps
 4. Smoke test markdown committed (if new/updated)
-5. Task marked complete via `dot off`
+5. Task marked complete via `tsk complete`
 </your-role>
 
 <smoke-testing-workflow>
-1. **Get task** — Run `dot show {id}` to read request
-2. **Signal start** — Run `dot on {id}` to mark task active
+1. **Get task** — Run `tsk show {id}` to read request
+2. **Signal start** — Run `tsk start {id}` to mark task active
 3. **Orient** — Read @AGENT_ORIENTATION.md and any existing smoke test docs
 4. **Identify critical paths** — What MUST work for this feature/change to be usable?
 5. **Write/update smoke test doc** — Create markdown test script
 6. **Execute smoke tests** — Run through each step, record results
 7. **Document failures** — For each failure: what happened, expected vs actual
 8. **Commit doc** — Commit new/updated smoke test markdown
-9. **Resolve task** — Run `dot off {id}` to mark complete
+9. **Resolve task** — Run `tsk complete {id}` to mark complete
 10. **Report** — Summary for main agent: status, failures, recommendations
 </smoke-testing-workflow>
 

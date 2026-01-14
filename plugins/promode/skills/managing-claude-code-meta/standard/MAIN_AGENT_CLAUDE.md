@@ -49,9 +49,15 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 </your-role>
 
 <task-management>
-**Use `dot` for task tracking.** It persists to disk, survives crashes, and is visible to all agents.
+**Use `tsk` for task tracking.** It persists to disk, survives crashes, and is visible to all agents.
 
-**Commands:** `dot add "task"`, `dot add "subtask" -P {parent-id}`, `dot rm {id}`, `dot tree`
+**Commands:**
+- `tsk add "task"` — create task
+- `tsk add "subtask" -P {id}` — create subtask under parent
+- `tsk add "task" --after {id}` or `--before {id}` — position next to existing task (can't combine with -P)
+- `tsk rm {id}`, `tsk tree`
+
+**IDs are 8 random chars** (e.g., `a1b2c3d4`).
 
 **Signs a task is too large:**
 - You'd need to explain significant context in the prompt
@@ -60,21 +66,21 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 </task-management>
 
 <planning-depth>
-**Scale your planning to the task.** A one-file bug fix needs a task in `dot`. A multi-week feature might need outcome docs, plan docs, and a deep task tree. Use your judgment.
+**Scale your planning to the task.** A one-file bug fix needs a task in `tsk`. A multi-week feature might need outcome docs, plan docs, and a deep task tree. Use your judgment.
 
-**The principle:** Before delegating, have enough written down that work is recoverable if your context clears. The `dot` task tree is how the next agent picks up where you left off.
+**The principle:** Before delegating, have enough written down that work is recoverable if your context clears. The `tsk` task tree is how the next agent picks up where you left off.
 
 **Plans vs. Tasks — one source of truth:**
-- **`dot` is the source of truth for tasks.** Never duplicate task lists in plan files.
+- **`tsk` is the source of truth for tasks.** Never duplicate task lists in plan files.
 - **Plans** answer: Why are we doing this? What's the approach? What are the risks? How should it be broken down?
-- **`dot`** tracks: What are the tasks? What's their status? What's blocked?
+- **`tsk`** tracks: What are the tasks? What's their status? What's blocked?
 
 **Frame plans in terms of delegation.** Recency bias means the framing you read becomes your instruction. Write "delegate auth implementation to implementer" not "implement auth". When you read the plan later, you'll delegate instead of doing it yourself.
 
 **For significant features, consider:**
 - `docs/{feature}/outcomes.md` — acceptance criteria, the "why"
 - `docs/{feature}/plan.md` — approach, risks, phasing guidance (not a task list)
-- Task tree in `dot` with phases as parent tasks
+- Task tree in `tsk` with phases as parent tasks
 
 **For complex features or epics:**
 - `docs/{feature}/{phase}/outcomes.md`
@@ -86,12 +92,12 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 <orchestration>
 **Create tasks upfront, then delegate.** Don't create just-in-time — granularity suffers as context fills.
 
-1. Create tasks with `dot add`
+1. Create tasks with `tsk add`
 2. Kick off agents in parallel (`run_in_background: true`) to pickup tasks
 3. Go passive — `<task-notification>` will wake you
 4. When notified, extract results: `tail -1 {output_file} | jq -r '.message.content[0].text'`
 
-Use `dot tree` anytime you want an overview of task statuses.
+Use `tsk tree` anytime you want an overview of task statuses.
 
 **Model selection:**
 - `sonnet` — Default for all work. Always override `Explore` agents to use sonnet.
