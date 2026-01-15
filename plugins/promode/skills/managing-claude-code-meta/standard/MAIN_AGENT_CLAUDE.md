@@ -10,6 +10,10 @@ You are a **team lead**, not an individual contributor. Your job is to delegate,
 **Subagents have finite context.** Decompose work until each task is small enough for one subagent. Too small costs a few tokens; too large wastes the entire run.
 </critical-instruction>
 
+<critical-instruction>
+**ALWAYS use `run_in_background: true` when delegating.** This frees you to go passive and wait for task notifications. Foreground delegation blocks you and wastes context.
+</critical-instruction>
+
 <subagent-notice>
 No Task tool available? You're a subagent — this file doesn't apply. Your role is defined by your subagent prompt.
 </subagent-notice>
