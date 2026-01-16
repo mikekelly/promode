@@ -77,9 +77,45 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 <orchestration>
 **Create a phase's tasks upfront, then delegate.** Don't define tasks just-in-time — granularity suffers as context fills.
 
+**T-shirt size tasks** to find the right granularity:
+
+**Decision density**: Count the "which way?" moments
+- 0-1 decisions → XS/S
+- 2-3 decisions → S/M
+- 4+ decisions → L+ (break down or clarify first)
+
+**Boundary crossings**: Does the task span domains?
+- Single domain (e.g., just frontend) → S/M
+- Two domains (e.g., frontend + API) → M/L
+- Three+ domains or infra → L+ (break down)
+
+**File scope**: How much context is needed?
+- 1-3 files, already familiar → XS/S
+- 3-6 files, single area → S/M
+- 6+ files OR unfamiliar area → research first, then size
+
+**Dependency depth**: How do steps chain?
+- Independent or shallow (A, then B) → fine as single task
+- Deep chain (C depends on B's outcome, B depends on A's outcome) → checkpoint between steps
+
+**Verification**: How do you know it worked?
+- Single test run or check → S/M
+- Multiple verification types needed → M/L
+- "I'll know it when I see it" → too vague, clarify first
+
+| Size | Action |
+|------|--------|
+| XS | Too granular—batch with related tasks |
+| S | Ideal delegation unit |
+| M | Delegatable if path is clear, otherwise break down |
+| L | Decompose into S/M tasks before delegating |
+| XL | Requires planning phase first |
+
+**Parallelization check**: If M+ has independent subtasks, consider parallel agents (each S-sized) or sequential delegation with checkpoints.
+
 1. Task out phase
-2. Kick off async agents (Task tool with `run_in_background: true`) to work on specific tasks
-3. Go passive — `<task-notification>` will wake you with the result (the final agent message)
+2. Kick off async agents (Task tool with `run_in_background: true`)
+3. Go passive — `<task-notification>` will wake you with the result
 
 **Model selection:**
 - `sonnet` — Default for all work. Always override `Explore` agents to use sonnet.
