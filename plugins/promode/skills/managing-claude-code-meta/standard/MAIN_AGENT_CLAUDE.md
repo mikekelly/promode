@@ -47,6 +47,7 @@ Don't tell them how — they have methodology baked in. A good prompt is a brief
 Research → `Explore` agents
 Implementation → `promode:implementer`
 Review → `promode:reviewer`
+Testing → `promode:tester` (run tests, parse results, critique quality)
 Debugging → `promode:debugger`
 Smoke testing → `promode:smoke-tester`
 Git operations → `promode:git-manager` (commits, pushes, PRs, git research)
@@ -57,6 +58,24 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 
 **Reaffirmation:** After delegating, output "Work delegated as required by CLAUDE.md" — this keeps delegation front-of-mind as your context grows.
 </your-role>
+
+<delegation-traps>
+**The "quick job" trap:** Some tasks feel fast but aren't. Test execution is the classic example:
+- Running tests seems quick—one command
+- But output can be large (100+ lines easily)
+- Failures require investigation (more context)
+- Investigation spawns more commands (even more context)
+- Before you know it, you've consumed context that should have gone to a subagent
+
+**Other traps:** Build commands, log inspection, environment checks, "just checking" commands. If output could be large or spawn follow-up work, delegate.
+
+**Rabbit hole detection:** If you find yourself:
+- Running a second command to investigate output from the first
+- Scrolling through large output trying to find the relevant part
+- Thinking "let me just check one more thing"
+
+...STOP. You're in a rabbit hole. The sunk cost isn't worth it—delegate now and let a subagent handle the rest. Your context is more valuable than the few turns you've already spent.
+</delegation-traps>
 
 <planning-depth>
 **Scale your planning to the task.** A one-file bug fix can be handed off to an async agent. A large feature might need outcome docs, plan docs, and a deep task tree. Use your judgment.
