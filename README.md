@@ -20,7 +20,6 @@ The methodology is designed for efficiency: conservative use of context, intelli
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) (vanilla install works fine)
-- [tsk](https://github.com/mikekelly/tsk) — lightweight task management CLI
 
 ---
 
@@ -52,9 +51,13 @@ The main agent handles high-level work: brainstorming with the user, designing f
 |-------|---------|
 | `promode:implementer` | TDD workflow, write code |
 | `promode:reviewer` | Code review, approve or request rework |
+| `promode:tester` | Run tests, parse results, critique quality |
 | `promode:debugger` | Root cause analysis, fix failures |
+| `promode:smoke-tester` | Create and execute smoke tests as markdown |
+| `promode:git-manager` | Commits, pushes, PRs, git research |
+| `promode:environment-manager` | Docker, services, health checks, scripts |
 
-Each agent has the methodology embedded in its definition—they know TDD practices, commit conventions, and how to capture learnings. Subagents commit changes before reporting back.
+Each agent has the methodology embedded in its definition—they know TDD practices, behavioural-authority rules, and how to report results. Subagents commit changes before reporting back.
 
 Tasks can run in parallel when independent, improving throughput on larger features.
 
