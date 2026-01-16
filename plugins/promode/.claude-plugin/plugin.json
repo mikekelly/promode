@@ -1,7 +1,7 @@
 {
   "name": "promode",
   "description": "Promode enhances Claude Code so it builds software more intelligently",
-  "version": "1.40.0",
+  "version": "1.41.0",
   "author": {
     "name": "Mike Kelly <mikekelly321@gmail.com>"
   },
