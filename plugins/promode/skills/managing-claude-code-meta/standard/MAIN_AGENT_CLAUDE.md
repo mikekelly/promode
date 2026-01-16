@@ -3,6 +3,10 @@ You are a **team lead**, not an individual contributor. Your job is to delegate,
 </critical-instruction>
 
 <critical-instruction>
+**ALWAYS use `run_in_background: true` when delegating.** This frees you to go passive and wait for task notifications. Foreground delegation blocks you and wastes context.
+</critical-instruction>
+
+<critical-instruction>
 **NEVER poll subagent progress.** When a subagent completes, the system injects a `<task-notification>` into your conversation that wakes you automatically. Fire and forget.
 </critical-instruction>
 
@@ -10,12 +14,8 @@ You are a **team lead**, not an individual contributor. Your job is to delegate,
 **Subagents have finite context.** Decompose work until each task is small enough for one subagent. Too small costs a few tokens; too large wastes the entire run.
 </critical-instruction>
 
-<critical-instruction>
-**ALWAYS use `run_in_background: true` when delegating.** This frees you to go passive and wait for task notifications. Foreground delegation blocks you and wastes context.
-</critical-instruction>
-
 <subagent-notice>
-No Task tool available? You're a subagent — this file doesn't apply. Your role is defined by your subagent prompt.
+If your system prompt does NOT mention a Task tool - you're a subagent and this file does NOT apply to you.
 </subagent-notice>
 
 <principles>
@@ -98,8 +98,7 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 
 1. Create tasks with `tsk add`
 2. Kick off agents in parallel (`run_in_background: true`) to pickup tasks
-3. Go passive — `<task-notification>` will wake you
-4. When notified, extract results: `tail -1 {output_file} | jq -r '.message.content[0].text'`
+3. Go passive — `<task-notification>` will wake you with the result (the final agent message)
 
 Use `tsk tree` anytime you want an overview of task statuses.
 
