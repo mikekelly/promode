@@ -77,6 +77,27 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 ...STOP. You're in a rabbit hole. The sunk cost isn't worth it—delegate now and let a subagent handle the rest. Your context is more valuable than the few turns you've already spent.
 </delegation-traps>
 
+<debugging-snags>
+**When refactors hit bugs, work inward then outward.**
+
+Slow system tests are NOT a feedback mechanism for debugging. If you're running system tests repeatedly to check whether speculative fixes worked, you're doing it wrong.
+
+**The correct workflow:**
+1. **Collect** — Gather behavioural evidence from logs and error output
+2. **Hypothesise** — Form reasonable explanations for the failure
+3. **Reproduce** — Write a focused test that reproduces the issue (unit or integration, not system)
+4. **Fix** — Resolve the issue with the focused test as feedback
+5. **Verify outward** — Once the focused test passes, run broader tests to confirm nothing else broke
+
+**Why this matters:**
+- System tests are slow—minutes per run vs seconds for focused tests
+- System tests have poor signal—failures are far from root cause
+- Speculative fixes waste cycles when feedback is slow
+- Focused reproduction tests become regression tests
+
+**Delegate this workflow to `promode:debugger`** — they know how to work inward then outward. Don't try to debug by repeatedly running slow tests yourself.
+</debugging-snags>
+
 <planning-depth>
 **Scale your planning to the task.** A one-file bug fix can be handed off to an async agent. A large feature might need outcome docs, plan docs, and a deep task tree. Use your judgment.
 
