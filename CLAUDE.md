@@ -5,9 +5,11 @@
 Promode is a Claude Code plugin that enhances how Claude builds software. It provides:
 
 - **Skills** — Domain knowledge that loads just-in-time (managing CLAUDE.md files, installing skills)
-- **Agents** — Phase-specific subagents for planning, research, implementation, review, and debugging
+- **Agents** — Phase-specific subagents for implementation, debugging, testing, and git operations
 
 The core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, and agents should delegate aggressively to conserve it.
+
+**Requires**: `compound-engineering` plugin for specialized reviewers, research-first planning, and knowledge capture. Install with `/plugin install compound-engineering`.
 
 ### Phase Agents
 
@@ -18,12 +20,13 @@ Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This 
 | Agent | Purpose | Model |
 |-------|---------|-------|
 | `promode:implementer` | TDD workflow, write code | sonnet |
-| `promode:reviewer` | Code review, approve or request rework | sonnet/opus |
 | `promode:debugger` | Root cause analysis, fix failures | sonnet |
 | `promode:tester` | Run tests, return AI-optimized results, critique quality | sonnet |
 | `promode:smoke-tester` | Create/execute smoke tests as readable markdown | sonnet |
 | `promode:git-manager` | Commits, pushes, PRs, git research | sonnet |
 | `promode:environment-manager` | Docker, services, health checks, env scripts | sonnet |
+
+**Code review**: Use compound-engineering's language-specific reviewers (`kieran-rails-reviewer`, `kieran-python-reviewer`, etc.) or `/workflows:review` for parallel multi-reviewer passes.
 
 **Note**: Brainstorming, planning, and orchestration are done by the main agent. Use built-in `Explore` agents for codebase research.
 
