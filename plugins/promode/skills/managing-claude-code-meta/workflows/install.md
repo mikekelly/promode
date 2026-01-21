@@ -11,7 +11,6 @@ Read these before proceeding:
 - NEVER proceed if CLAUDE.md already exists (route to migrate workflow instead)
 - NEVER include secrets or credentials in AGENT_ORIENTATION.md files
 - NEVER skip the verification step (Step 9)
-- NEVER proceed without compound-engineering plugin installed
 </never_do>
 
 <escalation>
@@ -19,36 +18,9 @@ Stop and ask the user when:
 - Project has unconventional structure (no src/, packages/, lib/, or apps/)
 - Existing AGENT_ORIENTATION.md has substantial content that might conflict
 - You're unsure which directories warrant their own AGENT_ORIENTATION.md
-- compound-engineering plugin is not installed
 </escalation>
 
 <process>
-## Step 0: Verify Dependencies
-
-**Promode requires compound-engineering plugin.** Check if it's installed:
-
-```bash
-# Check for compound-engineering plugin
-ls ~/.claude/plugins/compound-engineering 2>/dev/null || \
-ls ~/.claude/plugin-cache/*/compound-engineering 2>/dev/null || \
-echo "NOT_FOUND"
-```
-
-| Result | Action |
-|--------|--------|
-| Directory found | Continue to Step 1 |
-| NOT_FOUND | **STOP** — Tell user to install: `/plugin install compound-engineering` |
-
-**If compound-engineering is missing:**
-
-> Promode requires the compound-engineering plugin for specialized reviewers, research-first planning, and knowledge capture.
->
-> Install it with: `/plugin install compound-engineering`
->
-> Then re-run this installation.
-
-**Do not proceed until compound-engineering is installed.**
-
 ## Step 1: Verify Target Project
 
 Check the target project:
@@ -76,7 +48,7 @@ Copy `standard/MAIN_AGENT_CLAUDE.md` to the project root exactly as-is. Do not m
 
 This installs the promode methodology for the main agent. The standard CLAUDE.md is designed to work universally — it defines agent behaviour, not project knowledge. Project-specific information belongs in AGENT_ORIENTATION.md files.
 
-**Note**: Sub-agents don't inherit CLAUDE.md. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to phase-specific agents (implementer, reviewer, debugger) and compound-engineering's specialized reviewers.
+**Note**: Sub-agents don't inherit CLAUDE.md. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to phase-specific agents (implementer, debugger, tester, reviewers).
 
 ## Step 4: Create Project Tracking Files
 
@@ -118,7 +90,7 @@ These three files provide persistent project tracking across sessions. The main 
 
 ## Step 5: Create docs/solutions/ Directory
 
-Create the directory for compound-engineering's knowledge capture:
+Create the directory for knowledge capture:
 
 ```bash
 mkdir -p {project_path}/docs/solutions
@@ -310,7 +282,6 @@ Confirm:
 
 <success_criteria>
 Installation is complete when:
-- [ ] compound-engineering plugin is installed
 - [ ] CLAUDE.md installed at project root (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
 - [ ] KANBAN_BOARD.md created with Doing and Ready columns
 - [ ] IDEAS.md created for raw ideas
@@ -318,7 +289,7 @@ Installation is complete when:
 - [ ] `docs/solutions/` directory created for knowledge capture
 - [ ] MCP servers offered to user (optional — installed if user accepted)
 - [ ] LSP servers configured for detected languages
-- [ ] Root AGENT_ORIENTATION.md exists with compact project guidance
+- [ ] Root AGENT_ORIENTATION.md exists as thin conceptual entry point with links to solutions
 - [ ] Package AGENT_ORIENTATION.md files created for significant packages
-- [ ] Agent can navigate from CLAUDE.md → AGENT_ORIENTATION.md → package AGENT_ORIENTATION.md
+- [ ] Agent can navigate from CLAUDE.md → AGENT_ORIENTATION.md → docs/solutions/
 </success_criteria>

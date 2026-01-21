@@ -21,24 +21,6 @@ Stop and ask the user when:
 </escalation>
 
 <process>
-## Step 0: Verify Dependencies
-
-**Promode requires compound-engineering plugin.** Check if it's installed:
-
-```bash
-# Check for compound-engineering plugin
-ls ~/.claude/plugins/compound-engineering 2>/dev/null || \
-ls ~/.claude/plugin-cache/*/compound-engineering 2>/dev/null || \
-echo "NOT_FOUND"
-```
-
-| Result | Status | Action |
-|--------|--------|--------|
-| Directory found | PASS | Continue to Step 1 |
-| NOT_FOUND | **FAIL** | compound-engineering not installed |
-
-**Note this in the audit report.** If compound-engineering is missing, the project cannot use promode's full workflow (specialized reviewers, /workflows:plan, /workflows:compound).
-
 ## Step 1: Gather Project Information
 
 Collect key metrics:
@@ -258,7 +240,6 @@ Create a summary:
 ## Summary
 | Component | Status | Notes |
 |-----------|--------|-------|
-| compound-engineering plugin | {PASS/FAIL} | {installed?} |
 | CLAUDE.md | {PASS/FAIL} | {exact match with standard?} |
 | KANBAN_BOARD.md | {PASS/WARN/FAIL} | {exists with Doing/Ready columns?} |
 | IDEAS.md | {PASS/FAIL} | {exists?} |
@@ -290,9 +271,6 @@ Create a summary:
 
 Based on findings, recommend:
 
-**If compound-engineering not installed:**
-→ Install with: `/plugin install compound-engineering`
-
 **If CLAUDE.md doesn't match standard:**
 → Replace with exact copy of `standard/MAIN_AGENT_CLAUDE.md`. Move any project-specific content to AGENT_ORIENTATION.md files.
 
@@ -316,9 +294,6 @@ Based on findings, recommend:
 </process>
 
 <audit_checklist>
-**Dependencies:**
-- [ ] compound-engineering plugin installed
-
 **Required Components:**
 - [ ] CLAUDE.md — Exact match with `standard/MAIN_AGENT_CLAUDE.md`
 - [ ] KANBAN_BOARD.md — Exists with columns (Doing, Ready)
@@ -354,7 +329,6 @@ Based on findings, recommend:
 
 <success_criteria>
 Audit is complete when:
-- [ ] compound-engineering plugin checked
 - [ ] All required components checked (CLAUDE.md, KANBAN_BOARD.md, IDEAS.md, DONE.md, AGENT_ORIENTATION.md, docs/solutions/)
 - [ ] CLAUDE.md compared against standard
 - [ ] Knowledge capture directory checked

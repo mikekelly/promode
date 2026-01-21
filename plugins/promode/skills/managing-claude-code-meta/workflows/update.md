@@ -10,7 +10,6 @@ Read these before proceeding:
 - NEVER proceed if CLAUDE.md doesn't exist (route to install workflow)
 - NEVER modify project-specific AGENT_ORIENTATION.md content — only update standard components
 - NEVER skip the component verification step
-- NEVER proceed without compound-engineering plugin installed
 </never_do>
 
 <escalation>
@@ -18,36 +17,9 @@ Stop and ask the user when:
 - CLAUDE.md has project-specific modifications that would be lost
 - Project has custom components that might conflict with updates
 - You're unsure if existing configuration should be preserved or replaced
-- compound-engineering plugin is not installed
 </escalation>
 
 <process>
-## Step 0: Verify Dependencies
-
-**Promode requires compound-engineering plugin.** Check if it's installed:
-
-```bash
-# Check for compound-engineering plugin
-ls ~/.claude/plugins/compound-engineering 2>/dev/null || \
-ls ~/.claude/plugin-cache/*/compound-engineering 2>/dev/null || \
-echo "NOT_FOUND"
-```
-
-| Result | Action |
-|--------|--------|
-| Directory found | Continue to Step 1 |
-| NOT_FOUND | **STOP** — Tell user to install: `/plugin install compound-engineering` |
-
-**If compound-engineering is missing:**
-
-> Promode requires the compound-engineering plugin for specialized reviewers, research-first planning, and knowledge capture.
->
-> Install it with: `/plugin install compound-engineering`
->
-> Then re-run this update.
-
-**Do not proceed until compound-engineering is installed.**
-
 ## Step 1: Verify Existing Installation
 
 Confirm promode is already installed:
@@ -222,12 +194,11 @@ cat {project_path}/.mcp.json 2>/dev/null | grep -E "context7|exa|grep_app" || ec
 ```
 
 **Verification checklist:**
-- [ ] compound-engineering plugin installed
 - [ ] CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
 - [ ] KANBAN_BOARD.md exists with Doing/Ready columns
 - [ ] IDEAS.md exists
 - [ ] DONE.md exists
-- [ ] Root AGENT_ORIENTATION.md exists
+- [ ] Root AGENT_ORIENTATION.md exists as thin conceptual entry point
 - [ ] docs/solutions/ directory exists
 - [ ] MCP servers offered if missing (optional — user may decline)
 - [ ] LSP configured for detected languages
@@ -252,7 +223,7 @@ Provide a summary of what was updated:
 
 ## Knowledge Capture
 - docs/solutions/ directory {exists/created}
-- Use `/workflows:compound` after debugging sessions to document solutions
+- Document solved problems in docs/solutions/ after debugging sessions
 ```
 </process>
 
@@ -261,21 +232,19 @@ Every promode project should have these components:
 
 | Component | Location | Purpose |
 |-----------|----------|---------|
-| compound-engineering | plugin | Required dependency for specialized reviewers |
 | CLAUDE.md | project root | Main agent behaviour (exact copy of standard) |
 | KANBAN_BOARD.md | project root | Kanban board (Doing, Ready columns) |
 | IDEAS.md | project root | Raw ideas, not yet spec'd |
 | DONE.md | project root | Completed work archive |
-| AGENT_ORIENTATION.md | project root | Compact agent guidance for the project |
-| docs/solutions/ | project root | Knowledge capture via /workflows:compound |
+| AGENT_ORIENTATION.md | project root | Thin conceptual entry point with links to solutions |
+| docs/solutions/ | project root | Detailed solved problems, searchable by category |
 | .mcp.json | project root | MCP server configuration (optional) |
 | .claude/settings.local.json | project root | LSP plugin configuration |
-| Package AGENT_ORIENTATION.md | each significant package | Domain-specific agent guidance |
+| Package AGENT_ORIENTATION.md | each significant package | Package-specific conceptual guidance |
 </required_components>
 
 <success_criteria>
 Update is complete when:
-- [ ] compound-engineering plugin installed
 - [ ] CLAUDE.md updated to latest `standard/MAIN_AGENT_CLAUDE.md`
 - [ ] Required components exist (KANBAN_BOARD.md, IDEAS.md, DONE.md, AGENT_ORIENTATION.md)
 - [ ] docs/solutions/ directory exists for knowledge capture

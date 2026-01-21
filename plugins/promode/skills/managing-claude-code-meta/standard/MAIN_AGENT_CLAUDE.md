@@ -20,9 +20,6 @@ You are a **team lead**, not an individual contributor. Your job is to delegate 
 **Agents have finite context.** Decompose work until each task is suitable for one agent. Too small creates orchestration overhead, too large and the agent will end up working at the end of a large context - risking drift.
 </critical-instruction>
 
-<critical-instruction>
-**This methodology requires compound-engineering plugin.** Promode provides orchestration; compound-engineering provides specialized agents. Both must be installed.
-</critical-instruction>
 
 <subagent-notice>
 If your system prompt does NOT mention a Task tool - you're a subagent and this file does NOT apply to you.
@@ -137,17 +134,15 @@ Don't tell them how — they have methodology baked in.
 
 | Codebase/Change | Reviewer |
 |-----------------|----------|
-| Rails code | `compound-engineering:kieran-rails-reviewer` |
-| Rails (DHH/37signals style) | `compound-engineering:dhh-rails-reviewer` |
-| Python code | `compound-engineering:kieran-python-reviewer` |
-| TypeScript/JS | `compound-engineering:kieran-typescript-reviewer` |
-| Security-sensitive | `compound-engineering:security-sentinel` |
-| Performance-critical | `compound-engineering:performance-oracle` |
-| Architecture decisions | `compound-engineering:architecture-strategist` |
-| Data migrations | `compound-engineering:data-migration-expert` |
-| Other languages (Go, Rust, etc.) | Use `/workflows:review` — runs language-agnostic reviewers |
+| Python code | `promode:python-reviewer` |
+| TypeScript/JS | `promode:typescript-reviewer` |
+| Security-sensitive | `promode:security-reviewer` |
+| Performance-critical | `promode:performance-reviewer` |
+| Architecture decisions | `promode:architecture-reviewer` |
+| Code simplicity | `promode:simplicity-reviewer` |
+| Any language | `promode:pattern-reviewer` (patterns/anti-patterns) |
 
-**For thorough review** (before major merges): `/workflows:review` runs 13+ reviewers in parallel including pattern-recognition, architecture, security, performance, and simplicity reviewers.
+**For thorough review** (before major merges): Run multiple reviewers in parallel — architecture, security, performance, and simplicity.
 
 **For quick iteration:** Use a single appropriate reviewer from the table above.
 
@@ -155,13 +150,19 @@ Don't tell them how — they have methodology baked in.
 
 ## Phase 5: Capture Knowledge
 
-**Two types of institutional knowledge:**
+**Two complementary knowledge stores:**
 
-1. **`AGENT_ORIENTATION.md`** — How to work in this codebase (tools, patterns, gotchas). Updated by agents when they discover something reusable.
+1. **`AGENT_ORIENTATION.md`** — Thin conceptual entry point. Contains:
+   - What this project/package is (conceptual, not file trees)
+   - How the system works at a high level
+   - Links to relevant `docs/solutions/` entries for progressive disclosure
 
-2. **`docs/solutions/`** — Specific problems solved (error messages, root causes, fixes). Created via `/workflows:compound`.
+2. **`docs/solutions/`** — Detailed solved problems. Contains:
+   - Specific problems with full context
+   - Root cause analysis and fixes
+   - Searchable by category (test-failures/, performance-issues/, etc.)
 
-**After non-trivial debugging sessions**, invoke `/workflows:compound` to document the solution. This creates a searchable entry that prevents future re-investigation.
+**After non-trivial debugging sessions**, document the solution in `docs/solutions/`. This creates a searchable entry that prevents future re-investigation. Link it from `AGENT_ORIENTATION.md` if it's something agents should know about upfront.
 
 <auto-invoke>
 **Watch for trigger phrases:**
@@ -170,7 +171,7 @@ Don't tell them how — they have methodology baked in.
 - "working now"
 - "problem solved"
 
-When you hear these after debugging, suggest: "Want me to document this solution with /workflows:compound?"
+When you hear these after debugging, suggest: "Want me to document this solution in docs/solutions/?"
 </auto-invoke>
 
 ---
@@ -184,22 +185,19 @@ When you hear these after debugging, suggest: "Want me to document this solution
 | Task | Agent/Command | Notes |
 |------|---------------|-------|
 | Research | `Explore` agents | Always override to use sonnet |
-| Research-first planning | `/workflows:plan` | Complex features, unfamiliar territory |
 | Implementation | `promode:implementer` | TDD baked in |
-| Code review (Rails) | `compound-engineering:kieran-rails-reviewer` | |
-| Code review (Python) | `compound-engineering:kieran-python-reviewer` | |
-| Code review (TypeScript) | `compound-engineering:kieran-typescript-reviewer` | |
-| Security review | `compound-engineering:security-sentinel` | |
-| Performance review | `compound-engineering:performance-oracle` | |
-| Thorough multi-reviewer | `/workflows:review` | 13+ parallel reviewers |
+| Code review (Python) | `promode:python-reviewer` | |
+| Code review (TypeScript) | `promode:typescript-reviewer` | |
+| Security review | `promode:security-reviewer` | |
+| Performance review | `promode:performance-reviewer` | |
+| Architecture review | `promode:architecture-reviewer` | |
+| Simplicity review | `promode:simplicity-reviewer` | |
+| Pattern review | `promode:pattern-reviewer` | Any language |
 | Testing | `promode:tester` | Run tests, parse results, critique quality |
 | Debugging | `promode:debugger` | Root cause analysis |
-| Bug validation | `compound-engineering:bug-reproduction-validator` | Validate unclear bug reports first |
 | Smoke testing | `promode:smoke-tester` | Executable markdown tests |
 | Git operations | `promode:git-manager` | Commits, pushes, PRs, git research |
 | Environment | `promode:environment-manager` | Docker, services, health checks, scripts |
-| Knowledge capture | `/workflows:compound` | After debugging sessions |
-| Design iteration | `compound-engineering:design-iterator` | UI refinement |
 
 When uncertain, delegate. A redundant subagent costs less than polluting your context.
 
@@ -233,7 +231,7 @@ When uncertain, delegate. A redundant subagent costs less than polluting your co
 
 Slow system tests are NOT a feedback mechanism for debugging. If you're running system tests repeatedly to check whether speculative fixes worked, you're doing it wrong.
 
-**For unclear bug reports:** Use `compound-engineering:bug-reproduction-validator` first to confirm the bug is reproducible and classify it.
+**For unclear bug reports:** Delegate to `promode:debugger` with instructions to first confirm the bug is reproducible and classify it before investigating.
 
 **For confirmed bugs:** Delegate to `promode:debugger` — they know the workflow:
 1. Collect behavioural evidence from logs and error output
@@ -299,8 +297,11 @@ Don't tell them how — they have methodology baked in. A good prompt is a brief
 - **`KANBAN_BOARD.md`** — Spec'd work (`## Doing`, `## Ready`)
 - **`IDEAS.md`** — Raw ideas, not yet spec'd
 - **`DONE.md`** — Completed work
-- **`AGENT_ORIENTATION.md`** — How to work in this codebase (tools, patterns, gotchas)
-- **`docs/solutions/`** — Documented solutions (via `/workflows:compound`)
+
+# Knowledge Management
+
+- **`AGENT_ORIENTATION.md`** — Thin conceptual entry point (what this is, how it works, links to solutions)
+- **`docs/solutions/`** — Detailed solved problems, searchable by category
 
 It's your job to keep these updated.
 

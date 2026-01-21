@@ -6,13 +6,12 @@ description: "MUST be loaded when setting up, installing, migrating, reviewing, 
 <essential_principles>
 This skill manages projects that adopt the **promode methodology** — a set of principles and workflows for AI agents to develop software. The methodology emphasises TDD, context conservation, progressive disclosure, and clear delegation patterns.
 
-**Promode requires compound-engineering plugin.** The install/update/audit workflows check for this dependency and will not proceed without it. Install with `/plugin install compound-engineering`.
 
 **1. CLAUDE.md is for main agent behaviour**
 CLAUDE.md defines the main agent's role: conversing with users, delegating to sub-agents, and following the promode methodology. It does NOT contain project-specific technical details — those belong in AGENT_ORIENTATION.md.
 
 **2. Sub-agents use phase-specific agents**
-Claude Code sub-agents don't inherit CLAUDE.md. Promode provides phase-specific agents (implementer, debugger, tester) with the methodology baked in. Code review uses compound-engineering's language-specific reviewers. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to the appropriate agent.
+Claude Code sub-agents don't inherit CLAUDE.md. Promode provides phase-specific agents (implementer, debugger, tester, reviewers) with the methodology baked in. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to the appropriate agent.
 
 **3. AGENT_ORIENTATION.md is the agent knowledge graph**
 Each package/directory can have an AGENT_ORIENTATION.md with compact, token-efficient guidance for agents. This is distinct from README.md (which is for humans). Agents read these just-in-time when working in that area.
@@ -77,21 +76,21 @@ What would you like to do?
 <quick_reference>
 **CLAUDE.md**: Copy `standard/MAIN_AGENT_CLAUDE.md` exactly. Do not modify. This configures the main agent with promode methodology.
 
-**Sub-agents**: Main agents delegate execution to phase-specific agents (implementer, debugger, tester) and compound-engineering's reviewers. Brainstorming, planning, and orchestration are done by the main agent.
+**Sub-agents**: Main agents delegate execution to phase-specific agents (implementer, debugger, tester, reviewers). Brainstorming, planning, and orchestration are done by the main agent.
 
 **Promode project structure:**
 ```
 project/
 ├── CLAUDE.md              # Main agent behaviour (promode methodology)
 ├── KANBAN_BOARD.md        # Project tracking across sessions
-├── AGENT_ORIENTATION.md   # Compact agent guidance (tools, patterns, gotchas)
-├── .mcp.json              # MCP server configuration
+├── AGENT_ORIENTATION.md   # Thin conceptual entry point with links to solutions
+├── .mcp.json              # MCP server configuration (optional)
 ├── README.md              # Human documentation (optional, for GitHub etc)
 ├── docs/
-│   └── solutions/         # Knowledge capture via /workflows:compound
+│   └── solutions/         # Detailed solved problems, searchable by category
 └── packages/
     └── {package}/
-        └── AGENT_ORIENTATION.md  # Package-specific agent guidance
+        └── AGENT_ORIENTATION.md  # Package-specific conceptual guidance
 ```
 </quick_reference>
 
@@ -115,14 +114,13 @@ All in `workflows/`:
 A well-configured project has these components:
 
 **Required:**
-- compound-engineering plugin installed
 - CLAUDE.md — exact copy of `standard/MAIN_AGENT_CLAUDE.md`
 - KANBAN_BOARD.md — project tracking across sessions
-- AGENT_ORIENTATION.md — compact agent guidance at project root
-- docs/solutions/ — directory for knowledge capture via /workflows:compound
-- .mcp.json — MCP servers configured (context7, exa, grep_app)
+- AGENT_ORIENTATION.md — thin conceptual entry point (what this is, how it works, links to solutions)
+- docs/solutions/ — detailed solved problems, searchable by category
 
 **Recommended:**
+- .mcp.json — MCP servers configured (context7, exa, grep_app)
 - Package AGENT_ORIENTATION.md files for domain-specific context
 - LSP configured for detected languages
 - Tests document system behaviour, not markdown files
