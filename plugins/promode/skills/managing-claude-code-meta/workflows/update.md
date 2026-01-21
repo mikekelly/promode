@@ -113,7 +113,7 @@ If missing, create:
 mkdir -p {project_path}/docs/solutions
 ```
 
-This directory is where `/workflows:compound` stores documented solutions.
+This directory is where `/compound` stores documented solutions.
 
 ### .mcp.json (Optional)
 ```bash

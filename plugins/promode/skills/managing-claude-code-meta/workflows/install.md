@@ -96,7 +96,7 @@ Create the directory for knowledge capture:
 mkdir -p {project_path}/docs/solutions
 ```
 
-This is where `/workflows:compound` stores documented solutions. Categories will be created automatically as solutions are captured.
+This is where `/compound` stores documented solutions. Categories will be created automatically as solutions are captured.
 
 ## Step 6: Install MCP Servers (Optional)
 
@@ -214,7 +214,7 @@ Example:
 - `packages/api/` — Backend API
 - `packages/web/` — Frontend app
 - `docs/` — Architecture decisions
-- `docs/solutions/` — Documented problem solutions (via /workflows:compound)
+- `docs/solutions/` — Documented problem solutions (via /compound)
 
 ## Commands
 - `npm test` — Run tests

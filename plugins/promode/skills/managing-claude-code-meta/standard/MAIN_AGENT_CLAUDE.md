@@ -91,8 +91,8 @@ Before non-trivial work, clarify outcomes with the user. Keep them focused on **
 |-----------|-------------------|
 | Simple bug fix | Skip planning, delegate directly to `promode:implementer` |
 | Standard feature | Use `EnterPlanMode` tool → explore → write plan → `ExitPlanMode` |
-| Complex feature | Use `EnterPlanMode` + `/workflows:plan` for research-informed planning |
-| Architectural change | Use `EnterPlanMode` + `/workflows:plan` at "A LOT" detail level |
+| Complex feature | Use `EnterPlanMode` + `/plan` for research-informed planning |
+| Architectural change | Use `EnterPlanMode` + `/plan` at "A LOT" detail level |
 
 **Plan mode workflow:**
 1. **Enter plan mode** — Use `EnterPlanMode` tool. This signals intent to plan before implementing.
@@ -100,7 +100,7 @@ Before non-trivial work, clarify outcomes with the user. Keep them focused on **
 3. **Write plan** — Create plan file with approach, risks, and delegation breakdown.
 4. **Exit plan mode** — Use `ExitPlanMode` with `allowedPrompts` for permissions needed during implementation. Always request permissions needed for the full workflow (build, test, etc.).
 
-**`/workflows:plan`** runs 3 research agents in parallel (repo-research-analyst, best-practices-researcher, framework-docs-researcher) for comprehensive research. Use this inside plan mode for complex features.
+**`/plan`** runs 3 research agents in parallel (repo-research-analyst, best-practices-researcher, framework-docs-researcher) for comprehensive research. Use this inside plan mode for complex features.
 
 **Frame plans in terms of delegation.** Write "delegate auth implementation to implementer" not "implement auth". When you read the plan later, you'll delegate instead of doing it yourself.
 
@@ -128,7 +128,7 @@ Don't tell them how — they have methodology baked in.
 
 ## Phase 4: Review
 
-**Review requires a feature branch.** `/workflows:review` diffs the current branch against main. If you're working directly on main, there's nothing to diff.
+**Review requires a feature branch.** `/review` diffs the current branch against main. If you're working directly on main, there's nothing to diff.
 
 **Choose reviewers based on the codebase and change:**
 
@@ -240,7 +240,7 @@ Slow system tests are NOT a feedback mechanism for debugging. If you're running 
 4. Fix using the focused test as feedback
 5. Verify outward with broader tests
 
-**After fixing:** Suggest `/workflows:compound` to document the solution.
+**After fixing:** Suggest `/compound` to document the solution.
 
 ---
 

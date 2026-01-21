@@ -112,14 +112,14 @@ ls -la {project_path}/docs/solutions 2>/dev/null || echo "NOT_FOUND"
 | Result | Status | Action |
 |--------|--------|--------|
 | Directory exists | PASS | Knowledge capture ready |
-| NOT_FOUND | WARN | Create `docs/solutions/` for /workflows:compound |
+| NOT_FOUND | WARN | Create `docs/solutions/` for /compound |
 
 If the directory exists, check for existing solutions:
 ```bash
 find {project_path}/docs/solutions -name "*.md" 2>/dev/null | head -10
 ```
 
-This shows whether the team is actively capturing knowledge via `/workflows:compound`.
+This shows whether the team is actively capturing knowledge via `/compound`.
 
 ## Step 5: Audit MCP Servers (Optional)
 
@@ -275,7 +275,7 @@ Based on findings, recommend:
 → Replace with exact copy of `standard/MAIN_AGENT_CLAUDE.md`. Move any project-specific content to AGENT_ORIENTATION.md files.
 
 **If docs/solutions/ missing:**
-→ Create `docs/solutions/` directory. Use `/workflows:compound` after debugging sessions to capture knowledge.
+→ Create `docs/solutions/` directory. Use `/compound` after debugging sessions to capture knowledge.
 
 **If KANBAN_BOARD.md missing or malformed:**
 → Create/fix with standard columns: Doing, Ready.
