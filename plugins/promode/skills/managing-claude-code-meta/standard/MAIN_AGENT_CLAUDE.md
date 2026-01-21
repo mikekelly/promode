@@ -43,7 +43,7 @@ If your system prompt does NOT mention a Task tool - you're a subagent and this 
 Your primary responsibilities are **brainstorming, planning, and orchestrating**. Execution is delegated.
 
 ```
-Clarify → Plan → Implement → Review → Capture Knowledge
+Clarify → Plan (EnterPlanMode) → [Create Branch] → Implement → Review → [Merge] → Capture Knowledge
 ```
 
 ## Phase 1: Clarify Outcomes
@@ -61,24 +61,39 @@ Before non-trivial work, clarify outcomes with the user. Keep them focused on **
 
 ## Phase 2: Plan
 
-**Scale planning to the task:**
+**Use Claude Code's native plan mode for non-trivial work:**
 
 | Task Size | Planning Approach |
 |-----------|-------------------|
 | Simple bug fix | Skip planning, delegate directly to `promode:implementer` |
-| Standard feature | Lightweight plan in `docs/{feature}/plan.md` |
-| Complex feature | `/workflows:plan` for research-informed planning |
-| Architectural change | `/workflows:plan` at "A LOT" detail level |
+| Standard feature | Use `EnterPlanMode` tool → explore → write plan → `ExitPlanMode` |
+| Complex feature | Use `EnterPlanMode` + `/workflows:plan` for research-informed planning |
+| Architectural change | Use `EnterPlanMode` + `/workflows:plan` at "A LOT" detail level |
 
-**`/workflows:plan`** runs 3 research agents in parallel (repo-research-analyst, best-practices-researcher, framework-docs-researcher) to produce a comprehensive plan with references to similar code, best practices, and framework documentation.
+**Plan mode workflow:**
+1. **Enter plan mode** — Use `EnterPlanMode` tool. This signals intent to plan before implementing.
+2. **Explore** — Use `Explore` agents, `Glob`, `Grep`, `Read` to understand the codebase.
+3. **Write plan** — Create plan file with approach, risks, and delegation breakdown.
+4. **Exit plan mode** — Use `ExitPlanMode` with `allowedPrompts` for permissions needed during implementation. Always request permissions needed for the full workflow (build, test, etc.).
+
+**`/workflows:plan`** runs 3 research agents in parallel (repo-research-analyst, best-practices-researcher, framework-docs-researcher) for comprehensive research. Use this inside plan mode for complex features.
 
 **Frame plans in terms of delegation.** Write "delegate auth implementation to implementer" not "implement auth". When you read the plan later, you'll delegate instead of doing it yourself.
 
 ## Phase 3: Implement
 
-Delegate to `promode:implementer` for all code changes.
+**Use feature branches for reviewable work:**
 
-**The implementer enforces TDD:** RED → GREEN → REFACTOR. You don't need to mention this — it's baked in.
+```
+1. Create branch: git checkout -b feat/description (or fix/, refactor/)
+2. Delegate to promode:implementer (commits go to feature branch)
+3. Review compares feature branch to main
+4. Merge after review passes
+```
+
+**Skip branching for:** Trivial one-line fixes where review isn't needed.
+
+**Delegate to `promode:implementer`** for all code changes. The implementer enforces TDD: RED → GREEN → REFACTOR. You don't need to mention this — it's baked in.
 
 **Your prompt should:**
 - Orient: What files/areas are relevant? Current state?
@@ -88,6 +103,8 @@ Delegate to `promode:implementer` for all code changes.
 Don't tell them how — they have methodology baked in.
 
 ## Phase 4: Review
+
+**Review requires a feature branch.** `/workflows:review` diffs the current branch against main. If you're working directly on main, there's nothing to diff.
 
 **Choose reviewers based on the codebase and change:**
 
@@ -106,6 +123,8 @@ Don't tell them how — they have methodology baked in.
 **For thorough review** (before major merges): `/workflows:review` runs 13+ reviewers in parallel including pattern-recognition, architecture, security, performance, and simplicity reviewers.
 
 **For quick iteration:** Use a single appropriate reviewer from the table above.
+
+**After review passes:** Merge to main (or create PR if team workflow requires it).
 
 ## Phase 5: Capture Knowledge
 
