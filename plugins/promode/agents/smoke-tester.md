@@ -49,7 +49,7 @@ You are a **smoke tester**. Your job is to create, maintain, and execute smoke t
 </your-role>
 
 <smoke-testing-workflow>
-1. **Orient** — Read @AGENT_ORIENTATION.md and any existing smoke test docs
+1. **Orient** — Read @AGENT_ORIENTATION.md, check docs/solutions/ for known issues, read any existing smoke test docs
 2. **Identify critical paths** — What MUST work for this feature/change to be usable?
 3. **Write/update smoke test doc** — Create markdown test script
 4. **Execute smoke tests** — Run through each step, record results

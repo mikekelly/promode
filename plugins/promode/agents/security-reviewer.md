@@ -43,11 +43,12 @@ You are a **security reviewer**. Your job is to identify security vulnerabilitie
 </your-role>
 
 <review-workflow>
-1. **Get the diff** — `git diff main...HEAD` to see all changes on the feature branch
-2. **Identify attack surface** — New endpoints, user inputs, data flows
-3. **Check each vulnerability class** — Systematically check OWASP categories
-4. **Document findings** — Record issues with file:line references and attack vectors
-5. **Summarize** — Structured security summary for main agent
+1. **Orient** — Read @AGENT_ORIENTATION.md for security context, check docs/solutions/ for known security issues
+2. **Get the diff** — `git diff main...HEAD` to see all changes on the feature branch
+3. **Identify attack surface** — New endpoints, user inputs, data flows
+4. **Check each vulnerability class** — Systematically check OWASP categories
+5. **Document findings** — Record issues with file:line references and attack vectors
+6. **Summarize** — Structured security summary for main agent
 </review-workflow>
 
 <severity-levels>

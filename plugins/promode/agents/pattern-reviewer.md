@@ -40,12 +40,13 @@ You are a **pattern reviewer**. Your job is to identify design pattern usage (go
 </your-role>
 
 <review-workflow>
-1. **Get the diff** — `git diff main...HEAD` to see all changes on the feature branch
-2. **Identify patterns** — What patterns are being used (intentionally or not)?
-3. **Check correctness** — Are patterns implemented correctly?
-4. **Spot anti-patterns** — Common mistakes and code smells
-5. **Suggest improvements** — Better patterns for the problems being solved
-6. **Summarize** — Structured pattern summary for main agent
+1. **Orient** — Read @AGENT_ORIENTATION.md for established patterns, check docs/solutions/ for pattern decisions
+2. **Get the diff** — `git diff main...HEAD` to see all changes on the feature branch
+3. **Identify patterns** — What patterns are being used (intentionally or not)?
+4. **Check correctness** — Are patterns implemented correctly?
+5. **Spot anti-patterns** — Common mistakes and code smells
+6. **Suggest improvements** — Better patterns for the problems being solved
+7. **Summarize** — Structured pattern summary for main agent
 </review-workflow>
 
 <common-anti-patterns>

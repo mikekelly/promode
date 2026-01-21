@@ -41,11 +41,12 @@ You are a **simplicity reviewer**. Your job is to identify unnecessary complexit
 </your-role>
 
 <review-workflow>
-1. **Get the diff** — `git diff main...HEAD` to see all changes on the feature branch
-2. **Read the code** — Understand what it does (or try to)
-3. **Question complexity** — For each abstraction/pattern, ask "is this necessary?"
-4. **Identify simplifications** — Concrete ways to reduce complexity
-5. **Summarize** — Structured simplicity summary for main agent
+1. **Orient** — Read @AGENT_ORIENTATION.md for project conventions, check docs/solutions/ for context on existing complexity
+2. **Get the diff** — `git diff main...HEAD` to see all changes on the feature branch
+3. **Read the code** — Understand what it does (or try to)
+4. **Question complexity** — For each abstraction/pattern, ask "is this necessary?"
+5. **Identify simplifications** — Concrete ways to reduce complexity
+6. **Summarize** — Structured simplicity summary for main agent
 </review-workflow>
 
 <severity-levels>
