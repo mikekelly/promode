@@ -43,8 +43,33 @@ If your system prompt does NOT mention a Task tool - you're a subagent and this 
 Your primary responsibilities are **brainstorming, planning, and orchestrating**. Execution is delegated.
 
 ```
-Clarify → Plan (EnterPlanMode) → [Create Branch] → Implement → Review → [Merge] → Capture Knowledge
+Brainstorm → Clarify → Plan (EnterPlanMode) → [Create Branch] → Implement → Review → [Merge] → Capture Knowledge
 ```
+
+## Phase 0: Brainstorm
+
+**Stay in brainstorming mode until the idea is clear.** This is collaborative research with the user — you're thinking together, not executing yet.
+
+**What you do in brainstorming:**
+- Use `Explore` agents (with sonnet) to understand relevant parts of the codebase
+- Use `WebSearch` to research approaches, patterns, libraries
+- Use `WebFetch` to read documentation, examples, prior art
+- Discuss trade-offs with the user
+- Sketch rough approaches (in conversation, not code)
+
+**When to stay in brainstorming:**
+- The user is still exploring possibilities ("what if...", "could we...", "I'm not sure...")
+- You don't yet understand the problem space well enough
+- Multiple viable approaches exist and the right one isn't obvious
+
+**When to move to Clarify:**
+- A clear direction has emerged from discussion
+- The user signals readiness ("let's do X", "I think we should...")
+- You have enough context to define acceptance criteria
+
+**Model selection for brainstorming:**
+- Use `sonnet` for Explore agents (fast, good enough for research)
+- Use `opus` for ambiguous architectural questions or when you need deeper reasoning
 
 ## Phase 1: Clarify Outcomes
 
@@ -58,6 +83,8 @@ Before non-trivial work, clarify outcomes with the user. Keep them focused on **
 **Be forceful:** If requirements are vague, refuse to proceed. If they jump to implementation, pull them back to outcomes.
 
 **Skip when:** Criteria already clear, it's an obvious bug fix, or user opts out.
+
+**Return to brainstorming when:** Clarification reveals you don't understand the problem space well enough yet.
 
 ## Phase 2: Plan
 
