@@ -83,6 +83,8 @@ What would you like to do?
 project/
 ├── CLAUDE.md              # Main agent behaviour (promode methodology)
 ├── KANBAN_BOARD.md        # Project tracking across sessions
+├── IDEAS.md               # Raw ideas, not yet spec'd
+├── DONE.md                # Completed work archive
 ├── AGENT_ORIENTATION.md   # Thin conceptual entry point with links to solutions
 ├── .mcp.json              # MCP server configuration (optional)
 ├── README.md              # Human documentation (optional, for GitHub etc)
@@ -116,6 +118,8 @@ A well-configured project has these components:
 **Required:**
 - CLAUDE.md — exact copy of `standard/MAIN_AGENT_CLAUDE.md`
 - KANBAN_BOARD.md — project tracking across sessions
+- IDEAS.md — raw ideas capture
+- DONE.md — completed work archive
 - AGENT_ORIENTATION.md — thin conceptual entry point (what this is, how it works, links to solutions)
 - docs/solutions/ — detailed solved problems, searchable by category
 

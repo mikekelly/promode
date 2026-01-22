@@ -3,7 +3,7 @@ Read these before proceeding:
 1. The existing CLAUDE.md in the target project
 2. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 3. references/progressive-disclosure.md — Principles for content distribution
-4. references/mcp-servers.md — Required MCP server configuration
+4. references/mcp-servers.md — Optional MCP server configuration
 5. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
@@ -92,7 +92,7 @@ Replace the existing CLAUDE.md with an exact copy of `standard/MAIN_AGENT_CLAUDE
 
 This installs the promode methodology for the main agent. The standard CLAUDE.md is designed to work universally — all project-specific content belongs in AGENT_ORIENTATION.md files.
 
-**Note**: Sub-agents don't inherit CLAUDE.md. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to phase-specific agents (implementer, reviewer, debugger).
+**Note**: Sub-agents don't inherit CLAUDE.md. Main agents handle brainstorming, planning, and orchestration directly, then delegate execution to phase-specific agents (implementer, debugger, tester, reviewers).
 
 ## Step 5: Create KANBAN_BOARD.md (if missing)
 
@@ -103,27 +103,45 @@ ls {project_path}/KANBAN_BOARD.md 2>/dev/null || echo "MISSING"
 
 If missing, create with standard structure:
 ```markdown
-# Project Kanban
+# Kanban Board
 
-## Ideas
-<!-- Raw thoughts, not yet evaluated -->
-
-## Designed
-<!-- Has clear outcomes/spec -->
+## Doing
+<!-- Currently being worked on -->
 
 ## Ready
 <!-- Designed + planned, can be picked up -->
-
-## In Progress
-<!-- Currently being worked on -->
-
-## Done
-<!-- Shipped — archive periodically -->
 ```
 
-## Step 6: Install MCP Servers
+## Step 5b: Create IDEAS.md and DONE.md (if missing)
 
-Create `.mcp.json` in the project root with the required MCP servers (see `references/mcp-servers.md`):
+Check if the files exist:
+```bash
+ls {project_path}/IDEAS.md 2>/dev/null || echo "MISSING"
+ls {project_path}/DONE.md 2>/dev/null || echo "MISSING"
+```
+
+If missing, create:
+```markdown
+# Ideas
+
+Raw thoughts and ideas, not yet spec'd or evaluated.
+
+<!-- Add ideas here as they come up -->
+```
+
+```markdown
+# Done
+
+Completed work. Archive periodically.
+
+<!-- Move completed items here from Kanban -->
+```
+
+## Step 6: Install MCP Servers (Optional)
+
+MCP servers are optional optimisations. Ask the user if they want them.
+
+If yes, create `.mcp.json` in the project root (see `references/mcp-servers.md`):
 
 ```json
 {
@@ -216,12 +234,15 @@ Check the result:
 ```bash
 cat {project_path}/AGENT_ORIENTATION.md 2>/dev/null | head -20
 find {project_path} -name "AGENT_ORIENTATION.md" | wc -l
+ls {project_path}/IDEAS.md 2>/dev/null || echo "MISSING: IDEAS.md"
+ls {project_path}/DONE.md 2>/dev/null || echo "MISSING: DONE.md"
 ```
 
 Confirm:
 - [ ] New CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
 - [ ] KANBAN_BOARD.md exists with standard columns
-- [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
+- [ ] IDEAS.md and DONE.md exist
+- [ ] `.mcp.json` contains requested MCP servers (if user opted in)
 - [ ] LSP configured for detected languages (plugins in settings.local.json and/or .lsp.json)
 - [ ] All moved content is accessible via AGENT_ORIENTATION.md chain
 - [ ] No orphaned content (everything moved or deliberately deleted)
@@ -290,7 +311,8 @@ Migration is complete when:
 - [ ] Old CLAUDE.md content fully categorised (keep/move/delete)
 - [ ] New CLAUDE.md installed (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
 - [ ] KANBAN_BOARD.md exists with standard columns
-- [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
+- [ ] IDEAS.md and DONE.md exist
+- [ ] MCP servers offered and installed if user opts in
 - [ ] LSP servers configured for detected languages
 - [ ] Moved content placed in appropriate AGENT_ORIENTATION.md files
 - [ ] Content navigation tested (CLAUDE.md → AGENT_ORIENTATION.md → package AGENT_ORIENTATION.md)

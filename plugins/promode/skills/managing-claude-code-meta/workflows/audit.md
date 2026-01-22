@@ -60,7 +60,7 @@ The project's CLAUDE.md should be an exact copy of this skill's `standard/MAIN_A
 
 If there are differences, note what was added/changed. Any project-specific content should be moved to AGENT_ORIENTATION.md files.
 
-**Note**: Sub-agents don't inherit CLAUDE.md. Phase-specific agents (implementer, reviewer, debugger) handle execution; main agents handle brainstorming, planning, and orchestration directly.
+**Note**: Sub-agents don't inherit CLAUDE.md. Phase-specific agents (implementer, debugger, tester, reviewers) handle execution; main agents handle brainstorming, planning, and orchestration directly.
 
 ## Step 3: Audit Project Tracking Files
 

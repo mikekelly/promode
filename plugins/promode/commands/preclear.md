@@ -22,7 +22,7 @@ Write a handoff document to `docs/handoff.md` (or `docs/{feature}/handoff.md` if
 - Any commits made
 
 ### 3. What's Pending
-- Remaining tasks (reference `tsk tree` output if applicable)
+- Remaining tasks
 - Known issues or blockers
 - Next immediate step
 
@@ -43,7 +43,6 @@ Write a handoff document to `docs/handoff.md` (or `docs/{feature}/handoff.md` if
 - Include file paths, not just descriptions
 - Capture the "why" behind decisions, not just the "what"
 - Assume the next agent has no memory of this conversation
-- Run `tsk tree` and include the output if tasks exist
 - Commit the handoff document so it persists
 
 ## After Writing

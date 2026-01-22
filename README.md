@@ -50,7 +50,13 @@ The main agent handles high-level work: brainstorming with the user, designing f
 | Agent | Purpose |
 |-------|---------|
 | `promode:implementer` | TDD workflow, write code |
-| `promode:reviewer` | Code review, approve or request rework |
+| `promode:python-reviewer` | Python code review |
+| `promode:typescript-reviewer` | TypeScript/JavaScript code review |
+| `promode:security-reviewer` | Security-focused review |
+| `promode:performance-reviewer` | Performance-focused review |
+| `promode:architecture-reviewer` | Architecture review |
+| `promode:simplicity-reviewer` | Simplicity-focused review |
+| `promode:pattern-reviewer` | Pattern/anti-pattern review |
 | `promode:tester` | Run tests, parse results, critique quality |
 | `promode:debugger` | Root cause analysis, fix failures |
 | `promode:smoke-tester` | Create and execute smoke tests as markdown |
@@ -71,7 +77,7 @@ Tasks can run in parallel when independent, improving throughput on larger featu
 - **managing-skills** — Install, update, and remove skills from GitHub or local sources
 - **managing-claude-code-meta** — Set up, migrate, and audit CLAUDE.md files
 
-**MCP Servers (auto-start):**
+**MCP Servers (optional):**
 - **context7** — Library documentation ([upstash/context7](https://github.com/upstash/context7))
 - **exa** — Web search (requires `EXA_API_KEY`)
 - **grep_app** — Code search via [grep.app](https://grep.app)

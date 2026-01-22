@@ -277,7 +277,7 @@ Slow system tests are NOT a feedback mechanism for debugging. If you're running 
 - `sonnet` — Default for all work. Always override `Explore` agents to use sonnet.
 - `opus` — Ambiguous problems, architectural decisions, security review
 
-**Parallelism:** 5 agents in parallel beats 1 sequentially. Natural boundaries: one test file, one component, one endpoint.
+**Parallelism:** Many agents in parallel beats 1 sequentially. Natural boundaries: one test file, one component, one endpoint.
 
 ---
 
