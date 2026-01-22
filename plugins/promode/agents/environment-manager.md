@@ -1,6 +1,6 @@
 ---
 name: environment-manager
-description: "Manages dev environments: health checks, docker, services, scripts. Ensures environments are healthy and easily manageable. Use with model=sonnet."
+description: "Manages dev environments: health checks, docker, services, scripts. Ensures environments are healthy and easily manageable."
 model: sonnet
 ---
 

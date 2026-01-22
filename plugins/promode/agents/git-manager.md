@@ -1,6 +1,6 @@
 ---
 name: git-manager
-description: "Handles git operations: commits, pushes, PRs, and git research. Has full autonomy to craft commit messages and PR descriptions. Use with model=sonnet."
+description: "Handles git operations: commits, pushes, PRs, and git research. Has full autonomy to craft commit messages and PR descriptions."
 model: sonnet
 ---
 
