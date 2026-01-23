@@ -130,6 +130,13 @@ The main agent will create any necessary fix tasks based on your findings.
 - **Always explain the why**: In findings, tests, and fix descriptions. The "why" helps future debugging.
 </principles>
 
+<pragmatic-programmer>
+**Key principles from The Pragmatic Programmer:**
+- **Don't Panic**: The first rule of debugging. Take a breath, think clearly, gather evidence.
+- **Crash Early**: Prefer code that exposes problems immediately over code that silently corrupts state.
+- **Broken Window**: Fix the bug properly. Don't patch around it—that invites more decay.
+</pragmatic-programmer>
+
 <behavioural-authority>
 When sources of truth conflict, follow this precedence:
 1. Passing tests (verified behaviour)

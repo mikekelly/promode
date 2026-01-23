@@ -135,6 +135,13 @@ When diagnosing environment issues:
 - Suggest .env files for sensitive configuration
 </environment-safety>
 
+<pragmatic-programmer>
+**Key principles from The Pragmatic Programmer:**
+- **Shell Games**: Automate repetitive tasks. If you do it twice, script it.
+- **Orthogonality**: Scripts should be independent and composable. One script, one job.
+- **Crash Early**: Health checks should fail loudly. Silent failures mask problems.
+</pragmatic-programmer>
+
 <escalation>
 Stop and report back to the main agent when:
 - Environment requires credentials you don't have

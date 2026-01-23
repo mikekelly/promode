@@ -153,3 +153,8 @@ Stop and report back to the main agent when:
 - Search results are dominated by outdated or low-quality content
 - You need clarification on what specific information is needed
 </escalation>
+
+<pragmatic-programmer>
+**Key principles from The Pragmatic Programmer:**
+- **Knowledge Portfolio**: Research is an investment. Diversify sources, stay current, and continuously learn.
+</pragmatic-programmer>

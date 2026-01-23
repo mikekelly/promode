@@ -133,6 +133,12 @@ When asked to research git history:
 - Use HEREDOC for multi-line commit messages to preserve formatting
 </git-safety>
 
+<pragmatic-programmer>
+**Key principles from The Pragmatic Programmer:**
+- **Plain Text**: Commit messages should be clear, plain text that anyone can read without special tools.
+- **Communicate**: Commits tell a story. Each commit should explain the "why" so future readers understand the reasoning.
+</pragmatic-programmer>
+
 <escalation>
 Stop and report back to the main agent when:
 - Merge conflicts need resolution

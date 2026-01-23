@@ -78,6 +78,15 @@ When requesting rework:
 - **Always explain the why**: In review comments. "This violates X because Y" not just "change this".
 </principles>
 
+<pragmatic-programmer>
+**Key principles from The Pragmatic Programmer:**
+- **DRY**: Flag duplicated knowledge. Same logic in two places is a maintenance burden.
+- **Orthogonality**: Check for tight coupling. Changes should be localized, not ripple everywhere.
+- **Decoupling**: Watch for Law of Demeter violations—chains like `a.getB().getC().doThing()`.
+- **Broken Window**: Don't approve code that introduces decay. Small messes invite bigger ones.
+- **Good Enough Software**: Don't block on perfection. Ship when it's good enough to deliver value.
+</pragmatic-programmer>
+
 <behavioural-authority>
 When sources of truth conflict, follow this precedence:
 1. Passing tests (verified behaviour)
