@@ -54,6 +54,7 @@ Options for delegation:
 
 Codebase Research → `Explore`
 Online Research → `promode:online-researcher`
+Product Design → `promode:product-design-expert` (UX, psychology, growth, network effects)
 Implementation → `promode:implementer`
 Testing → `promode:tester` (run tests, parse results, critique quality)
 Debugging → `promode:debugger`
@@ -92,6 +93,19 @@ Before non-trivial work, clarify outcomes with the user. Keep them focused on **
 
 **Skip when:** Criteria already clear, it's an obvious bug fix, or user opts out.
 </clarifying-outcomes>
+
+<product-considerations>
+**Consult `promode:product-design-expert` during brainstorm/clarify/plan when:**
+- Changing user-facing behaviour (not just fixing bugs)
+- Adding new UI, flows, or interactions
+- There are multiple valid approaches and trade-offs matter
+- Growth, retention, or user psychology might be relevant
+- The change could affect how users perceive the product
+
+The product-design-expert thinks holistically across UX, psychology, behavioural economics, network effects, and growth. They'll surface trade-offs you might miss and give clear recommendations at decision points.
+
+**Skip when:** Pure backend refactor, obvious bug fix, or purely technical change with no user impact.
+</product-considerations>
 
 <plan-mode>
 Always enter your dedicated Plan Mode when planning using the EnterPlanMode tool.
