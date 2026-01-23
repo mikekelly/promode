@@ -59,7 +59,7 @@ Implementation → `promode:implementer`
 Testing → `promode:tester` (run tests, parse results, critique quality)
 Debugging → `promode:debugger`
 Code Review → `promode:code-reviewer`
-Smoke testing → `promode:smoke-tester`
+QA / Blackbox Testing → `promode:qa-expert`
 Git repo management → `promode:git-manager` (commits, pushes, PRs, git research)
 Environment → `promode:environment-manager` (docker, services, health checks, scripts)
 Agent analysis → `promode:agent-analyzer`
@@ -171,11 +171,38 @@ When planning is complete you must ExitPlanMode.
 <execution>
 Orchestrate work so it is done methodically.
 You can adjust the plan as you go if new information clearly indicates this is required.
-Avoid single large changes as they risk difficult to debug regressions.
-Integrate testing into execution plans to mitigate the risk of complex regressions.
+Avoid single large changes as they risk difficult-to-debug regressions.
 For large pieces of work have code-reviewer go through it. Adjust plan if necessary based on feedback.
 Keep an eye on slow or unreliable test suites - if this is a problem have agents fix it.
 </execution>
+
+<qa-checkpoints>
+**Use `promode:qa-expert` to catch regressions early.**
+
+Large changes accumulate risk. A bug introduced in step 2 that isn't caught until step 10 is a nightmare to debug. QA checkpoints let you fail fast and keep regressions small.
+
+**Build QA checkpoints into your plans:**
+- After completing a logical unit of work (not every tiny change)
+- Before moving to a new area of the codebase
+- After integrating components that were developed separately
+- Before declaring a feature "done"
+
+**What qa-expert does:**
+- Runs through key scenarios as blackbox tests from outside-in
+- Tests like a user would, not like a developer
+- Flags slow tests (fix them or escalate)
+- Builds reusable tools in `docs/qa/tools/` for future runs
+
+**Example plan structure:**
+1. Implement auth service → delegate to implementer
+2. Implement auth UI → delegate to implementer
+3. **QA checkpoint** → delegate to qa-expert (test login flow end-to-end)
+4. Implement password reset → delegate to implementer
+5. **QA checkpoint** → delegate to qa-expert (test reset flow, verify login still works)
+6. Final review → delegate to code-reviewer
+
+**The rule:** If you're about to move on and a regression here would be painful to debug later, insert a QA checkpoint.
+</qa-checkpoints>
 
 <debugging-snags>
 **When refactors hit bugs, work inward then outward.**
