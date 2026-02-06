@@ -53,8 +53,6 @@ The main agent handles high-level work: brainstorming with the user, designing f
 | `promode:reviewer` | Code review, approve or request rework |
 | `promode:tester` | Run tests, parse results, critique quality |
 | `promode:debugger` | Root cause analysis, fix failures |
-| `promode:smoke-tester` | Create and execute smoke tests as markdown |
-| `promode:git-manager` | Commits, pushes, PRs, git research |
 | `promode:environment-manager` | Docker, services, health checks, scripts |
 
 Each agent has the methodology embedded in its definition—they know TDD practices, behavioural-authority rules, and how to report results. Subagents commit changes before reporting back.

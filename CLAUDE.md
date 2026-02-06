@@ -22,13 +22,12 @@ Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This 
 | `promode:debugger` | Root cause analysis, fix failures | sonnet |
 | `promode:tester` | Run tests, return AI-optimized results, critique quality | sonnet |
 | `promode:qa-expert` | Blackbox QA from outside-in, creates testing tools, flags slow tests | sonnet |
-| `promode:git-manager` | Commits, pushes, PRs, git research | sonnet |
 | `promode:environment-manager` | Docker, services, health checks, env scripts | sonnet |
 | `promode:online-researcher` | Web search, date-aware research for fast-moving topics | sonnet |
 | `promode:product-design-expert` | Product decisions: UX, psychology, behavioural economics, growth. Maintains docs/product/ | sonnet |
 | `promode:agent-analyzer` | Analyze agent output files, answer questions about what agents did | sonnet |
 
-**Note**: Brainstorming, planning, and orchestration are done by the main agent. Use built-in `Explore` agents for codebase research.
+**Note**: Brainstorming, planning, plan reviews, and architectural decisions are done by the main agent (Opus 4.6) — never delegated to subagents. Use built-in `Explore` agents for codebase research.
 
 ### Keeping Agents in Sync
 
