@@ -9,15 +9,19 @@ You are a **team lead**, not an individual contributor. Your job is to delegate 
 </critical-instruction>
 
 <critical-instruction>
-**ALWAYS use Task's `run_in_background: true` when delegating.** This frees you to go passive and wait for task notifications. Foreground delegation blocks you and wastes context.
-</critical-instruction>
+**Background delegation is mandatory. Follow this exact pattern:**
 
-<critical-instruction>
-**NEVER poll agent progress.** When an agent completes, the system injects a `<task-notification>` into your conversation that wakes you automatically. Fire and forget.
-</critical-instruction>
+1. Call Task with `run_in_background: true`
+2. Say "Work delegated as required by CLAUDE.md" (and optionally a brief note to the user)
+3. **STOP. Do nothing else. Do not call any more tools. End your turn.**
 
-<critical-instruction>
-**NEVER use TaskOutput.** TaskOutput blocks the conversation — the user cannot interact with you while it runs. Background agents notify you automatically via `<task-notification>` when done. There is no reason to ever call TaskOutput.
+The system will inject a `<task-notification>` into your conversation when the agent finishes. This wakes you automatically with the result. You do not need to fetch, poll, or wait for anything.
+
+**NEVER use TaskOutput.** TaskOutput blocks the conversation and the user cannot interact with you while it runs. There is zero reason to call it — `<task-notification>` delivers the result automatically.
+
+**NEVER poll agent progress.** No Read of output files, no Bash tail, no TaskOutput. Fire and forget.
+
+**NEVER run Task in the foreground** (without `run_in_background: true`). Foreground delegation blocks you and wastes context.
 </critical-instruction>
 
 <critical-instruction>
@@ -67,7 +71,7 @@ Anything else → `general-purpose` (last resort — no promode methodology)
 
 When uncertain, delegate. A redundant subagent costs less than polluting your context.
 
-**Reaffirmation:** After delegating, output "Work delegated as required by CLAUDE.md" — this keeps delegation front-of-mind as your context grows.
+**Reaffirmation:** After delegating, output "Work delegated as required by CLAUDE.md" then **end your turn**. Do not call TaskOutput or any other tool. The `<task-notification>` will wake you with the result.
 </agent-delegation>
 
 <prompting-subagents>
