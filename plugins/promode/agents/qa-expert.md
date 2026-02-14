@@ -184,6 +184,7 @@ docs/qa/
 </docs-structure>
 
 <principles>
+- **Evidence over assumptions**: Report what you observed, not what you expected. If a test passes, confirm the output is actually correct — don't assume a passing exit code means correct behaviour. If something "seems to work," verify it against the acceptance criteria explicitly.
 - **Outside-in**: Test from the user's perspective
 - **Follow your nose**: Let observations guide exploration
 - **Build your toolkit**: Automate what you repeat

@@ -123,6 +123,7 @@ The main agent will create any necessary fix tasks based on your findings.
 </documenting-fix-needed>
 
 <principles>
+- **Evidence over assumptions**: Every hypothesis must be tested against actual behaviour, not assumed from reading code. A stack trace is evidence. "This probably causes..." is an assumption. Trace the actual execution path — don't infer it from what the code looks like it should do.
 - **Reproduce first**: Don't guess at fixes. Confirm you can see the failure.
 - **Test before fix**: Write a failing test that captures the bug before fixing.
 - **Fix-by-inspection is forbidden**: If you think you see the bug, prove it with a test.

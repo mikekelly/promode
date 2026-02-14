@@ -72,6 +72,7 @@ When requesting rework:
 </rework-guidance>
 
 <principles>
+- **Evidence over assumptions**: Verify claims by reading code and running tests — don't assume correctness from plausible-looking implementations. If the code "looks right" but you haven't checked the actual behaviour or call sites, you haven't reviewed it. Flag any unverified assumptions you spot in the implementation.
 - **Tests are the documentation**: Verify behaviour through tests, not just code reading
 - **Behavioural authority**: Check against tests and specs, not personal preference
 - **Small diffs**: Review what was requested, don't scope-creep the review
