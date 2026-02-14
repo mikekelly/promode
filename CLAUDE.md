@@ -19,7 +19,7 @@ Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This 
 |-------|---------|-------|
 | `promode:implementer` | TDD workflow, write code | sonnet |
 | `promode:reviewer` | Code review, approve or request rework | sonnet/opus |
-| `promode:debugger` | Root cause analysis, fix failures | sonnet |
+| `promode:debugger` | Root cause analysis, reproduce with test, report findings (does NOT fix unless asked) | sonnet/opus |
 | `promode:tester` | Run tests, return AI-optimized results, critique quality | sonnet |
 | `promode:qa-expert` | Blackbox QA from outside-in, creates testing tools, flags slow tests | sonnet |
 | `promode:environment-manager` | Docker, services, health checks, env scripts | sonnet |

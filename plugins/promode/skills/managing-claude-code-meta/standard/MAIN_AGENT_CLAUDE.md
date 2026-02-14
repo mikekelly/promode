@@ -82,6 +82,30 @@ Don't tell them how — they have methodology baked in. A good prompt is a brief
 **Agents have finite context.** Decompose work until each task is suitable for one agent. Too small creates orchestration overhead, too large and the agent will end up working at the end of a large context - risking drift.
 </prompting-subagents>
 
+<subagent-scoping>
+**Scope subagents tightly to prevent cross-cutting activity.**
+
+Long-running subagents that accumulate context operate inefficiently — they drift, make poor decisions at the end of a large context, and do work that should be orchestrated by you. Every subagent should have a **single, clear deliverable**.
+
+**The rule: diagnose OR fix, never both (unless trivial).**
+- A debugger should find the root cause and produce a reproducible test, then **report back**. You decide whether to send the fix to an implementer or back to the debugger with a tight scope.
+- A code reviewer should review and report findings. You decide what gets reworked and by whom.
+- An explorer should answer specific questions, not "understand everything about X".
+
+**Scoping checklist for every delegation:**
+1. **What is the deliverable?** One sentence. If you can't say it in one sentence, the scope is too broad.
+2. **What should the agent NOT do?** Explicitly exclude adjacent work. "Find the root cause and write a reproduction test. Do NOT implement the fix."
+3. **When should they stop and report back?** Define the exit condition. Agents without clear exit conditions expand indefinitely.
+
+**Signs of poor scoping:**
+- Agent runs for 15+ minutes on a single task
+- Agent output covers multiple unrelated changes
+- Agent makes architectural decisions that should be yours
+- Agent fixes a bug AND refactors surrounding code AND updates docs
+
+**Prefer two tight agents over one broad agent.** The orchestration cost of reading a summary and dispatching a follow-up is trivial compared to the cost of an agent that drifts or burns context on work outside its scope.
+</subagent-scoping>
+
 <clarifying-outcomes>
 Before non-trivial work, clarify outcomes with the user. Keep them focused on **what** and **why**, not implementation.
 
@@ -176,7 +200,13 @@ When planning is complete you must ExitPlanMode.
 3. Go passive — `<task-notification>` will wake you with the result
 
 **Model selection:**
-- `sonnet` — Default for all delegated work. Always override `Explore` agents to use sonnet.
+- `sonnet` — Default for routine, well-scoped work: implementation, testing, simple debugging, straightforward research.
+- `opus` — Use for **moderately complex or high-stakes** work where deeper reasoning pays off:
+  - `Explore` agents doing complex codebase analysis (architectural understanding, cross-cutting concerns, tracing subtle dependencies). Simple file lookups can stay sonnet.
+  - `promode:debugger` when the problem is difficult to reproduce, spans multiple systems, or previous debugging attempts have stalled.
+  - `promode:code-reviewer` for complex architectural reviews (already supports `model: inherit`).
+  - Any agent where **importance is high and/or progress is challenging**. If a sonnet agent is struggling or the stakes of getting it wrong are significant, escalate to opus.
+- **When in doubt, bias toward opus.** The cost difference is small compared to the cost of a sonnet agent burning context on a problem it can't solve, forcing a retry.
 - **Planning, architectural decisions, and plan reviews are YOUR job (Opus 4.6). Never delegate these to subagents.**
 
 **Parallelism:** 5 agents in parallel beats 1 sequentially. Natural boundaries: one test file, one component, one endpoint.
@@ -236,7 +266,9 @@ Slow system tests are NOT a feedback mechanism for debugging. If you're running 
 - Speculative fixes waste cycles when feedback is slow
 - Focused reproduction tests become regression tests
 
-**If you're experiencing debugging difficulty, provide relevant context to `promode:debugger`**
+**If you're experiencing debugging difficulty, provide relevant context to `promode:debugger`.**
+- Use `model: opus` for difficult, multi-system, or previously-stalled bugs.
+- Scope the debugger to **diagnose and reproduce only** — don't ask it to also fix unless the fix is trivial. Read the debugger's findings, then dispatch an implementer (or a tightly-scoped debugger) with explicit fix instructions.
 </debugging-snags>
 
 <after-action-review>
