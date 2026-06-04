@@ -59,6 +59,30 @@ Read both and compare content:
 | Present, executable, but differs | FAIL | Re-copy `standard/hooks/promode-main-context.sh` exactly |
 | File missing | FAIL | Run install workflow |
 
+## Step 2b: Check the Inspect-Agent Script
+
+Verify `.claude/scripts/inspect-agent.sh` is present, executable, and matches the standard:
+
+```bash
+ls -la {project_path}/.claude/scripts/inspect-agent.sh 2>/dev/null || echo "MISSING"
+```
+
+If present, check executability:
+```bash
+test -x {project_path}/.claude/scripts/inspect-agent.sh && echo "executable" || echo "NOT EXECUTABLE"
+```
+
+Read both and compare content:
+1. `{project_path}/.claude/scripts/inspect-agent.sh`
+2. `standard/scripts/inspect-agent.sh`
+
+| Result | Status | Remediation |
+|--------|--------|-------------|
+| Present, executable, exact match | PASS | — |
+| Present but not executable | FAIL | `chmod +x {project_path}/.claude/scripts/inspect-agent.sh` |
+| Present, executable, but differs | FAIL | Re-copy `standard/scripts/inspect-agent.sh` exactly |
+| File missing | FAIL | Run install workflow |
+
 ## Step 3: Check settings.json for the SessionStart Entry
 
 Read `.claude/settings.json` and verify it contains a `SessionStart` entry with all four required matchers:
@@ -108,6 +132,7 @@ Output a summary:
 |-----------|--------|-------|
 | .claude/PROMODE_MAIN_AGENT.md | PASS/FAIL | {exact match / differs / missing} |
 | .claude/hooks/promode-main-context.sh | PASS/FAIL | {present+executable+match / issue} |
+| .claude/scripts/inspect-agent.sh | PASS/FAIL | {present+executable+match / issue} |
 | settings.json SessionStart entry | PASS/FAIL | {all 4 matchers / missing: startup,resume,clear,compact} |
 | jq available | PASS/FAIL | {version or not found} |
 
@@ -127,6 +152,7 @@ Make no modifications. Report only.
 **Required for a correct promode install:**
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` — present, exact match with `standard/PROMODE_MAIN_AGENT.md`
 - [ ] `.claude/hooks/promode-main-context.sh` — present, executable, exact match with standard hook
+- [ ] `.claude/scripts/inspect-agent.sh` — present, executable, exact match with `standard/scripts/inspect-agent.sh`
 - [ ] `.claude/settings.json` — `SessionStart` entry with all four matchers (`startup`, `resume`, `clear`, `compact`)
 - [ ] `jq` available on PATH
 - [ ] Project's `CLAUDE.md` (if any) — untouched by promode (informational check, not a failure)
@@ -134,9 +160,10 @@ Make no modifications. Report only.
 
 <success_criteria>
 Audit is complete when:
-- [ ] All four components checked (brief, hook, settings, jq)
+- [ ] All five components checked (brief, hook, inspect-agent script, settings, jq)
 - [ ] Brief compared against standard
 - [ ] Hook compared against standard and executability checked
+- [ ] Inspect-agent script compared against standard and executability checked
 - [ ] All four SessionStart matchers verified in settings.json
 - [ ] Audit report generated with PASS/FAIL for each component
 - [ ] Specific remediation provided for every FAIL

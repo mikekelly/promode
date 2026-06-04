@@ -43,21 +43,24 @@ which jq && jq --version
 
 If `jq` is not found, **stop and tell the user**: install it before proceeding (e.g. `brew install jq` on macOS, `apt install jq` on Debian/Ubuntu).
 
-## Step 3: Copy the Brief and Hook
+## Step 3: Copy the Brief, Hook, and Scripts
 
-Create `.claude/hooks/` if it does not exist:
+Create `.claude/hooks/` and `.claude/scripts/` if they do not exist:
 ```bash
 mkdir -p {project_path}/.claude/hooks
+mkdir -p {project_path}/.claude/scripts
 ```
 
-Copy the two files **exactly** — do not modify their contents:
+Copy the files **exactly** — do not modify their contents:
 
 - `standard/PROMODE_MAIN_AGENT.md` → `{project_path}/.claude/PROMODE_MAIN_AGENT.md`
 - `standard/hooks/promode-main-context.sh` → `{project_path}/.claude/hooks/promode-main-context.sh`
+- `standard/scripts/inspect-agent.sh` → `{project_path}/.claude/scripts/inspect-agent.sh`
 
-Then make the hook executable:
+Then make them executable:
 ```bash
 chmod +x {project_path}/.claude/hooks/promode-main-context.sh
+chmod +x {project_path}/.claude/scripts/inspect-agent.sh
 ```
 
 ## Step 4: Merge the SessionStart Hook into settings.json
@@ -140,12 +143,14 @@ Run a quick check:
 ```bash
 ls -la {project_path}/.claude/PROMODE_MAIN_AGENT.md
 ls -la {project_path}/.claude/hooks/promode-main-context.sh
+ls -la {project_path}/.claude/scripts/inspect-agent.sh
 ls -la {project_path}/.claude/settings.json
 ```
 
 Confirm:
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` exists and matches `standard/PROMODE_MAIN_AGENT.md` exactly
 - [ ] `.claude/hooks/promode-main-context.sh` exists, is executable, and matches the standard hook exactly
+- [ ] `.claude/scripts/inspect-agent.sh` exists, is executable, and matches `standard/scripts/inspect-agent.sh` exactly
 - [ ] `.claude/settings.json` contains a `SessionStart` entry with all four matchers (`startup`, `resume`, `clear`, `compact`)
 - [ ] The project's `CLAUDE.md` (if it existed before install) is unchanged — promode did not touch it
 - [ ] `jq` is available on PATH
@@ -155,6 +160,7 @@ Confirm:
 Installation is complete when:
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` — exact copy of `standard/PROMODE_MAIN_AGENT.md`
 - [ ] `.claude/hooks/promode-main-context.sh` — exact copy of the standard hook, executable (`chmod +x`)
+- [ ] `.claude/scripts/inspect-agent.sh` — exact copy of `standard/scripts/inspect-agent.sh`, executable (`chmod +x`)
 - [ ] `.claude/settings.json` — SessionStart entry with all four matchers merged in, existing content preserved
 - [ ] Project's `CLAUDE.md` untouched (promode never created or modified it)
 - [ ] `jq` confirmed available on PATH
