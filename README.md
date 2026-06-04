@@ -51,15 +51,13 @@ The main agent handles high-level work: brainstorming with the user, designing f
 
 | Agent | Purpose |
 |-------|---------|
-| `promode:implementer` | TDD workflow, write code |
-| `promode:code-reviewer` | Code review, approve or request rework |
-| `promode:tester` | Run tests, parse results, critique quality |
+| `promode:implementer` | TDD workflow, write code (and tests) |
+| `promode:code-reviewer` | Review the code & solution (doesn't run the suite) |
 | `promode:debugger` | Root-cause analysis, reproduce with a test, report findings (does not fix unless asked) |
-| `promode:qa-expert` | Blackbox QA from the outside in |
+| `promode:verifier` | Exercise the running app via the `/verify` skill; PASS/FAIL |
 | `promode:environment-manager` | Docker, services, health checks, scripts |
-| `promode:online-researcher` | Date-aware web research |
 | `promode:product-design-expert` | Product/UX decisions |
-| `promode:agent-analyzer` | Analyse agent output during after-action reviews |
+| `promode:agent-analyzer` | Analyse agent transcripts during after-action reviews |
 
 The main agent gets the promode methodology from a `SessionStart` hook — it is **not** written into your `CLAUDE.md`, and it never reaches subagents. Each phase agent carries the methodology in its own definition, so subagents are self-contained. Subagents commit changes before reporting back.
 

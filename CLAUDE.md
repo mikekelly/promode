@@ -20,17 +20,15 @@ Why a hook, and why promode doesn't touch `CLAUDE.md`: see `plugins/promode/skil
 
 | Agent | Purpose | Model |
 |-------|---------|-------|
-| `promode:implementer` | TDD workflow, write code | sonnet |
-| `promode:code-reviewer` | Code review, approve or request rework | sonnet/opus |
+| `promode:implementer` | TDD workflow, write code (and tests) | sonnet |
+| `promode:code-reviewer` | Review the code & solution (doesn't run the suite) | sonnet/opus |
 | `promode:debugger` | Root cause analysis, reproduce with test (does NOT fix unless asked) | sonnet/opus |
-| `promode:tester` | Run tests, AI-optimized results, critique quality | sonnet |
-| `promode:qa-expert` | Blackbox QA outside-in, testing tools, flags slow tests | sonnet |
+| `promode:verifier` | Exercise the running app via the `/verify` skill; report PASS/FAIL | sonnet |
 | `promode:environment-manager` | Docker, services, health checks, env scripts | sonnet |
-| `promode:online-researcher` | Web search, date-aware research | sonnet |
 | `promode:product-design-expert` | Product decisions: UX, psychology, growth | sonnet |
 | `promode:agent-analyzer` | Analyze agent output files | sonnet |
 
-Brainstorming, planning, and architectural decisions stay with the main agent (the latest Opus on high effort) — never delegated. Use `Explore` for codebase research.
+Brainstorming, planning, and architectural decisions stay with the main agent (the latest Opus on high effort) — never delegated. Use `Explore` for codebase research and `/deep-research` for web research.
 
 ### Standard files & keeping them in sync
 
