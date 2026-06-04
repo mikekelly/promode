@@ -83,7 +83,6 @@ project/
 ├── CLAUDE.md              # Main agent behaviour (promode methodology)
 ├── KANBAN_BOARD.md        # Project tracking across sessions
 ├── AGENT_ORIENTATION.md   # Compact agent guidance (tools, patterns, gotchas)
-├── .mcp.json              # MCP server configuration
 ├── README.md              # Human documentation (optional, for GitHub etc)
 └── packages/
     └── {package}/
@@ -114,11 +113,9 @@ A well-configured project has these components:
 - CLAUDE.md — exact copy of `standard/MAIN_AGENT_CLAUDE.md`
 - KANBAN_BOARD.md — project tracking across sessions
 - AGENT_ORIENTATION.md — compact agent guidance at project root
-- .mcp.json — MCP servers configured (context7, exa, grep_app)
 
 **Recommended:**
 - Package AGENT_ORIENTATION.md files for domain-specific context
-- LSP configured for detected languages
 - Tests document system behaviour, not markdown files
 - README.md exists for humans (GitHub, etc) but is not agent-oriented
 </success_criteria>

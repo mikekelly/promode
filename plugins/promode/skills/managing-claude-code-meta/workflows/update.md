@@ -2,8 +2,6 @@
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The latest promode CLAUDE.md
 2. references/progressive-disclosure.md — Context on AGENT_ORIENTATION.md distribution
-3. references/mcp-servers.md — Recommended MCP server configuration (optional)
-4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
 <never_do>
@@ -29,7 +27,6 @@ ls -la {project_path}/KANBAN_BOARD.md 2>/dev/null
 ls -la {project_path}/IDEAS.md 2>/dev/null
 ls -la {project_path}/DONE.md 2>/dev/null
 ls -la {project_path}/AGENT_ORIENTATION.md 2>/dev/null
-ls -la {project_path}/.mcp.json 2>/dev/null
 ```
 
 **Routing:**
@@ -100,51 +97,13 @@ Completed work. Archive periodically.
 ls {project_path}/AGENT_ORIENTATION.md 2>/dev/null || echo "MISSING"
 ```
 
-If missing, create a minimal one (see install workflow Step 7 for template).
+If missing, create a minimal one (see install workflow Step 5 for template).
 
-### .mcp.json (Optional)
-```bash
-cat {project_path}/.mcp.json 2>/dev/null || echo "MISSING"
-```
-
-Note which MCP servers are present — these are optional optimisations.
-
-## Step 4: Check MCP Configuration (Optional)
-
-MCP servers are **optional optimisations** that improve information access:
-- **context7** — Documentation lookup (faster than web search for common libraries)
-- **exa** — Real-time web search (requires EXA_API_KEY)
-- **grep_app** — GitHub code search (find examples across public repos)
-
-Check which servers are currently configured and which are missing.
-
-**If any recommended servers are missing, ask the user:** "The following MCP servers are not configured: {list}. Would you like to add them? They're optional but improve agent effectiveness for documentation lookup and code search."
-
-If the user wants them, add to `.mcp.json`. See `references/mcp-servers.md` for configuration.
-
-If the user declines, skip — promode works without MCP servers.
-
-## Step 5: Update LSP Configuration
-
-Detect languages and ensure LSP is configured:
-
-**Step 5a: Detect languages**
-```bash
-find {project_path} -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | head -3
-find {project_path} -type f -name "*.py" | head -3
-find {project_path} -type f -name "*.go" | head -3
-find {project_path} -type f -name "*.rs" | head -3
-```
-
-**Step 5b: Check and update LSP config**
-For any detected language without LSP configured, add configuration.
-See `references/lsp-servers.md` for setup.
-
-## Step 6: Analyze Progressive Disclosure
+## Step 4: Analyze Progressive Disclosure
 
 Check if AGENT_ORIENTATION.md files are properly distributed:
 
-**Step 6a: Find significant directories**
+**Step 4a: Find significant directories**
 ```bash
 # Look for package directories
 find {project_path} -type d -name "src" -o -name "packages" -o -name "lib" -o -name "apps" 2>/dev/null | head -20
@@ -153,15 +112,15 @@ find {project_path} -type d -name "src" -o -name "packages" -o -name "lib" -o -n
 cat {project_path}/README.md 2>/dev/null | head -50
 ```
 
-**Step 6b: Check existing AGENT_ORIENTATION.md files**
+**Step 4b: Check existing AGENT_ORIENTATION.md files**
 ```bash
 find {project_path} -name "AGENT_ORIENTATION.md" -type f
 ```
 
-**Step 6c: Identify gaps**
+**Step 4c: Identify gaps**
 For each significant package without AGENT_ORIENTATION.md, note it as a recommendation.
 
-## Step 7: Verify Update
+## Step 5: Verify Update
 
 Run verification checks:
 
@@ -174,9 +133,6 @@ ls {project_path}/KANBAN_BOARD.md
 ls {project_path}/IDEAS.md
 ls {project_path}/DONE.md
 ls {project_path}/AGENT_ORIENTATION.md
-
-# Optional: check MCP servers if configured
-cat {project_path}/.mcp.json 2>/dev/null | grep -E "context7|exa|grep_app" || echo "No MCP servers configured (optional)"
 ```
 
 **Verification checklist:**
@@ -185,10 +141,8 @@ cat {project_path}/.mcp.json 2>/dev/null | grep -E "context7|exa|grep_app" || ec
 - [ ] IDEAS.md exists
 - [ ] DONE.md exists
 - [ ] Root AGENT_ORIENTATION.md exists
-- [ ] MCP servers offered if missing (optional — user may decline)
-- [ ] LSP configured for detected languages
 
-## Step 8: Report Update Summary
+## Step 6: Report Update Summary
 
 Provide a summary of what was updated:
 
@@ -218,8 +172,6 @@ Every promode project should have these components:
 | IDEAS.md | project root | Raw ideas, not yet spec'd |
 | DONE.md | project root | Completed work archive |
 | AGENT_ORIENTATION.md | project root | Compact agent guidance for the project |
-| .mcp.json | project root | MCP server configuration (optional) |
-| .claude/settings.local.json | project root | LSP plugin configuration |
 | Package AGENT_ORIENTATION.md | each significant package | Domain-specific agent guidance |
 </required_components>
 
@@ -227,7 +179,5 @@ Every promode project should have these components:
 Update is complete when:
 - [ ] CLAUDE.md updated to latest `standard/MAIN_AGENT_CLAUDE.md`
 - [ ] Required components exist (KANBAN_BOARD.md, IDEAS.md, DONE.md, AGENT_ORIENTATION.md)
-- [ ] MCP servers offered if missing (optional — user may decline)
-- [ ] LSP configured for detected languages
 - [ ] Progressive disclosure gaps identified and reported
 </success_criteria>

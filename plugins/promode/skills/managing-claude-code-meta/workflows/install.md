@@ -2,16 +2,13 @@
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 2. references/progressive-disclosure.md — Context on AGENT_ORIENTATION.md distribution
-3. references/mcp-servers.md — Recommended MCP server configuration (optional)
-4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
 <never_do>
 - NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when copying to target project
 - NEVER proceed if CLAUDE.md already exists (route to migrate workflow instead)
 - NEVER include secrets or credentials in AGENT_ORIENTATION.md files
-- NEVER skip the verification step (Step 8)
-</never_do>
+- NEVER skip the verification step (Step 7)</never_do>
 
 <escalation>
 Stop and ask the user when:
@@ -88,105 +85,7 @@ These three files provide persistent project tracking across sessions. The main 
 - **KANBAN_BOARD.md** — Spec'd work ready to be picked up or in progress
 - **DONE.md** — Archive of completed work
 
-## Step 5: Install MCP Servers (Optional)
-
-MCP servers are **optional optimisations** that improve information access:
-- **context7** — Documentation lookup (faster than web search for common libraries)
-- **exa** — Real-time web search (requires EXA_API_KEY)
-- **grep_app** — GitHub code search (find examples across public repos)
-
-**Ask the user:** "Would you like to install MCP servers for enhanced documentation and search capabilities? These are optional but improve agent effectiveness."
-
-If the user wants them, create or update `.mcp.json` in the project root (see `references/mcp-servers.md`):
-
-```json
-{
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "exa": {
-      "command": "npx",
-      "args": ["-y", "exa-mcp-server"],
-      "env": {
-        "EXA_API_KEY": "${EXA_API_KEY}"
-      }
-    },
-    "grep_app": {
-      "type": "http",
-      "url": "https://mcp.grep.app"
-    }
-  }
-}
-```
-
-If `.mcp.json` already exists, merge the `mcpServers` section (preserving any existing servers).
-
-**Note**: The `EXA_API_KEY` is provided by the user's environment, not stored in the file.
-
-If the user declines, skip this step — promode works without MCP servers.
-
-## Step 6: Install LSP Servers
-
-Configure LSP servers for languages detected in the project (see `references/lsp-servers.md`).
-
-**Step 6a: Detect languages**
-
-```bash
-# Check for common language files
-find {project_path} -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | head -3
-find {project_path} -type f -name "*.py" | head -3
-find {project_path} -type f -name "*.go" | head -3
-find {project_path} -type f -name "*.rs" | head -3
-find {project_path} -type f \( -name "*.ex" -o -name "*.exs" \) | head -3
-```
-
-**Step 6b: Configure official LSP plugins**
-
-For TypeScript, Python, or Rust, add to `.claude/settings.local.json`:
-
-```json
-{
-  "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "rust-lsp@claude-plugins-official": true
-  }
-}
-```
-
-Only include plugins for languages actually used in the project. Merge with existing settings if the file exists.
-
-**Step 6c: Configure custom LSP servers**
-
-For Go, Elixir, or other languages, create or update `.lsp.json`:
-
-```json
-{
-  "go": {
-    "command": "gopls",
-    "args": ["serve"],
-    "extensionToLanguage": {".go": "go"}
-  }
-}
-```
-
-**Step 6d: Verify language server binaries are installed**
-
-Check that the required binaries are available:
-
-```bash
-# For each detected language, verify the binary exists
-which typescript-language-server 2>/dev/null || echo "MISSING: typescript-language-server (npm install -g typescript-language-server typescript)"
-which pyright 2>/dev/null || echo "MISSING: pyright (pip install pyright)"
-which rust-analyzer 2>/dev/null || echo "MISSING: rust-analyzer (see https://rust-analyzer.github.io)"
-which gopls 2>/dev/null || echo "MISSING: gopls (go install golang.org/x/tools/gopls@latest)"
-```
-
-If any required binaries are missing, inform the user they need to install them for LSP to work.
-
-## Step 7: Create Root AGENT_ORIENTATION.md (if missing)
+## Step 5: Create Root AGENT_ORIENTATION.md (if missing)
 
 If no AGENT_ORIENTATION.md exists at the project root, create one with:
 - Project structure overview (key directories)
@@ -215,7 +114,7 @@ Example:
 See package AGENT_ORIENTATION.md files for domain-specific guidance.
 ```
 
-## Step 8: Create Package AGENT_ORIENTATION.md Files
+## Step 6: Create Package AGENT_ORIENTATION.md Files
 
 For each significant package/directory identified in Step 2:
 
@@ -243,7 +142,7 @@ Keep it compact. Example:
 - {issue}: {workaround}
 ```
 
-## Step 9: Verify Installation
+## Step 7: Verify Installation
 
 Run a quick check:
 ```bash
@@ -251,9 +150,6 @@ cat {project_path}/CLAUDE.md | head -5
 cat {project_path}/KANBAN_BOARD.md | head -10
 cat {project_path}/IDEAS.md | head -5
 cat {project_path}/DONE.md | head -5
-cat {project_path}/.mcp.json
-cat {project_path}/.claude/settings.local.json 2>/dev/null | grep -E "lsp"
-cat {project_path}/.lsp.json 2>/dev/null
 cat {project_path}/AGENT_ORIENTATION.md 2>/dev/null | head -10
 ```
 
@@ -262,8 +158,6 @@ Confirm:
 - [ ] KANBAN_BOARD.md exists with columns (Doing, Ready)
 - [ ] IDEAS.md exists for raw ideas
 - [ ] DONE.md exists for completed work archive
-- [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
-- [ ] LSP configured for detected languages (plugins in settings.local.json and/or .lsp.json)
 - [ ] Root AGENT_ORIENTATION.md exists with project overview
 </process>
 
@@ -273,8 +167,6 @@ Installation is complete when:
 - [ ] KANBAN_BOARD.md created with Doing and Ready columns
 - [ ] IDEAS.md created for raw ideas
 - [ ] DONE.md created for completed work archive
-- [ ] MCP servers offered to user (optional — installed if user accepted)
-- [ ] LSP servers configured for detected languages
 - [ ] Root AGENT_ORIENTATION.md exists with compact project guidance
 - [ ] Package AGENT_ORIENTATION.md files created for significant packages
 - [ ] Agent can navigate from CLAUDE.md → AGENT_ORIENTATION.md → package AGENT_ORIENTATION.md

@@ -5,7 +5,7 @@ model: sonnet
 ---
 
 <critical-instruction>
-You are a sub-agent. You MUST NOT delegate work. Never use `claude`, `aider`, or any other coding agent CLI to spawn sub-processes. Never use the Task tool. If the workload is too large, escalate back to the main agent who will orchestrate a solution.
+You are a sub-agent. You MUST NOT delegate work. Never use `claude`, `aider`, or any other coding agent CLI to spawn sub-processes. Never use the Agent tool. If the workload is too large, escalate back to the main agent who will orchestrate a solution.
 </critical-instruction>
 
 <critical-instruction>

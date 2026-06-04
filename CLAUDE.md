@@ -27,7 +27,7 @@ Claude Code subagents do NOT inherit CLAUDE.md from the main conversation. This 
 | `promode:product-design-expert` | Product decisions: UX, psychology, behavioural economics, growth. Maintains docs/product/ | sonnet |
 | `promode:agent-analyzer` | Analyze agent output files, answer questions about what agents did | sonnet |
 
-**Note**: Brainstorming, planning, plan reviews, and architectural decisions are done by the main agent (Opus 4.6) — never delegated to subagents. Use built-in `Explore` agents for codebase research.
+**Note**: Brainstorming, planning, plan reviews, and architectural decisions are done by the main agent (the latest Opus on high effort) — never delegated to subagents. Use built-in `Explore` agents for codebase research.
 
 ### Keeping Agents in Sync
 

@@ -3,8 +3,6 @@ Read these before proceeding:
 1. The existing CLAUDE.md in the target project
 2. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md for main agents
 3. references/progressive-disclosure.md — Principles for content distribution
-4. references/mcp-servers.md — Required MCP server configuration
-5. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
 <never_do>
@@ -12,7 +10,7 @@ Read these before proceeding:
 - NEVER leave content orphaned — every section must be categorised as KEEP, MOVE, or DELETE
 - NEVER modify `standard/MAIN_AGENT_CLAUDE.md` content when replacing the old file
 - NEVER create circular references between AGENT_ORIENTATION.md files
-- NEVER skip the navigation test (Step 8)
+- NEVER skip the navigation test (Step 6)
 </never_do>
 
 <escalation>
@@ -121,96 +119,7 @@ If missing, create with standard structure:
 <!-- Shipped — archive periodically -->
 ```
 
-## Step 6: Install MCP Servers
-
-Create `.mcp.json` in the project root with the required MCP servers (see `references/mcp-servers.md`):
-
-```json
-{
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "exa": {
-      "command": "npx",
-      "args": ["-y", "exa-mcp-server"],
-      "env": {
-        "EXA_API_KEY": "${EXA_API_KEY}"
-      }
-    },
-    "grep_app": {
-      "type": "http",
-      "url": "https://mcp.grep.app"
-    }
-  }
-}
-```
-
-If `.mcp.json` already exists, merge the `mcpServers` section (preserving any existing servers).
-
-**Note**: The `EXA_API_KEY` is provided by the user's environment, not stored in the file.
-
-## Step 7: Install LSP Servers
-
-Configure LSP servers for languages detected in the project (see `references/lsp-servers.md`).
-
-**Step 7a: Detect languages**
-
-```bash
-# Check for common language files
-find {project_path} -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | head -3
-find {project_path} -type f -name "*.py" | head -3
-find {project_path} -type f -name "*.go" | head -3
-find {project_path} -type f -name "*.rs" | head -3
-find {project_path} -type f \( -name "*.ex" -o -name "*.exs" \) | head -3
-```
-
-**Step 7b: Configure official LSP plugins**
-
-For TypeScript, Python, or Rust, add to `.claude/settings.local.json`:
-
-```json
-{
-  "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "rust-lsp@claude-plugins-official": true
-  }
-}
-```
-
-Only include plugins for languages actually used in the project. Merge with existing settings if the file exists.
-
-**Step 7c: Configure custom LSP servers**
-
-For Go, Elixir, or other languages, create or update `.lsp.json`:
-
-```json
-{
-  "go": {
-    "command": "gopls",
-    "args": ["serve"],
-    "extensionToLanguage": {".go": "go"}
-  }
-}
-```
-
-**Step 7d: Verify language server binaries are installed**
-
-Check that the required binaries are available:
-
-```bash
-# For each detected language, verify the binary exists
-which typescript-language-server 2>/dev/null || echo "MISSING: typescript-language-server (npm install -g typescript-language-server typescript)"
-which pyright 2>/dev/null || echo "MISSING: pyright (pip install pyright)"
-which rust-analyzer 2>/dev/null || echo "MISSING: rust-analyzer (see https://rust-analyzer.github.io)"
-which gopls 2>/dev/null || echo "MISSING: gopls (go install golang.org/x/tools/gopls@latest)"
-```
-
-If any required binaries are missing, inform the user they need to install them for LSP to work.
-
-## Step 8: Verify Migration
+## Step 6: Verify Migration
 
 Check the result:
 ```bash
@@ -221,12 +130,10 @@ find {project_path} -name "AGENT_ORIENTATION.md" | wc -l
 Confirm:
 - [ ] New CLAUDE.md matches `standard/MAIN_AGENT_CLAUDE.md` exactly
 - [ ] KANBAN_BOARD.md exists with standard columns
-- [ ] `.mcp.json` contains all 3 MCP servers (context7, exa, grep_app)
-- [ ] LSP configured for detected languages (plugins in settings.local.json and/or .lsp.json)
 - [ ] All moved content is accessible via AGENT_ORIENTATION.md chain
 - [ ] No orphaned content (everything moved or deliberately deleted)
 
-## Step 9: Test Agent Navigation
+## Step 7: Test Agent Navigation
 
 Simulate an agent's path:
 1. Read CLAUDE.md — Get agent behaviour instructions
@@ -290,8 +197,6 @@ Migration is complete when:
 - [ ] Old CLAUDE.md content fully categorised (keep/move/delete)
 - [ ] New CLAUDE.md installed (exact copy of `standard/MAIN_AGENT_CLAUDE.md`)
 - [ ] KANBAN_BOARD.md exists with standard columns
-- [ ] MCP servers installed in `.mcp.json` (context7, exa, grep_app)
-- [ ] LSP servers configured for detected languages
 - [ ] Moved content placed in appropriate AGENT_ORIENTATION.md files
 - [ ] Content navigation tested (CLAUDE.md → AGENT_ORIENTATION.md → package AGENT_ORIENTATION.md)
 </success_criteria>

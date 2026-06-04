@@ -69,12 +69,6 @@ Tasks can run in parallel when independent, improving throughput on larger featu
 - **managing-skills** — Install, update, and remove skills from GitHub or local sources
 - **managing-claude-code-meta** — Set up, migrate, and audit CLAUDE.md files
 
-**MCP Servers (auto-start):**
-- **context7** — Library documentation ([upstash/context7](https://github.com/upstash/context7))
-- **exa** — Web search (requires `EXA_API_KEY`)
-- **grep_app** — Code search via [grep.app](https://grep.app)
-
-
 ---
 
 ## Skills Management

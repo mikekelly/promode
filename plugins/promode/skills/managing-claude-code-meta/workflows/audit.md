@@ -2,13 +2,11 @@
 Read these before proceeding:
 1. `standard/MAIN_AGENT_CLAUDE.md` — The promode CLAUDE.md (project should match exactly)
 2. references/progressive-disclosure.md — Principles being audited against
-3. references/mcp-servers.md — Recommended MCP server configuration (optional)
-4. references/lsp-servers.md — LSP server configuration for code intelligence
 </required_reading>
 
 <never_do>
 - NEVER report PASS if CLAUDE.md doesn't match standard/MAIN_AGENT_CLAUDE.md exactly
-- NEVER skip navigation chain testing (Step 6)
+- NEVER skip navigation chain testing (Step 5)
 - NEVER auto-fix issues — audit reports findings, does not modify files
 - NEVER ignore missing AGENT_ORIENTATION.md files in significant packages
 </never_do>
@@ -31,7 +29,6 @@ ls {project_path}/KANBAN_BOARD.md 2>/dev/null || echo "MISSING: KANBAN_BOARD.md"
 ls {project_path}/IDEAS.md 2>/dev/null || echo "MISSING: IDEAS.md"
 ls {project_path}/DONE.md 2>/dev/null || echo "MISSING: DONE.md"
 ls {project_path}/AGENT_ORIENTATION.md 2>/dev/null || echo "MISSING: AGENT_ORIENTATION.md"
-ls {project_path}/.mcp.json 2>/dev/null || echo "MISSING: .mcp.json"
 
 # AGENT_ORIENTATION.md distribution
 find {project_path} -name "AGENT_ORIENTATION.md" -type f | head -20
@@ -100,94 +97,11 @@ cat {project_path}/DONE.md 2>/dev/null | head -10
 | File exists | PASS | DONE.md present |
 | File missing | FAIL | Create DONE.md for completed work archive |
 
-## Step 4: Audit MCP Servers (Optional)
-
-MCP servers are **optional optimisations** that improve information access. Check what's configured:
-
-```bash
-cat {project_path}/.mcp.json 2>/dev/null || echo "No .mcp.json"
-```
-
-**Recommended servers** (see `references/mcp-servers.md` for full config):
-
-| Server | Status | Purpose |
-|--------|--------|---------|
-| context7 | Present/Missing | Documentation lookup (faster than web search) |
-| exa | Present/Missing | Real-time web search |
-| grep_app | Present/Missing | GitHub code search |
-
-| Result | Status | Notes |
-|--------|--------|-------|
-| All 3 servers present | PASS | Full MCP optimisations enabled |
-| Some servers present | INFO | Partial MCP — suggest adding missing servers |
-| No .mcp.json | INFO | No MCP servers — suggest if user wants enhanced search |
-
-**Note**: MCP servers are optional. Promode works without them — they just optimise documentation and code search. If missing, note it as a suggestion, not a failure.
-
-**Note**: The `EXA_API_KEY` environment variable is user-provided and should NOT be in the file — only the `${EXA_API_KEY}` reference.
-
-## Step 5: Audit LSP Servers
-
-Check that LSP servers are configured for languages used in the project.
-
-**Step 5a: Detect languages used**
-
-```bash
-# Find language files in the project
-find {project_path} -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | head -5
-find {project_path} -type f -name "*.py" | head -5
-find {project_path} -type f -name "*.go" | head -5
-find {project_path} -type f -name "*.rs" | head -5
-find {project_path} -type f \( -name "*.ex" -o -name "*.exs" \) | head -5
-```
-
-**Step 5b: Check LSP configuration**
-
-For official plugins, check `.claude/settings.local.json`:
-```bash
-cat {project_path}/.claude/settings.local.json 2>/dev/null | grep -E "typescript-lsp|pyright-lsp|rust-lsp"
-```
-
-For custom LSP servers, check `.lsp.json`:
-```bash
-cat {project_path}/.lsp.json 2>/dev/null || echo "No custom LSP config"
-```
-
-**Required LSP by language** (see `references/lsp-servers.md`):
-
-| Language | Files Found | LSP Required | Status |
-|----------|-------------|--------------|--------|
-| TypeScript/JS | Yes/No | typescript-lsp plugin | Configured/Missing |
-| Python | Yes/No | pyright-lsp plugin | Configured/Missing |
-| Rust | Yes/No | rust-lsp plugin | Configured/Missing |
-| Go | Yes/No | gopls in .lsp.json | Configured/Missing |
-| Elixir | Yes/No | elixir-ls in .lsp.json | Configured/Missing |
-
-**Step 5c: Verify language server binaries are installed**
-
-For each configured LSP, check that the binary exists:
-
-```bash
-which typescript-language-server 2>/dev/null || echo "MISSING: typescript-language-server"
-which pyright 2>/dev/null || echo "MISSING: pyright"
-which rust-analyzer 2>/dev/null || echo "MISSING: rust-analyzer"
-which gopls 2>/dev/null || echo "MISSING: gopls"
-```
-
-| Result | Status | Action |
-|--------|--------|--------|
-| All detected languages have LSP + binaries | PASS | LSP configuration complete |
-| LSP configured but binary missing | WARN | Install missing language server binary |
-| Missing LSP config for some languages | WARN | Add LSP config for uncovered languages |
-| No LSP configured at all | FAIL | Configure LSP servers for code intelligence |
-
-**Note**: LSP is a warning (WARN) not a hard failure — projects can function without it, but code intelligence significantly improves agent effectiveness.
-
-## Step 6: Audit Progressive Disclosure
+## Step 4: Audit Progressive Disclosure
 
 This step analyzes the project structure and documentation to assess AGENT_ORIENTATION.md coverage and suggest improvements.
 
-**Step 6a: Analyze README for structure hints**
+**Step 4a: Analyze README for structure hints**
 
 ```bash
 # Look for package/component structure in README
@@ -199,7 +113,7 @@ The README often documents the project structure. Look for:
 - Architecture sections that hint at significant components
 - Directories mentioned that might warrant agent guidance
 
-**Step 6b: Identify significant directories**
+**Step 4b: Identify significant directories**
 
 ```bash
 # Find potential packages that should have AGENT_ORIENTATION.md
@@ -209,14 +123,14 @@ find {project_path} -type d -maxdepth 3 \( -name "packages" -o -name "src" -o -n
 find {project_path} -name "package.json" -maxdepth 3 | head -10
 ```
 
-**Step 6c: Check existing AGENT_ORIENTATION.md coverage**
+**Step 4c: Check existing AGENT_ORIENTATION.md coverage**
 
 ```bash
 # Find all AGENT_ORIENTATION.md files
 find {project_path} -name "AGENT_ORIENTATION.md" -type f
 ```
 
-**Step 6d: Build coverage assessment**
+**Step 4d: Build coverage assessment**
 
 | Directory | Has AGENT_ORIENTATION.md | Quality | Notes |
 |-----------|--------------------------|---------|-------|
@@ -230,7 +144,7 @@ find {project_path} -name "AGENT_ORIENTATION.md" -type f
 - **Sparse**: Missing key information an agent would need
 - **Verbose**: Too much detail — should be more compact or split into package files
 
-**Step 6e: Identify gaps and suggest placements**
+**Step 4e: Identify gaps and suggest placements**
 
 Based on README structure and directory analysis:
 
@@ -245,7 +159,7 @@ Based on README structure and directory analysis:
 - Has >5 source files with non-obvious patterns
 - Has gotchas or conventions not obvious from code
 
-## Step 7: Check Navigation Chain
+## Step 5: Check Navigation Chain
 
 Test the agent navigation path:
 
@@ -261,7 +175,7 @@ Test the agent navigation path:
    - Do package orientation files reference actual files?
    - Are key entry points documented?
 
-## Step 8: Generate Audit Report
+## Step 6: Generate Audit Report
 
 Create a summary:
 
@@ -275,8 +189,6 @@ Create a summary:
 | KANBAN_BOARD.md | {PASS/WARN/FAIL} | {exists with Doing/Ready columns?} |
 | IDEAS.md | {PASS/FAIL} | {exists?} |
 | DONE.md | {PASS/FAIL} | {exists?} |
-| .mcp.json | {PASS/INFO} | {count}/3 recommended servers (optional) |
-| LSP Servers | {PASS/WARN/FAIL} | {count}/{total} languages covered |
 | Root AGENT_ORIENTATION.md | {PASS/FAIL} | {exists and quality?} |
 | Progressive Disclosure | {GOOD/NEEDS_WORK} | {coverage}/{total} packages |
 | Navigation Chain | {COMPLETE/INCOMPLETE} | {all links valid?} |
@@ -293,14 +205,14 @@ Create a summary:
 - {improvements based on README/structure analysis}
 
 ## Recommended AGENT_ORIENTATION.md Additions
-{Based on Step 6e analysis, list specific directories that should have AGENT_ORIENTATION.md}
+{Based on Step 4e analysis, list specific directories that should have AGENT_ORIENTATION.md}
 
 ## Recommended Actions
 1. ...
 2. ...
 ```
 
-## Step 9: Provide Recommendations
+## Step 7: Provide Recommendations
 
 Based on findings, recommend:
 
@@ -316,18 +228,11 @@ Based on findings, recommend:
 **If DONE.md missing:**
 → Create DONE.md for archiving completed work.
 
-**If MCP servers missing (optional):**
-→ MCP servers are optional optimisations. If the user wants enhanced documentation/code search, add servers to `.mcp.json`. See `references/mcp-servers.md` for configuration.
-
-**If LSP servers missing for detected languages:**
-→ For TypeScript/Python/Rust: Enable official plugins in `.claude/settings.local.json`
-→ For Go/Elixir/others: Add custom config to `.lsp.json`. See `references/lsp-servers.md`.
-
 **If Root AGENT_ORIENTATION.md missing:**
 → Create with project structure, commands, and gotchas.
 
 **If package AGENT_ORIENTATION.md files missing:**
-→ List specific directories identified in Step 6e that need orientation files.
+→ List specific directories identified in Step 4e that need orientation files.
 → Prioritize directories referenced in README or containing domain-specific logic.
 
 **If navigation broken:**
@@ -341,19 +246,6 @@ Based on findings, recommend:
 - [ ] IDEAS.md — Exists for raw ideas
 - [ ] DONE.md — Exists for completed work archive
 - [ ] Root AGENT_ORIENTATION.md — Exists and is compact
-
-**MCP Servers (optional optimisations):**
-- [ ] context7 server configured (documentation lookup)
-- [ ] exa server configured (web search)
-- [ ] grep_app server configured (GitHub code search)
-- Note: These are optional — promode works without them
-
-**LSP Servers (for detected languages):**
-- [ ] TypeScript/JS → typescript-lsp plugin enabled
-- [ ] Python → pyright-lsp plugin enabled
-- [ ] Rust → rust-lsp plugin enabled
-- [ ] Go → gopls configured in .lsp.json
-- [ ] Other languages → appropriate LSP in .lsp.json
 
 **Progressive Disclosure:**
 - [ ] Root AGENT_ORIENTATION.md is compact (not verbose)
@@ -374,8 +266,6 @@ Audit is complete when:
 - [ ] CLAUDE.md compared against standard
 - [ ] KANBAN_BOARD.md structure verified (Doing, Ready columns)
 - [ ] IDEAS.md and DONE.md existence verified
-- [ ] MCP servers noted (optional — suggest if missing)
-- [ ] LSP servers checked for detected languages
 - [ ] README and project structure analyzed for progressive disclosure gaps
 - [ ] AGENT_ORIENTATION.md coverage and quality assessed
 - [ ] Navigation chain tested
