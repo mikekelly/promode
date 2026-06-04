@@ -33,16 +33,14 @@ ls -la {project_path}/.claude/settings.json 2>/dev/null || echo "MISSING"
 
 ## Step 2: Re-copy the Brief and Hook
 
-The brief, hook, and scripts in `.claude/` are promode-owned files. Overwrite them with the latest versions from `standard/`:
+The brief and hook in `.claude/` are promode-owned files. Overwrite them with the latest versions from `standard/`:
 
 - `standard/PROMODE_MAIN_AGENT.md` → `{project_path}/.claude/PROMODE_MAIN_AGENT.md` (overwrite)
 - `standard/hooks/promode-main-context.sh` → `{project_path}/.claude/hooks/promode-main-context.sh` (overwrite)
-- `standard/scripts/inspect-agent.sh` → `{project_path}/.claude/scripts/inspect-agent.sh` (overwrite; create `.claude/scripts/` if absent)
 
-Copy exactly — do not modify contents. Then ensure they are executable:
+Copy exactly — do not modify contents. Then ensure the hook is executable:
 ```bash
 chmod +x {project_path}/.claude/hooks/promode-main-context.sh
-chmod +x {project_path}/.claude/scripts/inspect-agent.sh
 ```
 
 The project's `CLAUDE.md` is **not touched** — it is the project's own and promode never modifies it.
@@ -77,16 +75,13 @@ Run a quick check:
 ```bash
 ls -la {project_path}/.claude/PROMODE_MAIN_AGENT.md
 ls -la {project_path}/.claude/hooks/promode-main-context.sh
-ls -la {project_path}/.claude/scripts/inspect-agent.sh
 test -x {project_path}/.claude/hooks/promode-main-context.sh && echo "hook is executable" || echo "NOT EXECUTABLE"
-test -x {project_path}/.claude/scripts/inspect-agent.sh && echo "inspect-agent.sh is executable" || echo "NOT EXECUTABLE"
 cat {project_path}/.claude/settings.json
 ```
 
 **Verification checklist:**
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` matches `standard/PROMODE_MAIN_AGENT.md` exactly
 - [ ] `.claude/hooks/promode-main-context.sh` matches the standard hook exactly and is executable
-- [ ] `.claude/scripts/inspect-agent.sh` matches `standard/scripts/inspect-agent.sh` exactly and is executable
 - [ ] `.claude/settings.json` has a `SessionStart` entry with all four matchers (`startup`, `resume`, `clear`, `compact`)
 - [ ] Project's `CLAUDE.md` (if any) was not touched
 
@@ -100,7 +95,6 @@ Provide a concise summary:
 ## Updated
 - .claude/PROMODE_MAIN_AGENT.md — refreshed to latest standard
 - .claude/hooks/promode-main-context.sh — refreshed to latest standard
-- .claude/scripts/inspect-agent.sh — refreshed to latest standard
 
 ## Settings
 - .claude/settings.json — {updated / already current}
@@ -117,7 +111,6 @@ Every correctly updated promode install has:
 |------|----------|------|
 | `PROMODE_MAIN_AGENT.md` | `{project}/.claude/` | Exact copy of `standard/PROMODE_MAIN_AGENT.md` |
 | `promode-main-context.sh` | `{project}/.claude/hooks/` | Exact copy, `chmod +x` |
-| `inspect-agent.sh` | `{project}/.claude/scripts/` | Exact copy of `standard/scripts/inspect-agent.sh`, `chmod +x` |
 | `settings.json` | `{project}/.claude/` | SessionStart entry with 4 matchers, merged in |
 </required_components>
 
@@ -125,7 +118,6 @@ Every correctly updated promode install has:
 Update is complete when:
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` updated to latest `standard/PROMODE_MAIN_AGENT.md`
 - [ ] `.claude/hooks/promode-main-context.sh` updated to latest standard hook, executable
-- [ ] `.claude/scripts/inspect-agent.sh` updated to latest `standard/scripts/inspect-agent.sh`, executable
 - [ ] `.claude/settings.json` has SessionStart entry with all four matchers
 - [ ] Project's `CLAUDE.md` untouched
 </success_criteria>

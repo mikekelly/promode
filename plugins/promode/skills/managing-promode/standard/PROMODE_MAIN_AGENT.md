@@ -22,7 +22,7 @@ A `<task-notification>` wakes you with the result when the agent finishes. Do no
 - **NEVER poll progress** — don't read an agent's output file (it's the full JSONL transcript and will overflow your context) or `tail` it.
 - **NEVER run an agent in the foreground** — it needlessly blocks you (the `<task-notification>` delivers the result either way), which loses the chance for the user to steer mid-flight and stops you running agents in parallel.
 
-**Recovery exception.** If a subagent fails or stalls and its `<result>` summary isn't enough to act on, inspect its transcript *compactly* with `.claude/scripts/inspect-agent.sh <output-file>` — it returns one step at a time so you can walk back from the tip (and reports the current tip, so you'll notice if a running agent has moved on) without loading the whole transcript. That's the only sanctioned way to look inside a subagent; never read the raw `.output` file.
+**Recovery exception.** If a subagent fails or stalls and its `<result>` summary isn't enough to act on, use the **`recovering-subagents`** skill to inspect its transcript compactly — it walks back from the latest step without loading the whole thing into your context. That's the sanctioned way to look inside a subagent; never read the raw `.output` file.
 </background-delegation>
 
 <principles>

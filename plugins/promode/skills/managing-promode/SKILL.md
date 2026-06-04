@@ -61,7 +61,6 @@ Promode install footprint in a target project:
 └── .claude/
     ├── PROMODE_MAIN_AGENT.md          # main-agent brief (copied from standard/)
     ├── hooks/promode-main-context.sh  # SessionStart hook (copied from standard/)
-    ├── scripts/inspect-agent.sh       # recovery: inspect a failed subagent's transcript compactly
     └── settings.json                  # SessionStart entry (MERGED; matchers startup|resume|clear|compact)
 ```
 The hook injects `PROMODE_MAIN_AGENT.md` into the main agent only (gated on `agent_id`); it re-fires on `clear`/`compact`, so the brief survives both. Requires `jq`.
@@ -70,7 +69,6 @@ The hook injects `PROMODE_MAIN_AGENT.md` into the main agent only (gated on `age
 <reference_index>
 - `standard/PROMODE_MAIN_AGENT.md` — the main-agent brief (copy into `.claude/` exactly)
 - `standard/hooks/promode-main-context.sh` — the SessionStart hook (copy into `.claude/hooks/` exactly)
-- `standard/scripts/inspect-agent.sh` — recovery script for inspecting failed subagent transcripts (copy into `.claude/scripts/` exactly)
 - `references/main-agent-delivery.md` — why the brief is hook-delivered, not in CLAUDE.md
 - `references/agent-knowledge-wiki.md` — the interlinked-graph model for durable agent knowledge
 </reference_index>
@@ -87,7 +85,6 @@ The hook injects `PROMODE_MAIN_AGENT.md` into the main agent only (gated on `age
 A correctly-installed project has:
 - `.claude/PROMODE_MAIN_AGENT.md` — exact copy of `standard/PROMODE_MAIN_AGENT.md`
 - `.claude/hooks/promode-main-context.sh` — exact copy of the standard hook, executable
-- `.claude/scripts/inspect-agent.sh` — exact copy of the standard script, executable
 - `.claude/settings.json` — a `SessionStart` hook entry (matchers `startup|resume|clear|compact`) running the hook
 - The project's `CLAUDE.md` (if any) left untouched
 - `jq` available on PATH
