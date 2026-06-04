@@ -35,11 +35,13 @@ Run two commands to get the plugin setup:
 /plugin install promode
 ```
 
-Then restart Claude Code and prompt Claude to install promode (update your CLAUDE.md, etc):
+Then restart Claude Code and ask Claude to set up promode in your project:
 
 ```
-Update the claude code meta to install promode
+Set up promode in this project
 ```
+
+This installs a `SessionStart` hook that gives the main agent the promode orchestration brief. It does **not** modify your project's `CLAUDE.md`.
 
 ---
 
@@ -50,12 +52,16 @@ The main agent handles high-level work: brainstorming with the user, designing f
 | Agent | Purpose |
 |-------|---------|
 | `promode:implementer` | TDD workflow, write code |
-| `promode:reviewer` | Code review, approve or request rework |
+| `promode:code-reviewer` | Code review, approve or request rework |
 | `promode:tester` | Run tests, parse results, critique quality |
-| `promode:debugger` | Root cause analysis, fix failures |
+| `promode:debugger` | Root-cause analysis, reproduce with a test, report findings (does not fix unless asked) |
+| `promode:qa-expert` | Blackbox QA from the outside in |
 | `promode:environment-manager` | Docker, services, health checks, scripts |
+| `promode:online-researcher` | Date-aware web research |
+| `promode:product-design-expert` | Product/UX decisions |
+| `promode:agent-analyzer` | Analyse agent output during after-action reviews |
 
-Each agent has the methodology embedded in its definition—they know TDD practices, behavioural-authority rules, and how to report results. Subagents commit changes before reporting back.
+The main agent gets the promode methodology from a `SessionStart` hook — it is **not** written into your `CLAUDE.md`, and it never reaches subagents. Each phase agent carries the methodology in its own definition, so subagents are self-contained. Subagents commit changes before reporting back.
 
 Tasks can run in parallel when independent, improving throughput on larger features.
 
@@ -66,18 +72,4 @@ Tasks can run in parallel when independent, improving throughput on larger featu
 **Phase Agents** — Implementation, review, and debugging agents with methodology baked in.
 
 **Skills:**
-- **managing-skills** — Install, update, and remove skills from GitHub or local sources
-- **managing-claude-code-meta** — Set up, migrate, and audit CLAUDE.md files
-
----
-
-## Skills Management
-
-Promode makes skill management conversational:
-
-- "Install the skill mikekelly/debugging-react-native"
-- "Install the skill from https://github.com/metabase/metabase/tree/master/.claude/skills/typescript-review"
-- "Update my installed skills"
-- "Remove the pdf skill"
-
-Works with both user-level (`~/.claude/skills/`) and project-level (`.claude/skills/`) installations.
+- **managing-promode** — Set up, update, and audit promode in a project (installs the main-agent SessionStart hook; never touches your `CLAUDE.md`)
