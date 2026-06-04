@@ -15,8 +15,8 @@ The project's `CLAUDE.md` stays the project's own. Subagents *do* load it (for g
 **3. Subagents are self-contained**
 Phase agents (implementer, code-reviewer, debugger, …) carry the methodology in their own definitions, so they need nothing installed into the project.
 
-**4. AGENT_ORIENTATION.md holds project knowledge for agents**
-Optional, compact, token-efficient project-specific guidance (tools, patterns, gotchas) that agents read just-in-time. Distinct from README.md (for humans). See `references/progressive-disclosure.md`.
+**4. Agent knowledge is an interlinked markdown graph**
+Durable project knowledge for agents lives as a graph of linked markdown docs with a single entry point (`AGENT_ORIENTATION.md`). The entry point links out to key areas; docs link to each other densely. File location doesn't matter — the links carry the graph. Distinct from README.md (for humans) and CLAUDE.md (the project team's own file). See `references/agent-knowledge-wiki.md`.
 </essential_principles>
 
 <never_do>
@@ -70,7 +70,7 @@ The hook injects `PROMODE_MAIN_AGENT.md` into the main agent only (gated on `age
 - `standard/PROMODE_MAIN_AGENT.md` — the main-agent brief (copy into `.claude/` exactly)
 - `standard/hooks/promode-main-context.sh` — the SessionStart hook (copy into `.claude/hooks/` exactly)
 - `references/main-agent-delivery.md` — why the brief is hook-delivered, not in CLAUDE.md
-- `references/progressive-disclosure.md` — AGENT_ORIENTATION.md: project knowledge for agents
+- `references/agent-knowledge-wiki.md` — the interlinked-graph model for durable agent knowledge
 </reference_index>
 
 <workflows_index>

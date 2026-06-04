@@ -109,7 +109,7 @@ If the user agrees, create only the missing files:
 ```
 
 ### AGENT_ORIENTATION.md (if missing)
-Minimal template — the project team fills in the actual content:
+Minimal template — this is the **entry point** to the agent-knowledge graph; it links out as knowledge accrues (the project team fills in actual content):
 ```markdown
 # Agent Orientation
 
