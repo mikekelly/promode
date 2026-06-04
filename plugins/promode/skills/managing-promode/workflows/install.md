@@ -6,7 +6,7 @@ Read these before proceeding:
 </required_reading>
 
 <never_do>
-- NEVER create, overwrite, or modify the project's `CLAUDE.md` — promode coexists with it
+- NEVER put the orchestration brief in `CLAUDE.md`; NEVER overwrite or clobber existing `CLAUDE.md` content
 - NEVER modify `standard/PROMODE_MAIN_AGENT.md` or `standard/hooks/promode-main-context.sh` when copying — copy them exactly
 - NEVER overwrite an existing `.claude/settings.json` — MERGE the hook entry, preserve all other content
 - NEVER skip the verification step (Step 7)
@@ -85,17 +85,29 @@ All four matchers are required. Without `compact`, the brief is silently dropped
 
 **If `settings.json` already has a conflicting `SessionStart` hook**: stop and ask the user how to proceed before modifying anything.
 
-## Step 5: Do Not Touch CLAUDE.md
+## Step 5: CLAUDE.md — Do Not Put the Brief Here
 
-The project's `CLAUDE.md` (if any) is the project's own — promode must never create, overwrite, or modify it. Skip this entirely. The promode brief is delivered by the hook installed in Step 3–4.
+The promode orchestration brief must never go in `CLAUDE.md`. The brief is delivered by the hook installed in Step 3–4.
+
+If the project has an existing `CLAUDE.md`, do not overwrite or modify it — it is the project's own file and the root of the agent-knowledge graph; its content is preserved as-is.
+
+If the project has **no `CLAUDE.md`**, create a minimal one now as the knowledge root (see Step 6).
 
 ## Step 6: Scaffold Optional Promode Conventions (offer, do not force)
 
-The brief references `KANBAN_BOARD.md` and `AGENT_ORIENTATION.md`. Offer to create them if missing — never overwrite existing files.
+The brief references `KANBAN_BOARD.md`. Offer to scaffold missing files — never overwrite existing files.
 
-Ask the user: "Would you like me to scaffold `KANBAN_BOARD.md` and a root `AGENT_ORIENTATION.md`? I'll only create them if they don't already exist."
+Ask the user: "Would you like me to scaffold `KANBAN_BOARD.md`? I'll only create it if it doesn't already exist."
 
 If the user agrees, create only the missing files:
+
+### CLAUDE.md (if missing — create as knowledge root)
+If no `CLAUDE.md` exists (and one was not created in Step 5), create a minimal one now. This is the **root of the agent-knowledge graph**; agents will add links to it as knowledge accrues:
+```markdown
+# {Project Name}
+
+<!-- Agent-knowledge root. Add links here as knowledge docs are created. -->
+```
 
 ### KANBAN_BOARD.md (if missing)
 ```markdown
@@ -106,22 +118,6 @@ If the user agrees, create only the missing files:
 
 ## Ready
 <!-- Designed + planned, can be picked up -->
-```
-
-### AGENT_ORIENTATION.md (if missing)
-Minimal template — this is the **entry point** to the agent-knowledge graph; it links out as knowledge accrues (the project team fills in actual content):
-```markdown
-# Agent Orientation
-
-## Structure
-- {key directories and their purpose}
-
-## Commands
-- {test command}
-- {dev server command}
-
-## Gotchas
-- {known issues and workarounds}
 ```
 
 Also offer to create `IDEAS.md` and `DONE.md` if the user wants the full project-tracking setup:
@@ -147,7 +143,7 @@ Confirm:
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` exists and matches `standard/PROMODE_MAIN_AGENT.md` exactly
 - [ ] `.claude/hooks/promode-main-context.sh` exists, is executable, and matches the standard hook exactly
 - [ ] `.claude/settings.json` contains a `SessionStart` entry with all four matchers (`startup`, `resume`, `clear`, `compact`)
-- [ ] The project's `CLAUDE.md` (if it existed before install) is unchanged — promode did not touch it
+- [ ] `CLAUDE.md` is present as the knowledge root (created if missing; existing content preserved; does not contain the orchestration brief)
 - [ ] `jq` is available on PATH
 </process>
 
@@ -156,6 +152,6 @@ Installation is complete when:
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` — exact copy of `standard/PROMODE_MAIN_AGENT.md`
 - [ ] `.claude/hooks/promode-main-context.sh` — exact copy of the standard hook, executable (`chmod +x`)
 - [ ] `.claude/settings.json` — SessionStart entry with all four matchers merged in, existing content preserved
-- [ ] Project's `CLAUDE.md` untouched (promode never created or modified it)
+- [ ] `CLAUDE.md` present as the knowledge root (created if it was missing; existing content preserved; never holds the orchestration brief)
 - [ ] `jq` confirmed available on PATH
 </success_criteria>

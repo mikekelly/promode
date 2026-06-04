@@ -41,7 +41,7 @@ Then restart Claude Code and ask Claude to set up promode in your project:
 Set up promode in this project
 ```
 
-This installs a `SessionStart` hook that gives the main agent the promode orchestration brief. It does **not** modify your project's `CLAUDE.md`.
+This installs a `SessionStart` hook that gives the main agent the promode orchestration brief. It never puts its methodology in your `CLAUDE.md` — your `CLAUDE.md` is the agent-knowledge root that agents maintain.
 
 ---
 
@@ -59,7 +59,7 @@ The main agent handles high-level work: brainstorming with the user, designing f
 | `promode:product-design-expert` | Product/UX decisions |
 | `promode:agent-analyzer` | Analyse agent transcripts during after-action reviews |
 
-The main agent gets the promode methodology from a `SessionStart` hook — it is **not** written into your `CLAUDE.md`, and it never reaches subagents. Each phase agent carries the methodology in its own definition, so subagents are self-contained. Subagents commit changes before reporting back.
+The main agent gets the promode methodology from a `SessionStart` hook — it is **not** put in your `CLAUDE.md`, and it never reaches subagents. Your `CLAUDE.md` is the agent-knowledge root: every agent reads it to orient, and agents grow the knowledge graph from it. Each phase agent carries the methodology in its own definition, so subagents are self-contained. Subagents commit changes before reporting back.
 
 Tasks can run in parallel when independent, improving throughput on larger features.
 
@@ -70,4 +70,4 @@ Tasks can run in parallel when independent, improving throughput on larger featu
 **Phase Agents** — Implementation, review, and debugging agents with methodology baked in.
 
 **Skills:**
-- **managing-promode** — Set up, update, and audit promode in a project (installs the main-agent SessionStart hook; never touches your `CLAUDE.md`)
+- **managing-promode** — Set up, update, and audit promode in a project (installs the main-agent SessionStart hook; never puts its methodology in your `CLAUDE.md` — your `CLAUDE.md` is the agent-knowledge root)

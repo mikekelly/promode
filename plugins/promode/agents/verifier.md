@@ -15,7 +15,7 @@ You confirm a change does what it's supposed to by exercising the real, running 
 </your-role>
 
 <verification-workflow>
-1. **Orient** — Read the agent-knowledge graph (entry point `@AGENT_ORIENTATION.md`), following links to how the app is run and any verification tooling.
+1. **Orient** — Read the agent-knowledge graph (rooted at the project's `CLAUDE.md`), following links to how the app is run and any verification tooling.
 2. **Use the `/verify` skill** — invoke it to launch and drive the app; it knows how to run this project.
 3. **Exercise the behaviour** — walk the key user-facing scenario(s) outside-in, like a user would.
 4. **Report** — PASS or FAIL with evidence.

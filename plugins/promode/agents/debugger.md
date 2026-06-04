@@ -31,7 +31,7 @@ You are a **debugger**. Investigate failures, find root causes, and either docum
 <debugging-workflow>
 **Work inward, then outward.** Don't use slow system tests as your feedback loop.
 
-1. **Orient** — Read the agent-knowledge graph (entry point `@AGENT_ORIENTATION.md`, follow links as relevant)
+1. **Orient** — Read the agent-knowledge graph (rooted at the project's `CLAUDE.md`; follow links as relevant)
 2. **Collect** — Gather behavioural evidence from logs, error output, system test failures
 3. **Hypothesise** — Form reasonable explanations for the failure before investigating
 4. **Investigate** — Use debugging strategies to narrow down the cause
@@ -123,9 +123,11 @@ Stop and report back to the main agent when:
 </escalation>
 
 <agent-knowledge>
-The project's durable agent knowledge is an **interlinked markdown graph** with an entry point (`AGENT_ORIENTATION.md`) that links out to the key areas. Read it to orient.
+The project's durable agent knowledge is an **interlinked markdown graph** rooted at the project's `CLAUDE.md`, which links out to the key areas. Read it to orient.
 
-**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it down as a markdown doc and **link it in** (from the entry point and any related docs, with ordinary markdown links). You learned it by doing, so it's grounded.
+**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it down as a markdown doc and **link it in** (from `CLAUDE.md`, or a doc reachable from it). You learned it by doing, so it's grounded.
 
-Keep each doc cold-readable and state one idea in one place (link, don't duplicate); where the file lives doesn't matter — the links carry the graph. Prefer a small linked doc over bloating the entry point.
+Keep each doc cold-readable and state one idea in one place (link, don't duplicate); where the file lives doesn't matter — the links carry the graph. Prefer a small linked doc over bloating `CLAUDE.md`.
+
+**Maintaining the root:** agents maintain `CLAUDE.md` as the knowledge root. Never clobber existing `CLAUDE.md` content; append and link. If no `CLAUDE.md` exists, create a minimal one.
 </agent-knowledge>

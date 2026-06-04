@@ -1,26 +1,26 @@
 ---
 name: managing-promode
-description: "MUST be loaded when setting up, installing, updating, or auditing promode in a project. Promode delivers a main-agent orchestration brief via a SessionStart hook and never modifies the project's own CLAUDE.md. Invoke PROACTIVELY when the user mentions installing/setting up promode, the promode hook, or auditing a promode install."
+description: "MUST be loaded when setting up, installing, updating, or auditing promode in a project. Promode delivers a main-agent orchestration brief via a SessionStart hook and never puts its methodology in the project's own CLAUDE.md. Invoke PROACTIVELY when the user mentions installing/setting up promode, the promode hook, or auditing a promode install."
 ---
 
 <essential_principles>
-This skill sets up the **promode methodology** in a project. Promode is delivered without ever touching the project's own `CLAUDE.md`.
+This skill sets up the **promode methodology** in a project. Promode never puts its methodology in `CLAUDE.md` (that's hook-delivered) and never clobbers it.
 
 **1. The main-agent brief is delivered by a hook, not CLAUDE.md**
 `PROMODE_MAIN_AGENT.md` (the team-lead orchestration brief) is injected into the **main agent only**, by a `SessionStart` hook gated on `agent_id`. It never reaches subagents. See `references/main-agent-delivery.md` for why.
 
-**2. promode never owns the project's CLAUDE.md**
-The project's `CLAUDE.md` stays the project's own. Subagents *do* load it (for genuine project context), so promode keeps its main-agent-only instructions out of it. Do NOT create, overwrite, or migrate `CLAUDE.md`.
+**2. CLAUDE.md is the project's own file and the agent-knowledge root**
+The project's `CLAUDE.md` is auto-loaded into every agent and serves as the root of the agent-knowledge graph. Promode does not put its orchestration brief there. Agents maintain it over time (adding links to new knowledge docs); existing content is never overwritten. A minimal `CLAUDE.md` may be created if none exists.
 
 **3. Subagents are self-contained**
 Phase agents (implementer, code-reviewer, debugger, …) carry the methodology in their own definitions, so they need nothing installed into the project.
 
-**4. Agent knowledge is an interlinked markdown graph**
-Durable project knowledge for agents lives as a graph of linked markdown docs with a single entry point (`AGENT_ORIENTATION.md`). The entry point links out to key areas; docs link to each other densely. File location doesn't matter — the links carry the graph. Distinct from README.md (for humans) and CLAUDE.md (the project team's own file). See `references/agent-knowledge-wiki.md`.
+**4. Agent knowledge is an interlinked markdown graph rooted at CLAUDE.md**
+Durable project knowledge for agents lives as a graph of linked markdown docs. `CLAUDE.md` is the root — it links out to key areas; docs link to each other densely. File location doesn't matter — the links carry the graph. Distinct from README.md (for humans). See `references/agent-knowledge-wiki.md`.
 </essential_principles>
 
 <never_do>
-- NEVER create, overwrite, or modify the project's `CLAUDE.md` — promode coexists with it
+- NEVER put the orchestration brief in `CLAUDE.md`; NEVER overwrite or clobber existing `CLAUDE.md` content (the knowledge graph only appends + links; a minimal `CLAUDE.md` may be created if none exists)
 - NEVER modify `standard/PROMODE_MAIN_AGENT.md` or the standard hook when copying into a project — copy them exactly
 - NEVER overwrite an existing `.claude/settings.json` — always MERGE the hook entry, preserving existing settings
 </never_do>
@@ -57,7 +57,7 @@ What would you like to do?
 Promode install footprint in a target project:
 ```
 <project>/
-├── CLAUDE.md                          # the project's OWN — promode never touches it
+├── CLAUDE.md                          # the project's own file + agent-knowledge root (created if missing, never clobbered)
 └── .claude/
     ├── PROMODE_MAIN_AGENT.md          # main-agent brief (copied from standard/)
     ├── hooks/promode-main-context.sh  # SessionStart hook (copied from standard/)
@@ -86,6 +86,6 @@ A correctly-installed project has:
 - `.claude/PROMODE_MAIN_AGENT.md` — exact copy of `standard/PROMODE_MAIN_AGENT.md`
 - `.claude/hooks/promode-main-context.sh` — exact copy of the standard hook, executable
 - `.claude/settings.json` — a `SessionStart` hook entry (matchers `startup|resume|clear|compact`) running the hook
-- The project's `CLAUDE.md` (if any) left untouched
+- `CLAUDE.md` present as the knowledge root (created if it was missing; existing content preserved; never holds the orchestration brief)
 - `jq` available on PATH
 </success_criteria>

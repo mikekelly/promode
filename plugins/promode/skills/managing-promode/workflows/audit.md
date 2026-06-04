@@ -129,7 +129,7 @@ Make no modifications. Report only.
 - [ ] `.claude/hooks/promode-main-context.sh` — present, executable, exact match with standard hook
 - [ ] `.claude/settings.json` — `SessionStart` entry with all four matchers (`startup`, `resume`, `clear`, `compact`)
 - [ ] `jq` available on PATH
-- [ ] Project's `CLAUDE.md` (if any) — untouched by promode (informational check, not a failure)
+- [ ] `CLAUDE.md` — present as the knowledge root and not holding the orchestration brief (its content is the project's own — informational check, not a failure)
 </audit_checklist>
 
 <success_criteria>

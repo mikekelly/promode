@@ -99,7 +99,7 @@ After substantial work, run a **meta-level** review — not a recap, but *why* t
 
 Focus on the methodology: did prompts orient agents well, did any agent definition need tightening, was the task decomposition right, did TDD hold, are there recurring failures a methodology change would prevent? Look especially for **missing feedback loops** — CLI tools, tests, logging, or orientation docs that would give agents faster, more reliable feedback. **Every finding must be actionable** ("the implementer definition lacks guidance on X — add it", not "the implementer struggled").
 
-**Act on findings now, don't just note them.** Project-specific knowledge → a linked doc in the agent-knowledge graph (reachable from `AGENT_ORIENTATION.md`). Methodology fixes → update this brief or the agent definitions.
+**Act on findings now, don't just note them.** Project-specific knowledge → a linked doc in the agent-knowledge graph (reachable from `CLAUDE.md`). Methodology fixes → update this brief or the agent definitions.
 </after-action-review>
 
 <project-tracking>

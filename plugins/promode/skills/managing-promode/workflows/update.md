@@ -5,7 +5,7 @@ Read these before proceeding:
 </required_reading>
 
 <never_do>
-- NEVER create, overwrite, or modify the project's `CLAUDE.md` — promode never owns it
+- NEVER put the orchestration brief in `CLAUDE.md`; NEVER overwrite or clobber existing `CLAUDE.md` content — it is the project's own file and the agent-knowledge root
 - NEVER overwrite `.claude/settings.json` wholesale — MERGE the hook entry, preserve all other content
 - NEVER skip the verification step (Step 4)
 </never_do>
@@ -43,7 +43,7 @@ Copy exactly — do not modify contents. Then ensure the hook is executable:
 chmod +x {project_path}/.claude/hooks/promode-main-context.sh
 ```
 
-The project's `CLAUDE.md` is **not touched** — it is the project's own and promode never modifies it.
+The project's `CLAUDE.md` is **not touched** — it is the project's own file and the agent-knowledge root; the orchestration brief never goes there.
 
 ## Step 3: Ensure the SessionStart Entry Is Present
 
@@ -83,7 +83,7 @@ cat {project_path}/.claude/settings.json
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` matches `standard/PROMODE_MAIN_AGENT.md` exactly
 - [ ] `.claude/hooks/promode-main-context.sh` matches the standard hook exactly and is executable
 - [ ] `.claude/settings.json` has a `SessionStart` entry with all four matchers (`startup`, `resume`, `clear`, `compact`)
-- [ ] Project's `CLAUDE.md` (if any) was not touched
+- [ ] `CLAUDE.md` present as the knowledge root; existing content preserved; does not hold the orchestration brief
 
 ## Step 5: Report Update Summary
 
@@ -119,5 +119,5 @@ Update is complete when:
 - [ ] `.claude/PROMODE_MAIN_AGENT.md` updated to latest `standard/PROMODE_MAIN_AGENT.md`
 - [ ] `.claude/hooks/promode-main-context.sh` updated to latest standard hook, executable
 - [ ] `.claude/settings.json` has SessionStart entry with all four matchers
-- [ ] Project's `CLAUDE.md` untouched
+- [ ] `CLAUDE.md` present as the knowledge root; existing content preserved; never holds the orchestration brief
 </success_criteria>
