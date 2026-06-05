@@ -20,10 +20,18 @@ The promode-alignment axes. Each is one assessor's deliverable.
 | Dimension | Assesses (promode principle) | Suggested assessor |
 |-----------|------------------------------|--------------------|
 | **Tests & feedback loops** | Behaviour-focused tests on critical paths; tested through public interfaces vs coupled to implementation / over-mocked; speed & determinism (can an agent get a fast pass/fail signal?); a documented one-command way to run tests, lint, typecheck, and the app. *(TDD, tests-as-documentation, fast feedback, verifier-readiness)* | `promode:code-reviewer` (opus) |
-| **Agent knowledge & orientation** | Is `CLAUDE.md` a real knowledge root with links out? Orientation for subsystems; non-obvious build/run/gotcha knowledge captured or tribal? Are significant decisions recorded (ADR-style) or will agents re-litigate them? *(CLAUDE.md-rooted knowledge graph, decision capture)* | `general-purpose` |
+| **Agent knowledge & orientation** | Apply the **CLAUDE.md health check** (below). Beyond it: orientation for subsystems; non-obvious build/run/gotcha knowledge captured or tribal? Significant decisions recorded (ADR-style) or will agents re-litigate them? *(CLAUDE.md-rooted knowledge graph, decision capture)* | `general-purpose` |
 | **Architecture & navigability** | Module depth vs shallowness; testability (dependency injection, seams, return-values over side-effects); oversized files that burn agent context; tangled coupling, dead code, misleading names. *(small diffs, testability, context-frugality)* | `promode:code-reviewer` (opus) |
 | **Change hygiene** *(optional)* | Commit focus & size; messages explain *why*; do tests land with the code they cover? *(small focused commits, explain-why, visible TDD)* | `general-purpose` |
 </dimensions>
+
+<claude-md-health>
+`CLAUDE.md` is auto-loaded into **every** agent's context, so it's the highest-leverage file in the repo. The Agent-knowledge assessor evaluates it specifically against three tests, and recommends a concrete restructure (what to cut, what to link, what signposts to add) where it falls short:
+
+1. **Concise** — it enters *every* agent run, so every extra line is a token tax paid each time *and* dilutes attention, harming reasoning quality. Flag bloat: long prose, duplicated content, detail that belongs in a linked doc. It should be a launchpad, not a manual.
+2. **Critical essentials + role signposts** — does it give every agent what it must know to act safely (how to build/run/test, hard constraints, where the landmines are)? And does it route different kinds of work to the right starting docs — engineering, QA, product design, marketing — so each agent type finds its area fast?
+3. **Entry point to the knowledge graph** — does it link out to the key docs so an agent can reach any major area in a hop or two? Flag orphaned docs (reachable from nothing = invisible) and missing links.
+</claude-md-health>
 
 <assessor-brief>
 Give each assessor:

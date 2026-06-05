@@ -6,6 +6,8 @@ Promode keeps a project's durable agent knowledge as a **graph of interlinked ma
 
 `CLAUDE.md` is the one file Claude Code auto-loads into **every** agent — the main agent and every subagent — so it's already in context before any agent acts. That makes it the natural root of the knowledge graph: agents read it to orient, and it **links out** to the key areas. It is **not** an exhaustive index; it's a **launchpad**.
 
+It should carry the critical essentials every agent needs (how to build/run/test, hard constraints, where the landmines are) and **signpost by kind of work** — link engineering, QA, product design, marketing, etc. each to their starting docs, so an agent of that type finds its area in a hop or two.
+
 `CLAUDE.md` is the **project's own file**. Promode does not put its methodology there — the main-agent orchestration brief is hook-delivered (see `main-agent-delivery.md`). But the project's durable agent knowledge *does* live here and grows from here.
 
 ## 2. Docs link to each other, densely
@@ -24,7 +26,7 @@ What does **not** belong: things obvious from the code, one-off trivia, unverifi
 
 - **Cold-readable.** An agent may land on any doc via a link, so each opens by saying what it is.
 - **One idea, one home.** State a fact in one doc and link to it; don't duplicate.
-- **Compact and current.** Prefer a small new linked doc over bloating `CLAUDE.md`. A documented script/make target beats a paragraph of prose.
+- **Compact — it's loaded into every agent.** `CLAUDE.md` enters *every* agent's context, so every extra line is a tax paid on every run and dilutes attention, harming reasoning. Keep it a launchpad: prefer a small linked doc over inlined prose; a documented script/make target beats a paragraph.
 - **Distinct from `README.md`.** `README.md` is for humans; this graph is agent-optimised project knowledge (and `CLAUDE.md` doubles as Claude Code's project file and the knowledge root).
 
 ## Going further
