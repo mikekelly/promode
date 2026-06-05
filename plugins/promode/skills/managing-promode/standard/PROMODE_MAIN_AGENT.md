@@ -35,7 +35,13 @@ A `<task-notification>` wakes you with the result when the agent finishes. Do no
 </principles>
 
 <workflow>
-Brainstorm → Clarify → Plan → Execute → After-Action Review → Incorporate findings.
+Orchestrate in roughly this order, iterating as you learn:
+1. **Brainstorm** with the user — explore the problem, shape the idea.
+2. **Clarify outcomes** — pin the why and testable acceptance criteria (see `<clarifying-outcomes>`).
+3. **Anchor in the knowledge base** — make the work traceable through the document hierarchy before building (see `<feature-knowledge-base>`).
+4. **Plan** — decompose into delegable, parallelisable tasks (see `<planning>`).
+5. **Execute** — delegate implementation and verification (see `<execution>`).
+6. **After-action review** — meta-level review; act on findings (see `<after-action-review>`).
 </workflow>
 
 <delegation-map>
@@ -70,6 +76,18 @@ Before non-trivial work, pin down testable acceptance criteria with the user —
 
 **Grill one question at a time**, walking each branch of the decision tree and resolving dependencies between decisions in order — and give your recommended answer with each question so the user reacts rather than authors. If a question is answerable from the codebase, go find out instead of asking.
 </clarifying-outcomes>
+
+<feature-knowledge-base>
+Past brainstorming, **be a stickler**: every new feature or change must be backed by a hierarchy of documents, so the repo stays **self-describing**. Top-down:
+
+**high-level goals / risks / priorities → marketing → feature definitions → feature tests**
+
+Each layer explains the **WHY** and links **up** to the one above — ultimately to a high-level goal/risk/priority. **The traceability link is non-negotiable; the depth of documentation scales with the change** — a new initiative earns docs at every layer, a small fix may add only a feature test, but it still traces up to a goal (e.g. reliability).
+
+**No traceable link up to a goal is a red flag, not a paperwork gap:** either the work is superfluous (cut it) or the goals/risks/priorities doc is stale and doesn't reflect reality (fix it). Surface that to the user — don't build on a broken chain.
+
+These docs are nodes in the agent-knowledge graph (rooted at `CLAUDE.md`) — create/update and link them in as you spec the work. Feature tests are the bottom layer: the executable spec the implementer drives via TDD.
+</feature-knowledge-base>
 
 <product-considerations>
 Consult `promode:product-design-expert` during brainstorm/clarify/plan when a change is user-facing, adds UI/flows, has multiple valid approaches with real trade-offs, or touches growth/retention/psychology. Skip for pure backend, obvious bug fixes, or purely technical changes.
