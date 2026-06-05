@@ -19,11 +19,20 @@ The promode-alignment axes. Each is one assessor's deliverable.
 
 | Dimension | Assesses (promode principle) | Suggested assessor |
 |-----------|------------------------------|--------------------|
+| **Framing & traceability** | Apply the **framing & traceability check** (below): does a top-down document hierarchy (goals/risks/priorities → marketing → feature definitions → feature tests) make the repo self-describing, each layer explaining WHY and linking up to a goal? *(feature knowledge-base, self-describing repo)* | `general-purpose` |
 | **Tests & feedback loops** | Behaviour-focused tests on critical paths; tested through public interfaces vs coupled to implementation / over-mocked; speed & determinism (can an agent get a fast pass/fail signal?); a documented one-command way to run tests, lint, typecheck, and the app. *(TDD, tests-as-documentation, fast feedback, verifier-readiness)* | `promode:code-reviewer` (opus) |
 | **Agent knowledge & orientation** | Apply the **CLAUDE.md health check** (below). Beyond it: orientation for subsystems; non-obvious build/run/gotcha knowledge captured or tribal? Significant decisions recorded (ADR-style) or will agents re-litigate them? *(CLAUDE.md-rooted knowledge graph, decision capture)* | `general-purpose` |
 | **Architecture & navigability** | Module depth vs shallowness; testability (dependency injection, seams, return-values over side-effects); oversized files that burn agent context; tangled coupling, dead code, misleading names. *(small diffs, testability, context-frugality)* | `promode:code-reviewer` (opus) |
 | **Change hygiene** *(optional)* | Commit focus & size; messages explain *why*; do tests land with the code they cover? *(small focused commits, explain-why, visible TDD)* | `general-purpose` |
 </dimensions>
+
+<framing-traceability>
+The repo should be **self-describing top-down** — a reader (human or agent) can start at the high-level goals and follow links down to the tests that implement them. The Framing & traceability assessor checks:
+
+1. **The hierarchy exists** — are there docs for high-level goals/risks/priorities, product/marketing framing, feature definitions, and feature tests? Note which layers are missing or thin.
+2. **Every layer explains WHY and links up** — each artifact states *why* it exists and links to the layer above, ultimately to a goal. Flag docs that describe only WHAT/HOW with no WHY, and layers that don't connect upward.
+3. **No orphans, no drift** — can each significant feature be traced up to a goal? Flag orphaned features (no link to any goal → likely superfluous, or the goals doc is stale) and goals nothing implements. A broken chain is a **diagnostic signal**, not just a missing file — say which interpretation is likely and recommend the fix (cut the work, or update the goals doc).
+</framing-traceability>
 
 <claude-md-health>
 `CLAUDE.md` is auto-loaded into **every** agent's context, so it's the highest-leverage file in the repo. The Agent-knowledge assessor evaluates it specifically against three tests, and recommends a concrete restructure (what to cut, what to link, what signposts to add) where it falls short:
@@ -51,7 +60,7 @@ Synthesise into:
 # Promode Methodology Audit — <repo>
 
 ## Overall alignment
-<2–4 sentences. Per-dimension rating: Tests <R> · Knowledge <R> · Architecture <R> · Hygiene <R>>
+<2–4 sentences. Per-dimension rating: Framing <R> · Tests <R> · Knowledge <R> · Architecture <R> · Hygiene <R>>
 
 ## Findings by dimension
 ### <Dimension> — <rating>
