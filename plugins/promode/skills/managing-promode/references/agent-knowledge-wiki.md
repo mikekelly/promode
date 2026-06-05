@@ -6,7 +6,7 @@ Promode keeps a project's durable agent knowledge as a **graph of interlinked ma
 
 `CLAUDE.md` is the one file Claude Code auto-loads into **every** agent — the main agent and every subagent — so it's already in context before any agent acts. That makes it the natural root of the knowledge graph: agents read it to orient, and it **links out** to the key areas. It is **not** an exhaustive index; it's a **launchpad**.
 
-It should carry the critical essentials every agent needs (how to build/run/test, hard constraints, where the landmines are) and **signpost by kind of work** — link engineering, QA, product design, marketing, etc. each to their starting docs, so an agent of that type finds its area in a hop or two.
+It carries only the **critical essentials** — what an agent would *fail or do harm without* (how to build/run/test, hard constraints, where the landmines are) — because a linked doc *may not be read*, so anything truly critical must be inline, not merely discoverable. Everything else, including detailed role-specific guidance (engineering, QA, product design, marketing), lives in the graph and is reached by a **signpost link** from here. The test for inline-vs-linked is **criticality, not topic** — which also keeps the inline core minimal.
 
 `CLAUDE.md` is the **project's own file**. Promode does not put its methodology there — the main-agent orchestration brief is hook-delivered (see `main-agent-delivery.md`). But the project's durable agent knowledge *does* live here and grows from here.
 
