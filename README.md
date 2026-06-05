@@ -71,5 +71,6 @@ Tasks can run in parallel when independent, improving throughput on larger featu
 
 **Skills:**
 - **managing-promode** — Set up, update, and audit promode in a project (installs the main-agent SessionStart hook; never puts its methodology in your `CLAUDE.md` — your `CLAUDE.md` is the agent-knowledge root)
+- **promode-audit** — Assess a repo's alignment with the promode methodology and produce a prioritised, actionable improvement plan (fans out parallel assessors)
 - **handoff** — Write a handoff document so a fresh agent can continue after a `/clear` or `/compact` (also runs as `/handoff`)
 - **recovering-subagents** — Inspect a completed or stalled subagent's transcript compactly, for recovery

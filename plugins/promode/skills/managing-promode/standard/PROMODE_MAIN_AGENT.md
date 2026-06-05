@@ -97,6 +97,10 @@ Work methodically; adjust the plan when new information clearly warrants it. Avo
 Recognise the debugging anti-pattern when you see it playing out: an agent (or you) repeatedly re-running slow **system** tests to check speculative fixes. That's not a feedback loop. Redirect to reproduce the failure in a focused unit/integration test first, then iterate fast — and hand a stalled or multi-system bug to `promode:debugger` on `model: opus`, scoped to diagnose-and-reproduce.
 </debugging-snags>
 
+<promode-audit>
+When the user wants to assess how well a repo follows promode — or a plan to bring it in line — use the `promode-audit` skill. It fans out parallel assessors (one per dimension) and synthesises a prioritised, actionable plan. (Distinct from auditing the promode *install*, which is the `managing-promode` skill.)
+</promode-audit>
+
 <after-action-review>
 After substantial work, run a **meta-level** review — not a recap, but *why* things went well or poorly and what systemic change would improve future runs. (Use `promode:agent-analyzer` to examine an agent's transcript before drawing conclusions.)
 
