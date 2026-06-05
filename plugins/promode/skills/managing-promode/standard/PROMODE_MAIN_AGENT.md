@@ -32,6 +32,7 @@ A `<task-notification>` wakes you with the result when the agent finishes. Do no
 - **Tests are the documentation** — behaviour lives in tests, not markdown.
 - **Always explain the why** — it's the frame for judgement calls.
 - **KISS** — solve today's problem, not tomorrow's hypothetical.
+- **Crystallise discovery into determinism** — inference (agents) discovers; deterministic code then replays the finding for free. Wire it to feed back: a crystallised check that fails is a question for judgement — flake (harden), intended change (re-crystallise), or regression (raise) — so coverage compounds instead of rotting.
 </principles>
 
 <workflow>
@@ -113,6 +114,16 @@ Work methodically; adjust the plan when new information clearly warrants it. Avo
 **Verification checkpoints:** insert a `promode:verifier` pass where a later-discovered regression would be painful — after a logical unit of work, before moving to a new area, after integrating separately-built components, and before declaring "done". The verifier exercises the running app and reports PASS/FAIL; it doesn't fix — you dispatch the fix.
 </execution>
 
+<seam-and-test-tiers>
+**Design the operator seam once; it serves tests and agents both.** When real logic sits behind a UI, a high-leverage architectural move is to carve a clean **operator seam** below the UI — an observable, scriptable interface to the real logic (real persistence, real backend, no GUI). The same seam that lets a fast headless client drive end-to-end acceptance tests is structurally the seam that exposes the system to **AI agent tools**: tests and agents are both non-human operators needing a clean grip on the real logic. Treat headless testability and agent-operability as **one architectural decision, made here during planning** — but fence it: it is convergence of the *seam*, not one interface for both (a test client's god-mode — reset/seed/freeze/auth-bypass — is never a production agent's surface), the agent-tool payoff is a design heuristic not yet proven (n=1), and a seam must still trace up to a real goal, never a hypothetical "might enable agents someday" one. Build it test-first, no wider than a failing test needs, and prefer exposing an existing seam (API/service-layer/CLI) over inventing a parallel one. The UI becomes a thin shell, tested separately.
+
+**Two acceptance tiers, never merged:**
+- **Headless (the workhorse, fast feedback)** — a deterministic code-driven client exercises the system end-to-end *below* the UI. The **bulk** of acceptance coverage lives here; it's cheap, deterministic, CI-friendly, and keeps feedback in the unit/integration regime.
+- **UI state-graph (the scalpel, verification-only)** — only for behaviour that *only* manifests through the real GUI (navigation gating, view/provider/persistence wiring, render defects — the bug that passes every headless test and still breaks the running app). A slow **system-test tier**: dispatch via `promode:verifier`, surgically, for *verification not debugging*. **Load-bearing rule:** the UI tier must NOT re-test what headless already covers — slow UI tests doing a fast headless test's job is the central anti-pattern.
+
+The mechanics (state-graph, recognizers, fail-fast traversal, the applicability gate) live in the **`discovery-to-determinism`** skill — reach for it when designing a layered acceptance suite or building an operator seam.
+</seam-and-test-tiers>
+
 <debugging-snags>
 Recognise the debugging anti-pattern when you see it playing out: an agent (or you) repeatedly re-running slow **system** tests to check speculative fixes. That's not a feedback loop. Redirect to reproduce the failure in a focused unit/integration test first, then iterate fast — and hand a stalled or multi-system bug to `promode:debugger` on `model: opus`, scoped to diagnose-and-reproduce.
 </debugging-snags>
@@ -124,7 +135,7 @@ When the user wants to assess how well a repo follows promode — or a plan to b
 <after-action-review>
 After substantial work, run a **meta-level** review — not a recap, but *why* things went well or poorly and what systemic change would improve future runs. (Use `promode:agent-analyzer` to examine an agent's transcript before drawing conclusions.)
 
-Focus on the methodology: did prompts orient agents well, did any agent definition need tightening, was the task decomposition right, did TDD hold, are there recurring failures a methodology change would prevent? Look especially for **missing feedback loops** — CLI tools, tests, logging, or orientation docs that would give agents faster, more reliable feedback. **Every finding must be actionable** ("the implementer definition lacks guidance on X — add it", not "the implementer struggled").
+Focus on the methodology: did prompts orient agents well, did any agent definition need tightening, was the task decomposition right, did TDD hold, are there recurring failures a methodology change would prevent? Look especially for **missing feedback loops** — CLI tools, tests, logging, or orientation docs that would give agents faster, more reliable feedback. A discovery an agent made this run that isn't yet hardened into deterministic, self-checking code is itself a missing feedback loop — crystallise it (test, map, script) before it's re-paid next run. **Every finding must be actionable** ("the implementer definition lacks guidance on X — add it", not "the implementer struggled").
 
 **Act on findings now, don't just note them.** Project-specific knowledge → a linked doc in the agent-knowledge graph (reachable from `CLAUDE.md`). A *decision* worth recording — hard to reverse, surprising without context, the result of a real trade-off — gets its own node: what was decided and why. Methodology fixes → update this brief or the agent definitions.
 </after-action-review>

@@ -69,6 +69,7 @@ That installs the `SessionStart` hook and the brief, and creates a minimal `CLAU
 
 - **managing-promode** — install, update, or audit the promode setup in a project.
 - **promode-audit** — assess how well an existing repo matches the methodology (tests and feedback loops, the `CLAUDE.md` knowledge root, architecture, traceability) and produce a prioritised, actionable plan. Fans out parallel assessors and synthesises their findings.
+- **discovery-to-determinism** — design layered acceptance testing and crystallise what agents discover into deterministic code. Most coverage runs fast and headless below the UI, through an "operator seam" that could also serve AI-agent tools; a surgical UI state-graph tier covers only what breaks through the real running GUI.
 - **handoff** — write a handoff document so a fresh agent can continue after a `/clear` or `/compact` (also runs as `/handoff`).
 - **recovering-subagents** — inspect a finished or stalled subagent's transcript compactly, to recover from a failure without reading the whole thing.
 

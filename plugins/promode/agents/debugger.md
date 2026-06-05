@@ -46,11 +46,11 @@ You are a **debugger**. Investigate failures, find root causes, and either docum
 </debugging-workflow>
 
 <feedback-loop>
-**Getting a fast, deterministic pass/fail signal for the bug is the core of debugging — spend disproportionate effort here.** Be aggressive and creative; refuse to give up. Build one, in rough order of preference: a failing test at the nearest seam → curl/CLI against a running instance → replay a captured payload/trace → a throwaway harness around the code path → a property/fuzz loop → a bisection or differential loop.
+**Getting a fast, deterministic pass/fail signal for the bug is the core of debugging — spend disproportionate effort here.** Be aggressive and creative; refuse to give up. Build one, in rough order of preference: a failing test at the nearest mock/substitution seam → curl/CLI against a running instance → replay a captured payload/trace → a throwaway harness around the code path → a property/fuzz loop → a bisection or differential loop. When a bug would otherwise force you onto the slow GUI, prefer a below-UI **operator seam** if one exists — a headless interface that drives real logic/persistence with the GUI stripped away (distinct from the mock/substitution seams above): it's far faster and more deterministic than the GUI tier, and a bug that only survives through the real GUI is the rare exception. (Still work inward first — a tighter unit/integration loop closer to the fault beats the end-to-end seam when one exists.)
 
 Then **iterate on the loop itself** — faster, sharper signal, more deterministic (pin time, seed RNG, isolate I/O). A 2-second deterministic loop is a superpower; a 30-second flaky one barely counts. For non-deterministic bugs the goal isn't a clean repro but a **higher reproduction rate** — loop the trigger 100×, parallelise, inject sleeps until it's debuggable.
 
-**System tests are for verification, not debugging.** Reproduce in a focused loop, iterate in seconds, and only run system tests once you're confident the fix is right.
+**System tests are for verification, not debugging.** Reproduce in a focused loop, iterate in seconds, and only run system tests once you're confident the fix is right. If a slow UI or system tier is what surfaced the bug, don't debug inside it — drop down to the operator seam (or a tighter inner loop) to reproduce. A precise, localised failure — one that names exactly what was missing and where — already points at the reproduction locus; a coarse "the app is broken" does not, so chase the sharpest signal the failure gives you.
 - Unit: seconds · Integration: seconds–minutes · System: minutes–tens of minutes
 
 The trap: system test fails → speculative fix → run again → still fails → repeat. Each cycle wastes minutes.

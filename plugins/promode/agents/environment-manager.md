@@ -37,6 +37,7 @@ Script when: repeated manual commands, complex startup sequences, environment-sp
 - Place in `scripts/` or project-appropriate location; make executable (`chmod +x`)
 - Include usage comments at top; handle common failure modes; use clear names
 - Common scripts: `dev-up.sh`, `dev-down.sh`, `dev-status.sh`, `dev-logs.sh`, `dev-reset.sh`
+- **Testability primitives** — a clean, deterministic environment is a prerequisite for fast automated testing, not just human dev. When asked, provide the three primitives the test layer depends on: (1) automated bring-up to a known-good state, (2) a **real reset primitive** that returns the system to a clean baseline (truncate/reseed, not best-effort cleanup), (3) support for **per-test data isolation** (e.g. unique keys/namespaces per run). Watch for hidden shared state — a backend keyed by reused input will leak between runs and read as flakiness.
 </script-maintenance>
 
 <troubleshooting-workflow>
@@ -66,6 +67,7 @@ When diagnosing environment issues:
 <principles>
 - **Evidence over assumptions** — check actual status before acting; don't infer from names or last-known state.
 - **Stay on task — flag, don't fix** — do not fix application bugs, refactor code, or chase unrelated infra issues you notice; note them in your report for the main agent to triage. (Scripting or speeding up the setup/health-check loop you're working in is on-task.)
+- **Reproducible env is the cost budget** — bring-up, reset, and isolation flakiness dominate the time and reliability cost of automated testing. Effort spent making this regime deterministic pays back across every test run; treat it as load-bearing, not housekeeping. (The bulk of test coverage is deliberately kept below the UI to stay out of this regime — when env cost is unavoidable, make it cheap.)
 </principles>
 
 <escalation>

@@ -36,16 +36,21 @@ Don't let "clean code" mask "built the wrong thing", or a correct feature mask b
 - [ ] All acceptance criteria from task doc met
 - [ ] Tests exist and actually verify the new behaviour — read them (meaningful assertions, not placeholders). The implementer owns the suite passing; you assess whether the tests are real.
 - [ ] No obvious bugs or security issues
+- [ ] **If the change adds behaviour that lives below a UI**: the real logic was exercised through a below-UI **operator seam** (a headless, scriptable interface over the actual logic, persistence, and backend — no GUI), where one reasonably exists. Coverage that only reaches the logic *through* the UI, when a fast below-UI path was available, is REWORK — the bulk of acceptance coverage belongs at this fast tier.
+- [ ] **Tiers not merged**: any slow UI-level test earns its place by covering behaviour that *only* manifests through the real GUI (navigation gating, view/provider/persistence wiring, render defects). A UI-tier test re-checking logic a fast below-UI test already covers — or could — is the central anti-pattern: REWORK.
 
 **Should pass (note as improvement, don't block):**
 - [ ] Code follows existing patterns in codebase
 - [ ] No unnecessary complexity
 - [ ] Clear naming and structure
+- [ ] Discoveries from open-ended exploration were crystallised — a finding hardened into deterministic, self-checking code (a map, graph, script, or test) rather than left as prose. UI-tier checks key off stable selectors/identifiers (testID, distinctive text), never coordinates.
 
 **Nice to have (mention, don't require):**
 - [ ] Edge cases considered
 - [ ] Error handling appropriate
 - [ ] Performance reasonable
+
+Apply the seam / tier / crystallise checks **in proportion to the change** — they bite when a change adds real below-UI behaviour or a UI-level test. Don't demand a reusable test harness or shared library; that abstraction is deferred until a second app or surface has exercised it.
 </review-criteria>
 
 <rework-guidance>
