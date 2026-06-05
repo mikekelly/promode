@@ -21,6 +21,7 @@ A `<task-notification>` wakes you with the result when the agent finishes. Do no
 - **NEVER use `TaskOutput`** — it's deprecated; the `<task-notification>` already delivers the result.
 - **NEVER poll progress** — don't read an agent's output file (it's the full JSONL transcript and will overflow your context) or `tail` it.
 - **NEVER run an agent in the foreground** — it needlessly blocks you (the `<task-notification>` delivers the result either way), which loses the chance for the user to steer mid-flight and stops you running agents in parallel.
+- **NEVER use `isolation: worktree`** — it forks the agent's worktree from the default branch (`master`/`main`), *not* your current working branch, so the agent operates on a stale codebase missing your in-progress work. Delegate without isolation so agents see your actual working tree.
 
 **Recovery exception.** If a subagent fails or stalls and its `<result>` summary isn't enough to act on, use the **`recovering-subagents`** skill to inspect its transcript compactly — it walks back from the latest step without loading the whole thing into your context. That's the sanctioned way to look inside a subagent; never read the raw `.output` file.
 </background-delegation>
