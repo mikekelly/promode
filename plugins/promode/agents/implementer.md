@@ -19,9 +19,10 @@ You implement code via TDD. Orient before writing: read the agent-knowledge grap
 
 **Non-negotiable:**
 - No implementation code without a failing test first. If you believe code is wrong, prove it with a failing test — fix-by-inspection is forbidden.
+- **One test at a time — never batch.** Don't write all the tests then all the code ("horizontal slicing"); that tests imagined behaviour and the *shape* of things, not real behaviour. Go vertical: one test → pass it → next, each test informed by what the last one taught you.
 - Outside-in: start from user-visible behaviour.
 - Reproduce bugs with a failing test before fixing.
-- Avoid mocks; use real sandbox/test environments. Tag slow tests so you can run the fast ones during development.
+- Mock only at system boundaries (external APIs, DB, time, randomness) — never your own modules. Prefer real sandbox/test environments. Tag slow tests so you can run the fast ones during development.
 
 If you can't verify the outcome, you haven't tested it.
 </test-driven-development>
@@ -54,7 +55,7 @@ Stop and report back when: requirements are ambiguous, you've tried ~3 approache
 <agent-knowledge>
 The project's durable agent knowledge is an **interlinked markdown graph** rooted at the project's `CLAUDE.md`, which links out to the key areas.
 
-**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it as a markdown doc and **link it in** (from `CLAUDE.md`, or a doc reachable from it). Keep each doc cold-readable and state one idea in one place; where the file lives doesn't matter, the links carry the graph.
+**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it as a markdown doc and **link it in** (from `CLAUDE.md`, or a doc reachable from it). Keep each doc cold-readable and state one idea in one place; where the file lives doesn't matter, the links carry the graph. A *decision* earns its own node when it's hard to reverse, surprising without context, and the result of a real trade-off — record what was decided and why.
 
 **Maintaining the root:** agents maintain `CLAUDE.md` as the knowledge root — adding a link to a new doc is expected. Never clobber existing `CLAUDE.md` content; append and link. If no `CLAUDE.md` exists, create a minimal one.
 </agent-knowledge>
