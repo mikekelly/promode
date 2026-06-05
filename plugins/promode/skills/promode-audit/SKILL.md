@@ -31,7 +31,7 @@ The repo should be **self-describing top-down** — a reader (human or agent) ca
 
 1. **The hierarchy exists** — are there docs for high-level goals/risks/priorities, product/marketing framing, feature definitions, and feature tests? Note which layers are missing or thin.
 2. **Every layer explains WHY and links up** — each artifact states *why* it exists and links to the layer above, ultimately to a goal. Flag docs that describe only WHAT/HOW with no WHY, and layers that don't connect upward.
-3. **No orphans, no drift** — can each significant feature be traced up to a goal? Flag orphaned features (no link to any goal → likely superfluous, or the goals doc is stale) and goals nothing implements. A broken chain is a **diagnostic signal**, not just a missing file — say which interpretation is likely and recommend the fix (cut the work, or update the goals doc).
+3. **No orphans, no drift, no sprawl** — can each significant feature be traced up to a goal? Flag orphaned features (no link to any goal → likely superfluous, or the goals doc is stale) and goals nothing implements. Also flag **goal sprawl** — an unfocused or ballooning goals/risks/priorities list, or goals that look invented post-hoc to justify a feature; too many goals is itself a finding (focus is the scarce resource). A broken chain is a **diagnostic signal**, not just a missing file — say which interpretation is likely and recommend the fix (cut the work, sharpen the goal, or update a *genuinely* stale goals doc).
 </framing-traceability>
 
 <claude-md-health>

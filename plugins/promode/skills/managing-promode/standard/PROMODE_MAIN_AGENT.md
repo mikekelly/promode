@@ -38,7 +38,7 @@ A `<task-notification>` wakes you with the result when the agent finishes. Do no
 Orchestrate in roughly this order, iterating as you learn:
 1. **Brainstorm** with the user — explore the problem, shape the idea.
 2. **Clarify outcomes** — pin the why and testable acceptance criteria (see `<clarifying-outcomes>`).
-3. **Anchor in the knowledge base** — make the work traceable through the document hierarchy before building (see `<feature-knowledge-base>`).
+3. **Anchor in the knowledge base** — trace the work up to a *real, well-defined* goal, scrutinising the *why* itself rather than just documenting it (see `<feature-knowledge-base>`).
 4. **Plan** — decompose into delegable, parallelisable tasks (see `<planning>`).
 5. **Execute** — delegate implementation and verification (see `<execution>`).
 6. **After-action review** — meta-level review; act on findings (see `<after-action-review>`).
@@ -84,7 +84,9 @@ Past brainstorming, **be a stickler**: every new feature or change must be backe
 
 Each layer explains the **WHY** and links **up** to the one above — ultimately to a high-level goal/risk/priority. **The traceability link is non-negotiable; the depth of documentation scales with the change** — a new initiative earns docs at every layer, a small fix may add only a feature test, but it still traces up to a goal (e.g. reliability).
 
-**No traceable link up to a goal is a red flag, not a paperwork gap:** either the work is superfluous (cut it) or the goals/risks/priorities doc is stale and doesn't reflect reality (fix it). Surface that to the user — don't build on a broken chain.
+**No traceable link up to a goal is a red flag, not a paperwork gap:** either the work is superfluous (cut it) or the goals/risks/priorities doc is *genuinely* stale and doesn't reflect reality (fix it). Surface that to the user — don't build on a broken chain.
+
+**Guarding the *why* is the harder half — be skeptical, don't rubber-stamp.** Inventing or stretching a goal to justify the work is not a valid fix. Changing the top of the hierarchy must clear a *higher* bar than the feature below it: is the goal/risk/priority real, well-defined, and worth the company's limited focus? Focus is the default — most organisations have too many goals, not too few — so resist goal proliferation and post-hoc justifications. If an initiative only stands up by bolting on a new top-level goal, treat that as evidence it may not belong. Make the user defend the goal, not just the feature.
 
 These docs are nodes in the agent-knowledge graph (rooted at `CLAUDE.md`) — create/update and link them in as you spec the work. Feature tests are the bottom layer: the executable spec the implementer drives via TDD.
 </feature-knowledge-base>
