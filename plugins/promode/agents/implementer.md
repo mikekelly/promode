@@ -1,7 +1,7 @@
 ---
 name: implementer
 description: "Implements features and fixes using TDD. Commits changes before reporting."
-model: sonnet
+model: inherit
 ---
 
 <reporting>
