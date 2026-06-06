@@ -1,11 +1,23 @@
 {
-  "description": "promode: inject the main-agent orchestration brief at session start (main agent only)",
+  "description": "promode: inject the main-agent orchestration brief at session start (main agent only), split into self-contained chunks to stay under the 10k hook-output cap",
   "hooks": {
     "SessionStart": [
-      { "matcher": "startup", "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] },
-      { "matcher": "resume",  "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] },
-      { "matcher": "clear",   "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] },
-      { "matcher": "compact", "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] }
+      { "matcher": "startup", "hooks": [
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "1"] },
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "2"] }
+      ] },
+      { "matcher": "resume", "hooks": [
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "1"] },
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "2"] }
+      ] },
+      { "matcher": "clear", "hooks": [
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "1"] },
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "2"] }
+      ] },
+      { "matcher": "compact", "hooks": [
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "1"] },
+        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md", "2"] }
+      ] }
     ]
   }
 }

@@ -16,6 +16,10 @@ Promode never puts its methodology in the project's `CLAUDE.md` (that's the hook
 - **Main agent** — gets the full promode brief (`PROMODE_MAIN_AGENT.md`: principles + orchestration) delivered **only** to it, via a `SessionStart` hook gated on `agent_id`. So "delegate everything, never do the work yourself" never leaks into subagents that exist to do the work.
 - **Subagents** — carry the methodology in their own definitions (`plugins/promode/agents/*.md`); they need nothing from `CLAUDE.md`.
 
+**Design constraints for the brief (load-bearing):**
+- **Decisions, not mechanics.** The brief carries orchestration *decisions*; execution mechanics and methodology detail live in the subagent definitions and skills — reached by *dispatch* (which is acted on), not a pointer (which may not be read).
+- **Stay under the 10k cap.** Every hook output string (`additionalContext`, `systemMessage`, stdout) must be < 10,000 chars, or Claude Code silently truncates it to a preview + file path and drops the tail. `scripts/check-hook-output-limits.sh` enforces this — keep it green (wire into CI). If a principle-complete brief exceeds the cap, split it across multiple SessionStart outputs at *section boundaries* (self-contained, so the parallel/unordered merge can't garble them) — never demote a principle to a pointer to fit.
+
 Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/skills/managing-promode/references/main-agent-delivery.md`.
 
 | Agent | Purpose | Model |
@@ -30,10 +34,10 @@ Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/sk
 
 Brainstorming, planning, and architectural decisions stay with the main agent (the latest Opus on high effort) — never delegated. Use `Explore` for codebase research and `/deep-research` for web research.
 
-### Standard files & keeping them in sync
+### Where the brief + hook live; keeping principles in sync
 
-The `managing-promode` skill installs these into a target project (templates live in `skills/managing-promode/standard/`) — never putting the brief in the project's `CLAUDE.md`:
-- `standard/PROMODE_MAIN_AGENT.md` → `.claude/PROMODE_MAIN_AGENT.md` (main-only, hook-delivered)
-- `standard/hooks/promode-main-context.sh` + a `SessionStart` entry in `.claude/settings.json`
+The plugin ships its own `SessionStart` delivery — nothing is copied into a project:
+- `plugins/promode/hooks/` — `hooks.json` + `promode-main-context.sh` inject the brief (main-agent-only, gated on `agent_id`), reading it from the plugin via `${CLAUDE_PLUGIN_ROOT}`, so a plugin update delivers the new brief automatically.
+- `plugins/promode/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md` — the brief the hook reads.
 
-Principles live in two places by design (the cost of keeping the brief out of `CLAUDE.md`): update them in `standard/PROMODE_MAIN_AGENT.md` (main agent) and the relevant phase-agent definitions (subagents).
+(`managing-promode` is narrowing to project scaffolding; its old per-project copy-install is superseded by the hook above.) Principles live in two places by design: when you change a shared principle, update **both** the brief (main agent) and the relevant phase-agent definitions (subagents).
