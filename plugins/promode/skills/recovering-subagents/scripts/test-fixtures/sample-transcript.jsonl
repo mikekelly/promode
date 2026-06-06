@@ -1,0 +1,3 @@
+{"type":"assistant","message":{"content":[{"type":"text","text":"Starting the task now."},{"type":"tool_use","name":"Bash","input":{"command":"ls -la /tmp"}}]}}
+{"type":"user","message":{"content":[{"type":"tool_result","is_error":false,"content":[{"type":"text","text":"total 0\ndrwxr-xr-x  2 user  wheel  64 Jun  6 10:00 ."}]}]}}
+{"type":"assistant","message":{"content":[{"type":"thinking","thinking":"deciding next step"},{"type":"text","text":"Done."}]}}

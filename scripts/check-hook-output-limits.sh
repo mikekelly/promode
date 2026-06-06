@@ -34,7 +34,17 @@ while IFS=$'\t' read -r event command argsjson; do
   fi
   for pair in "additionalContext=$ac" "systemMessage=$sm"; do
     name="${pair%%=*}"; n="${pair##*=}"
-    [ "${n:-0}" -gt 0 ] || continue
+    # A 0-char additionalContext is a FAILURE, not a skip: the brief-delivery output must
+    # be non-empty. A missing brief file or an out-of-range chunk arg degrades silently to
+    # empty output, which would otherwise pass unnoticed. The systemMessage is legitimately
+    # absent on every chunk but the first, so empty there is fine — only enforce non-empty
+    # on additionalContext (the brief payload).
+    if [ "${n:-0}" -le 0 ]; then
+      if [ "$name" = "additionalContext" ]; then
+        printf 'FAIL  %-12s %-17s %6s chars  (empty brief output — missing file or out-of-range chunk?)\n' "$event" "$name" "${n:-0}"; fail=1
+      fi
+      continue
+    fi
     if [ "$n" -gt "$CAP" ]; then
       printf 'FAIL  %-12s %-17s %6s chars  (> %s)\n' "$event" "$name" "$n" "$CAP"; fail=1
     else
@@ -48,7 +58,9 @@ done < <(jq -r '
 
 echo
 if [ "$fail" -ne 0 ]; then
-  echo "✗ hook output exceeds the ${CAP}-char cap — Claude Code will truncate it to a preview. Trim the source."
+  echo "✗ hook output invalid — either it exceeds the ${CAP}-char cap (Claude Code truncates"
+  echo "  it to a preview; trim the source) or a brief-delivery output came back empty"
+  echo "  (missing file / out-of-range chunk; the brief would be silently dropped)."
   exit 1
 fi
-echo "✓ all ${checked} hook output(s) within the ${CAP}-char cap"
+echo "✓ all ${checked} hook output(s) non-empty and within the ${CAP}-char cap"
