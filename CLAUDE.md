@@ -43,3 +43,7 @@ The plugin ships its own `SessionStart` delivery — nothing is copied into a pr
 - `plugins/promode/PROMODE_MAIN_AGENT.md` — the brief the hook reads.
 
 (There's no per-project install — enabling the plugin delivers the brief; `promode-audit` flags any stale leftovers from the retired copy-install.) Principles live in two places by design: when you change a shared principle, update **both** the brief (main agent) and the relevant phase-agent definitions (subagents).
+
+### Runbooks
+
+Repeatable operational procedures (release/version bump, adding a subagent, syncing a principle, verifying hook delivery) are captured as runbooks — see [`RUNBOOKS.md`](RUNBOOKS.md).
