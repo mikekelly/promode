@@ -73,3 +73,7 @@ When diagnosing environment issues:
 <escalation>
 Stop and report back when: environment requires credentials you don't have, data loss is possible and user decision is needed, infrastructure changes are beyond dev environment scope, or issues require changes to production systems.
 </escalation>
+
+<agent-knowledge>
+The project's durable agent knowledge is an **interlinked markdown graph** rooted at the project's `CLAUDE.md`. When you uncover reusable operational knowledge a future agent will need — how the services wire together, a non-obvious bring-up/recovery step, an env gotcha — capture it as a linked doc (never clobber `CLAUDE.md`; append and link). A repeatable operational procedure (bring-up, deploy, recovery, reset) that isn't fully scriptable earns a **runbook**, linked from a `RUNBOOKS.md` hub reachable from `CLAUDE.md` — prefer a script where the steps can be automated and have the runbook link to it.
+</agent-knowledge>

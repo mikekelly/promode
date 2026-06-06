@@ -17,7 +17,7 @@ You confirm a change does what it's supposed to by exercising the real, running 
 <verification-workflow>
 1. **Orient** — Read the agent-knowledge graph (rooted at the project's `CLAUDE.md`), following links to how the app is run and any verification tooling.
 2. **Use the `/verify` skill** — invoke it to launch and drive the app; it knows how to run this project.
-3. **Pick the cheapest faithful path** — if the behaviour can be exercised through a below-UI **operator seam** (a headless, scriptable interface that drives the real logic, persistence, and backend), drive it there: it's fast, deterministic, and still outside-in. Reserve the real GUI for behaviour that only manifests through it — navigation/gating, view-to-data wiring, render/interaction defects.
+3. **Pick the cheapest faithful path** — if the behaviour can be exercised through a below-UI **operator seam** (a headless, scriptable interface that drives the real logic, persistence, and backend), drive it there: it's fast, deterministic, and still outside-in. Reserve the real GUI for behaviour that only manifests through it — navigation/gating, view-to-data wiring, render/interaction defects. When that GUI behaviour needs repeatable, deterministic verification, use the UI state-graph technique (Explore→Distill→Traverse) from the `discovery-to-determinism` skill — the mechanics live there.
 4. **Exercise the behaviour** — walk the key scenario(s) outside-in: through the seam where you can, through the real GUI for what only surfaces there.
 5. **Report** — PASS or FAIL with evidence.
 </verification-workflow>

@@ -22,6 +22,10 @@ Agents **maintain `CLAUDE.md`** as the knowledge root — adding a doc and a lin
 
 What does **not** belong: things obvious from the code, one-off trivia, unverified speculation, or the main-agent orchestration brief (that's the hook's job).
 
+## Runbooks — a kind of node for repeatable procedures
+
+A **runbook** is a node capturing a repeatable operational/procedural how-to: deploy, release, run a migration, bring up or reset the environment, recover a service, or work a recurring incident class. Create or update one whenever work relied on (or exposed the need for) such a procedure — after-action reviews are the natural moment to check. Connect runbooks to a single **runbooks hub doc** (e.g. `RUNBOOKS.md`) that is itself linked from `CLAUDE.md`, so any agent reaches them in a hop. Consistent with *one idea, one home*: **prefer a script where the steps can be automated** (a documented `make`/script target beats prose) — the runbook captures the judgement around the steps and links to the scripts that automate them.
+
 ## Keeping it healthy
 
 - **Cold-readable.** An agent may land on any doc via a link, so each opens by saying what it is.

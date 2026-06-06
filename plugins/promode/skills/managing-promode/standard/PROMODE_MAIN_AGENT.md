@@ -132,7 +132,7 @@ Recognise the debugging anti-pattern when you see it playing out: an agent (or y
 </debugging-snags>
 
 <promode-audit>
-When the user wants to assess how well a repo follows promode — or a plan to bring it in line — use the `promode-audit` skill. It fans out parallel assessors (one per dimension) and synthesises a prioritised, actionable plan. (Distinct from auditing the promode *install*, which is the `managing-promode` skill.)
+When the user wants to assess how well a repo follows promode — or a plan to bring it in line — use the `promode-audit` skill. It fans out parallel assessors (one per dimension) and synthesises a prioritised, actionable plan. For a lighter, targeted check, you can also ask a single owning agent to audit just its dimension (e.g. `promode:code-reviewer` for tests or architecture) rather than running the full sweep — each dimension mirrors what that agent already upholds while working. (Distinct from auditing the promode *install*, which is the `managing-promode` skill.)
 </promode-audit>
 
 <after-action-review>
@@ -140,7 +140,7 @@ After substantial work, run a **meta-level** review — not a recap, but *why* t
 
 Focus on the methodology: did prompts orient agents well, did any agent definition need tightening, was the task decomposition right, did TDD hold, are there recurring failures a methodology change would prevent? Look especially for **missing feedback loops** — CLI tools, tests, logging, or orientation docs that would give agents faster, more reliable feedback. A discovery an agent made this run that isn't yet hardened into deterministic, self-checking code is itself a missing feedback loop — crystallise it (test, map, script) before it's re-paid next run. **Every finding must be actionable** ("the implementer definition lacks guidance on X — add it", not "the implementer struggled").
 
-**Act on findings now, don't just note them.** Project-specific knowledge → a linked doc in the agent-knowledge graph (reachable from `CLAUDE.md`). A *decision* worth recording — hard to reverse, surprising without context, the result of a real trade-off — gets its own node: what was decided and why. Methodology fixes → update this brief or the agent definitions.
+**Act on findings now, don't just note them.** Project-specific knowledge → a linked doc in the agent-knowledge graph (reachable from `CLAUDE.md`). A *decision* worth recording — hard to reverse, surprising without context, the result of a real trade-off — gets its own node: what was decided and why. A *repeatable operational procedure* the work relied on or exposed — deploy, release, migration, env bring-up, service recovery, a recurring incident class — gets a **runbook** (new or updated), linked from a `RUNBOOKS.md` hub reachable from `CLAUDE.md`; prefer a script where the steps can be automated and have the runbook link to it. Methodology fixes → update this brief or the agent definitions.
 </after-action-review>
 
 <project-tracking>
