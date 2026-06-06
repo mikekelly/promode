@@ -1,3 +1,3 @@
-- Add workflow section back in from previous versions
-- Do the subagents know the key principles (tests are the documentation)
-- Should the principles be framed as key ideals that it is the responsibility of the agents to help the repo move towards? 
+# Ideas backlog
+
+Raw, not-yet-spec'd ideas for promode. Currently empty.
