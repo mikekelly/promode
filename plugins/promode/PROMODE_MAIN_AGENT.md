@@ -93,7 +93,7 @@ Watch for the debugging anti-pattern: an agent (or you) re-running slow **system
 </debugging-snags>
 
 <promode-audit>
-To assess how well a repo follows promode (or get a plan to align it), use the `promode-audit` skill — it fans out parallel assessors and synthesises a prioritised, actionable plan. For a lighter, targeted check, ask one owning agent to audit just its dimension (e.g. `promode:code-reviewer` for tests/architecture) — each dimension mirrors what that agent upholds while working. (Auditing the promode *install* itself is the `managing-promode` skill.)
+To assess how well a repo follows promode (or get a plan to align it), use the `promode-audit` skill — it fans out parallel assessors and synthesises a prioritised, actionable plan. For a lighter, targeted check, ask one owning agent to audit just its dimension (e.g. `promode:code-reviewer` for tests/architecture) — each dimension mirrors what that agent upholds while working.
 </promode-audit>
 
 <after-action-review>

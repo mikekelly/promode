@@ -3,7 +3,7 @@
 Promode keeps its **main-agent orchestration brief out of `CLAUDE.md`** and delivers it via a SessionStart hook instead. The split:
 
 - **`CLAUDE.md`** is the project's own file and the **root of the agent-knowledge graph** — auto-loaded into the main agent *and* every subagent, and maintained by agents over time. It holds project knowledge, not promode's methodology.
-- **`PROMODE_MAIN_AGENT.md`** carries the main-agent methodology (principles + orchestration). It's delivered to the **main agent only**, via the hook, and lives in `.claude/` — never in `CLAUDE.md`.
+- **`PROMODE_MAIN_AGENT.md`** carries the main-agent methodology (principles + orchestration). It ships *with the plugin* and is injected to the **main agent only** by the plugin's own SessionStart hook — never in `CLAUDE.md`, never copied into the project.
 - **Subagents** carry their methodology in their own definitions, so they need nothing extra.
 
 ## Why the brief can't just go in CLAUDE.md
@@ -26,6 +26,10 @@ Verified behaviour:
 
 - The injected context **does not cascade** into subagents.
 - `SessionStart` re-fires on `clear` and `compact`, so the brief **survives `/clear` and compaction** — provided the hook matches all four sources (`startup|resume|clear|compact`). Miss the `compact` matcher and the brief is silently dropped after the first compaction.
+
+## How it's delivered
+
+The plugin ships the hook (`plugins/promode/hooks/`) and the brief (`plugins/promode/PROMODE_MAIN_AGENT.md`); nothing is copied into a project, and updating the plugin updates the brief. Because Claude Code caps each hook output string at 10,000 chars, the brief is split at `<!-- CHUNK -->` markers into self-contained parts, each injected as a separate SessionStart output — see the brief's own header and `scripts/check-hook-output-limits.sh`.
 
 ## The trade-off
 

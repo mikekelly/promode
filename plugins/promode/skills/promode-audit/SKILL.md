@@ -1,16 +1,16 @@
 ---
 name: promode-audit
-description: "Audit how well a repository's codebase and practices align with the promode methodology, then produce a prioritised, actionable improvement plan. Fans out parallel assessors (one per dimension) and synthesises their findings. Use when the user wants to assess promode alignment/fit, audit a repo against the methodology, or get a plan to bring a codebase in line with promode. NOT for checking the promode install itself (hook/settings) — that's the managing-promode audit."
+description: "Audit how well a repository's codebase and practices align with the promode methodology, then produce a prioritised, actionable improvement plan. Fans out parallel assessors (one per dimension) and synthesises their findings. Use when the user wants to assess promode alignment/fit, audit a repo against the methodology, or get a plan to bring a codebase in line with promode. Also flags stale per-project install leftovers — promode ships its own SessionStart hook, so nothing should be copied into a project."
 ---
 
 You (the main agent) run this audit: fan out parallel assessors, one per dimension, then synthesise their findings into a prioritised, actionable plan. The assessors gather evidence; the **prioritisation and plan are yours** — that judgement is not delegated.
 
-This audits the **repo's alignment with promode's working practices**, not whether promode is installed (that's `managing-promode` → audit).
+This audits the **repo's alignment with promode's working practices**, plus a pre-flight setup check. promode ships its delivery via its own plugin SessionStart hook, so nothing is installed per-project — the only setup issue to catch is *stale* leftovers from the retired copy-install.
 
 Each dimension is a **reusable lens, not just a step in the full sweep** — it mirrors what a working agent is already responsible for. The same standard runs at three cadences: every agent upholds its dimension *continuously* while working; a single owning agent can be asked to audit just its dimension for a *targeted* spot-check (e.g. `promode:code-reviewer` for tests or architecture); or you run this skill for the *full* parallel sweep. Auditing and doing are the same standard, zoomed differently.
 
 <process>
-1. **Frame** — Skim `CLAUDE.md` and `README` to understand the repo (language, stack, size, test setup). Pick which dimensions apply and scale the assessor count to the repo (a small library may merge dimensions; a large system warrants all of them, possibly split by area).
+1. **Frame** — Skim `CLAUDE.md` and `README` to understand the repo (language, stack, size, test setup). Pick which dimensions apply and scale the assessor count to the repo (a small library may merge dimensions; a large system warrants all of them, possibly split by area). Also do a quick **setup check**: the promode plugin delivers its brief via its own SessionStart hook, so a project needs nothing installed — flag any stale leftovers from the retired per-project copy-install (`.claude/PROMODE_MAIN_AGENT.md`, `.claude/hooks/promode-main-context.sh`, or a promode `SessionStart` entry in `.claude/settings.json`); they now double-inject the brief and should be removed.
 2. **Fan out assessors in parallel** — Dispatch one background agent per dimension using the standard fire-and-forget pattern (all in one turn, then end the turn; their `<task-notification>`s wake you). Each is **read-only — instruct it to modify nothing**. Give each the assessor brief below. Wait for all to report.
 3. **Synthesise** — Merge findings into one assessment and a single prioritised plan (format below). Resolve overlaps between dimensions; rank across all of them.
 4. **Deliver & offer to capture** — Present the report. Offer to turn the plan into tracked work (e.g. `KANBAN_BOARD.md` / `IDEAS.md`) or a saved report file.

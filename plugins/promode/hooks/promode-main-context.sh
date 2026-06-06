@@ -27,7 +27,7 @@ if printf '%s' "$input" | grep -q '"agent_id"'; then
 fi
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 brief="${1:-}"
-[ -f "$brief" ] || brief="$root/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"
+[ -f "$brief" ] || brief="$root/PROMODE_MAIN_AGENT.md"
 [ -f "$brief" ] || exit 0
 chunk="${2:-}"
 

@@ -4,7 +4,7 @@
 
 Promode is a Claude Code plugin that enhances how Claude builds software:
 
-- **Skills** — just-in-time knowledge (`managing-promode` sets up promode in a project)
+- **Skills** — just-in-time knowledge (e.g. `promode-audit` assesses a repo's alignment + setup; `discovery-to-determinism` for layered acceptance testing)
 - **Agents** — phase-specific subagents for research, implementation, review, debugging, testing, QA, environment, product design
 
 Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, discovery hardens into deterministic tests/scripts/maps, and the main agent orchestrates while subagents execute.
@@ -20,7 +20,7 @@ Promode never puts its methodology in the project's `CLAUDE.md` (that's the hook
 - **Decisions, not mechanics.** The brief carries orchestration *decisions*; execution mechanics and methodology detail live in the subagent definitions and skills — reached by *dispatch* (which is acted on), not a pointer (which may not be read).
 - **Stay under the 10k cap.** Every hook output string (`additionalContext`, `systemMessage`, stdout) must be < 10,000 chars, or Claude Code silently truncates it to a preview + file path and drops the tail. `scripts/check-hook-output-limits.sh` enforces this — keep it green (wire into CI). If a principle-complete brief exceeds the cap, split it across multiple SessionStart outputs at *section boundaries* (self-contained, so the parallel/unordered merge can't garble them) — never demote a principle to a pointer to fit.
 
-Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/skills/managing-promode/references/main-agent-delivery.md`.
+Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/skills/promode-audit/references/main-agent-delivery.md`.
 
 | Agent | Purpose | Model |
 |-------|---------|-------|
@@ -38,6 +38,6 @@ Brainstorming, planning, and architectural decisions stay with the main agent (t
 
 The plugin ships its own `SessionStart` delivery — nothing is copied into a project:
 - `plugins/promode/hooks/` — `hooks.json` + `promode-main-context.sh` inject the brief (main-agent-only, gated on `agent_id`), reading it from the plugin via `${CLAUDE_PLUGIN_ROOT}`, so a plugin update delivers the new brief automatically.
-- `plugins/promode/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md` — the brief the hook reads.
+- `plugins/promode/PROMODE_MAIN_AGENT.md` — the brief the hook reads.
 
-(`managing-promode` is narrowing to project scaffolding; its old per-project copy-install is superseded by the hook above.) Principles live in two places by design: when you change a shared principle, update **both** the brief (main agent) and the relevant phase-agent definitions (subagents).
+(There's no per-project install — enabling the plugin delivers the brief; `promode-audit` flags any stale leftovers from the retired copy-install.) Principles live in two places by design: when you change a shared principle, update **both** the brief (main agent) and the relevant phase-agent definitions (subagents).
