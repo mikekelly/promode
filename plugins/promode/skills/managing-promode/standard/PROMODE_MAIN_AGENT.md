@@ -64,6 +64,7 @@ Subagents start fresh — no conversation history. A good prompt is a brief, not
 - **Specify** — the objective and what success looks like.
 - **Why** — the reasoning, so they can make judgement calls.
 - **Verified vs assumed** — separate what you've confirmed from what you're assuming, so they can challenge it (agents inherit your assumptions silently).
+- **Feedback loop** — when the task touches tests, debugging, verification, or GUI traversal, say what deterministic artifact should exist or ask the agent to report the missing one.
 </prompting-subagents>
 
 <subagent-scoping>
@@ -115,13 +116,15 @@ Work methodically; adjust the plan when new information clearly warrants it. Avo
 </execution>
 
 <seam-and-test-tiers>
+Use the **`discovery-to-determinism`** skill when planning or reviewing layered acceptance coverage, creating a below-UI operator seam, replacing slow GUI coverage, or turning agent exploration into deterministic code.
+
 **Design the operator seam once; it serves tests and agents both.** When real logic sits behind a UI, a high-leverage architectural move is to carve a clean **operator seam** below the UI — an observable, scriptable interface to the real logic (real persistence, real backend, no GUI). The same seam that lets a fast headless client drive end-to-end acceptance tests is structurally the seam that exposes the system to **AI agent tools**: tests and agents are both non-human operators needing a clean grip on the real logic. Treat headless testability and agent-operability as **one architectural decision, made here during planning** — but fence it: it is convergence of the *seam*, not one interface for both (a test client's god-mode — reset/seed/freeze/auth-bypass — is never a production agent's surface), the agent-tool payoff is a design heuristic not yet proven (n=1), and a seam must still trace up to a real goal, never a hypothetical "might enable agents someday" one. Build it test-first, no wider than a failing test needs, and prefer exposing an existing seam (API/service-layer/CLI) over inventing a parallel one. The UI becomes a thin shell, tested separately.
 
 **Two acceptance tiers, never merged:**
 - **Headless (the workhorse, fast feedback)** — a deterministic code-driven client exercises the system end-to-end *below* the UI. The **bulk** of acceptance coverage lives here; it's cheap, deterministic, CI-friendly, and keeps feedback in the unit/integration regime.
 - **UI state-graph (the scalpel, verification-only)** — only for behaviour that *only* manifests through the real GUI (navigation gating, view/provider/persistence wiring, render defects — the bug that passes every headless test and still breaks the running app). A slow **system-test tier**: dispatch via `promode:verifier`, surgically, for *verification not debugging*. **Load-bearing rule:** the UI tier must NOT re-test what headless already covers — slow UI tests doing a fast headless test's job is the central anti-pattern.
 
-The mechanics (state-graph, recognizers, fail-fast traversal, the applicability gate) live in the **`discovery-to-determinism`** skill — reach for it when designing a layered acceptance suite or building an operator seam.
+The detailed mechanics (applicability gate, operator seam, state graph, recognizers, fail-fast traversal) live in the skill.
 </seam-and-test-tiers>
 
 <debugging-snags>

@@ -7,7 +7,7 @@ Promode is a Claude Code plugin that enhances how Claude builds software:
 - **Skills** — just-in-time knowledge (`managing-promode` sets up promode in a project)
 - **Agents** — phase-specific subagents for research, implementation, review, debugging, testing, QA, environment, product design
 
-Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, and the main agent orchestrates while subagents execute.
+Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, discovery hardens into deterministic tests/scripts/maps, and the main agent orchestrates while subagents execute.
 
 ### How the methodology reaches agents
 

@@ -47,6 +47,8 @@ Promode is opinionated on purpose. What's baked into the agents:
 
 - **TDD is not optional.** No implementation without a failing test first. Tests are the specification; behaviour lives in tests, not in prose.
 - **Evidence over assumptions.** Read the code, run it, check the output. State assumptions out loud so they can be challenged.
+- **Discovery hardens into determinism.** Agents do the open-ended discovery; worthwhile findings become runnable tests, scripts, maps, recognizers, or state graphs so future agents don't rediscover the same thing.
+- **Acceptance coverage is layered.** Most behaviour is exercised fast and headless below the UI through an operator seam; the real GUI is a surgical state-graph tier for defects that only surface there.
 - **Stay on task.** An agent fixes what it was sent to fix and flags the rest, rather than wandering into adjacent refactors and bloating the diff.
 - **Work traces to a reason.** New work connects, through a hierarchy of docs (goals and risks → feature definitions → tests), up to an actual goal. If it can't, either the work is superfluous or the goals are out of date — and the main agent is told to push back, not to invent a goal to justify the work.
 
