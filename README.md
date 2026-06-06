@@ -38,7 +38,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 | `debugger` | Find the root cause, reproduce with a test, report (doesn't fix unless asked) |
 | `verifier` | Exercise the running app from the outside; PASS/FAIL with evidence |
 | `environment-manager` | Docker, services, health checks, scripts |
-| `product-design-expert` | Product and UX decisions |
+| `product-design-expert` | Product and UX decisions, grounded in realistic customer profiles/personas |
 | `agent-analyzer` | Read an agent's transcript during after-action reviews |
 
 ## The opinions
@@ -51,6 +51,7 @@ Promode is opinionated on purpose. What's baked into the agents:
 - **Acceptance coverage is layered.** Most behaviour is exercised fast and headless below the UI through an operator seam; the real GUI is a surgical state-graph tier for defects that only surface there.
 - **Stay on task.** An agent fixes what it was sent to fix and flags the rest, rather than wandering into adjacent refactors and bloating the diff.
 - **Work traces to a reason.** New work connects, through a hierarchy of docs (goals and risks → feature definitions → tests), up to an actual goal. If it can't, either the work is superfluous or the goals are out of date — and the main agent is told to push back, not to invent a goal to justify the work.
+- **Decisions ground in who we build for.** Product and UX decisions trace to a realistic customer profile/persona — grounded in real evidence, never invented or flattered to justify a feature. A feature without a clear persona is a red flag, the same way work without a goal is.
 
 ## Install
 
