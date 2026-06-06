@@ -1,0 +1,11 @@
+{
+  "description": "promode: inject the main-agent orchestration brief at session start (main agent only)",
+  "hooks": {
+    "SessionStart": [
+      { "matcher": "startup", "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] },
+      { "matcher": "resume",  "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] },
+      { "matcher": "clear",   "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] },
+      { "matcher": "compact", "hooks": [ { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/skills/managing-promode/standard/PROMODE_MAIN_AGENT.md"] } ] }
+    ]
+  }
+}
