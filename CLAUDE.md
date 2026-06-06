@@ -24,17 +24,9 @@ Promode never puts its methodology in the project's `CLAUDE.md` (that's the hook
 
 Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/skills/promode-audit/references/main-agent-delivery.md`.
 
-| Agent | Purpose | Model |
-|-------|---------|-------|
-| `promode:implementer` | TDD workflow, write code (and tests) | sonnet |
-| `promode:code-reviewer` | Review the code & solution (doesn't run the suite) | sonnet/opus |
-| `promode:debugger` | Root cause analysis, reproduce with test (does NOT fix unless asked) | sonnet/opus |
-| `promode:verifier` | Exercise the running app via the `/verify` skill; report PASS/FAIL | sonnet |
-| `promode:environment-manager` | Docker, services, health checks, env scripts | sonnet |
-| `promode:product-design-expert` | Product decisions: UX, psychology, growth | sonnet |
-| `promode:agent-analyzer` | Analyze agent output files | sonnet |
+Subagent definitions live in `plugins/promode/agents/`; skills (just-in-time knowledge) in `plugins/promode/skills/`. The canonical agent routing is the brief's `<delegation-map>` (and README's table for humans). Brainstorming, planning, and architectural decisions stay with the main agent — never delegated.
 
-Brainstorming, planning, and architectural decisions stay with the main agent (the latest Opus on high effort) — never delegated. Use `Explore` for codebase research and `/deep-research` for web research.
+How this knowledge graph works — the discipline this `CLAUDE.md` itself follows: [`agent-knowledge-wiki.md`](plugins/promode/skills/promode-audit/references/agent-knowledge-wiki.md).
 
 ### Where the brief + hook live; keeping principles in sync
 

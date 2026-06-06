@@ -29,7 +29,7 @@ Verified behaviour:
 
 ## How it's delivered
 
-The plugin ships the hook (`plugins/promode/hooks/`) and the brief (`plugins/promode/PROMODE_MAIN_AGENT.md`); nothing is copied into a project, and updating the plugin updates the brief. Because Claude Code caps each hook output string at 10,000 chars, the brief is split at `<!-- CHUNK -->` markers into self-contained parts, each injected as a separate SessionStart output — see the brief's own header and `scripts/check-hook-output-limits.sh`.
+The plugin ships the hook (`plugins/promode/hooks/`) and the brief (`plugins/promode/PROMODE_MAIN_AGENT.md`); nothing is copied into a project, and updating the plugin updates the brief. (This shipped delivery is what let the per-project-install skill be retired — see [`managing-promode-retirement.md`](managing-promode-retirement.md).) Because Claude Code caps each hook output string at 10,000 chars, the brief is split at `<!-- CHUNK -->` markers into self-contained parts, each injected as a separate SessionStart output — see the brief's own header and `scripts/check-hook-output-limits.sh`.
 
 ## The trade-off
 
