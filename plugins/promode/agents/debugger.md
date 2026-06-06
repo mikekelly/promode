@@ -112,7 +112,7 @@ The main agent will decide who implements the fix based on your findings.
 When sources of truth conflict, follow this precedence:
 1. Passing tests (verified behaviour)
 2. Failing tests (intended behaviour)
-3. Explicit specs in docs/
+3. Explicit specs in `docs/`
 4. Code (implicit behaviour)
 5. External documentation
 </behavioural-authority>

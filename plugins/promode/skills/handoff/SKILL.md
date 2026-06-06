@@ -6,6 +6,8 @@ argument-hint: "[what the next session will focus on]"
 
 The conversation is about to end or be cleared. A fresh agent will continue **without any of this conversation's history** — write it what it needs to pick up cleanly.
 
+This skill serves the promode principle that **context is precious** and conversation state is ephemeral: when a session ends its working memory is lost, so anything the next agent needs must be persisted — ephemeral state to a handoff doc, durable knowledge into the `CLAUDE.md`-rooted knowledge graph.
+
 <where>
 Save to the OS temp directory (`$TMPDIR`, falling back to `/tmp`), e.g. `<tmpdir>/handoff-<feature>.md` — **not** the repo. A handoff is ephemeral conversation state, not durable project knowledge (durable knowledge belongs in the agent-knowledge graph rooted at `CLAUDE.md`). Tell the user the absolute path at the end so they can point the next agent at it.
 </where>

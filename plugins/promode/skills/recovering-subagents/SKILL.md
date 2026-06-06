@@ -3,7 +3,7 @@ name: recovering-subagents
 description: "Inspect a failed or stalled subagent's transcript compactly to recover. Use when a background subagent failed, stalled, or its <result> summary isn't enough to decide what to do next, and you need to look inside its run without loading the whole transcript into your context."
 ---
 
-When a subagent fails or stalls and its `<result>` summary isn't enough to act on, you need to look inside its run — but the transcript (the `.output` file whose path arrives in the `<task-notification>`) is large JSONL, and reading it whole overflows your context.
+When a subagent fails or stalls and its `<result>` summary isn't enough to act on, you need to look inside its run — but the transcript (the `.output` file whose path arrives in the `<task-notification>`) is large JSONL, and reading it whole overflows your context. This skill exists to honour the promode principle that **context is precious**: it lets you inspect the run one step at a time instead of paying the full transcript's context cost.
 
 Use the bundled inspector instead. It takes the **absolute** output-file path (copy it from the notification) and prints one step at a time, compactly, so you walk back from the latest step and expand only what you need. Run it from this skill's directory (the base directory is shown when this skill loads):
 
