@@ -18,7 +18,9 @@ Promode never puts its methodology in the project's `CLAUDE.md` (that's the hook
 
 **Design constraints for the brief (load-bearing):**
 - **Decisions, not mechanics.** The brief carries orchestration *decisions*; execution mechanics and methodology detail live in the subagent definitions and skills — reached by *dispatch* (which is acted on), not a pointer (which may not be read).
-- **Stay under the 10k cap.** Every hook output string (`additionalContext`, `systemMessage`, stdout) must be < 10,000 chars, or Claude Code silently truncates it to a preview + file path and drops the tail. `scripts/check-hook-output-limits.sh` enforces this — keep it green (wire into CI). If a principle-complete brief exceeds the cap, split it across multiple SessionStart outputs at *section boundaries* (self-contained, so the parallel/unordered merge can't garble them) — never demote a principle to a pointer to fit.
+- **Stay under the 10k cap.** Every hook output string (`additionalContext`, `systemMessage`, stdout) must be < 10,000 chars, or Claude Code silently truncates it to a preview + file path and drops the tail. If a principle-complete brief exceeds the cap, split it across multiple SessionStart outputs at *section boundaries* (self-contained, so the parallel/unordered merge can't garble them) — never demote a principle to a pointer to fit.
+- **Brief isolation + full chunk registration.** The brief must reach the MAIN agent only (the hook withholds it whenever stdin carries an `agent_id`), and every `<!-- CHUNK -->`-delimited part must be registered in `hooks.json` (chunks `1..N`, N = markers+1, in each matcher) or the tail is silently dropped while the size check still passes.
+- **One CI-gated runner enforces all three.** `scripts/check-hooks.sh` runs the size, gating, and chunk-registration checks (`scripts/check-hook-{output-limits,agent-gating,chunk-registration}.sh`); keep it green — it's wired into CI (`.github/workflows/hook-output-limits.yml`).
 
 Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/skills/promode-audit/references/main-agent-delivery.md`.
 

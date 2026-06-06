@@ -1,7 +1,8 @@
 name: hook-output-limits
 
-# Enforces the design constraint (see CLAUDE.md): every promode hook output string must
-# stay under Claude Code's 10,000-char cap, or the brief is silently truncated on delivery.
+# Enforces the hook-delivery design constraints (see CLAUDE.md): the main-agent brief must
+# stay under Claude Code's 10,000-char cap (no silent truncation), must reach the MAIN agent
+# only (agent_id gating), and must be fully chunk-registered (no silently dropped tail).
 on:
   push:
   pull_request:
@@ -13,5 +14,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Ensure jq
         run: command -v jq >/dev/null || sudo apt-get update && sudo apt-get install -y jq
-      - name: Check hook output sizes
-        run: ./scripts/check-hook-output-limits.sh
+      - name: Check hook-delivery invariants
+        run: ./scripts/check-hooks.sh
