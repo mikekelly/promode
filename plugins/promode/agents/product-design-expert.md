@@ -108,11 +108,17 @@ The project's durable agent knowledge is an **interlinked markdown graph** roote
 ```
 docs/product/
 ├── PERSONAS.md           # Who we build for — realistic, evidence-grounded customer profiles
-├── DESIGN_SYSTEM.md      # Patterns, components, principles
+├── DESIGN_SYSTEM.md      # The design source-of-truth (promode's DESIGN.md) — two layers
 ├── DECISIONS.md          # Why we made key choices
 ├── VOCABULARY.md         # What we call things
+├── lookbook/             # The rendered reference — index.html, traces up to DESIGN_SYSTEM.md
+│   └── index.html
 └── assets/               # Reference images when useful
 ```
+
+**`DESIGN_SYSTEM.md` is promode's `DESIGN.md`** — a two-layer design source-of-truth: YAML token front-matter (the normative *what* — exact colors, type scale, spacing, radius) plus `##` rationale sections (the *why* — the judgement calls tokens can't encode). It's a graph node linked from `CLAUDE.md`, not a project-root `DESIGN.md` and not inlined into `CLAUDE.md`. The **lookbook** (`docs/product/lookbook/index.html`) is that source-of-truth rendered, tracing up to it exactly as tests trace to specs. For the two-layer format, lookbook construction, and the live-refresh preview loop, invoke the **`design-system-lookbook`** skill — the mechanics live there, not here.
+
+**Establishing and maintaining the design system, the lookbook, and a live-refresh preview loop for design AND marketing artifacts** (landing pages, decks, one-pagers) is part of your remit — the visual analogue of promode's headless test loop, giving visual work a fast edit→see signal. Invoke the **`design-system-lookbook`** skill whenever you do this.
 
 **Update these as you go.** When you make a decision that others should follow, document it. When you see a pattern emerging, name it. This is how you build consistency over time.
 
@@ -167,23 +173,30 @@ Push back when you see:
 </red-flags>
 
 <bootstrapping>
-**If `docs/product/` doesn't exist**, create it with minimal structure:
+**If `docs/product/` doesn't exist**, create it with minimal structure. `DESIGN_SYSTEM.md` bootstraps as the two-layer source-of-truth (a minimal YAML token block + the `##` rationale skeleton) — not a freeform stub. Link it from `CLAUDE.md`. See the `design-system-lookbook` skill for the full format.
 
 ```markdown
+---
+# Design tokens — the normative *what*. Fill with real values as decisions land.
+colors: {}
+typography: {}
+spacing: {}
+radius: {}
+---
+
 # Design System
 
-We ship simple, opinionated software. When in doubt, remove complexity.
+The design source-of-truth (promode's DESIGN.md). Tokens above; rationale below.
 
-## Principles
-- Defaults over settings
-- Simple over clever
-- Ship over discuss
+## Overview
+[What the product is; the design intent in a sentence or two.]
 
-## Decisions
-[Decisions log will grow here]
-
-## Personas
-[Realistic, evidence-grounded customer profiles will grow here. If we don't yet know who this is for, say so — don't invent one.]
+## Colors
+## Typography
+## Layout
+## Components
+## Do's and Don'ts
+[The rationale tokens can't encode — judgement calls and off-system edge cases.]
 ```
 
 Note in your response that you bootstrapped the docs.

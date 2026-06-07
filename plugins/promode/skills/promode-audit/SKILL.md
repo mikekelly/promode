@@ -26,6 +26,7 @@ The promode-alignment axes. Each is one assessor's deliverable.
 | **Agent knowledge & orientation** | Apply the **CLAUDE.md health check** (below). Beyond it, the core question is whether durable reusable knowledge is **captured as linked nodes reachable from `CLAUDE.md`, or left tribal** — across the kinds the knowledge-graph model names: subsystem orientation, non-obvious build/run gotchas, **decisions** (ADR-style), and **runbooks** (repeatable operational procedures — deploy, migration, env bring-up, recovery, recurring incidents). Flag any kind that's missing, unlinked, or lives only in someone's head. *(CLAUDE.md-rooted knowledge graph; decision, runbook & operational-knowledge capture)* | `general-purpose` |
 | **Architecture & navigability** | Module depth vs shallowness; testability (dependency injection, seams, return-values over side-effects); oversized files that burn agent context; tangled coupling, dead code, misleading names. *(small diffs, testability, context-frugality)* | `promode:code-reviewer` (opus) |
 | **Observability & traceability** | Apply the **observability & traceability check** (below): do runtime logs carry a correlation/tracer ID that threads one request client→backend (and across service hops), filterable on both sides, so an agent can pull a single request's whole trace instead of slurping unfiltered logs? *(context is precious applied to runtime; cheap agent debugging)* | `promode:code-reviewer` (opus) |
+| **Design system & visual feedback loop** | Apply the **design system & visual feedback-loop check** (below): is a design source-of-truth established (two-layer `DESIGN_SYSTEM.md`, tokens + rationale, linked from `CLAUDE.md`, traceable to personas/goals), does a lookbook exist and cover the components/screens, and is there a live-refresh preview loop for design + marketing artifacts? *(visual feedback loop = the design analogue of the operator-seam test loop; crystallise taste into determinism)* | `promode:product-design-expert` |
 | **Change hygiene** *(optional)* | Commit focus & size; messages explain *why*; do tests land with the code they cover? *(small focused commits, explain-why, visible TDD)* | `general-purpose` |
 </dimensions>
 
@@ -62,6 +63,16 @@ Runtime traceability is **"context is precious" applied to debugging**: an agent
 3. **The discipline is built in, not bolted on** — is tracing present in the code paths that matter (boundary crossings, error paths) and asserted where it's load-bearing, rather than absent until someone needs to debug? Flag boundary-crossing code with no traceability as a **debugging feedback-loop gap**, not a cosmetic one — it's the runtime analogue of a missing test seam.
 </observability-tracing>
 
+<design-system-visual-loop>
+The **visual feedback loop** is the design analogue of the operator-seam test loop: a design source-of-truth (≈ feature tests), a lookbook that renders it (≈ headless client), and a live-refresh preview server (≈ fast test runner) together **crystallise taste into determinism** — capture an aesthetic decision once, replay it deterministically across every prompt and session. The Design system & visual feedback-loop assessor checks:
+
+1. **Design source-of-truth exists and is traceable** — a two-layer `docs/product/DESIGN_SYSTEM.md` (YAML token front-matter for the normative *what* + `##` rationale sections for the *why*), linked from `CLAUDE.md` as a graph node (not a project-root `DESIGN.md`, not inlined into `CLAUDE.md`), tracing up to the documented personas/goals. Flag fabricated or ad-hoc tokens (a hex here, a spacing value there) with no source-of-truth behind them.
+2. **A lookbook exists and renders the system** — a lookbook at `docs/product/lookbook/` that renders the tokens: *living* (imports the real components, so it can't drift) where a component system exists, or *reference* (curated, tagged screenshots) before one does. It should cover the key components and screen states and **trace up** to the source-of-truth. Flag a stale or absent lookbook.
+3. **A live-refresh feedback loop exists** — design AND marketing artifacts (the lookbook, landing-page proposals, decks, one-pagers) have an edit→see-instantly loop — the project's existing HMR where it has one, else the reference static server — rather than a manual rebuild-and-reload tax. Flag visual artifacts with no live-preview loop as a **visual feedback-loop gap** — the design analogue of a missing test seam.
+
+**Applicability:** like the layered-coverage check, this dimension is **conditional** — it applies when the project has a user-facing visual surface or produces marketing artifacts. Skip it for a pure backend or library with no visual output.
+</design-system-visual-loop>
+
 <assessor-brief>
 Give each assessor:
 - **Scope** — its one dimension, and which part of the repo to read (whole repo, or an area for large codebases).
@@ -80,7 +91,7 @@ Synthesise into:
 # Promode Methodology Audit — <repo>
 
 ## Overall alignment
-<2–4 sentences. Per-dimension rating: Framing <R> · Tests <R> · Knowledge <R> · Architecture <R> · Observability <R> · Hygiene <R>>
+<2–4 sentences. Per-dimension rating: Framing <R> · Tests <R> · Knowledge <R> · Architecture <R> · Observability <R> · Design <R> · Hygiene <R>>
 
 ## Findings by dimension
 ### <Dimension> — <rating>

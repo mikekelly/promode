@@ -93,5 +93,3 @@ This skill = **structure & process** (the source-of-truth, the lookbook, the fee
 - **`frontend-design`** (Anthropic) — aesthetic taste; the source of the decisions this skill captures.
 - **`product-design-expert`** agent — maintains `docs/product/` (incl. the design source-of-truth) and traces design to personas/goals.
 </related>
-</content>
-</invoke>

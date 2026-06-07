@@ -68,6 +68,7 @@ Restart Claude Code — that's it. promode ships its own `SessionStart` hook, so
 
 - **promode-audit** — assess how well an existing repo matches the methodology (tests and feedback loops, the `CLAUDE.md` knowledge root, architecture, traceability), flag any stale per-project install leftovers, and produce a prioritised, actionable plan. Fans out parallel assessors and synthesises their findings.
 - **discovery-to-determinism** — design layered acceptance testing and crystallise what agents discover into deterministic code. Most coverage runs fast and headless below the UI, through an "operator seam" that could also serve AI-agent tools; a surgical UI state-graph tier covers only what breaks through the real running GUI.
+- **design-system-lookbook** — give visual work the same fast feedback loop logic already has: a two-layer design source-of-truth (tokens + rationale), a lookbook that renders it, and a live-refresh preview server for design and marketing artifacts. The visual analogue of the operator-seam test loop; defers aesthetic taste to `frontend-design`.
 - **handoff** — write a handoff document so a fresh agent can continue after a `/clear` or `/compact` (also runs as `/handoff`).
 - **recovering-subagents** — inspect a finished or stalled subagent's transcript compactly, to recover from a failure without reading the whole thing.
 
