@@ -38,6 +38,7 @@ Don't let "clean code" mask "built the wrong thing", or a correct feature mask b
 - [ ] No obvious bugs or security issues
 - [ ] **If the change adds behaviour that lives below a UI**: the real logic was exercised through a below-UI **operator seam** (a headless, scriptable interface over the actual logic, persistence, and backend — no GUI), where one reasonably exists. Coverage that only reaches the logic *through* the UI, when a fast below-UI path was available, is REWORK — the bulk of acceptance coverage belongs at this fast tier.
 - [ ] **Tiers not merged**: any slow UI-level test earns its place by covering behaviour that *only* manifests through the real GUI (navigation gating, view/provider/persistence wiring, render defects). A UI-tier test re-checking logic a fast below-UI test already covers — or could — is the central anti-pattern: REWORK.
+- [ ] **If the change adds or alters a code path that crosses the client↔backend boundary (or any service hop)**: it threads a correlation/tracer ID and logs it in a filterable form on **both** sides, so a future agent can isolate one request's whole trace with a single filter. Boundary-crossing code that emits only unfilterable, uncorrelated logs is REWORK — it forces later debugging to slurp unfiltered logs (token-expensive and slow).
 
 **Should pass (note as improvement, don't block):**
 - [ ] Code follows existing patterns in codebase

@@ -25,6 +25,7 @@ The promode-alignment axes. Each is one assessor's deliverable.
 | **Tests & feedback loops** | Behaviour-focused tests on critical paths; tested through public interfaces vs coupled to implementation / over-mocked; speed & determinism (can an agent get a fast pass/fail signal?); a documented one-command way to run tests, lint, typecheck, and the app. Where a UI fronts real logic, apply the **Discovery → Determinism layered-coverage check** (below). *(TDD, tests-as-documentation, fast feedback, verifier-readiness)* | `promode:code-reviewer` (opus) |
 | **Agent knowledge & orientation** | Apply the **CLAUDE.md health check** (below). Beyond it, the core question is whether durable reusable knowledge is **captured as linked nodes reachable from `CLAUDE.md`, or left tribal** — across the kinds the knowledge-graph model names: subsystem orientation, non-obvious build/run gotchas, **decisions** (ADR-style), and **runbooks** (repeatable operational procedures — deploy, migration, env bring-up, recovery, recurring incidents). Flag any kind that's missing, unlinked, or lives only in someone's head. *(CLAUDE.md-rooted knowledge graph; decision, runbook & operational-knowledge capture)* | `general-purpose` |
 | **Architecture & navigability** | Module depth vs shallowness; testability (dependency injection, seams, return-values over side-effects); oversized files that burn agent context; tangled coupling, dead code, misleading names. *(small diffs, testability, context-frugality)* | `promode:code-reviewer` (opus) |
+| **Observability & traceability** | Apply the **observability & traceability check** (below): do runtime logs carry a correlation/tracer ID that threads one request client→backend (and across service hops), filterable on both sides, so an agent can pull a single request's whole trace instead of slurping unfiltered logs? *(context is precious applied to runtime; cheap agent debugging)* | `promode:code-reviewer` (opus) |
 | **Change hygiene** *(optional)* | Commit focus & size; messages explain *why*; do tests land with the code they cover? *(small focused commits, explain-why, visible TDD)* | `general-purpose` |
 </dimensions>
 
@@ -53,6 +54,14 @@ When a UI sits over real logic, the test suite should be **layered, not flat** �
 3. **Discoveries are crystallised** — when an agent explores an unknown surface, is the finding hardened into deterministic, self-checking code (a map, recognizer, fixture, or test) rather than left as one-off manual knowledge? Flag exploration whose result wasn't captured as a re-runnable check, and UI checks pinned to coordinates/screenshots rather than stable selectors (they drift). Determinism that breaks *imprecisely* is a finding too: a failure that can't say which state/edge broke can't tell an agent where to re-discover.
 </layered-coverage>
 
+<observability-tracing>
+Runtime traceability is **"context is precious" applied to debugging**: an agent that can filter a whole request by one correlation/tracer ID across client and backend never has to slurp megabytes of unfiltered logs into context — cheaper tokens, faster root-causing. The Observability & traceability assessor checks:
+
+1. **Correlation IDs exist and propagate** — does a request carry a correlation/tracer ID that threads from the client through to the backend (and across service hops), rather than each tier logging in isolation? Flag boundaries where the ID is dropped or regenerated, so a single request can't be followed end-to-end.
+2. **Logs are filterable by that ID on both sides** — are client and backend logs emitted in a form (a structured field or a consistent greppable tag) that lets an agent isolate one request's complete trace with a single filter? Flag unstructured or untagged logging that forces a full-log read to reconstruct one request.
+3. **The discipline is built in, not bolted on** — is tracing present in the code paths that matter (boundary crossings, error paths) and asserted where it's load-bearing, rather than absent until someone needs to debug? Flag boundary-crossing code with no traceability as a **debugging feedback-loop gap**, not a cosmetic one — it's the runtime analogue of a missing test seam.
+</observability-tracing>
+
 <assessor-brief>
 Give each assessor:
 - **Scope** — its one dimension, and which part of the repo to read (whole repo, or an area for large codebases).
@@ -71,7 +80,7 @@ Synthesise into:
 # Promode Methodology Audit — <repo>
 
 ## Overall alignment
-<2–4 sentences. Per-dimension rating: Framing <R> · Tests <R> · Knowledge <R> · Architecture <R> · Hygiene <R>>
+<2–4 sentences. Per-dimension rating: Framing <R> · Tests <R> · Knowledge <R> · Architecture <R> · Observability <R> · Hygiene <R>>
 
 ## Findings by dimension
 ### <Dimension> — <rating>

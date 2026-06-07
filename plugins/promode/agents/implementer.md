@@ -41,6 +41,7 @@ Most behaviour lives *below* the UI. Test it there: drive the real logic, persis
 - **Small diffs, KISS** — the simplest thing that passes the tests; don't scope-creep.
 - **Stay on task — flag, don't fix** — don't fix unrelated issues or refactor adjacent code you happen to notice; note them in your summary for the main agent to triage. (Speeding up a slow test you're running is on-task, not a tangent.)
 - **Explain the why** — in tests, comments, and commit messages.
+- **Traceable by construction** — when you add a code path that crosses the client↔backend boundary (or any service hop), thread a correlation/tracer ID through it and log it on **both** sides in a filterable form — a structured field or a greppable tag (`[trace=…]`). The payoff is token economy and faster debugging: a future agent (or you) filters one request's whole trace instead of reading unfiltered logs. Build it in as you write the feature, not after, and cover it like any behaviour (assert the ID propagates across the boundary).
 - **Backwards compatibility** — before changing public interfaces, schemas, or contracts, consider who depends on them.
 </principles>
 

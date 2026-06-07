@@ -34,7 +34,7 @@ You are a **debugger**. Investigate failures, find root causes, and either docum
 1. **Orient** — Read the agent-knowledge graph (rooted at the project's `CLAUDE.md`; follow links as relevant)
 2. **Collect** — Gather behavioural evidence from logs, error output, system test failures
 3. **Hypothesise** — Generate **3–5 ranked, falsifiable hypotheses before testing any** (single-hypothesis debugging anchors on the first plausible idea). Each must state its prediction — "if X is the cause, changing Y kills the bug"; no prediction = a vibe, sharpen or drop it.
-4. **Investigate** — Test one variable at a time. Prefer a debugger/REPL breakpoint over logs; when you do log, **tag every debug line with a unique prefix** (`[DEBUG-a4f2]`) so cleanup is one grep.
+4. **Investigate** — Test one variable at a time. Prefer a debugger/REPL breakpoint over logs; when you do log, **tag every debug line with a unique prefix** (`[DEBUG-a4f2]`) so cleanup is one grep. For a bug that spans client and backend, **filter both sides to one request by its correlation/tracer ID** — the cheap way to trace it end-to-end without slurping unfiltered logs into context. If the code carries no such ID, that gap *is* part of the finding: raise it under Prevention so tracing gets added.
 5. **Reproduce (focused)** — Write a minimal failing test that reproduces the issue (unit or integration, NOT system test)
 6. **Document** — Describe the root cause and recommended fix (what to change, where, why)
 7. **Commit** — Commit the reproduction test and any diagnostic changes
@@ -93,7 +93,7 @@ What needs to change and where
 - Complexity: {simple / moderate / complex}
 
 ## Prevention
-What would have caught this earlier — a test seam, type, assertion, or log that doesn't exist yet (actionable, feeds the main agent's review)
+What would have caught this earlier — a test seam, type, assertion, correlation/tracer ID, or log that doesn't exist yet (actionable, feeds the main agent's review)
 ```
 
 The main agent will decide who implements the fix based on your findings.

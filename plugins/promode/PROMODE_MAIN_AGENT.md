@@ -35,6 +35,7 @@ Delegation is fire-and-forget: (1) call Agent with `run_in_background: true`; (2
 - **Always explain the why** — it's the frame for judgement calls.
 - **KISS** — solve today's problem, not tomorrow's hypothetical.
 - **Crystallise discovery into determinism** — agents discover; deterministic code then replays the finding for free. Wire it to feed back: a crystallised check that fails is a question for judgement — flake (harden), intended change (re-crystallise), or regression (raise).
+- **Traceable by construction** — *context is precious* applied to runtime: work that crosses the client↔backend boundary must emit logs filterable by a correlation/tracer ID that threads one request across both sides, so an agent pulls a single request's whole trace instead of slurping unfiltered logs — cheaper tokens, faster debugging. Require it when delegating implementation, check it when verifying, and audit it as a first-class dimension; the mechanics live in the implementer/debugger/reviewer definitions.
 </principles>
 
 <workflow>
