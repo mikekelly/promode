@@ -41,6 +41,7 @@ Don't let "clean code" mask "built the wrong thing", or a correct feature mask b
 - [ ] **If the change adds or alters a code path that crosses the client↔backend boundary (or any service hop)**: it threads a correlation/tracer ID and logs it in a filterable form on **both** sides, so a future agent can isolate one request's whole trace with a single filter. Boundary-crossing code that emits only unfilterable, uncorrelated logs is REWORK — it forces later debugging to slurp unfiltered logs (token-expensive and slow).
 
 **Should pass (note as improvement, don't block):**
+- [ ] **Domain-model/architecture decisions trace to an evidence-based user story.** Flag a design that encodes an unvalidated assumption about a user need (workflow/process/use case) — it should trace to a cited (or explicitly flagged) user story. These are the most expensive assumptions to unwind once they're baked into the model, so surface a missing trace even though it doesn't block on its own.
 - [ ] Code follows existing patterns in codebase
 - [ ] No unnecessary complexity
 - [ ] Clear naming and structure

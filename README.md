@@ -52,6 +52,7 @@ Promode is opinionated on purpose. What's baked into the agents:
 - **Stay on task.** An agent fixes what it was sent to fix and flags the rest, rather than wandering into adjacent refactors and bloating the diff.
 - **Work traces to a reason.** New work connects, through a hierarchy of docs (goals and risks → feature definitions → tests), up to an actual goal. If it can't, either the work is superfluous or the goals are out of date — and the main agent is told to push back, not to invent a goal to justify the work.
 - **Decisions ground in who we build for.** Product and UX decisions trace to a realistic customer profile/persona — grounded in real evidence, never invented or flattered to justify a feature. A feature without a clear persona is a red flag, the same way work without a goal is.
+- **User needs are claims, not givens.** The workflows and use cases a feature assumes are claims about real people. Cite the signal that grounds each, or flag it as an assumption with a validation path — never a fabricated citation. This is "build something people want" enforced as engineering risk: a wrong user-need assumption propagates into the domain model and architecture, the most expensive layer to unwind, and an evidence-based user story doubles as the high-level acceptance test.
 
 ## Install
 

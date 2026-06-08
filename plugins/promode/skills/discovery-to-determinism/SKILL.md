@@ -70,6 +70,18 @@ The methodology is not "use a graph." It is the set of disciplines that keep the
 **Build the seam by test-driven extraction, never speculative architecture.** Under RED→GREEN→REFACTOR and KISS, the seam is the *thinnest interface a failing test needs* to reach below-UI logic otherwise only reachable through the slow GUI — no wider than the test demands. Prefer **exposing or cleaning an existing programmatic seam** (public API, application/service layer, CLI, SDK, MCP) over inventing a parallel one that drifts. Design its `observe()`/`act()` shape so it *could* serve an agent later, but ship only what the test needs now. See `references/operator-seam-and-agent-tools.md`.
 </the-operator-seam>
 
+<scenario-vs-seam>
+**The product story is the seam to code — but the scenario and the operator seam are orthogonal and compose.** An evidence-based user story (top of the knowledge graph, traceable up to a cited or explicitly-flagged user need — see the main brief's `<feature-knowledge-base>` and `promode:product-design-expert`) becomes the bottom-layer acceptance test by being expressed as a **high-level executable scenario**. That single artifact bridges product docs and the executable suite: it is the *what* — the user-visible behaviour and its acceptance criteria, in the user's language, traceable to *why* it matters and *who* it serves.
+
+Keep the two axes separate:
+- **The scenario is the *what*** — a behaviour specification (Given/When/Then is one readable shape) that traces *up* to a user need.
+- **The operator seam is the *how/where*** — the below-UI interface the scenario runs *against*, headless and deterministic (`<the-operator-seam>`).
+
+They compose: the *same* scenario could in principle run against the headless seam, and a surgical few against the UI tier — the scenario doesn't change, only the runner beneath it does. Don't conflate "writing the scenario" with "building the seam"; a scenario with no seam is just prose, and a seam with no scenario has nothing to assert.
+
+**Tool-agnostic, KISS — do NOT mandate a BDD framework.** Gherkin/BDD (Cucumber, `behave`, SpecFlow, etc.) is *one* option for expressing scenarios, not a requirement. A plain high-level test function whose name and steps read as a user story serves the same purpose. Reach for a Gherkin/step-definition framework only when a non-technical stakeholder actually reads or authors the `.feature` files — otherwise the step-definition indirection layer (glue code mapping prose to calls, kept in sync by hand) is pure maintenance cost for no readability gain. The principle is "the acceptance test reads as the evidence-based user story and traces up to the need," achievable with or without Gherkin. Pick the lightest expression that keeps the trace legible.
+</scenario-vs-seam>
+
 <when-this-applies>
 The seam pays off only under real conditions. **Apply the gate first** — and STOP if it fails:
 
@@ -119,5 +131,6 @@ You have applied this skill well when:
 - Deterministic failures are **triaged** — flake → harden, intended change → re-crystallise, regression → raise — not blindly re-run; the loop back to inference is closed.
 - Any seam was **extracted test-first**, only after the applicability gate passed, and an existing seam was reused in preference to a new one.
 - The convergence was treated as **one architectural investment, two tailored artifacts** — never one interface for both, never test god-mode exposed to an agent.
+- Acceptance tests that encode a user need read as **evidence-based user stories** traceable up to a cited (or explicitly-flagged) need, expressed as the lightest scenario form that keeps the trace legible — not forced through a BDD/step-definition framework no stakeholder reads.
 - No reusable skeleton/library was extracted from a single case.
 </success_criteria>

@@ -21,6 +21,7 @@ You implement code via TDD. Orient before writing: read the agent-knowledge grap
 - No implementation code without a failing test first. If you believe code is wrong, prove it with a failing test — fix-by-inspection is forbidden.
 - **One test at a time — never batch.** Don't write all the tests then all the code ("horizontal slicing"); that tests imagined behaviour and the *shape* of things, not real behaviour. Go vertical: one test → pass it → next, each test informed by what the last one taught you.
 - Outside-in: start from user-visible behaviour.
+- **Trace a user-need test to evidence.** When a feature/acceptance test encodes a user need (a workflow, process, or use case), it must trace up to an evidence-based user story. If that story rests on an UNBACKED assumption about what users actually need, **REPORT the missing evidence** rather than silently baking the assumption into the domain model — an unvalidated user-need assumption propagates into the model and architecture, the most expensive layer to unwind, so it's the costliest kind of assumption to get wrong. (An evidence-based user story expressed as a high-level executable scenario *is* this bottom-layer test.)
 - Reproduce bugs with a failing test before fixing.
 - Mock only at system boundaries (external APIs, DB, time, randomness) — never your own modules. Prefer real sandbox/test environments. Tag slow tests so you can run the fast ones during development.
 
