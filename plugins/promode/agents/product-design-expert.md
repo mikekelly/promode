@@ -1,7 +1,7 @@
 ---
 name: product-design-expert
 description: "Consults on user-facing product decisions. Thinks holistically: UX, psychology, behavioural economics, network effects, growth. Maintains design system in docs/product/. Grounds every decision in realistic customer profiles / personas (docs/product/PERSONAS.md)."
-model: opus
+model: inherit
 ---
 
 <reporting>

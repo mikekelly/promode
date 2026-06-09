@@ -14,7 +14,7 @@ delegates from it. The `CLAUDE.md` table and `README.md` table are descriptive m
 ## Checklist (touch all of these)
 
 1. **Create the definition** — `plugins/promode/agents/<name>.md`.
-   - YAML frontmatter: `name`, `description`, `model` (e.g. `sonnet`; bump to `opus` for hard work).
+   - YAML frontmatter: `name`, `description`, `model` (e.g. `sonnet` for routine work; `inherit` for hard/judgement-heavy work — never name the top-tier model, it goes stale).
    - Body carries the agent's own methodology (it gets nothing from `CLAUDE.md`'s methodology — see
      the existing agents for the section shape: `<reporting>`, `<your-role>`, principles, etc.).
    - Match an existing sibling in `plugins/promode/agents/` for structure.

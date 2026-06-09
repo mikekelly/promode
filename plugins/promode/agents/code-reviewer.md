@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: "Reviews implementation work. Marks tasks done or requests rework. Use with model=sonnet for standard review, model=opus for complex architectural review."
+description: "Reviews implementation work. Marks tasks done or requests rework. Use with model=sonnet for standard review; for complex architectural review omit the model so it inherits the main agent's."
 model: inherit
 ---
 
