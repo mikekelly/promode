@@ -2,7 +2,7 @@
 
 Promode keeps a project's durable agent knowledge as a **graph of interlinked markdown docs**, rooted at the project's own **`CLAUDE.md`**. Two rules make it work; everything else is flexible.
 
-## 1. The entry point is `CLAUDE.md`
+## 1. The root entry point is `CLAUDE.md`
 
 `CLAUDE.md` is the one file Claude Code auto-loads into **every** agent — the main agent and every subagent — so it's already in context before any agent acts. That makes it the natural root of the knowledge graph: agents read it to orient, and it **links out** to the key areas. It is **not** an exhaustive index; it's a **launchpad**.
 
@@ -10,15 +10,23 @@ It carries only the **critical essentials** — what an agent would *fail or do 
 
 `CLAUDE.md` is the **project's own file**. Promode does not put its methodology there — the main-agent orchestration brief is hook-delivered (see `main-agent-delivery.md`). But the project's durable agent knowledge *does* live here and grows from here.
 
+## Loaded orientation can be hierarchical
+
+The root `CLAUDE.md` is the repo-wide launchpad. Major subdirectories may carry their own `CLAUDE.md` when local rules, commands, concepts, or landmines would bloat the root or matter only inside that subtree. A subtree `CLAUDE.md` is still a launchpad, not a manual: put only the local critical essentials inline, then link to the detailed docs that explain them.
+
+Put a critical rule in the nearest loaded orientation file that governs the work area. Repo-wide or cross-cutting rules belong in the root; subsystem-specific build/test commands, invariants, or workflow constraints belong in that subsystem's `CLAUDE.md`. A rule that lives only in a linked workflow doc is still missable, so mirror the non-negotiable part inline and link to the fuller rationale.
+
+For harness portability, keep an adjacent `AGENTS.md -> CLAUDE.md` symlink beside each orientation file where the filesystem supports it. If symlinks are impossible, duplicate only the minimal loaded orientation and document that the two files must stay in lockstep.
+
 ## 2. Docs link to each other, densely
 
-Knowledge lives in plain markdown docs that **link to one another** (and back toward `CLAUDE.md`) with ordinary markdown links. The links *are* the structure — so **where a file lives doesn't matter**. A doc reachable from nothing is invisible; link generously. No naming convention, no mandated folders, no frontmatter.
+Knowledge lives in plain markdown docs that **link to one another** (and back toward the relevant loaded orientation) with ordinary markdown links. The links *are* the structure — so outside the special loaded `CLAUDE.md` orientation files, **where a file lives doesn't matter**. A doc reachable from nothing is invisible; link generously. No naming convention, no mandated folders, no frontmatter.
 
 ## What goes in it — the capture rule
 
 When an agent spends real effort uncovering something that **wasn't documented** and a **future agent will likely need** it — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* a thing is the way it is — it writes that as a linked doc and links it into the graph (from `CLAUDE.md`, or a doc reachable from it). It was learned by doing the work, so it's grounded.
 
-Agents **maintain `CLAUDE.md`** as the knowledge root — adding a doc and a link to it is expected. **Never clobber** existing `CLAUDE.md` content; append and link. If a project has no `CLAUDE.md` yet, create a minimal one as the root.
+Agents **maintain the `CLAUDE.md` orientation hierarchy** — adding a doc and a link to the root or nearest relevant subtree orientation is expected. **Never clobber** existing orientation content; append and link. If a project has no `CLAUDE.md` yet, create a minimal one as the root.
 
 What does **not** belong: things obvious from the code, one-off trivia, unverified speculation, or the main-agent orchestration brief (that's the hook's job).
 
@@ -30,7 +38,7 @@ A **runbook** is a node capturing a repeatable operational/procedural how-to: de
 
 - **Cold-readable.** An agent may land on any doc via a link, so each opens by saying what it is.
 - **One idea, one home.** State a fact in one doc and link to it; don't duplicate.
-- **Compact — it's loaded into every agent.** `CLAUDE.md` enters *every* agent's context, so every extra line is a tax paid on every run and dilutes attention, harming reasoning. Keep it a launchpad: prefer a small linked doc over inlined prose; a documented script/make target beats a paragraph.
+- **Compact — loaded orientation is context.** Root and subtree `CLAUDE.md` files enter agent context for the work they govern, so every extra line is a tax and dilutes attention. Keep each one a launchpad: prefer a small linked doc over inlined prose; a documented script/make target beats a paragraph.
 - **Distinct from `README.md`.** `README.md` is for humans; this graph is agent-optimised project knowledge (and `CLAUDE.md` doubles as Claude Code's project file and the knowledge root).
 
 ## Going further

@@ -127,11 +127,11 @@ Stop and report back to the main agent when:
 </escalation>
 
 <agent-knowledge>
-The project's durable agent knowledge is an **interlinked markdown graph** rooted at the project's `CLAUDE.md`, which links out to the key areas. Read it to orient.
+The project's durable agent knowledge is an **interlinked markdown graph** rooted at the project's `CLAUDE.md`, with optional subtree `CLAUDE.md` files for local loaded orientation. Read it to orient.
 
-**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it down as a markdown doc and **link it in** (from `CLAUDE.md`, or a doc reachable from it). You learned it by doing, so it's grounded.
+**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it down as a markdown doc and **link it in** (from the root `CLAUDE.md`, the nearest subtree `CLAUDE.md`, or a doc reachable from them). You learned it by doing, so it's grounded.
 
 Keep each doc cold-readable and state one idea in one place (link, don't duplicate); where the file lives doesn't matter — the links carry the graph. Prefer a small linked doc over bloating `CLAUDE.md`. A *decision* earns its own node when it's hard to reverse, surprising without context, and the result of a real trade-off — record what was decided and why. A *recurring failure class* worth a repeatable response earns a **runbook**, linked from a `RUNBOOKS.md` hub reachable from `CLAUDE.md` — prefer a script where it can be automated and have the runbook link to it.
 
-**Maintaining the root:** agents maintain `CLAUDE.md` as the knowledge root. Never clobber existing `CLAUDE.md` content; append and link. If no `CLAUDE.md` exists, create a minimal one.
+**Maintaining orientation:** never clobber existing orientation; integrate and link. If the knowledge is a critical rule for a specific subtree, mirror the rule into that subtree's `CLAUDE.md` rather than only linking a doc from root. If you create a `CLAUDE.md`, add or preserve an adjacent `AGENTS.md -> CLAUDE.md` symlink where supported. If no root `CLAUDE.md` exists, create a minimal one.
 </agent-knowledge>

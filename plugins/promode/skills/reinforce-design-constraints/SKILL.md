@@ -1,11 +1,11 @@
 ---
 name: reinforce-design-constraints
-description: "Walk the knowledge graph (rooted at CLAUDE.md) and ensure every crucial design constraint — invariants, prohibitions, required patterns, load-bearing decisions — is stated inline in CLAUDE.md with a link to its full rationale for expanded discovery. Use when constraints are buried in ADRs, knowledge docs, code comments, or tribal knowledge; when an agent violated a rule it had no way to know; or when asked to surface, hoist, lift, strengthen, or reinforce design constraints, or make them discoverable to agents."
+description: "Walk the knowledge graph (rooted at CLAUDE.md) and ensure every crucial design constraint — invariants, prohibitions, required patterns, load-bearing decisions — is stated inline in the nearest loaded CLAUDE.md orientation that governs the affected area, with a link to its full rationale for expanded discovery. Use when constraints are buried in ADRs, knowledge docs, code comments, or tribal knowledge; when an agent violated a rule it had no way to know; or when asked to surface, hoist, lift, strengthen, or reinforce design constraints, or make them discoverable to agents."
 ---
 
-An agent acts only on what is in its context. `CLAUDE.md` is the **one** doc Claude Code auto-loads into every agent before it does anything — so it is the only place a constraint is guaranteed to be seen at the moment an agent would otherwise violate it. A crucial design constraint that lives only in an ADR, a code comment, a linked knowledge doc, or someone's head is **invisible** to the agent who needs it: agents can't know what isn't in their system prompt, and they don't follow links they don't know exist.
+An agent acts only on what is in its context. `CLAUDE.md` files are the loaded project orientation: the root covers the repo, and major subdirectories may have their own `CLAUDE.md` for local rules. A crucial design constraint that lives only in an ADR, a code comment, a linked knowledge doc, or someone's head is **invisible** to the agent who needs it: agents can't know what isn't in their system prompt, and they don't follow links they don't know exist.
 
-This skill traverses the knowledge graph, finds the crucial design constraints, and makes sure each one is stated **inline** in `CLAUDE.md` — concisely, with a **link** to its full rationale so an agent who wants the whole story can discover it. The binding rule is in front of every agent; the derivation stays one hop away.
+This skill traverses the knowledge graph, finds the crucial design constraints, and makes sure each one is stated **inline** in the nearest loaded orientation file that governs the affected area — concisely, with a **link** to its full rationale so an agent who wants the whole story can discover it. The binding rule is in front of the affected agent; the derivation stays one hop away.
 
 <what-counts>
 A **design constraint** is a load-bearing rule about how the system must be built or changed. It passes all three tests:
@@ -23,20 +23,21 @@ They come in a few shapes:
 </what-counts>
 
 <the-tension>
-`CLAUDE.md` enters *every* agent's context, so every inline line is a token tax paid on every run that also dilutes attention. So this is **not** "inline everything." Only constraints that pass the three tests earn an inline spot; their full rationale, edge cases, and derivation stay in a linked doc. The decision rule is **criticality, not topic** — exactly the inline-vs-linked discipline in the `agent-knowledge-wiki` reference (under the `promode-audit` skill). Keep `CLAUDE.md` a lean launchpad; a constraint section that balloons is itself a finding.
+Loaded orientation enters agent context, so every inline line is a token tax that also dilutes attention. So this is **not** "inline everything." Only constraints that pass the three tests earn an inline spot; their full rationale, edge cases, and derivation stay in a linked doc. The decision rule is **criticality, not topic** — exactly the inline-vs-linked discipline in the `agent-knowledge-wiki` reference (under the `promode-audit` skill). Keep each `CLAUDE.md` a lean launchpad; a constraint section that balloons is itself a finding, and may mean local rules should move to subtree orientation.
 </the-tension>
 
 <process>
-1. **Traverse the graph.** Start at `CLAUDE.md` and follow its links outward through the knowledge docs (ADRs/decision nodes, runbooks, subsystem docs). Then sweep beyond the graph for constraints that were never captured: grep code/config for landmine markers (`DO NOT`, `must`, `never`, `WARNING`, `HACK`, load-bearing magic numbers), and fold in anything learned this session or named by the user.
+1. **Traverse the graph and map orientation.** Start at the root `CLAUDE.md` and follow its links outward through the knowledge docs (ADRs/decision nodes, runbooks, subsystem docs). Detect existing `CLAUDE.md` files along relevant paths so you know which loaded orientation governs each area. Then sweep beyond the graph for constraints that were never captured: grep code/config for landmine markers (`DO NOT`, `must`, `never`, `WARNING`, `HACK`, load-bearing magic numbers), and fold in anything learned this session or named by the user.
 2. **Extract candidates.** For each rule you find, write it as one imperative sentence plus its *why*. Run the three tests in `<what-counts>`. Drop anything that fails.
 3. **Recover the why.** A constraint must trace to a real rationale. If the why exists in a doc, note the link. If it's folklore with no recoverable reason, **surface it, don't enshrine it** — an unexplained "never do X" is as likely a cargo-cult rule as a real one; ask before promoting it, and capture the why as a node once confirmed (grounded, because it was learned by doing).
-4. **Check coverage.** For each surviving constraint, ask two questions of the current `CLAUDE.md`: (a) Is the rule stated inline? (b) Is there a link to its full rationale? Note which are missing, only-linked (invisible), or only-inline (no path to expand).
-5. **Reinforce.** Edit `CLAUDE.md` so each crucial constraint is inline in the format below, with a signpost link. If the rationale doc doesn't exist yet, create it as a node and link it into the graph. **Never clobber** — integrate into the existing structure; append and link. If there's no `CLAUDE.md`, create a minimal one as the root.
-6. **Report.** List what you hoisted inline, what links you added, any rationale nodes you created, and any candidate constraints you deliberately left in the graph (with why) so the inline core stays lean.
+4. **Choose placement.** Repo-wide or cross-cutting rules go in the root `CLAUDE.md`. Subsystem/package/workflow-specific rules go in that subtree's `CLAUDE.md`. If no suitable subtree orientation exists and several local critical rules would otherwise bloat the root, create a concise subtree `CLAUDE.md` and link it from the parent or root.
+5. **Check coverage.** For each surviving constraint, ask two questions of the chosen orientation file: (a) Is the rule stated inline? (b) Is there a link to its full rationale? Note which are missing, only-linked (invisible), or only-inline (no path to expand).
+6. **Reinforce.** Edit the chosen `CLAUDE.md` so each crucial constraint is inline in the format below, with a signpost link. If the rationale doc doesn't exist yet, create it as a node and link it into the graph. **Never clobber** — integrate into the existing structure; append and link. If there's no root `CLAUDE.md`, create a minimal one as the root. Ensure every created or maintained orientation file has an adjacent `AGENTS.md -> CLAUDE.md` symlink where symlinks are supported; if not, duplicate minimally and note the lockstep requirement.
+7. **Report.** List what you hoisted inline, what went to root versus subtree orientation, what links you added, any rationale nodes you created, and any candidate constraints you deliberately left in the graph (with why) so the inline core stays lean.
 </process>
 
 <inline-format>
-Each crucial constraint is one tight bullet: the rule as an imperative, a one-line why, and a link to expand. Group them under a clear heading (e.g. `## Design constraints` or `## Hard constraints`) so an agent finds them fast.
+Each crucial constraint is one tight bullet in the selected orientation file: the rule as an imperative, a one-line why, and a link to expand. Group them under a clear heading (e.g. `## Design constraints` or `## Hard constraints`) so an agent finds them fast.
 
 ```markdown
 ## Design constraints
@@ -44,22 +45,24 @@ Each crucial constraint is one tight bullet: the rule as an imperative, a one-li
 - **Never put methodology in the project's `CLAUDE.md`.** It's the project's own file and the knowledge-graph root; the brief is hook-delivered. See [why](docs/main-agent-delivery.md).
 ```
 
-The statement is inline so no agent misses it; the link carries the full rationale and edge cases for **expanded discovery**. State the rule in exactly one inline home and let the linked doc hold the rest — *one idea, one home*, with the headline as its earned inline exception.
+The statement is inline so no affected agent misses it; the link carries the full rationale and edge cases for **expanded discovery**. State the rule in exactly one inline home — root for repo-wide, subtree for local — and let the linked doc hold the rest: *one idea, one home*, with the headline as its earned inline exception.
 </inline-format>
 
 <guardrails>
-- **Don't bloat the launchpad.** Inline the rule, not the essay. If you're tempted to inline more than ~2 lines per constraint, that surplus belongs in the linked doc.
-- **Never clobber `CLAUDE.md`.** Append and integrate; preserve everything already there.
+- **Don't bloat the launchpad.** Inline the rule, not the essay. If you're tempted to inline more than ~2 lines per constraint, that surplus belongs in the linked doc. If root bloat comes from local rules, prefer subtree orientation.
+- **Never clobber orientation.** Append and integrate; preserve everything already there.
 - **The project's `CLAUDE.md` is the project's own file.** Don't import promode's methodology into it — that's the hook's job.
 - **Every constraint links somewhere expandable.** Inline-only with no path to the full story half-fails the skill's purpose; only-linked with no inline rule fully fails it.
+- **Keep harness compatibility.** Adjacent `AGENTS.md` symlinks should point to each loaded `CLAUDE.md` orientation where supported.
 - **Keep it grounded.** No speculative constraints — only rules with a real, traceable why.
 </guardrails>
 
 <success_criteria>
-- Every crucial design constraint in the repo is stated inline in `CLAUDE.md`, concisely, with a link to its full rationale.
+- Every crucial design constraint in the repo is stated inline in the nearest loaded `CLAUDE.md` orientation that governs the affected area, concisely, with a link to its full rationale.
 - No agent editing an affected area could plausibly miss the rule, and any agent wanting the reasoning can reach it in one hop.
-- `CLAUDE.md` stayed a lean launchpad — only constraints that pass the three tests went inline; the rest stayed linked.
-- Existing `CLAUDE.md` content is intact; nothing was clobbered.
+- Root and subtree `CLAUDE.md` files stayed lean launchpads — only constraints that pass the three tests went inline; the rest stayed linked.
+- Adjacent `AGENTS.md` symlinks exist for created or maintained orientation files where symlinks are supported, or a minimal lockstep fallback is documented.
+- Existing orientation content is intact; nothing was clobbered.
 </success_criteria>
 
 <related>

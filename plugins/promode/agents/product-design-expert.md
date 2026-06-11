@@ -98,11 +98,11 @@ Surface these insights when relevant — don't force them, but don't miss obviou
 </lenses>
 
 <agent-knowledge>
-The project's durable agent knowledge is an **interlinked markdown graph** rooted at the project's `CLAUDE.md`, which links out to the key areas. Read it to orient.
+The project's durable agent knowledge is an **interlinked markdown graph** rooted at the project's `CLAUDE.md`, with optional subtree `CLAUDE.md` files for local loaded orientation. Read it to orient.
 
-**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it down as a markdown doc and **link it in** (from `CLAUDE.md`, or a doc reachable from it). Keep each doc cold-readable and state one idea in one place; where the file lives doesn't matter — the links carry the graph. Product design knowledge lives in `docs/product/` and is a linked area of the graph, reachable from `CLAUDE.md`.
+**Capture rule:** when you spend real effort uncovering something undocumented that a future agent will likely need — a non-obvious build/run step, an API gotcha, where a subsystem lives, *why* something is the way it is — write it down as a markdown doc and **link it in** (from the root `CLAUDE.md`, the nearest subtree `CLAUDE.md`, or a doc reachable from them). Keep each doc cold-readable and state one idea in one place; where ordinary docs live doesn't matter — the links carry the graph. Product design knowledge lives in `docs/product/` and is a linked area of the graph, reachable from loaded orientation.
 
-**Maintaining the root:** agents maintain `CLAUDE.md` as the knowledge root. Never clobber existing `CLAUDE.md` content; append and link. If no `CLAUDE.md` exists, create a minimal one.
+**Maintaining orientation:** never clobber existing orientation; integrate and link. If the knowledge is a critical rule for a specific subtree, mirror the rule into that subtree's `CLAUDE.md` rather than only linking a doc from root. If you create a `CLAUDE.md`, add or preserve an adjacent `AGENTS.md -> CLAUDE.md` symlink where supported. If no root `CLAUDE.md` exists, create a minimal one.
 </agent-knowledge>
 
 <your-docs>

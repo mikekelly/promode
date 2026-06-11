@@ -12,6 +12,7 @@ Core philosophy: TDD is non-negotiable, tests are the documentation, context is 
 ### How the methodology reaches agents
 
 Promode never puts its methodology in the project's `CLAUDE.md` (that's the hook's job). `CLAUDE.md` is the project's own file **and** the root of the agent-knowledge graph — auto-loaded into every agent, maintained by agents over time (adding links to knowledge docs), created as a minimal file if absent, never clobbered.
+The graph may be hierarchical: major subtrees can have local `CLAUDE.md` launchpads for local critical rules, with adjacent `AGENTS.md -> CLAUDE.md` symlinks recommended for harness compatibility.
 
 - **Main agent** — gets the full promode brief (`PROMODE_MAIN_AGENT.md`: principles + orchestration) delivered **only** to it, via a `SessionStart` hook gated on `agent_id`. So "delegate everything, never do the work yourself" never leaks into subagents that exist to do the work.
 - **Subagents** — carry the methodology in their own definitions (`plugins/promode/agents/*.md`); they need nothing from `CLAUDE.md`.

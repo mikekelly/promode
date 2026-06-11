@@ -27,7 +27,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 
 - The orchestration brief is delivered to the *main agent only*, via a `SessionStart` hook. It is not written into your `CLAUDE.md`, so "delegate everything, never do the work yourself" never leaks into the subagents whose whole job is to do the work.
 - Each subagent carries its own methodology in its own definition, so it's self-contained.
-- Your `CLAUDE.md` stays yours. Promode treats it as the root of an agent-maintained knowledge graph — an LLM wiki: every agent reads it to orient, and agents add linked docs as they learn things worth keeping. Promode never overwrites it; it creates a minimal one only if you don't have it.
+- Your `CLAUDE.md` stays yours. Promode treats it as the root of an agent-maintained knowledge graph — an LLM wiki: every agent reads it to orient, and agents add linked docs as they learn things worth keeping. The graph can be hierarchical: major subsystems may have their own concise `CLAUDE.md` launchpads for local must-obey rules, with adjacent `AGENTS.md -> CLAUDE.md` symlinks recommended for harnesses that load that filename. Promode never overwrites existing orientation; it creates a minimal root only if you don't have one.
 
 ### Agents
 
@@ -67,7 +67,7 @@ Restart Claude Code — that's it. promode ships its own `SessionStart` hook, so
 
 ## Skills
 
-- **promode-audit** — assess how well an existing repo matches the methodology (tests and feedback loops, the `CLAUDE.md` knowledge root, architecture, traceability), flag any stale per-project install leftovers, and produce a prioritised, actionable plan. Fans out parallel assessors and synthesises their findings.
+- **promode-audit** — assess how well an existing repo matches the methodology (tests and feedback loops, the `CLAUDE.md` knowledge hierarchy, architecture, traceability), flag any stale per-project install leftovers, and produce a prioritised, actionable plan. Fans out parallel assessors and synthesises their findings.
 - **discovery-to-determinism** — design layered acceptance testing and crystallise what agents discover into deterministic code. Most coverage runs fast and headless below the UI, through an "operator seam" that could also serve AI-agent tools; a surgical UI state-graph tier covers only what breaks through the real running GUI.
 - **design-system-lookbook** — give visual work the same fast feedback loop logic already has: a two-layer design source-of-truth (tokens + rationale), a lookbook that renders it, and a live-refresh preview server for design and marketing artifacts. The visual analogue of the operator-seam test loop; defers aesthetic taste to `frontend-design`.
 - **handoff** — write a handoff document so a fresh agent can continue after a `/clear` or `/compact` (also runs as `/handoff`).
