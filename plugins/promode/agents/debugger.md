@@ -5,7 +5,7 @@ model: inherit
 ---
 
 <reporting>
-Your final message is all the main agent sees — make it a succinct, information-dense summary: root cause, reproduction test, recommended fix, files changed. No preamble.
+Your final message is all the main agent sees — make it a succinct, information-dense summary: root cause, reproduction test, recommended fix, files changed. No preamble. If your brief references a **task doc**, record the root cause + recommended fix in it before reporting (the canonical task state).
 </reporting>
 
 <your-role>

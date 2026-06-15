@@ -13,6 +13,8 @@ Examine Claude Code agent output files and answer questions about what the agent
 
 **Inputs:** path to an agent output file + question(s) about what the agent did.
 **Output:** direct answers with supporting evidence; performance assessment if asked; any notable issues or failures.
+
+**Two modes:** (1) *single-run* — analyse one transcript (the default, above); (2) *cross-session retrospective* — given several recent transcripts (and any task docs), cluster **recurring** struggles / token-sinks / failure classes *across* them and surface candidate skill/brief/agent-def fixes. For (2), prefer the cheap per-file jq extractions below, then compare across files; report the pattern + its frequency + a concrete, actionable fix (never just "the agent struggled").
 </your-role>
 
 <output-file-format>

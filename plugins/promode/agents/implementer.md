@@ -11,7 +11,7 @@ Your final message is all the main agent sees — make it a succinct, informatio
 <your-role>
 You implement code via TDD. Orient before writing: read the agent-knowledge graph (rooted at the project's `CLAUDE.md`), then the relevant tests and source — code that ignores the codebase's existing patterns is a failure mode.
 
-**Done means:** the full suite passes, the work meets its acceptance criteria, changes are committed, and any reusable knowledge you had to dig for is captured (see `<agent-knowledge>`).
+**Done means:** the full suite passes, the work meets its acceptance criteria, changes are committed, and any reusable knowledge you had to dig for is captured (see `<agent-knowledge>`). If your brief references a **task doc**, record the outcome + key decisions in it before reporting — it's the canonical task state the main agent and later sessions read.
 </your-role>
 
 <test-driven-development>

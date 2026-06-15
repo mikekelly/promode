@@ -70,8 +70,33 @@ Restart Claude Code — that's it. promode ships its own `SessionStart` hook, so
 - **promode-audit** — assess how well an existing repo matches the methodology (tests and feedback loops, the `CLAUDE.md` knowledge hierarchy, architecture, traceability), flag any stale per-project install leftovers, and produce a prioritised, actionable plan. Fans out parallel assessors and synthesises their findings.
 - **discovery-to-determinism** — design layered acceptance testing and crystallise what agents discover into deterministic code. Most coverage runs fast and headless below the UI, through an "operator seam" that could also serve AI-agent tools; a surgical UI state-graph tier covers only what breaks through the real running GUI.
 - **design-system-lookbook** — give visual work the same fast feedback loop logic already has: a two-layer design source-of-truth (tokens + rationale), a lookbook that renders it, and a live-refresh preview server for design and marketing artifacts. The visual analogue of the operator-seam test loop; defers aesthetic taste to `frontend-design`.
+- **task-docs** — persist a multi-task plan as durable per-task markdown docs (canonical brief + state + outcome) so the plan survives the prompt, hands off to fresh sessions, and feeds durable history. The Kanban board tracks flow; these docs hold the detail.
 - **handoff** — write a handoff document so a fresh agent can continue after a `/clear` or `/compact` (also runs as `/handoff`).
 - **recovering-subagents** — inspect a finished or stalled subagent's transcript compactly, to recover from a failure without reading the whole thing.
+
+## Recommended settings
+
+Optional, but they unlock two promode behaviours. Add to your project `.claude/settings.json` (settings take effect after you accept the workspace-trust prompt — relevant for unattended runs):
+
+```jsonc
+{
+  // Parallel worktree isolation that includes your in-progress branch.
+  // Default worktrees fork from the repo's DEFAULT branch (origin/HEAD) — a stale
+  // tree missing your work. "head" forks from your current branch HEAD (committed
+  // work included), making independent parallel subagents safe. Commit before you
+  // fan out; worktrees prevent live collisions, not semantic merge conflicts.
+  "worktree": { "baseRef": "head" },
+
+  // Keep project memory IN the repo (versioned, synced) instead of the out-of-repo
+  // default (~/.claude/projects/<project>/memory/). Treat this dir as a capture
+  // BUFFER — promode promotes worthwhile entries into the CLAUDE.md knowledge graph
+  // and prunes the rest during after-action review. Commit it; do NOT gitignore it.
+  "autoMemoryEnabled": true,
+  "autoMemoryDirectory": "./.promode/memory"
+}
+```
+
+(Verified against Claude Code 2.1.x: these keys exist; `worktree.baseRef: "head"` carries your branch's committed/unpushed commits into the worktree — not uncommitted edits, so commit first.)
 
 ## Requirements
 

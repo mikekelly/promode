@@ -24,7 +24,7 @@ Write for an agent with zero context. Be concrete — file paths, not vague desc
 </what-to-capture>
 
 <keep-it-lean>
-- **Reference, don't duplicate.** Anything already captured in commits, PRDs, plans, ADRs, issues, or the knowledge graph → link it by path, don't restate it. The handoff is the connective tissue between those artifacts, not a copy of them.
+- **Reference, don't duplicate.** Anything already captured in commits, PRDs, plans, ADRs, issues, **task docs** (`task-docs` skill), or the knowledge graph → link it by path, don't restate it. The handoff is the connective tissue between those artifacts, not a copy of them. If the work used task docs, point the next agent at them — they already carry the live per-task state, so the handoff just names the open loop and where to look.
 - **Redact secrets** — no API keys, passwords, tokens, or PII in the document.
 - If the user passed an argument, treat it as the next session's focus and tailor the doc to it.
 </keep-it-lean>
