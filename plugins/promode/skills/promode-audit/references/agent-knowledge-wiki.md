@@ -49,6 +49,14 @@ A **runbook** is a node capturing a repeatable operational/procedural how-to: de
 - **Compact — loaded orientation is context.** Root and subtree `CLAUDE.md` files enter agent context for the work they govern, so every extra line is a tax and dilutes attention. Keep each one a launchpad: prefer a small linked doc over inlined prose; a documented script/make target beats a paragraph.
 - **Distinct from `README.md`.** `README.md` is for humans; this graph is agent-optimised project knowledge (and `CLAUDE.md` doubles as Claude Code's project file and the knowledge root).
 
+## Authoring skills (SKILL.md)
+
+A skill is just-in-time knowledge a coding agent loads on trigger — so the same discipline as a `CLAUDE.md` launchpad applies, sharpened:
+
+- **Landmines, not docs.** A skill carries the project-specific gotchas, conventions, and decisions an agent *wouldn't know from training* — not a comprehensive manual of what the model already does well. Comprehensive prose dilutes the signal and burns context; an over-stuffed skill can make behaviour *worse*, not better.
+- **Inline the exact conventions at the point of use.** Precise thresholds, formats, and rules (the commit format, the seam shape, a naming rule) belong stated *where the agent acts on them*, not deferred behind a link — progressive disclosure under-performs for exact conventions.
+- **Fix a misfiring skill at the faulty step.** When a skill produces the wrong behaviour, localise the *first* faulty step, make the *minimal* edit, and commit it as a reviewable diff with its rationale — don't rewrite the whole skill. (The cross-session retrospective surfaces these — see the main-agent brief's `<after-action-review>`.)
+
 ## Going further
 
 For a heavyweight, source-backed knowledge corpus (citations, freshness discipline, retrieval bundles, audits), see the **`managing-agent-knowledge`** skill. promode's default is deliberately lighter: a self-maintained graph of learned project knowledge.

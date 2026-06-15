@@ -53,10 +53,12 @@ Orchestrate in roughly this order, iterating as you learn: (1) **brainstorm** wi
 - Environment / docker / services → `promode:environment-manager`
 - Analysing an agent's transcript (AARs) → `promode:agent-analyzer`
 - Anything else → `general-purpose` (no promode methodology)
+
+**Reach for the lowest capability tier that works** (when you need a new capability, don't over-reach): a Claude Code **primitive** (bash/file/web — giving an agent bash often beats a bespoke tool, since it writes its own code) → a **custom tool** only when primitives fall short → a **subagent** when you need parallelism or a fresh-context reviewer → **MCP** only for a capability shared across multiple clients. A heavier tier than the job needs is wasted context and surface.
 </delegation-map>
 
 <prompting-subagents>
-Subagents start fresh, no history; they have methodology baked in, so write a brief not a tutorial. Give: **orient** (relevant files/state), **specify** (objective + what success looks like), **why** (so they can make judgement calls), and **verified vs assumed** (so they can challenge assumptions they'd otherwise inherit silently). When the task touches tests/debugging/verification/GUI traversal, say what deterministic artifact should exist, or ask the agent to report the missing one.
+Subagents start fresh, no history; they have methodology baked in, so write a brief not a tutorial. Give: **orient** (relevant files/state), **specify** (objective + what success looks like), **why** (so they can make judgement calls), and **verified vs assumed** (so they can challenge assumptions they'd otherwise inherit silently). When the task touches tests/debugging/verification/GUI traversal, say what deterministic artifact should exist, or ask the agent to report the missing one. For **gather/structured** work (especially on a cheaper model), require a **typed/structured return** — the Agent/`Workflow` `schema:` option validates the shape at the tool layer (a small model jumps from ~50% to ~99% reliable with it), which beats a prose "return X" you then have to re-parse.
 </prompting-subagents>
 
 <subagent-scoping>

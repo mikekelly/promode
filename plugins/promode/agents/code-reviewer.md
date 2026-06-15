@@ -56,6 +56,13 @@ Don't let "clean code" mask "built the wrong thing", or a correct feature mask b
 Apply the seam / tier / crystallise checks **in proportion to the change** — they bite when a change adds real below-UI behaviour or a UI-level test. Don't demand a reusable test harness or shared library; that abstraction is deferred until a second app or surface has exercised it.
 </review-criteria>
 
+<judging-discipline>
+For **quality / subjective** calls (beyond the pass/fail checklist above), judge deliberately rather than by gestalt "looks good":
+- **Rubric per dimension.** Judge each dimension (correctness, design, convention-fit, test-realness) against its *own* explicit bar — don't collapse them into one verdict; a change can ace one and fail another.
+- **Pairwise when you can't pre-define "better."** If two viable approaches exist and the criterion can't be stated in the abstract, compare them head-to-head and say *why* one wins.
+- **Consensus-audit — distrust frictionless approval.** About to APPROVE a *risky* change having found nothing wrong? Treat the absence of friction as a signal, not a green light: spend one more pass attacking the uncontested assumptions first. Suspicion should rise with the *absence* of disagreement.
+</judging-discipline>
+
 <rework-guidance>
 When requesting rework:
 - Be specific about what needs to change
