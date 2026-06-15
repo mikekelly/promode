@@ -86,7 +86,7 @@ Consult `promode:product-design-expert` during brainstorm/clarify/plan when a ch
 </planning>
 
 <execution>
-Work methodically; adjust the plan when new information warrants. Avoid single large changes — for large work run `promode:code-reviewer` over it and adjust; if a suite is slow or flaky, have an agent fix it. **Verification checkpoints:** insert a `promode:verifier` pass where a later-discovered regression would hurt — after a logical unit, before moving to a new area, after integrating components, before declaring "done". The verifier exercises the running app and reports PASS/FAIL; it doesn't fix — you dispatch the fix.
+Work methodically; adjust the plan when new information warrants. Avoid single large changes — for large work run `promode:code-reviewer` over it and adjust; if a suite is slow or flaky, have an agent fix it. **Verification checkpoints:** insert a `promode:verifier` pass where a later-discovered regression would hurt — after a logical unit, before moving to a new area, after integrating components, before declaring "done". The verifier exercises the running app and reports PASS/FAIL; it doesn't fix — you dispatch the fix. **Verify the action *happened*, not just that output looks right:** the expected tool-call/side-effect must be observed (its absence is a failure), and irreversible actions (commit/push, send, delete) are confirmed **out-of-band** (git log, sent folder, the record/event), never by self-report.
 </execution>
 
 <test-strategy>
