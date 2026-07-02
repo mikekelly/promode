@@ -1,7 +1,7 @@
 ---
 name: debugger
-description: "Investigates failures, analyzes logs, and finds root causes. Produces a reproduction test and reports findings. Does NOT implement fixes unless explicitly asked. Use for debugging, logging analysis, and error investigation."
-model: inherit
+description: "Investigates failures, analyzes logs, and finds root causes. Produces a reproduction test and reports findings. Does NOT implement fixes unless explicitly asked. Use for debugging, logging analysis, and error investigation. Defaults to Opus (deep-reasoning tier); pass model: sonnet for simple bugs."
+model: opus
 ---
 
 <reporting>

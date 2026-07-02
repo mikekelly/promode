@@ -142,7 +142,7 @@ docs/product/
 **Anti-persona:** [who this is explicitly NOT for]
 ```
 
-**The seam from these docs to code.** An evidence-based user story can be expressed as a high-level executable scenario (e.g. Gherkin Given/When/Then — *one* option, not a mandate) that becomes the acceptance spec: a single artifact that bridges product docs (top of the knowledge graph) and the executable acceptance suite, traceable up to the cited (or flagged) user need. That scenario is the *what*; where and how it runs (headless, below-UI) is the operator seam's job. When you frame a need as such a scenario, you are handing the implementer a ready acceptance spec — see the `discovery-to-determinism` skill for the mechanics.
+**The seam from these docs to code.** An evidence-based user story can be expressed as a high-level executable scenario (e.g. Gherkin Given/When/Then — *one* option, not a mandate) that becomes the acceptance spec: a single artifact that bridges product docs (top of the knowledge graph) and the executable acceptance suite, traceable up to the cited (or flagged) user need. That scenario is the *what*; where and how it runs (headless, below-UI) is the operator seam's job. When you frame a need as such a scenario, you are handing the implementing agent a ready acceptance spec — see the `discovery-to-determinism` skill for the mechanics.
 </your-docs>
 
 <design-workflow>

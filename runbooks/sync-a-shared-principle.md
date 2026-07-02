@@ -24,7 +24,7 @@ duplicated. A doc link won't do — the inline copy is load-bearing in each home
   (`<test-strategy>`, `<after-action-review>` runbook/knowledge rules, `<feature-knowledge-base>`).
 - **Subagents** — the relevant `plugins/promode/agents/*.md`. As of this writing, shared-principle
   text (TDD / evidence / operator-seam / crystallise) lives in:
-  `implementer.md`, `code-reviewer.md`, `debugger.md`, `verifier.md`, `environment-manager.md`.
+  `senior-engineer.md`, `fast-worker.md`, `code-reviewer.md`, `debugger.md`, `verifier.md`, `environment-manager.md`.
   (Re-grep before editing — `grep -ln 'TDD\|operator seam\|Crystallise\|Evidence over assumptions'
   plugins/promode/agents/*.md` — definitions drift.)
 
@@ -33,7 +33,7 @@ duplicated. A doc link won't do — the inline copy is load-bearing in each home
 Commit **`510b071`** ("Mirror methodology into working agents: runbooks, audit-as-a-lens") is the
 canonical principle-sync: it introduced the *runbook* principle and updated **both** homes in one
 commit — the brief (`PROMODE_MAIN_AGENT.md`), the producing agent definitions
-(`implementer.md`, `debugger.md`, `environment-manager.md`, `verifier.md`), **and** the audit
+(then `implementer.md` — since split into `senior-engineer.md` + `fast-worker.md` — plus `debugger.md`, `environment-manager.md`, `verifier.md`), **and** the audit
 skill that checks for it — so the audit lens and every working agent agreed. Note it also bumped the
 version in the same commit (see [cut-a-release.md](cut-a-release.md)).
 

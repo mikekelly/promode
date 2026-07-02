@@ -21,7 +21,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 
 **Subagents execute.** Each delegation is one agent, one deliverable, fresh context. They run in the background — the main agent dispatches and ends its turn, then gets woken when a result lands. Independent work runs in parallel. Subagents commit their changes before reporting, so what comes back is a summary, not a context-bloating dump.
 
-**Model choice is explicit.** The main agent runs on a strong model because it's doing the reasoning; routine subagents run on a cheaper, faster one; hard jobs (multi-system debugging, architectural review) get bumped up.
+**Model choice is explicit — three tiers by cognitive load.** The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration. Execution runs a tier below to save frontier usage: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model.
 
 **Where the methodology lives is deliberate** — this is the part that's easy to get wrong:
 
@@ -33,8 +33,9 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 
 | Agent | Job |
 |---|---|
-| `implementer` | Write code and tests, TDD |
-| `code-reviewer` | Review the change (doesn't run the suite — that's the implementer's job) |
+| `senior-engineer` | Reasoning-heavy implementation — architecture-adjacent changes, complex/multi-system work, hard-bug fixes, algorithm design; TDD (pinned to Opus) |
+| `fast-worker` | Mechanical execution — boilerplate, simple edits, formatting, straightforward tests, browser/GUI driving (pinned to Sonnet) |
+| `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) |
 | `debugger` | Find the root cause, reproduce with a test, report (doesn't fix unless asked) |
 | `verifier` | Exercise the running app from the outside; PASS/FAIL with evidence |
 | `environment-manager` | Docker, services, health checks, scripts |
@@ -63,7 +64,19 @@ Promode is opinionated on purpose. What's baked into the agents:
 
 Restart Claude Code — that's it. promode ships its own `SessionStart` hook, so the main-agent brief is delivered automatically in every session where the plugin is enabled (gated to the main agent only); nothing is copied into your project, and updating the plugin updates the brief.
 
-> **Migrating from an older promode?** If you previously ran "Set up promode in this project", remove the now-redundant `.claude/PROMODE_MAIN_AGENT.md`, `.claude/hooks/promode-main-context.sh`, and the promode `SessionStart` entry in `.claude/settings.json` — otherwise the brief is injected twice. `promode-audit` flags these.
+> **Migrating from an older promode?** If you previously ran "Set up promode in this project", remove the now-redundant `.claude/PROMODE_MAIN_AGENT.md`, `.claude/hooks/promode-main-context.sh`, and the promode `SessionStart` entry in `.claude/settings.json` — otherwise the brief is injected twice. `promode-audit` flags these. (Since 2.22.0 the single `implementer` agent is split into `senior-engineer` + `fast-worker`.)
+
+### Optional: Codex as a peer engineer
+
+If you use OpenAI's Codex CLI (install it first), add the official Codex plugin:
+
+```
+/plugin marketplace add openai/codex-plugin-cc
+/plugin install codex@openai-codex
+/codex:setup
+```
+
+With it installed, promode's main agent treats Codex (`/codex:rescue --background`) as a peer senior engineer — on par with the Opus tier, from a different perspective, a peer rather than a reviewer. For high-stakes decisions it tasks Opus and Codex on the same problem in parallel, without showing either the other's answer, and synthesises the best of both.
 
 ## Skills
 

@@ -69,7 +69,7 @@ The **lookbook** is the rendered visual reference — the source-of-truth made v
 
 **Who runs it in promode:**
 - **`environment-manager`** owns the preview server as a **managed dev service** (starts it, keeps it healthy, reports its URL).
-- **`implementer`** builds the lookbook and any static artifacts from the reference, test-first where there's logic to test.
+- **`senior-engineer`** builds the lookbook and any static artifacts from the reference, test-first where there's logic to test (mechanical assembly can go to **`fast-worker`**).
 - **`verifier`** screenshots the rendered output **against the lookbook / source-of-truth** as the visual acceptance check.
 </the-live-refresh-loop>
 
