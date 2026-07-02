@@ -18,13 +18,18 @@ So a shared principle (TDD non-negotiable, evidence over assumptions, crystallis
 determinism, the operator-seam test strategy, runbooks/knowledge capture) is intentionally
 duplicated. A doc link won't do — the inline copy is load-bearing in each home.
 
+**The rationale travels with the rule.** When syncing, don't dedupe the *why* out of any copy to
+save tokens: explaining why is as important as the rule itself — it's the frame for the judgement
+calls the rule can't anticipate, and a rule stripped of its rationale gets misapplied. (Maintainer
+ruling, 2026-07-02, after a prompt-corpus review proposed exactly that dedup.)
+
 ## Which files hold which principles
 
 - **Brief** — `plugins/promode/PROMODE_MAIN_AGENT.md`: `<principles>`, plus the decision sections
   (`<test-strategy>`, `<after-action-review>` runbook/knowledge rules, `<feature-knowledge-base>`).
 - **Subagents** — the relevant `plugins/promode/agents/*.md`. As of this writing, shared-principle
   text (TDD / evidence / operator-seam / crystallise) lives in:
-  `senior-engineer.md`, `fast-worker.md`, `code-reviewer.md`, `debugger.md`, `verifier.md`, `environment-manager.md`.
+  `chief-technology-officer.md`, `senior-engineer.md`, `fast-worker.md`, `code-reviewer.md`, `debugger.md`, `verifier.md`, `environment-manager.md`.
   (Re-grep before editing — `grep -ln 'TDD\|operator seam\|Crystallise\|Evidence over assumptions'
   plugins/promode/agents/*.md` — definitions drift.)
 

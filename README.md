@@ -21,7 +21,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 
 **Subagents execute.** Each delegation is one agent, one deliverable, fresh context. They run in the background — the main agent dispatches and ends its turn, then gets woken when a result lands. Independent work runs in parallel. Subagents commit their changes before reporting, so what comes back is a summary, not a context-bloating dump.
 
-**Model choice is explicit — three tiers by cognitive load.** The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration. Execution runs a tier below to save frontier usage: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model.
+**Model choice is explicit — three tiers by cognitive load.** The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration. Execution runs a tier below to save frontier usage: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model. The one deliberate exception is `chief-technology-officer`, pinned to the frontier tier itself — crucial, hard-to-reverse design is the execution work that earns frontier reasoning.
 
 **Where the methodology lives is deliberate** — this is the part that's easy to get wrong:
 
@@ -33,6 +33,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 
 | Agent | Job |
 |---|---|
+| `chief-technology-officer` | Crucial, hard-to-reverse design — architecture, entity/domain model, large-refactor strategy, critical product-technical calls; drafts designs and plans the main agent ratifies (pinned to the frontier tier) |
 | `senior-engineer` | Reasoning-heavy implementation — architecture-adjacent changes, complex/multi-system work, hard-bug fixes, algorithm design; TDD (pinned to Opus) |
 | `fast-worker` | Mechanical execution — boilerplate, simple edits, formatting, straightforward tests, browser/GUI driving (pinned to Sonnet) |
 | `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) |

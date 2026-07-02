@@ -1,15 +1,16 @@
 # Runbook: Add a new subagent
 
 What this is: the complete checklist of files to touch when adding a phase-specific subagent to
-promode. A subagent is listed in **four** places besides its own definition; miss one and it is
+promode. A subagent is listed in **two** places besides its own definition; miss one and it is
 either undiscoverable or undelegated.
 
-## Why so many places
+## Why these places
 
-A subagent is real only when (a) its definition exists, (b) the **main agent's brief** both lists
-it and routes work to it, and (c) the human-facing and knowledge-root tables describe it. The brief
-is the load-bearing one — it reaches the main agent via the SessionStart hook, and the main agent
-delegates from it. The `CLAUDE.md` table and `README.md` table are descriptive mirrors.
+A subagent is real only when (a) its definition exists, (b) the **main agent's brief** routes work
+to it, and (c) the human-facing `README.md` table describes it. The brief is the load-bearing one —
+it reaches the main agent via the SessionStart hook, and the main agent delegates from it. The
+`README.md` table is a descriptive mirror. (There is no agent table in `CLAUDE.md` — the brief's
+`<delegation-map>` is the canonical routing, as `CLAUDE.md` itself states.)
 
 ## Checklist (touch all of these)
 
@@ -28,10 +29,7 @@ delegates from it. The `CLAUDE.md` table and `README.md` table are descriptive m
      under the 10k cap; add/move a `<!-- CHUNK -->` marker if a chunk goes red, and register the new
      chunk count in `hooks.json`). See [verify-hook-delivery.md](verify-hook-delivery.md).
 
-3. **`CLAUDE.md` agent table** — the root knowledge graph.
-   - Add a row to the `| Agent | Purpose | Model |` table. Keep `CLAUDE.md` under its 50-line cap.
-
-4. **`README.md` agent table** — the human-facing doc.
+3. **`README.md` agent table** — the human-facing doc.
    - Add a row to the `| Agent | Job |` table, plain register, no `promode:` prefix (README omits it).
 
 ## Verify

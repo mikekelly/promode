@@ -27,7 +27,7 @@ The graph may be hierarchical: major subtrees can have local `CLAUDE.md` launchp
 
 Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/skills/promode-audit/references/main-agent-delivery.md`.
 
-Subagent definitions live in `plugins/promode/agents/`; skills (just-in-time knowledge) in `plugins/promode/skills/`. The canonical agent routing is the brief's `<delegation-map>` (and README's table for humans). Brainstorming, planning, and architectural decisions stay with the main agent — never delegated.
+Subagent definitions live in `plugins/promode/agents/`; skills (just-in-time knowledge) in `plugins/promode/skills/`. The canonical agent routing is the brief's `<delegation-map>` (and README's table for humans). Brainstorming, plan reviews, and final architectural calls stay with the main agent; crucial hard-to-reverse design may be *drafted* by `chief-technology-officer` (frontier-pinned) for the main agent to ratify.
 
 How this knowledge graph works — the discipline this `CLAUDE.md` itself follows: [`agent-knowledge-wiki.md`](plugins/promode/skills/promode-audit/references/agent-knowledge-wiki.md).
 
