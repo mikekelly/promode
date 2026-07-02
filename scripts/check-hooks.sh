@@ -12,6 +12,7 @@ for check in \
   check-hook-output-limits.sh \
   check-hook-agent-gating.sh \
   check-hook-chunk-registration.sh \
+  check-version-in-context.sh \
   check-inspect-agent.sh
 do
   echo "==> $check"

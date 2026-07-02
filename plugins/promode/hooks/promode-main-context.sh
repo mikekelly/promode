@@ -9,7 +9,10 @@
 # Injects PROMODE_MAIN_AGENT.md as additionalContext for the MAIN agent only: subagent
 # hook calls carry an "agent_id" field on stdin, so the brief never reaches subagents.
 # Also emits a `systemMessage` notice (chunk 1 only) so the user sees "promode vX.Y.Z
-# active in this session". Registered for the startup|resume|clear|compact sources.
+# active in this session", and prepends a model-visible "Promode vX.Y.Z" line to chunk 1's
+# additionalContext (systemMessage never reaches the model) so the main agent can answer
+# which promode version is running. Version is read from plugin.json at delivery time, so
+# it can't go stale. Registered for the startup|resume|clear|compact sources.
 # Requires jq.
 #
 # CHUNKING: a hook output string is capped at 10,000 chars by Claude Code (it silently
@@ -44,7 +47,10 @@ content="$(awk -v want="$chunk" '
 if [ "$chunk" = "1" ] || [ -z "$chunk" ]; then
   ver=$(jq -r '.version // empty' "$root/.claude-plugin/plugin.json" 2>/dev/null)
   msg="promode${ver:+ v$ver} active in this session"
-  printf '%s' "$content" | jq -Rs --arg msg "$msg" '{systemMessage:$msg, hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:.}}'
+  {
+    [ -n "$ver" ] && printf 'Promode v%s — orchestration brief:\n\n' "$ver"
+    printf '%s' "$content"
+  } | jq -Rs --arg msg "$msg" '{systemMessage:$msg, hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:.}}'
 else
   printf '%s' "$content" | jq -Rs '{hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:.}}'
 fi
