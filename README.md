@@ -41,7 +41,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 | `verifier` | Exercise the running app from the outside; PASS/FAIL with evidence |
 | `environment-manager` | Docker, services, health checks, scripts |
 | `product-design-expert` | Product and UX decisions, grounded in realistic customer profiles/personas |
-| `agent-analyzer` | Read an agent's transcript during after-action reviews |
+| `agent-analyzer` | Evidence side of after-action reviews — verify an agent's self-debrief against its transcript, autopsy failed/oversized runs, cluster cross-session patterns |
 
 ## The opinions
 
@@ -86,7 +86,7 @@ With it installed, promode's main agent treats Codex (`/codex:rescue --backgroun
 - **design-system-lookbook** — give visual work the same fast feedback loop logic already has: a two-layer design source-of-truth (tokens + rationale), a lookbook that renders it, and a live-refresh preview server for design and marketing artifacts. The visual analogue of the operator-seam test loop; defers aesthetic taste to `frontend-design`.
 - **task-docs** — persist a multi-task plan as durable per-task markdown docs (canonical brief + state + outcome) so the plan survives the prompt, hands off to fresh sessions, and feeds durable history. The Kanban board tracks flow; these docs hold the detail.
 - **handoff** — write a handoff document so a fresh agent can continue after a `/clear` or `/compact` (also runs as `/handoff`).
-- **recovering-subagents** — inspect a finished or stalled subagent's transcript compactly, to recover from a failure without reading the whole thing.
+- **recovering-subagents** — inspect a subagent's transcript compactly, without reading the whole thing: recover from a failure mid-work, or gather after-action-review evidence (verify a self-debrief, autopsy a run, bulk stats across transcripts).
 
 ## Recommended settings
 
