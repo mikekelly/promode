@@ -9,6 +9,8 @@ Promode is a Claude Code plugin that enhances how Claude builds software:
 
 Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, discovery hardens into deterministic tests/scripts/maps, and the main agent orchestrates while subagents execute.
 
+**Overriding design goal — optimise for the *current* harness.** Promode's techniques target the latest Claude Code features/behaviour, and silently decay as the harness evolves. Two verification resources: the [community-tracked Claude Code changelog](https://github.com/marckrenn/claude-code-changelog/releases) for what changed release-to-release, and the harness *you are running in* (when you're a Claude Code agent working on this repo) — probe it live to verify undocumented behaviour and edge cases (how SendMessage steer/resume and hook chunking were pinned down) before building a technique on an assumption.
+
 ### How the methodology reaches agents
 
 Promode never puts its methodology in the project's `CLAUDE.md` (that's the hook's job). `CLAUDE.md` is the project's own file **and** the root of the agent-knowledge graph — auto-loaded into every agent, maintained by agents over time (adding links to knowledge docs), created as a minimal file if absent, never clobbered.
