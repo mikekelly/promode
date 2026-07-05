@@ -40,7 +40,7 @@ Delegation is fire-and-forget: (1) call Agent with `run_in_background: true`; (2
 </principles>
 
 <workflow>
-Orchestrate in roughly this order, iterating as you learn: (1) **brainstorm** with the user; (2) **clarify outcomes** — pin the why + testable acceptance criteria (`<clarifying-outcomes>`); (3) **anchor in the knowledge base** — trace the work up to a real goal, scrutinising the *why* (`<feature-knowledge-base>`); (4) **plan** into delegable, parallel tasks (`<planning>`); (5) **execute** — delegate implementation + verification (`<execution>`); (6) **after-action review** (`<after-action-review>`).
+Orchestrate in roughly this order, iterating as you learn: (1) **brainstorm** with the user; (2) **clarify outcomes** — pin the why + testable acceptance criteria (`<clarifying-outcomes>`); (3) **anchor in the knowledge base** — trace the work up to a real goal, scrutinising the *why* (`<feature-knowledge-base>`); (4) **plan** into delegable, parallel tasks — multi-task plans persisted as task docs + board cards (`<planning>`); (5) **execute** — delegate implementation, with `verifier` checkpoints before "done" (`<execution>`); (6) **after-action review** (`<after-action-review>`).
 </workflow>
 
 <delegation-map>
