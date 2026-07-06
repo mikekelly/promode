@@ -28,7 +28,21 @@
 - **Unresolved errors** — none
 - **Open constraints** — 10k/chunk cap; 3 registered chunks; principles duplicated with agent defs are BY DESIGN (cut only *same-target* repeats within this file)
 - **Established facts** — audit findings listed above
-- **Pending goals / next step** — execute, commit, record Outcome
+- **Pending goals / next step** — none; task complete
 
 ## Outcome
-_(filled by the agent on completion)_
+**Done** — all 9 work items executed on branch `worktree-agent-a9631984bce8dfdea`, commit `17564f6`. `./scripts/check-hooks.sh` green before and after. One file changed: `plugins/promode/PROMODE_MAIN_AGENT.md` (9 insertions, 9 deletions). Chunk count stays 3, `hooks.json` untouched, no version bump.
+
+**Final chunk sizes** (raw additionalContext / delivered incl. banner): chunk 1 — 9288 / 9641; chunk 2 — 7122 / 7313; chunk 3 — 8835 / 9052. All under the 10k cap; no rebalancing needed. Chunk 1 is now the tightest (~360 chars delivered headroom) — worth knowing before the next addition lands there. (Pre-edit raw baseline measured: 9049 / 6737 / 9015.)
+
+**Key judgement calls:**
+1. *Cut 1 nuance:* `<model-tiers>` never restated the full drafts/ratifies rule — only the descriptive "the crucial hard-to-reverse design work via `chief-technology-officer`". Trimmed to the bare name ("plus `chief-technology-officer` (the one execution agent worth your tier)"), keeping the tier assignment, which is that section's actual job. Left the later "or `chief-technology-officer` for crucial design" qualifier in the high-stakes-parallel sentence — it routes a different decision (parallel dispatch), not ratification.
+2. *Cuts 1+2 merged:* the `<planning>` Model: sentence and the CTO closing sentence were adjacent — removed in one edit, ending the paragraph at "…checkpoint between chained ones."
+3. *Cut 4 shape:* single trap statement placed at the "Guarding the *why*" sentence — "post-hoc justification is one trap in three guises — a stretched or invented goal, a flattered persona, a fabricated citation — and none is a valid fix." Persona rule kept ("Personas must be *realistic* — grounded in real customer evidence"); citation clause kept ("never silent, never fabricated"). Rules survive; the trap is stated once.
+4. *Rule of Two placement:* appended to `<subagent-scoping>` after the fresh-spawn sentence, next to the new unprimed-dispatch rule — both are dispatch-time constraints, so they read as a coherent tail. Side benefit: moves ~350 chars from the tight chunk 3 to the roomy chunk 2.
+5. *Addition 9 wording:* "At any step, when a decision needs a *reactable* answer rather than a debated one, detour into a spike…" appended after `<workflow>`'s ordered list — a cross-cutting detour, not a numbered phase, since it can fire during brainstorm, clarify, or plan.
+6. *No rebalancing:* the brief said rebalance only if a chunk exceeds the cap; none did.
+
+**Doc accuracy:** audit findings held up, with one wrinkle — the `<model-tiers>` "4th copy" of the CTO rule is a paraphrase of the routing, not a verbatim restatement of drafts/ratifies (handled per call 1). Nothing else stale.
+
+*(Note: recorded in the task's worktree copy and committed on the branch — the Edit tool is sandboxed to this worktree, so the shared-checkout copy at `.claude/worktrees/lucid-agnesi-d48e54/tasks/01-brief-surgery.md` gets this Outcome on merge.)*
