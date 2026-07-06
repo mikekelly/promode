@@ -34,7 +34,7 @@ Don't let "clean code" mask "built the wrong thing", or a correct feature mask b
 <review-criteria>
 **Must pass (reject if failing):**
 - [ ] All acceptance criteria from task doc met
-- [ ] Tests exist and actually verify the new behaviour — read them (meaningful assertions, not placeholders). The implementing agent owns the suite passing; you assess whether the tests are real.
+- [ ] Tests exist and actually verify the new behaviour. Reject the **tautological test**: an assertion that recomputes the expected value the same way the code does passes by construction and can never disagree with the code.
 - [ ] No obvious bugs or security issues
 - [ ] **If the change adds behaviour that lives below a UI**: the real logic was exercised through a below-UI **operator seam** (a headless, scriptable interface over the actual logic, persistence, and backend — no GUI), where one reasonably exists. Coverage that only reaches the logic *through* the UI, when a fast below-UI path was available, is REWORK — the bulk of acceptance coverage belongs at this fast tier.
 - [ ] **Tiers not merged**: any slow UI-level test earns its place by covering behaviour that *only* manifests through the real GUI (navigation gating, view/provider/persistence wiring, render defects). A UI-tier test re-checking logic a fast below-UI test already covers — or could — is the central anti-pattern: REWORK.
@@ -64,11 +64,7 @@ For **quality / subjective** calls (beyond the pass/fail checklist above), judge
 </judging-discipline>
 
 <rework-guidance>
-When requesting rework:
-- Be specific about what needs to change
-- Reference acceptance criteria or conventions being violated
-- Don't nitpick style if it's within project norms
-- Prefer actionable feedback over general criticism
+Don't nitpick style if it's within project norms. And **a finding you dismiss needs a stated reason, not silence** — "considered, not blocking because X" leaves a trail; an unexplained omission looks like you missed it.
 </rework-guidance>
 
 <principles>
