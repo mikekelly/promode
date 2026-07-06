@@ -36,4 +36,14 @@
 - **Pending goals / next step** — execute, commit, record Outcome
 
 ## Outcome
-_(filled by the agent on completion)_
+**Done** — all four defs edited and committed as `d194bcd` on branch `worktree-agent-a503496eb85ed7506` (not pushed, no version bump). `scripts/check-hooks.sh` green before and after. Net −43 lines (10 insertions, 53 deletions).
+
+Per file:
+- **debugger.md** — `<reproduction-test>` section cut whole (one non-toy bit, "lives with the other tests, not a one-off script", folded into workflow step 5); "not a system test" parentheticals trimmed from `<your-role>` item 2 and workflow step 5, `<feedback-loop>` copy kept; hard gate added at the top of the Hypothesise step ("no red-capable reproduction command, no hypothesis phase… stop and build the loop"); confirmed-hypothesis-in-report-and-commit-message added to `<documenting-findings>`.
+- **code-reviewer.md** — test-realness checkbox stripped of its no-suite-running echo (the `<review-workflow>` paragraph carries it fully, confirmed) and the tautological-test class added in its place; `<rework-guidance>` trimmed to the nitpick line plus the new dismissed-finding-needs-a-stated-reason rule.
+- **verifier.md** — additions only, as two new principles after "Evidence over assumptions": prove-the-change-is-real first (diff against pre-change baseline; unchanged artifact = verified no-op), and reproduce-the-reporter's-framing (exact steps/parameters/viewport first; own probes supplement, never substitute).
+- **environment-manager.md** — `<health-check-workflow>`, `<environment-operations>`, `<troubleshooting-workflow>` removed entirely (all-generic docker procedure; no non-generic content survived to justify shells); testability primitives, safety nevers, and cost-budget principle untouched; bootstrap line added to `<agent-knowledge>` ("If no root `CLAUDE.md` exists, create a minimal one — this agent often runs first in a fresh repo").
+
+Deviations from brief:
+- **Debugger debug-log-token ADD skipped** — already present verbatim in workflow step 4 (`[DEBUG-a4f2]`, "cleanup is one grep"); the brief's "only if not already present" clause applied.
+- **Outcome recorded in the worktree copy** of this doc (harness isolation blocks writes to the shared-checkout path); it merges with the branch. All other finding locations in the brief matched current wording exactly; nothing stale found.
