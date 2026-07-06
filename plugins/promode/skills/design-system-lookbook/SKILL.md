@@ -1,6 +1,6 @@
 ---
 name: design-system-lookbook
-description: "Establish a design source-of-truth (a DESIGN.md-style two-layer doc of tokens + rationale), build a lookbook that renders it, and wire a live-refresh preview server so visual work gets a fast edit→see feedback loop. Use when setting up or restructuring a design system / design tokens, creating a DESIGN.md or design source-of-truth, building a lookbook, or wanting live preview / live reload of design or marketing artifacts — landing pages, decks, one-pagers, marketing material previews. The visual analogue of the operator-seam test loop: it crystallises taste into determinism. Defers aesthetic taste (typography/color/motion choices) to the frontend-design skill."
+description: "Establish a design source-of-truth (a DESIGN.md-style two-layer doc of tokens + rationale), build a lookbook that renders it, and wire a live-refresh preview server so visual work gets a fast edit→see feedback loop. Use when setting up or restructuring a design system / design tokens, creating a DESIGN.md or design source-of-truth, building a lookbook, or wanting live preview / live reload of design or marketing artifacts — landing pages, decks, one-pagers, marketing material previews."
 ---
 
 <objective>

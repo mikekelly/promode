@@ -1,6 +1,6 @@
 ---
 name: discovery-to-determinism
-description: "Put the bulk of acceptance coverage below the UI through a fast, deterministic headless client driving an operator seam, and reserve a surgical UI state-graph tier for defects that only manifest through the real GUI. Use when designing test/QA or acceptance-testing strategy, automating acceptance, end-to-end (E2E), or QA testing of a running app, deciding what to cover with fast headless tests vs slow UI/E2E, building agent-driven exploration or automation of a running app, building a below-UI operator seam (interaction layer) or headless client, or crystallising agent-discovered knowledge into reusable deterministic artifacts (maps, graphs, scripts, tests). Covers the Discovery⇄Determinism flywheel, the operator-seam architecture (one seam serving both a headless test client and AI-agent tools), and layered headless-first acceptance testing with a surgical UI state-graph tier for GUI-only defects."
+description: "Put the bulk of acceptance coverage below the UI through a fast, deterministic headless client driving an operator seam, and reserve a surgical UI state-graph tier for defects that only manifest through the real GUI. Use when a UI fronts real logic and you are designing test/QA or acceptance-testing strategy, automating acceptance, end-to-end (E2E), or QA testing of a running app, deciding what to cover with fast headless tests vs slow UI/E2E, building agent-driven exploration or automation of a running app, building a below-UI operator seam (interaction layer) or headless client, or crystallising agent-discovered knowledge into reusable deterministic artifacts (maps, graphs, scripts, tests)."
 ---
 
 <objective>
@@ -16,7 +16,7 @@ The principle leads; testing is its first worked embodiment. Keep it general; th
 2. **Default acceptance coverage below the UI** — drive the real logic, persistence, and backend through an **operator seam** with a fast, deterministic headless client; that tier carries the bulk.
 3. **Extract the seam test-first** — RED before any seam code; reuse an existing API / service-layer / CLI / SDK / MCP in preference to inventing one.
 4. **Reserve a small, surgical UI tier** (`references/ui-state-graph-edt.md`) only for defects that *only* surface through the real GUI; never let it re-test what headless covers.
-5. **Crystallise every worthwhile discovery** into self-checking code as part of the same effort — an un-crystallised discovery is a missing feedback loop.
+5. **Crystallise every worthwhile discovery** into self-checking code as part of the same effort (see `<disciplines>`).
 </quick_start>
 
 <the-flywheel>
@@ -30,7 +30,7 @@ Run discovery and determinism as a loop with **two arrows**, not a one-way pipel
 3. **Drift becomes a targeted discovery prompt.** When the system changes, a *precise, localised* failure in the deterministic layer ("expected marker X missing at step A→B") **is the instruction for where to re-discover.** Coarse failures cannot do this.
 4. **Orientation keeps findings integrated.** A deterministic "where am I?" check lets an exploring agent locate itself against the known model, so new findings *slot into* the existing structure instead of forking a duplicate.
 
-**The ratchet:** discovery produces determinism; determinism lowers the cost and raises the precision of the next discovery; repeat. This is a *model and a discipline*, not a measured law — there is no promised "cost falls by N%," and a **stale** crystallised map inverts the benefit until re-crystallised.
+**The ratchet is a *model and a discipline*, not a measured law** — there is no promised "cost falls by N%," and a **stale** crystallised map inverts the benefit until re-crystallised.
 
 **Promode already runs this flywheel once.** The `CLAUDE.md`-rooted agent-knowledge graph *is* its first instance: a knowledge node is a crystallised discovery about the *repo*; "orient before you act" is the where-am-I check. Everything below aims the same loop at a *running app* instead of a codebase.
 </the-flywheel>
@@ -63,7 +63,7 @@ The methodology is not "use a graph." It is the set of disciplines that keep the
 **One seam, two non-human operators.** The same seam that lets a fast headless client drive end-to-end acceptance tests is structurally the seam that exposes the system to **AI-agent tools** — because a test runner and an agent both need a clean, observable, scriptable grip on the real logic with the GUI stripped away. Designing for headless testability and designing for agent-operability **converge on one architectural investment that pays out twice.** This convergence is the load-bearing reason the seam is worth building even before any agent tool exists.
 
 **But it is convergence of the SEAM, not identity of the INTERFACE.** Fence it, or it becomes wrong and dangerous:
-- The two consumers diverge on **granularity** (fine deterministic primitives vs intent-level composable affordances), **authority/blast-radius** (a test client gets sandbox god-mode — reset/seed/freeze/auth-bypass — a production agent gets least privilege under the *same* auth and tenancy as a human), **self-description** (terse/positional for tests vs LLM-readable names/schemas/errors for agents — that is the `axi` skill's domain; defer to it, don't re-derive it), and **failure semantics** (deterministic fail-fast vs tolerant/recoverable/idempotent).
+- The two consumers diverge on four axes — **granularity**, **authority/blast-radius**, **self-description** (the `axi` skill's domain; defer to it), and **failure semantics**. Per-axis detail: `references/operator-seam-and-agent-tools.md`.
 - **Hard security rule:** never ship one interface to both, and **never expose test god-mode to a production agent.** An agent surface is a *new external boundary* that earns the same security review as any other.
 - **Honesty:** the testability half of this convergence is evidenced by a real build; the **agent-operability half is, so far, a structural prediction (n=1), never actually shipped.** Treat it as a heuristic to design *toward* and a hypothesis to validate — not a proven law, and not a licence to build a seam speculatively.
 
@@ -122,15 +122,3 @@ So: **do NOT extract a reusable graph/recognizer/traverser library or a standard
 - `references/ui-state-graph-edt.md` — Tier-2 mechanics: the state-graph model, Explore→Distill→Traverse, recognizers, the fail-fast contract and its lifecycle, the client-adapter seam, the hard-won implementation rules, and the worked example.
 - `references/operator-seam-and-agent-tools.md` — the operator-seam ↔ agent-tool convergence in depth: where it holds, the four divergence axes, the privilege/security fence, and how to shape `observe()`/`act()` so the seam *could* serve an agent without ever becoming one by accident.
 </references>
-
-<success_criteria>
-You have applied this skill well when:
-- Acceptance coverage is **layered**: the bulk runs fast and headless through an operator seam; the UI tier is small, surgical, and verification-only.
-- The two tiers are **not merged**, and no slow UI test re-checks what a fast headless test covers.
-- Every worthwhile discovery was **crystallised** into deterministic, self-checking code, and the deterministic layer **breaks precisely** (verified by perturbation).
-- Deterministic failures are **triaged** — flake → harden, intended change → re-crystallise, regression → raise — not blindly re-run; the loop back to inference is closed.
-- Any seam was **extracted test-first**, only after the applicability gate passed, and an existing seam was reused in preference to a new one.
-- The convergence was treated as **one architectural investment, two tailored artifacts** — never one interface for both, never test god-mode exposed to an agent.
-- Acceptance tests that encode a user need read as **evidence-based user stories** traceable up to a cited (or explicitly-flagged) need, expressed as the lightest scenario form that keeps the trace legible — not forced through a BDD/step-definition framework no stakeholder reads.
-- No reusable skeleton/library was extracted from a single case.
-</success_criteria>
