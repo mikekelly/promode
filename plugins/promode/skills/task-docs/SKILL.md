@@ -38,6 +38,14 @@ Keep it lean — a coordination + decision artifact, **not** a duplicate spec of
 The **Brief** block mirrors `<prompting-subagents>` — so delegating a task = pointing the agent at its doc. The **State** block is the four-bucket Active-State Index: the exact payload a fresh session or handoff needs to resume.
 </doc-shape>
 
+<fog-of-war>
+Plan tasks only to the **fog edge**. Beyond it, carry the fog as **named unknowns** — never pre-sliced into fake tasks that guess at work no one can specify yet. The fog test: you can state the question precisely *now* — **not** answer it. A named unknown spawns real tasks only once the work that resolves it lands.
+</fog-of-war>
+
+<durability>
+Write the brief for when it will be read. A dispatch brief consumed immediately may cite file paths and line numbers; a task doc that may sit in `## Ready` describes **behavioural contracts and interfaces** instead — paths rot as the codebase moves, contracts don't.
+</durability>
+
 <anti-drift>
 - **Open-loop only** — carry the live task + last outcome, not a full replay; prior state is recoverable from git/files.
 - **Decisions-as-constraints, not prose** — record a decision as a rule the next agent must honour, not a narrative.

@@ -32,6 +32,7 @@ Why a hook, and why the brief never goes in `CLAUDE.md`: see `plugins/promode/sk
 Subagent definitions live in `plugins/promode/agents/`; skills (just-in-time knowledge) in `plugins/promode/skills/`. The canonical agent routing is the brief's `<delegation-map>` (and README's table for humans). Brainstorming, plan reviews, and final architectural calls stay with the main agent; crucial hard-to-reverse design may be *drafted* by `chief-technology-officer` (frontier-pinned) for the main agent to ratify.
 
 How this knowledge graph works — the discipline this `CLAUDE.md` itself follows: [`agent-knowledge-wiki.md`](plugins/promode/skills/promode-audit/references/agent-knowledge-wiki.md).
+Concepts considered and **rejected** — check before proposing methodology ideas, don't re-suggest: [`docs/decisions/`](docs/decisions/2026-07-community-skills-rejections.md).
 
 ### Where the brief + hook live; keeping principles in sync
 

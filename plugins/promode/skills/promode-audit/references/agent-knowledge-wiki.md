@@ -42,6 +42,20 @@ What does **not** belong: things obvious from the code, one-off trivia, unverifi
 
 A **runbook** is a node capturing a repeatable operational/procedural how-to: deploy, release, run a migration, bring up or reset the environment, recover a service, or work a recurring incident class. Create or update one whenever work relied on (or exposed the need for) such a procedure — after-action reviews are the natural moment to check. Connect runbooks to a single **runbooks hub doc** (e.g. `RUNBOOKS.md`) that is itself linked from `CLAUDE.md`, so any agent reaches them in a hop. Consistent with *one idea, one home*: **prefer a script where the steps can be automated** (a documented `make`/script target beats prose) — the runbook captures the judgement around the steps and links to the scripts that automate them.
 
+## Domain glossary — a node for canonical vocabulary
+
+A **domain glossary** is a first-class node type: the project's canonical domain terms, each defined by what it **is** (not what it does), with an `_Avoid_:` list of near-synonyms that must not be used in its place. Update it **inline, the moment a term resolves** — never batched for later, or usage drifts before the record exists. Agents actively challenge vocabulary drift against it ("the glossary defines *cancellation* as X — you seem to mean Y; which is it?"). Large repos may split glossaries per subtree, linked from that subtree's orientation.
+
+Why it pays: shared language is token economy — every ambiguous term costs clarification round-trips. And since tests are the documentation, test names written in the canonical vocabulary make that documentation coherent.
+
+## Rejected work — a node type ideation must check
+
+A **rejected-work KB** records concepts that were considered and rejected, so ideation and reviews never re-suggest them. Conventions:
+
+- **One node per concept, not per request.** Match incoming suggestions by concept similarity — a "night theme" request matches an existing dark-mode rejection node.
+- **Reasons must be durable.** "No time right now" expires and tells a future agent nothing; record the reason that will still hold ("conflicts with constraint X", "competes with Y — one home per fact").
+- **Never file an already-implemented request as rejected.** Recording it would poison the dedup checks with false rejections — an implemented request is closed, not rejected.
+
 ## Keeping it healthy
 
 - **Cold-readable.** An agent may land on any doc via a link, so each opens by saying what it is.
@@ -55,6 +69,8 @@ A skill is just-in-time knowledge a coding agent loads on trigger — so the sam
 
 - **Landmines, not docs.** A skill carries the project-specific gotchas, conventions, and decisions an agent *wouldn't know from training* — not a comprehensive manual of what the model already does well. Comprehensive prose dilutes the signal and burns context; an over-stuffed skill can make behaviour *worse*, not better.
 - **Inline the exact conventions at the point of use.** Precise thresholds, formats, and rules (the commit format, the seam shape, a naming rule) belong stated *where the agent acts on them*, not deferred behind a link — progressive disclosure under-performs for exact conventions.
+- **Leading words.** One word already in the model's pretraining (*fog of war*, *tracer bullets*, *tight*) recruits priors a paragraph of instruction can't buy. When a behaviour under-fires, strengthen the word, not the sentence count.
+- **Examples document the problem, not the solution.** A solution example ("so we keyed it on FRONT_ARC") rots as the code moves on; a problem example teaches the shape of the situation the rule exists for, and stays true.
 - **Fix a misfiring skill at the faulty step.** When a skill produces the wrong behaviour, localise the *first* faulty step, make the *minimal* edit, and commit it as a reviewable diff with its rationale — don't rewrite the whole skill. (The cross-session retrospective surfaces these — see the main-agent brief's `<after-action-review>`.)
 
 ## Going further

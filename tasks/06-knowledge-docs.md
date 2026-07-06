@@ -32,4 +32,10 @@
 - **Pending goals / next step** — execute, commit, record Outcome
 
 ## Outcome
-_(filled by the agent on completion)_
+- **Done** — commit `fd10737` on branch `worktree-agent-a08d0544895abb2f3` (agent worktree; not pushed, no version bump).
+- **Wiki** (`plugins/promode/skills/promode-audit/references/agent-knowledge-wiki.md`): two new node-type sections after Runbooks — "Domain glossary — a node for canonical vocabulary" and "Rejected work — a node type ideation must check" — plus two new bullets in Authoring skills (leading words; examples document the problem, not the solution), placed above "Fix a misfiring skill at the faulty step".
+- **task-docs skill**: two new blocks after `<doc-shape>` — `<fog-of-war>` (plan to the fog edge; named unknowns; fog test = state the question, don't answer it) and `<durability>` (Ready-queue docs describe behavioural contracts/interfaces, not paths).
+- **Decision node placement**: `docs/decisions/2026-07-community-skills-rejections.md` — one node, four rejections with durable reasons, opening line marks it as a rejected-work node per the wiki conventions. Linked twice: (1) root `CLAUDE.md`, one new line under the knowledge-graph line ("Concepts considered and rejected — check before proposing methodology ideas") → **47/50 lines, cap held**, no fallback link needed; (2) `IDEAS.md` intro sentence guards the point of ideation ("match by concept, don't re-suggest").
+- **IDEAS.md**: inbound-triage-skill bullet added (mattpocock state machine, parked).
+- **Key decision**: linked the node from *both* root CLAUDE.md (graph reachability, budget allowed it) and IDEAS.md (the rejected-work KB's actual consumer per its own new convention) — link generously, one home.
+- **Verified**: `scripts/check-hooks.sh` + `check-skill-frontmatter.sh` green; relative link targets resolve. Task doc found accurate — no stale claims (wiki section names and 46-line count both matched). Outcome recorded here in the worktree copy: writes to the shared-checkout task-doc path were blocked by worktree isolation, so it reaches the canonical doc on merge.
