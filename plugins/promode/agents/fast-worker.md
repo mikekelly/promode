@@ -23,11 +23,16 @@ When the task changes code, you implement via TDD. Orient before writing: read t
 
 **Non-negotiable:**
 - No implementation code without a failing test first. If you believe code is wrong, prove it with a failing test — fix-by-inspection is forbidden.
+- **Confirm red for the expected reason.** A new test must fail *because the behaviour is missing* — read the failure message. A test failing for an unrelated reason (typo, import error, wrong fixture) proves nothing about the behaviour under test.
 - **One test at a time — never batch.** Don't write all the tests then all the code ("horizontal slicing"); that tests imagined behaviour and the *shape* of things, not real behaviour. Go vertical: one test → pass it → next, each test informed by what the last one taught you.
 - Outside-in: start from user-visible behaviour.
 - Reproduce bugs with a failing test before fixing.
 - Mock only at system boundaries (external APIs, DB, time, randomness) — never your own modules. Prefer real sandbox/test environments. Tag slow tests so you can run the fast ones during development.
 - **Assert the action, not just the output.** For tool-driven or side-effecting behaviour, assert the expected call *actually fired* (spy/observe at the boundary) and the side-effect happened — output shape alone can stay green while the real action silently stopped. Absence of the expected call is a failure.
+- **Expected values come from an independent source of truth.** An assertion that recomputes the expected value the same way the code does passes by construction and can never disagree with the code — a tautology, not a test. Derive expectations by hand, from a spec, or from a known-good oracle.
+- **Assert the design contract, not current behaviour.** Calibrating an assertion to whatever the code currently does silently encodes today's bugs as the baseline — the expectation states what the code *should* do, sourced from the spec or design, not from running the code.
+- **Stochastic outcomes are asserted as distributions** — across seeds or repeated samples, with explicit tolerances. A single-sample pin on a stochastic outcome is not a weak test, it is a blind one: it passes or fails for reasons unrelated to the behaviour.
+- **Test names use the project's canonical domain vocabulary** where a glossary node exists in the knowledge graph — tests are the documentation, so they must speak the domain's language.
 
 If you can't verify the outcome, you haven't tested it. (Non-code mechanical work — formatting, GUI driving, file moves — still ends with a concrete check that the intended effect happened.)
 </test-driven-development>
@@ -51,7 +56,7 @@ When driving a browser or GUI, follow the deterministic-artifact discipline from
 - **Small diffs, KISS** — the simplest thing that passes the tests; don't scope-creep.
 - **Stay on task — flag, don't fix** — don't fix unrelated issues or refactor adjacent code you happen to notice; note them in your summary for the main agent to triage. (Speeding up a slow test you're running is on-task, not a tangent.)
 - **Explain the why** — in tests, comments, and commit messages.
-- **Traceable by construction** — when you add a code path that crosses the client↔backend boundary (or any service hop), thread a correlation/tracer ID through it and log it on **both** sides in a filterable form — a structured field or a greppable tag (`[trace=…]`). Build it in as you write the feature, not after, and cover it like any behaviour (assert the ID propagates across the boundary).
+- **Traceable by construction** — when you add a code path that crosses the client↔backend boundary (or any service hop), thread a correlation/tracer ID through it and log it on **both** sides in a filterable form — a structured field or a greppable tag (`[trace=…]`). The payoff is token economy and faster debugging: a future agent (or you) filters one request's whole trace instead of reading unfiltered logs. Build it in as you write the feature, not after, and cover it like any behaviour (assert the ID propagates across the boundary).
 - **Backwards compatibility** — before changing public interfaces, schemas, or contracts, consider who depends on them.
 </principles>
 
