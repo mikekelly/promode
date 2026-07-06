@@ -35,7 +35,7 @@
 - **Pending goals / next step** — execute, commit, record Outcome
 
 ## Outcome
-**Done** — commit `f7e1ee3` (amended to `HEAD` with this Outcome) on branch `worktree-agent-a234f9ec09b6d6ae0` (agent worktree), `./scripts/check-hooks.sh` green (frontmatter check included). 4 skill files, +16/−36 lines; no version bump, not pushed.
+**Done** — commit `db2a944` (includes this Outcome, added by amend) on branch `worktree-agent-a234f9ec09b6d6ae0` (agent worktree), `./scripts/check-hooks.sh` green (frontmatter check included). 4 skill files, +16/−36 lines; no version bump, not pushed.
 
 Per work item:
 - **discovery-to-determinism/SKILL.md** — `<success_criteria>` deleted; ratchet paragraph trimmed to its non-duplicated caveat (kept "model not measured law" + stale-map inversion, cut the sentence restating the two arrows); "un-crystallised discovery is a missing feedback loop" now only in `<disciplines>` (quick_start item 5 points there); description lost the "Covers…" table-of-contents sentence and gained the "when a UI fronts real logic" pre-filter.

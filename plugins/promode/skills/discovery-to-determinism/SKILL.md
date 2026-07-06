@@ -1,6 +1,6 @@
 ---
 name: discovery-to-determinism
-description: "Put the bulk of acceptance coverage below the UI through a fast, deterministic headless client driving an operator seam, and reserve a surgical UI state-graph tier for defects that only manifest through the real GUI. Use when a UI fronts real logic and you are designing test/QA or acceptance-testing strategy, automating acceptance, end-to-end (E2E), or QA testing of a running app, deciding what to cover with fast headless tests vs slow UI/E2E, building agent-driven exploration or automation of a running app, building a below-UI operator seam (interaction layer) or headless client, or crystallising agent-discovered knowledge into reusable deterministic artifacts (maps, graphs, scripts, tests)."
+description: "Put the bulk of acceptance coverage below the UI through a fast, deterministic headless client driving an operator seam, and reserve a surgical UI state-graph tier for defects that only manifest through the real GUI. Use when a UI fronts real logic and you are designing test/QA or acceptance-testing strategy, automating acceptance, end-to-end (E2E), or QA testing of a running app, deciding what to cover with fast headless tests vs slow UI/E2E, building agent-driven exploration or automation of a running app, or building a below-UI operator seam (interaction layer) or headless client. Also use — UI or not — when crystallising agent-discovered knowledge into reusable deterministic artifacts (maps, graphs, scripts, tests)."
 ---
 
 <objective>

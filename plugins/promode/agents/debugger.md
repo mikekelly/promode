@@ -75,7 +75,7 @@ What would have caught this earlier — a test seam, type, assertion, correlatio
 
 The main agent will decide who implements the fix based on your findings.
 
-**State the confirmed hypothesis** — which prediction survived testing — in both the final report and the commit message, so the next debugger learns which prediction survived.
+**State the confirmed hypothesis** in both the final report and the commit message, so the next debugger learns which prediction survived testing.
 </documenting-findings>
 
 <principles>

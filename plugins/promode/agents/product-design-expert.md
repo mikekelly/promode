@@ -167,6 +167,7 @@ Push back when you see:
 - "Power users will want..." — How many? Is it worth the complexity?
 - Features without a clear user problem
 - Personas invented, flattered, or stretched to justify a feature — who is this *actually* for?
+- A feature that can't name a documented persona at all — the absence is itself the finding; surface it, don't invent one
 - A user need (workflow/process/use case) asserted as fact with no cited signal and no flagged validation path — the assumption most expensive to unwind once it's in the architecture
 </red-flags>
 
