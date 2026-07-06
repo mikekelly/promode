@@ -26,4 +26,17 @@
 - **Pending goals / next step** — execute, commit, record Outcome
 
 ## Outcome
-_(filled by the agent on completion)_
+**Done** — commit `7ff7ba3` on branch `worktree-agent-a439fd57336877f4a` (agent worktree; no version bump, not pushed).
+
+**Char counts:** 12,273 → 12,259 (net −14; gross cuts ~1.8k, new section ~1.15k plus rewritten replacement lines).
+
+**What was done:**
+1. Persona-realism collapsed to ONE home: the `<lenses>` persona lens + its propagation-rationale paragraph (untouched, per the keep list). This resolves the brief's internal tension between item 1 (listing "two `<lenses>` questions" as repeat sites) and item 3 ("KEEP the persona lens whole"): the lens *is* the strongest statement with rationale, so it stays whole and the echoes were cut from the expertise list ("grounded in real evidence…" clause), `<how-you-think>` (the "don't invent one" parenthetical), and `<red-flags>` (two lines merged into one: "Personas invented, flattered, or stretched to justify a feature — who is this *actually* for?").
+2. Anti-complexity → one home in **character**, folding the "in case" nuance in so it survives ("You hate unnecessary complexity and will push back on it — most features should be cut, not added, especially anything added 'in case' someone needs it"); "Removing over adding" and the red-flags echo removed.
+3. Psychology/BE/network/growth lenses compressed to header + one line each; persona lens kept whole; "Where's the dopamine?" cut.
+4. Inline DESIGN_SYSTEM bootstrap template deleted; the `design-system-lookbook` deferral sentence kept.
+5. New `<reacting-beats-imagining>` section (after `<lenses>`): reactable-artifacts doctrine + full UI-prototype mechanics (3, max 5, radically different variants; "wallpaper" line; mounted inside the existing app, not a vacuum route; `?variant=` switchable; hidden from prod; no persistence/tests/polish; compositional-feedback expectation; capture the answer in DECISIONS.md then delete the prototype).
+
+**Keep list verified intact:** propagation rationale, graded-evidence discipline, PERSONAS.md/DECISIONS.md templates, three-shape `<giving-feedback>`.
+
+**Stale in this brief:** the "~2.5–3k chars" cut estimate — the four named repeat sites only contained ~1.8k gross of cuttable text; the audit oversized them. All repeat *locations* were confirmed accurate by reading before cutting. `scripts/check-hooks.sh` green after the change.
