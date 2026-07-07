@@ -15,7 +15,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | M3 `rationale-travels-with-the-rule` | Never dedupe the *why* out of any copy of a duplicated principle — a rule stripped of its rationale gets misapplied | RB (canonical; maintainer ruling 2026-07-02), manifest corpus-wide · w:RB |
 | M4 `principle-complete-brief` | If the brief exceeds the 10k hook cap, split at section boundaries — never demote a principle to a pointer | B-header v, CM v, `check-hooks.sh` e |
 | M5 `no-voluntary-invocation` | Promode ships no skills: skill invocation is voluntary (a description competing in a listing) and therefore non-determinate — determinism outranks listing convenience, so every capability reaches agents via a non-voluntary surface: dedicated agent (delegation-map dispatch), def prompting, def-directed doc read, or user-typed command (ratified 2026-07-07) | CM, W, B-header, this register's Components · w:`docs/decisions/2026-07-skills-elimination.md` |
-| M6 `hook-only-install-hygiene` | Promode installs nothing per-project — the SessionStart hook + plugin deliver everything; stale leftovers from the retired copy-install double-inject the brief and are audit findings to remove | CM, AUD, README (migration note) |
+| M6 `hook-only-install-hygiene` | Promode installs nothing per-project — the SessionStart hook + plugin deliver everything; stale leftovers from the retired copy-install double-inject the brief and are audit findings to remove | CM, AUD |
 
 ## Orchestration (brief-resident; reach the main agent only, by design)
 
