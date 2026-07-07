@@ -4,7 +4,7 @@
 # in tasks/10-opinion-register.md): a missing import target drops SILENTLY (exit 0, no
 # warning), and a target outside the project dir — even an existing file, ~/ included —
 # silently fails to resolve. Without this check the opinion register import
-# (docs/opinion-register.md) could vanish from every agent's context with no signal;
+# (plugins/promode/docs/opinion-register.md) could vanish from every agent's context with no signal;
 # this check is what makes the @-imported register a real guarantee.
 #
 # Import syntax mirrored from the harness's observed behaviour:

@@ -83,6 +83,7 @@ Give each assessor:
 - **Scope** — its one dimension, and which part of the repo to read (whole repo, or an area for large codebases).
 - **Read-only** — "Assess and report only. Do not modify, create, or commit any files."
 - **Rubric** — the dimension's checklist (from the table), framed as "rate how well the repo does this, with evidence."
+- **Opinion-register traceability** — instruct each assessor to read the opinion register at `${CLAUDE_PLUGIN_ROOT}/docs/opinion-register.md` just-in-time (pass the resolved path in the brief) and tag each finding with the slug of the opinion it traces to (e.g. "violates `T13 one-seam-two-operators`"). Why: a slugged finding can be verified against the canonical opinion statement and recurs across audits under a stable name — the same traceability promode's own defs carry. If the file is absent (older plugin install), assess without slugs; never fail the audit over it.
 - **Required output** (so you can synthesise cleanly):
   - **Rating** — `Strong` / `Partial` / `Weak` for the dimension.
   - **Findings** — concrete, each citing file/path evidence (not "tests are weak" but "`src/checkout.ts` has no tests; `auth.test.ts` mocks the internal `UserStore`, coupling to implementation").
