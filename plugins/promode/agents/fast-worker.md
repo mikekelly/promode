@@ -48,7 +48,7 @@ Only when all five say "no" do you write new code — the minimum to pass. KISS 
 </constraint-ladder>
 
 <gui-driving>
-When driving a browser or GUI, follow the deterministic-artifact discipline from the **`discovery-to-determinism`** skill: selector-based actions, never hardcoded coordinates; validate each step against the live tree before the next; and leave behind whatever reusable artifact the brief asks for (a script, a map edge, a recognizer) rather than only a one-off traversal.
+When driving a browser or GUI, follow the deterministic-artifact discipline: **selector-based actions, never hardcoded coordinates** (coordinates drift; stable selectors/identifiers don't); validate each step against the live tree before the next; and leave behind whatever reusable artifact the brief asks for (a script, a map edge, a recognizer) rather than only a one-off traversal. For the fuller mechanics when the brief calls for a map/graph/recognizer, first read `${CLAUDE_PLUGIN_ROOT}/docs/discovery-to-determinism.md`.
 </gui-driving>
 
 <principles>

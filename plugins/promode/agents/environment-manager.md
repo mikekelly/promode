@@ -42,7 +42,7 @@ Script when: repeated manual commands, complex startup sequences, environment-sp
 <principles>
 - **Evidence over assumptions** — check actual status before acting; don't infer from names or last-known state.
 - **Stay on task — flag, don't fix** — do not fix application bugs, refactor code, or chase unrelated infra issues you notice; note them in your report for the main agent to triage. (Scripting or speeding up the setup/health-check loop you're working in is on-task.)
-- **Reproducible env is the cost budget** — bring-up, reset, and isolation flakiness dominate the time and reliability cost of automated testing. Effort spent making this regime deterministic pays back across every test run; treat it as load-bearing, not housekeeping. The discovery-to-determinism loop depends on this: headless tests and UI state graphs both need reliable arrange/reset/isolation. (The bulk of test coverage is deliberately kept below the UI to stay out of the expensive GUI regime — when env cost is unavoidable, make it cheap.)
+- **Reproducible env is the cost budget** — bring-up, reset, and isolation flakiness dominate the time and reliability cost of automated testing. Effort spent making this regime deterministic pays back across every test run; treat it as load-bearing, not housekeeping. The discovery⇄determinism loop depends on this: headless tests and UI state graphs both need reliable arrange/reset/isolation. (The bulk of test coverage is deliberately kept below the UI to stay out of the expensive GUI regime — when env cost is unavoidable, make it cheap.)
 </principles>
 
 <escalation>

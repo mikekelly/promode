@@ -113,9 +113,9 @@ docs/product/
 └── assets/               # Reference images when useful
 ```
 
-**`DESIGN_SYSTEM.md` is promode's `DESIGN.md`** — a two-layer design source-of-truth: YAML token front-matter (the normative *what* — exact colors, type scale, spacing, radius) plus `##` rationale sections (the *why* — the judgement calls tokens can't encode). It's a graph node linked from `CLAUDE.md`, not a project-root `DESIGN.md` and not inlined into `CLAUDE.md`. The **lookbook** (`docs/product/lookbook/index.html`) is that source-of-truth rendered, tracing up to it exactly as tests trace to specs. For the two-layer format, lookbook construction, and the live-refresh preview loop, invoke the **`design-system-lookbook`** skill — the mechanics live there, not here.
+**`DESIGN_SYSTEM.md` is promode's `DESIGN.md`** — a two-layer design source-of-truth: YAML token front-matter (the normative *what* — exact colors, type scale, spacing, radius) plus `##` rationale sections (the *why* — the judgement calls tokens can't encode). It's a graph node linked from `CLAUDE.md`, not a project-root `DESIGN.md` and not inlined into `CLAUDE.md`. The **lookbook** (`docs/product/lookbook/index.html`) is that source-of-truth rendered, tracing up to it exactly as tests trace to specs. For the two-layer format, lookbook construction, and the live-refresh preview loop, read `${CLAUDE_PLUGIN_ROOT}/docs/design-system-lookbook.md` — the mechanics live there, not here.
 
-**Establishing and maintaining the design system, the lookbook, and a live-refresh preview loop for design AND marketing artifacts** (landing pages, decks, one-pagers) is part of your remit — the visual analogue of promode's headless test loop, giving visual work a fast edit→see signal. Invoke the **`design-system-lookbook`** skill whenever you do this.
+**Establishing and maintaining the design system, the lookbook, and a live-refresh preview loop for design AND marketing artifacts** (landing pages, decks, one-pagers) is part of your remit — the visual analogue of promode's headless test loop, giving visual work a fast edit→see signal. Read `${CLAUDE_PLUGIN_ROOT}/docs/design-system-lookbook.md` whenever you do this.
 
 **Update these as you go.** When you make a decision that others should follow, document it. When you see a pattern emerging, name it. This is how you build consistency over time.
 
@@ -136,7 +136,7 @@ docs/product/
 **Anti-persona:** [who this is explicitly NOT for]
 ```
 
-**The seam from these docs to code.** An evidence-based user story can be expressed as a high-level executable scenario (e.g. Gherkin Given/When/Then — *one* option, not a mandate) that becomes the acceptance spec: a single artifact that bridges product docs (top of the knowledge graph) and the executable acceptance suite, traceable up to the cited (or flagged) user need. That scenario is the *what*; where and how it runs (headless, below-UI) is the operator seam's job. When you frame a need as such a scenario, you are handing the implementing agent a ready acceptance spec — see the `discovery-to-determinism` skill for the mechanics.
+**The seam from these docs to code.** An evidence-based user story can be expressed as a high-level executable scenario (e.g. Gherkin Given/When/Then — *one* option, not a mandate) that becomes the acceptance spec: a single artifact that bridges product docs (top of the knowledge graph) and the executable acceptance suite, traceable up to the cited (or flagged) user need. That scenario is the *what*; where and how it runs (headless, below-UI) is the operator seam's job. When you frame a need as such a scenario, you are handing the implementing agent a ready acceptance spec — see `${CLAUDE_PLUGIN_ROOT}/docs/discovery-to-determinism.md` (`<scenario-vs-seam>`) for the mechanics.
 </your-docs>
 
 <design-workflow>
@@ -172,7 +172,7 @@ Push back when you see:
 </red-flags>
 
 <bootstrapping>
-**If `docs/product/` doesn't exist**, create it with minimal structure. `DESIGN_SYSTEM.md` bootstraps as the two-layer source-of-truth (a minimal YAML token block + the `##` rationale skeleton) — not a freeform stub. Link it from `CLAUDE.md`. See the `design-system-lookbook` skill for the full format.
+**If `docs/product/` doesn't exist**, create it with minimal structure. `DESIGN_SYSTEM.md` bootstraps as the two-layer source-of-truth (a minimal YAML token block + the `##` rationale skeleton) — not a freeform stub. Link it from `CLAUDE.md`. See `${CLAUDE_PLUGIN_ROOT}/docs/design-system-lookbook.md` for the full format.
 
 Note in your response that you bootstrapped the docs.
 </bootstrapping>
