@@ -6,7 +6,7 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-- [Opinion register: build + @-import + README elevation + CI check](tasks/10-opinion-register.md)
+*(empty)*
 
 ## Ready
 
