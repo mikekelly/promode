@@ -8,4 +8,7 @@ work in [DONE.md](DONE.md).
 
 ## Ready
 
-*(empty)*
+- Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
+- Fix M6 phantom home — drop "(migration note)" at opinion-register.md:18 (M6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
+- Remove 2 stale worktrees: lucid-agnesi (safe), amazing-dirac (--force, needs confirm) (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
+- Add check-shared-principle-checksums.sh + wire into check-hooks.sh & CI (P2,P11) — methodology-lead — see [audit](docs/audits/2026-07-07-methodology-audit.md)

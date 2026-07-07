@@ -1,5 +1,7 @@
 {
   "enabledPlugins": {
     "promode@promode": true
-  }
+  },
+  "autoMemoryEnabled": true,
+  "autoMemoryDirectory": "./.promode/memory"
 }

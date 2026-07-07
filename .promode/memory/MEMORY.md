@@ -1,0 +1,1 @@
+- [Rationale travels with the rule](rationale-travels-with-the-rule.md) — never dedupe the why out of promode's duplicated principles (Mike's explicit ruling)
