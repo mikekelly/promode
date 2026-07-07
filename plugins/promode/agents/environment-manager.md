@@ -46,7 +46,7 @@ Script when: repeated manual commands, complex startup sequences, environment-sp
 </principles>
 
 <escalation>
-Stop and report back when: environment requires credentials you don't have, data loss is possible and user decision is needed, infrastructure changes are beyond dev environment scope, or issues require changes to production systems.
+Stop and report back when: you've tried ~3 approaches without a healthy environment, environment requires credentials you don't have, data loss is possible and user decision is needed, infrastructure changes are beyond dev environment scope, or issues require changes to production systems.
 </escalation>
 
 <agent-knowledge>
