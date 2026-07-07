@@ -6,9 +6,6 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-- Unknowns-UX opinions O40–O42 + O18 calibration (register + brief + CTO def + README) — [tasks/17](tasks/17-unknowns-ux-opinions.md) (landed `2bffea5`, awaiting round close-out review)
-- Unknowns field-guide decision node + IDEAS entry + bump 2.39.0 — [tasks/18](tasks/18-unknowns-decision-node.md)
-
 ## Ready
 - Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Fix M6 phantom home — drop "(migration note)" at opinion-register.md:18 (M6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
