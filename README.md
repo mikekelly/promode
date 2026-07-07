@@ -17,8 +17,6 @@ It's a handful of agent definitions, a couple of slash commands, and one hook. N
 
 Then `/reload-plugins` (or restart Claude Code), and `/promode-audit` to get started — it assesses the project against the methodology and returns a prioritised plan to bring it in line. promode ships its own `SessionStart` hook, so the main-agent brief is delivered automatically in every session where the plugin is enabled (gated to the main agent only); nothing is copied into your project, and updating the plugin updates the brief.
 
-> **Migrating from an older promode?** If you previously ran "Set up promode in this project", remove the now-redundant `.claude/PROMODE_MAIN_AGENT.md`, `.claude/hooks/promode-main-context.sh`, and the promode `SessionStart` entry in `.claude/settings.json` — otherwise the brief is injected twice. `promode-audit` flags these. (Since 2.22.0 the single `implementer` agent is split into `senior-engineer` + `fast-worker`.)
-
 ### Optional: Codex as a peer engineer
 
 If you use OpenAI's Codex CLI (install it first), add the official Codex plugin:
