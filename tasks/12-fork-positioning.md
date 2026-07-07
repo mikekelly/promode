@@ -17,4 +17,9 @@
 - **Pending goals / next step** — execute, commit, record Outcome
 
 ## Outcome
-_(filled by the agent on completion)_
+Done 2026-07-07, single commit, v2.35.0.
+- **README** — fork intent woven into the opening paragraph ("built to be forked… install as-is if that taste fits, or fork it"), a fork pointer added to "The opinions" intro, and a new `## Fork it` section between Install and Skills: taste framing, register-as-customisation-surface, the 3-step change→sync→yours loop (linking the sync runbook), direct install explicitly blessed as first-class.
+- **CLAUDE.md** — fork intent + register-as-focal-point appended to the existing core-philosophy line in "What is Promode?"; file stays at 49/50 lines, nothing trimmed.
+- **Register** — new `## Components (existence-as-opinion)` section (after Agent analysis, before Documented calibrations): framing paragraph + two tables, 9 agent entries (`AG-cto` … `AG-agent-analyzer`) and 7 skill entries (`SK-promode-audit` … `SK-reinforce-design-constraints`; `SK-d2d` uses the header-defined abbreviation). Each entry = one why-it-exists line citing opinion ids + one coordination line (dispatcher / return / handoffs), edges sourced from the actual brief `<delegation-map>` and defs (e.g. DBG→main-agent→engineer for the fix, VER seam-first via `/verify`, CR fresh-unprimed-spawn, SK-d2d build→SE / run→VER).
+- **Size (import tax):** register grew 28,062 → **34,213 chars** (+6,151; ~22%) — @-imported every repo session; entries kept to the ratified two lines.
+- `./scripts/check-hooks.sh` fully green (imports check included); defs, brief, hooks untouched; no push.

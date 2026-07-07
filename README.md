@@ -4,7 +4,7 @@ A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that keep
 
 Instead of one agent doing everything in a single, ever-growing context, the main agent plans, makes decisions, and talks to you, while short-lived subagents start clean, do one job, run in parallel, and report back a short summary.
 
-It's a handful of agent definitions, a few skills, and one hook. No services, no MCP servers, no lock-in — you can read every prompt it ships.
+It's a handful of agent definitions, a few skills, and one hook. No services, no MCP servers, no lock-in — you can read every prompt it ships. And it's built to be forked: methodology is taste, and this repo is the mikekelly fork — install it as-is if that taste fits, or [fork it](#fork-it) and make it yours.
 
 ## The problem it's built around
 
@@ -45,7 +45,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 
 ## The opinions
 
-Promode is opinionated on purpose — and every opinion is tracked. The canonical, complete index is the [opinion register](plugins/promode/docs/opinion-register.md): every opinion the brief and the agent definitions instantiate, each with a stable slug, a one-line statement, and the exact homes that carry it (it's `@`-imported into every agent working on this repo, so the slugs are shared vocabulary). What follows is the map, not the list — the kinds of opinionatedness promode is built around:
+Promode is opinionated on purpose — and every opinion is tracked. The canonical, complete index is the [opinion register](plugins/promode/docs/opinion-register.md): every opinion the brief and the agent definitions instantiate, each with a stable slug, a one-line statement, and the exact homes that carry it (it's `@`-imported into every agent working on this repo, so the slugs are shared vocabulary) — and it's the surface you edit when you [fork](#fork-it). What follows is the map, not the list — the kinds of opinionatedness promode is built around:
 
 - **TDD is not optional.** No implementation without a failing test first. Tests are the specification; behaviour lives in tests, not in prose.
 - **Evidence over assumptions.** Read the code, run it, check the output. State assumptions out loud so they can be challenged.
@@ -78,6 +78,16 @@ If you use OpenAI's Codex CLI (install it first), add the official Codex plugin:
 ```
 
 With it installed, promode's main agent treats Codex (`/codex:rescue --background`) as a peer senior engineer — on par with the Opus tier, from a different perspective, a peer rather than a reviewer. For high-stakes decisions it tasks Opus and Codex on the same problem in parallel, without showing either the other's answer, and synthesises the best of both.
+
+## Fork it
+
+Promode is intended to be forked and customised. A methodology is mostly taste — how much process, which disciplines are non-negotiable, where judgement sits — and taste differs between people. This repository is the mikekelly fork; installing it as-is means adopting this fork's taste, which is a perfectly good default. Where your taste differs, fork it rather than fight it.
+
+The [opinion register](plugins/promode/docs/opinion-register.md) is the focal point of a fork — the customisation surface. Every opinion has a register row: a stable slug, a one-line statement, and the exact homes (brief sections, agent definitions, skills) that carry it. And because every clause in the shipped prompts must serve a register item, there is no hidden opinion to trip over. Changing promode's mind is mechanical, not archaeological:
+
+1. **Change the opinion in the register** — reword it, replace it, or delete the row.
+2. **Sync its homes** — the row names every file that carries it; the [sync runbook](runbooks/sync-a-shared-principle.md) walks the multi-home update.
+3. **The fork is now coherently yours.** Even removing a whole subagent or skill is register-guided: the register's Components section maps which agents and skills exist to serve which opinions, so a component whose opinions you reject is deleted deliberately, not discovered later.
 
 ## Skills
 

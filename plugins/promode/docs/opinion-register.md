@@ -191,6 +191,36 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | AN2 `transcript-red-flags` | Watch for repeated retries, unaddressed errors, summary/transcript mismatch, off-track drift, a report more confident than its run | AA |
 | AN3 `divergence-is-a-finding` | Testimony↔transcript divergence is itself a finding — an agent that misremembers its run has a blind spot worth naming | AA (mechanics of O31) |
 
+## Components (existence-as-opinion)
+
+Each subagent and skill is itself an opinion — the claim that this need is real and earns a dedicated component — so each entry is a fork decision point: a fork that rejects an entry's underlying opinions deletes or replaces the component rather than carrying dead weight. Entries cite, never duplicate: the brief's `<delegation-map>` stays canonical for routing, each def/`SKILL.md` for mechanics.
+
+### Agents
+
+| id | why it exists | coordination |
+|---|---|---|
+| AG-cto | Crucial hard-to-reverse design — architecture, entity/domain model, refactor strategy, technology selection — earns the frontier tier (O13, A1, A2) | Dispatched by the main agent, which ratifies (O2); returns recommendation + strongest rejected alternatives + delegation-ready tasks routed to SE/FW (A3, A4); re-dispatches routine implementation down (O38) |
+| AG-senior-engineer | Opus tier for reasoning-heavy implementation via full TDD — architecture-adjacent, multi-system, hard-bug fixes, algorithms (O13, P2) | Dispatched by the main agent, often executing a CTO plan; implements the fix DBG diagnosed (O9); proposes seam reshapes for ratification (T16); builds the d2d harness VER runs (T12); commits + Outcome before reporting (P12, O19) |
+| AG-fast-worker | Sonnet tier for mechanical execution — boilerplate, simple edits, formatting, GUI driving — TDD still binding, scaffolding calibrated to the pin (O13, P2, M1) | Dispatched for well-specified tasks; bounces design-judgement work up for re-dispatch to SE (O38, O37); GUI driving follows d2d's selector discipline (T17); commits + Outcome before reporting (P12, O19) |
+| AG-code-reviewer | Fresh-eyes judgement kept separate from authorship, and the enforcement home (`e`) for the seam/tier/tracer/crystallise/K6 checks (O10, R1–R6) | Always a fresh, unprimed spawn (O5, O10); judges the diff without running the suite (R2); returns APPROVED or REWORK for the main agent to act on — REWORK *is* its escalation (O37) |
+| AG-debugger | Diagnosis is its own dispatch, built around the repro loop — no red-capable command, no hypothesis phase (O9, D1–D6, T5) | Main agent hands it stalled/multi-system bugs (B§debugging-snags); returns root cause + committed repro test + recommended fix + prevention; the fix routes back through the main agent to an engineer unless fixing was explicitly asked (O9) |
+| AG-verifier | "Tests pass" is not verification — a change is proven by exercising the real running app from the outside (V1–V6) | Fresh-spawned at checkpoints (O27, O5); drives the app via `/verify`, seam-first (V6, T15); returns PASS/FAIL + evidence + a not-verified line (R6, P14); never fixes — the main agent dispatches the fix (O9) |
+| AG-environment-manager | Reproducible environments are the cost budget of automated testing, held inside a safety envelope (T19, T20, E1) | Dispatched for docker/services/health; supplies the bring-up/reset/isolation primitives the test tiers depend on (T19); commits scripts before reporting (E2, P12); escalates data-loss and credential calls (O37) |
+| AG-product-design-expert | Skeptical, persona-grounded product judgement — cut before add, defaults over settings, user needs as claims (PD1–PD11) | Consulted at brainstorm/clarify/plan per PD9; owns `docs/product/` (K8); returns Approve/Refine/Reject (R6); runs UI-variant spikes whose *answer* survives as a decision node (PD10, O29); crucial product-technical calls go to CTO instead (O2) |
+| AG-agent-analyzer | Self-debriefs are testimony, not evidence — AARs need a transcript-grounded reader (O31, AN1–AN3) | Dispatched during AARs to verify testimony, autopsy runs that can't testify, and cluster cross-session patterns (O30, O32); inspects via the recovering-subagents tooling (O7); reports capture-worthy knowledge for the main agent to dispatch — never writes the graph itself (K1/K2 calibration) |
+
+### Skills
+
+| id | why it exists | coordination |
+|---|---|---|
+| SK-promode-audit | Alignment with the methodology is assessable and plannable, not vibes (O36; O11 as a dimension) | Invoked by the main agent (B§promode-audit); fans out parallel assessors and synthesises a prioritised plan; a light check routes to the one owning agent instead (O36) |
+| SK-d2d | Mechanics home of crystallisation and the operator-seam / UI-tier doctrine (P7, T12–T17 · w:T17) | B§test-strategy dispatches the seam/harness *build* to SE and the *run* to VER, both via this skill; FW's GUI driving and DBG's seam preference lean on it (T17, D1) |
+| SK-design-system-lookbook | Visual work deserves the same fast deterministic loop as logic — taste crystallised into a renderable source-of-truth (T21) | B§test-strategy routes it through PDE, who owns `DESIGN_SYSTEM.md` + lookbook under `docs/product/` (K8); defers aesthetic taste to the harness's frontend-design skill |
+| SK-task-docs | Plans that live only in context evaporate — task state must be durable and canonical (O19, O8, O15) | Main agent writes one doc per task at plan time; delegating = pointing the agent at its doc; every executor records the Outcome before reporting (O19); the board keeps flow, docs keep detail (O20) |
+| SK-handoff | When a session must end, its context survives as a durable doc rather than being re-derived (session-scale kin of O19/K2) | Invoked by the user (`/handoff`) or main agent before `/clear`/`/compact`; produces the orientation doc the next session's main agent resumes from |
+| SK-recovering-subagents | Raw transcripts overflow the reader they're meant to inform — inspection must be compact (O7) | Main agent uses it to recover failed/stalled delegations (B§background-delegation); AA uses its inspector + bulk extractions as the evidence tooling for every AAR job (O30–O32) |
+| SK-reinforce-design-constraints | A critical rule an agent never loads is a rule it violates — constraints belong in loaded orientation (K6) | Invoked when a buried constraint bit, or as a graph-health pass at AAR time (O30); hoists rules into the nearest loaded `CLAUDE.md`; CR enforces K6 per-change (`e`), this skill repairs corpus-wide |
+
 ## Documented calibrations (silent divergence from these is drift — check RB before "fixing")
 
 - SE↔CTO `<test-driven-development>` blocks are **checksum-identical**; FW's is deliberately calibrated to its pin (fewer design-altitude bullets, no T4 bullet, no logic-spikes exception) — RB documents both.

@@ -7,7 +7,7 @@ Promode is a Claude Code plugin that enhances how Claude builds software:
 - **Skills** — just-in-time knowledge (e.g. `promode-audit` assesses a repo's alignment + setup; `discovery-to-determinism` for layered acceptance testing)
 - **Agents** — phase-specific subagents for hard-to-reverse design, implementation, review, debugging, verification/QA, environment management, product design, and after-action analysis
 
-Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, discovery hardens into deterministic tests/scripts/maps, and the main agent orchestrates while subagents execute.
+Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, discovery hardens into deterministic tests/scripts/maps, and the main agent orchestrates while subagents execute. Promode is **intended to be forked per user** — methodology is taste, this repo is the mikekelly fork — and the opinion register (imported below) is a fork's customisation surface: change an opinion there, sync its homes, and the fork is coherently yours.
 
 **Overriding design goal — optimise for the *current* harness.** Promode's techniques target the latest Claude Code features/behaviour, and silently decay as the harness evolves. Two verification resources: the [community-tracked Claude Code changelog](https://github.com/marckrenn/claude-code-changelog/releases) for what changed release-to-release, and the harness *you are running in* (when you're a Claude Code agent working on this repo) — probe it live to verify undocumented behaviour and edge cases (how SendMessage steer/resume and hook chunking were pinned down) before building a technique on an assumption.
 
