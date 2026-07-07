@@ -6,8 +6,8 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-*(empty)*
+- [Opinion register: build + @-import + README elevation + CI check](tasks/10-opinion-register.md)
 
 ## Ready
 
-- [Opinion register (09 ratified 2026-07-07 — unblocked; @-import probe pending)](tasks/10-opinion-register.md)
+*(empty)*
