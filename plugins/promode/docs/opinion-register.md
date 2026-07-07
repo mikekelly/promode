@@ -195,7 +195,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 
 ## Components (existence-as-opinion)
 
-Each subagent, command, and routed mechanics doc is itself an opinion — the claim that this need is real and earns a dedicated component — so each entry is a fork decision point: a fork that rejects an entry's underlying opinions deletes or replaces the component rather than carrying dead weight. There are no skills to list: per M5, every capability lives on a non-voluntary surface. Entries cite, never duplicate: the brief's `<delegation-map>` stays canonical for routing, each def / command / routed doc for mechanics.
+Each subagent, command, and routed mechanics doc is itself an opinion — the claim that this need is real and earns a dedicated component — so each entry is a fork decision point: a fork that rejects an entry's underlying opinions deletes or replaces the component rather than carrying dead weight. There are no skills to list: per M5, every capability lives on a non-voluntary surface. Entries cite, never duplicate: the brief's `<delegation-map>` stays canonical for routing, each def / command / routed doc for mechanics. Routed-doc conditional reads are imperatives, not guarantees (✓2 live-measured one miss) — dispatch briefs also cite the doc path, belt-and-braces (B§prompting-subagents).
 
 ### Agents
 
