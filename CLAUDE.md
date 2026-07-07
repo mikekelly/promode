@@ -2,12 +2,12 @@
 
 ## What is Promode?
 
-Promode is a Claude Code plugin that enhances how Claude builds software:
+Promode is a Claude Code plugin whose main goal is to make Claude Code operate in an opinionated way that drives projects in the direction of its owner's preferences — spanning how the harness's features are used, product and engineering methodology, and knowledge/memory management. It ships:
 
 - **Agents** — phase-specific subagents for hard-to-reverse design, implementation, review, debugging, verification/QA, environment management, product design, after-action analysis, methodology audit, and constraint reinforcement
 - **Commands** — user-typed flows (`/promode:handoff`, `/promode:promode-audit`); cross-cutting mechanics live in routed docs (`plugins/promode/docs/`) reached by def-directed reads. **No skills, by design** — voluntary invocation is non-determinate: [`docs/decisions/2026-07-skills-elimination.md`](docs/decisions/2026-07-skills-elimination.md)
 
-Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, discovery hardens into deterministic tests/scripts/maps, and the main agent orchestrates while subagents execute. Promode is **intended to be forked per user** — methodology is taste, this repo is the mikekelly fork — and the opinion register (imported below) is a fork's customisation surface: change an opinion there, sync its homes, and the fork is coherently yours.
+Core philosophy: TDD is non-negotiable, tests are the documentation, context is precious, discovery hardens into deterministic tests/scripts/maps, and the main agent orchestrates — and enforces the opinions — while subagents execute, instilled with the same opinions. Promode is **intended to be forked per user** — methodology is taste, this repo is the mikekelly fork — and the opinion register (imported below) is the single evolvable home of the owner's preferences and a fork's customisation surface: opinions evolve gradually, and changing one there then syncing its homes is what drives the change in the prompting and tools that carry it — the fork stays coherently yours.
 
 **Overriding design goal — optimise for the *current* harness.** Promode's techniques target the latest Claude Code features/behaviour, and silently decay as the harness evolves. Two verification resources: the [community-tracked Claude Code changelog](https://github.com/marckrenn/claude-code-changelog/releases) for what changed release-to-release, and the harness *you are running in* (when you're a Claude Code agent working on this repo) — probe it live to verify undocumented behaviour and edge cases (how SendMessage steer/resume and hook chunking were pinned down) before building a technique on an assumption.
 

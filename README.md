@@ -1,6 +1,6 @@
 # Promode
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that keeps the main agent orchestrating and hands the actual work to focused subagents.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that makes Claude Code operate your way: an opinionated main agent orchestrates and enforces the methodology, and focused subagents do the actual work.
 
 Instead of one agent doing everything in a single, ever-growing context, the main agent plans, makes decisions, and talks to you, while short-lived subagents start clean, do one job, run in parallel, and report back a short summary.
 
@@ -8,12 +8,16 @@ It's a handful of agent definitions, a couple of slash commands, and one hook. N
 
 ## The problem it's built around
 
-Two things quietly degrade a long Claude Code session:
+A vanilla Claude Code has no opinions. It builds software however the model's defaults lean that day, so every session re-litigates taste and methodology from scratch — how much process, when to test, what counts as done, where knowledge should live. The obvious fix, a library of skills, only half-solves it: a skills library leaves the methodology's orchestration to you. You have to remember which skills to invoke, when, and in what order — session after session, you are the enforcement.
 
-1. **Context fills up.** The more an agent reads, edits, and logs, the larger its context grows and the worse its reasoning and instruction-following get. A session that starts sharp ends sloppy.
+Promode's goal is to end that: make Claude Code operate in an opinionated way that drives projects in the direction of *your* preferences — how the harness's features get used, product and engineering methodology, knowledge and memory management, all of it — with the session's main agent enforcing it itself, unprompted. The main agent is both the orchestrator and the enforcer of those opinions, the same opinions are instilled into every subagent, and they arrive structurally — a hook, agent definitions, deterministic dispatch, an imported register — never as a menu waiting to be picked from ([no skills, by design](#no-skills--by-design)). And because preferences evolve, every opinion is held in one evolvable doc — the [opinion register](plugins/promode/docs/opinion-register.md) — so evolving an opinion there is what drives the change in the prompting and tools that carry it. Your promode becomes a living definition of your opinions on how to most effectively use Claude Code and deliver projects with AI agents — which is exactly why [forking](#fork-it) works: your fork's register, your promode.
+
+Holding opinions over a long session runs into the two things that quietly degrade one:
+
+1. **Context fills up.** The more an agent reads, edits, and logs, the larger its context grows and the worse its reasoning and instruction-following get. A session that starts sharp ends sloppy — and a sloppy agent sheds its opinions first.
 2. **The agent does the work itself.** Left to its own devices, a capable model writes code inline, piles detail into the main thread, and loses the high-level thread.
 
-Promode's bet is to keep the main agent thin: it should hold the plan and the conversation, not the diff. Execution goes to subagents that each start fresh, do one thing, and return a few lines — so the main context stays small and the expensive reasoning stays clear.
+So promode keeps the main agent thin: it holds the opinions, the plan, and the conversation, not the diff. Execution goes to subagents that each start fresh, carry the same opinions in their own definitions, do one thing, and return a few lines — the main context stays small, the expensive reasoning stays clear, and the methodology survives the session.
 
 ## How it works
 
