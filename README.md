@@ -8,6 +8,29 @@ Promode is designed for Fable and its costly inference: very high quality reason
 
 It's a handful of agent definitions, a couple of slash commands, and one hook. No services, no MCP servers, no lock-in — you can read every prompt it ships. And it's built to be forked: methodology is taste, and this repo is the mikekelly fork — install it as-is if that taste fits, or [fork it](#fork-it) and make it yours.
 
+## Install
+
+```
+/plugin marketplace add mikekelly/promode
+/plugin install promode
+```
+
+Then `/reload-plugins` (or restart Claude Code), and `/promode-audit` to get started — it assesses the project against the methodology and returns a prioritised plan to bring it in line. promode ships its own `SessionStart` hook, so the main-agent brief is delivered automatically in every session where the plugin is enabled (gated to the main agent only); nothing is copied into your project, and updating the plugin updates the brief.
+
+> **Migrating from an older promode?** If you previously ran "Set up promode in this project", remove the now-redundant `.claude/PROMODE_MAIN_AGENT.md`, `.claude/hooks/promode-main-context.sh`, and the promode `SessionStart` entry in `.claude/settings.json` — otherwise the brief is injected twice. `promode-audit` flags these. (Since 2.22.0 the single `implementer` agent is split into `senior-engineer` + `fast-worker`.)
+
+### Optional: Codex as a peer engineer
+
+If you use OpenAI's Codex CLI (install it first), add the official Codex plugin:
+
+```
+/plugin marketplace add openai/codex-plugin-cc
+/plugin install codex@openai-codex
+/codex:setup
+```
+
+With it installed, promode's main agent treats Codex (`/codex:rescue --background`) as a peer senior engineer — on par with the Opus tier, from a different perspective, a peer rather than a reviewer. For high-stakes decisions it tasks Opus and Codex on the same problem in parallel, without showing either the other's answer, and synthesises the best of both.
+
 ## The problem it's built around
 
 A vanilla Claude Code has no opinions. It builds software however the model's defaults lean that day, so every session re-litigates taste and methodology from scratch — how much process, when to test, what counts as done, where knowledge should live. The obvious fix, a library of skills, only half-solves it: a skills library leaves the methodology's orchestration to you. You have to remember which skills to invoke, when, and in what order — session after session, you are the enforcement.
@@ -63,29 +86,6 @@ Promode is opinionated on purpose — and every opinion is tracked. The canonica
 - **Work traces to a reason.** New work connects, through a hierarchy of docs (goals and risks → feature definitions → tests), up to an actual goal. If it can't, either the work is superfluous or the goals are out of date — and the main agent is told to push back, not to invent a goal to justify the work.
 - **Decisions ground in who we build for.** Product and UX decisions trace to a realistic customer profile/persona — grounded in real evidence, never invented or flattered to justify a feature. A feature without a clear persona is a red flag, the same way work without a goal is.
 - **User needs are claims, not givens.** The workflows and use cases a feature assumes are claims about real people. Cite the signal that grounds each, or flag it as an assumption with a validation path — never a fabricated citation. This is "build something people want" enforced as engineering risk: a wrong user-need assumption propagates into the domain model and architecture, the most expensive layer to unwind, and an evidence-based user story doubles as the high-level acceptance test.
-
-## Install
-
-```
-/plugin marketplace add mikekelly/promode
-/plugin install promode
-```
-
-Restart Claude Code — that's it. promode ships its own `SessionStart` hook, so the main-agent brief is delivered automatically in every session where the plugin is enabled (gated to the main agent only); nothing is copied into your project, and updating the plugin updates the brief.
-
-> **Migrating from an older promode?** If you previously ran "Set up promode in this project", remove the now-redundant `.claude/PROMODE_MAIN_AGENT.md`, `.claude/hooks/promode-main-context.sh`, and the promode `SessionStart` entry in `.claude/settings.json` — otherwise the brief is injected twice. `promode-audit` flags these. (Since 2.22.0 the single `implementer` agent is split into `senior-engineer` + `fast-worker`.)
-
-### Optional: Codex as a peer engineer
-
-If you use OpenAI's Codex CLI (install it first), add the official Codex plugin:
-
-```
-/plugin marketplace add openai/codex-plugin-cc
-/plugin install codex@openai-codex
-/codex:setup
-```
-
-With it installed, promode's main agent treats Codex (`/codex:rescue --background`) as a peer senior engineer — on par with the Opus tier, from a different perspective, a peer rather than a reviewer. For high-stakes decisions it tasks Opus and Codex on the same problem in parallel, without showing either the other's answer, and synthesises the best of both.
 
 ## Fork it
 
