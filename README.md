@@ -1,8 +1,10 @@
 # Promode
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that makes Claude Code operate your way: an opinionated main agent orchestrates and enforces the methodology, and focused subagents do the actual work.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that makes Claude Code opinionated, so it operates *your* way — and proactively pushes you, itself, and its subagents to follow your methodology, so you never have to think about it, let alone enforce it. Describe an outcome, and Claude Code starts working towards it under your rules.
 
-Instead of one agent doing everything in a single, ever-growing context, the main agent plans, makes decisions, and talks to you, while short-lived subagents start clean, do one job, run in parallel, and report back a short summary.
+Behind that sits the orchestration: an opinionated main agent holds the methodology, plans, makes decisions, and talks to you, while focused subagents do the actual work. Instead of one agent doing everything in a single, ever-growing context, short-lived subagents start clean, do one job, run in parallel, and report back a short summary.
+
+The economics are part of the design. The methodology is built for a model like Fable — very high quality reasoning, relatively expensive inference compared to Opus and Sonnet. Promode prescribes the frontier tier for the judgement-dense work — brainstorming, planning, designing, reviewing — while more cost-effective models take the context-intensive implementation that gets delegated to subagents. That's the cost logic of the whole architecture: frontier tokens are spent only where whole-picture judgement concentrates; the context-heavy grinding happens on cheaper tiers, in fresh contexts.
 
 It's a handful of agent definitions, a couple of slash commands, and one hook. No services, no MCP servers, no lock-in — you can read every prompt it ships. And it's built to be forked: methodology is taste, and this repo is the mikekelly fork — install it as-is if that taste fits, or [fork it](#fork-it) and make it yours.
 
@@ -25,7 +27,7 @@ So promode keeps the main agent thin: it holds the opinions, the plan, and the c
 
 **Subagents execute.** Each delegation is one agent, one deliverable, fresh context. They run in the background — the main agent dispatches and ends its turn, then gets woken when a result lands. Independent work runs in parallel. Subagents commit their changes before reporting, so what comes back is a summary, not a context-bloating dump.
 
-**Model choice is explicit — three tiers by cognitive load.** The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration. Execution runs a tier below to save frontier usage: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model. The one deliberate exception is `chief-technology-officer`, pinned to the frontier tier itself — crucial, hard-to-reverse design is the execution work that earns frontier reasoning.
+**Model choice is explicit — three tiers by cognitive load.** This is the intro's cost split made mechanical. The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration; execution runs a tier below: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model. The one deliberate exception is `chief-technology-officer`, pinned to the frontier tier itself — crucial, hard-to-reverse design is the execution work that earns frontier reasoning.
 
 **Where the methodology lives is deliberate** — this is the part that's easy to get wrong:
 
