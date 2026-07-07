@@ -34,6 +34,7 @@ The promode-alignment axes. Each is one assessor's deliverable.
 | **Architecture & navigability** | Module depth vs shallowness; testability (dependency injection, seams, return-values over side-effects); oversized files that burn agent context; tangled coupling, dead code, misleading names. *(small diffs, testability, context-frugality)* | `promode:code-reviewer` |
 | **Observability & traceability** | Apply the **observability & traceability check** (below): a correlation/tracer ID threads one request client→backend, filterable on both sides. *(context is precious applied to runtime; cheap agent debugging)* | `promode:code-reviewer` |
 | **Design system & visual feedback loop** | Apply the **design system & visual feedback-loop check** (below): design source-of-truth, lookbook, live-refresh preview loop. *(visual feedback loop = the design analogue of the operator-seam test loop; crystallise taste into determinism)* | `promode:product-design-expert` |
+| **Autonomy & security (Rule of Two)** | For every *autonomous* run the repo performs (unattended, parallel, or bypass-permission agents — CI bots, scheduled agents, background fan-outs), check that no single agent simultaneously holds **private data + untrusted input + a consequential external action** without a human gate — an agent holding all three can be steered by the untrusted input into leaking the data or firing the action, with no human in the loop to catch it. A delegation that would combine all three is a finding: split it across agents or insert a human checkpoint. Skip if the repo runs nothing autonomously. *(Rule of Two; autonomy/security)* | `general-purpose` |
 | **Change hygiene** *(optional)* | Commit focus & size; messages explain *why*; do tests land with the code they cover? *(small focused commits, explain-why, visible TDD)* | `general-purpose` |
 </dimensions>
 
@@ -104,7 +105,7 @@ Synthesise into:
 # Promode Methodology Audit — <repo>
 
 ## Overall alignment
-<2–4 sentences. Per-dimension rating: Framing <R> · Tests <R> · Knowledge <R> · Architecture <R> · Observability <R> · Design <R> · Hygiene <R>>
+<2–4 sentences. Per-dimension rating: Framing <R> · Tests <R> · Knowledge <R> · Architecture <R> · Observability <R> · Design <R> · Autonomy <R> · Hygiene <R>>
 
 ## Findings by dimension
 ### <Dimension> — <rating>

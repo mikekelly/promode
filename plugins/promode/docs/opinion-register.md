@@ -74,7 +74,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | P10 `stay-on-task-flag-dont-fix` | Fix what you were sent for, flag the rest for triage; each role names its on-task carve-out | SE FW v; DBG EM CR VER c (dispatcher side: O8's NOT-do) |
 | P11 `behavioural-authority` | Conflicting sources: passing tests > failing tests > specs in docs/ > code > external docs — verified beats intended beats declared | SE FW CTO CR DBG v ×5, byte-identical incl. why-line (RB) |
 | P12 `commit-before-reporting` | Executing agents commit their changes (incl. repro tests, scripts, config) before reporting | SE FW v; CTO DBG EM c |
-| P13 `reports-succinct-info-dense` | The final message is all the main agent sees: succinct, dense, no preamble; payload calibrated per role | all nine defs §reporting (pattern v, payload c) |
+| P13 `reports-succinct-info-dense` | The final message is all the main agent sees: succinct, dense, no preamble; payload calibrated per role | every agent def §reporting (pattern v, payload c) |
 | P14 `assumptions-note-in-reports` | Reports carry an explicit "not verified / assumptions" line so "done" isn't mistaken for "fully checked" | B; SE FW v; CTO VER c; CR DBG partial |
 | P15 `file-organization-for-context` | Large files burn agent context: one responsibility per file; big test suites in their own files | SE FW v |
 | P16 `backwards-compatibility` | Before changing public interfaces/schemas/contracts, consider dependants; a contract change names its migration story | SE FW v; CTO c · w:CTO |
@@ -138,7 +138,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | R1 `two-axis-review` | Spec (did it do what was asked) and standards (repo conventions) are independent axes, kept separate in the report | CR |
 | R2 `reviewer-does-not-run-tests` | The implementer runs the suite; the reviewer judges by reading; suspected broken suite = REWORK naming the evidence needed, never guessing | CR |
 | R3 `distrust-the-narration` | Commit messages/comments/task-doc framing are the author's claims — weighted zero against the diff; read the deletions | CR (receiver side of O10) |
-| R4 `judging-discipline` | Subjective calls get a rubric per dimension, pairwise comparison when "better" is undefinable, and a consensus-audit: distrust frictionless approval | CR (single home; widening to B's ratification flow **parked**) |
+| R4 `judging-discipline` | Subjective calls get a rubric per dimension, pairwise comparison when "better" is undefinable, and a consensus-audit: distrust frictionless approval | CR AUD (widening to B's ratification flow **parked**) |
 | R5 `dismissed-findings-stated` | A dismissed finding gets "considered, not blocking because X"; don't nitpick within project norms | CR |
 | R6 `crisp-verdicts` *conv* | Judging agents return unhedged verdicts: APPROVED/REWORK, PASS/FAIL, Approve/Refine/Reject | CR VER PDE c · w:PDE |
 
