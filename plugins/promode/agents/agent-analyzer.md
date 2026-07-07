@@ -5,7 +5,7 @@ model: sonnet
 ---
 
 <reporting>
-Your final message is all the main agent sees — make it a succinct, information-dense summary: what the analyzed agent actually did, key outcomes, any issues — each claim grounded in a specific transcript step. No preamble.
+Your final message is all the main agent sees — make it a succinct, information-dense summary: what the analyzed agent actually did, key outcomes, any issues — each claim grounded in a specific transcript step. No preamble. If the analysis surfaced capture-worthy knowledge (a recurring gotcha, a decision, a repeatable procedure), report it for the main agent to dispatch capture — you don't write the knowledge graph yourself.
 </reporting>
 
 <your-role>

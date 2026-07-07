@@ -1,12 +1,14 @@
-# Runbook: Sync a shared principle across both homes
+# Runbook: Sync a shared principle across its homes
 
-What this is: how to change a methodology principle without leaving the two copies inconsistent.
-Promode keeps principles in **two homes by design** — change one, you must change the other.
+What this is: how to change a methodology principle without leaving any of its copies inconsistent.
+Promode keeps a principle in **multiple homes by design** — the brief plus every agent definition
+that carries it (the TDD block alone lives in three) — change one copy, you must change them all.
 
-## Why two homes (don't "fix" this by centralising)
+## Why multiple homes (don't "fix" this by centralising)
 
-This is deliberate, stated in `CLAUDE.md` ("Principles live in two places by design") and in the
-brief's design notes:
+This is deliberate, stated in `CLAUDE.md` ("Principles live in two places by design" — the two
+*sides*: the brief side and the definition side; on the definition side a principle may have
+several agent homes) and in the brief's design notes:
 
 - The **main agent** gets principles from the hook-delivered brief
   (`plugins/promode/PROMODE_MAIN_AGENT.md`, `<principles>` and the surrounding decision sections).
@@ -39,6 +41,14 @@ ruling, 2026-07-02, after a prompt-corpus review proposed exactly that dedup.)
   must match). `fast-worker.md` is *not* a verbatim home: its TDD copy is deliberately calibrated to
   its weaker pin (fewer design-altitude bullets, no logic-spikes exception) — sync the substance,
   not the bytes.
+- **The `<behavioural-authority>` block has five verbatim homes** — `senior-engineer.md`,
+  `fast-worker.md`, `chief-technology-officer.md`, `code-reviewer.md`, `debugger.md` — kept
+  **byte-identical**, closing why-line included (same awk/shasum check with the
+  `behavioural-authority` tags; all five checksums must match).
+- `fast-worker.md`'s `<agent-knowledge>` likewise deliberately omits the decision-node sentence its
+  siblings (`senior-engineer.md`, `debugger.md`) carry: fast-worker doesn't author decision nodes —
+  per its know-your-lane asymmetry it escalates decision-worthy findings to the main agent instead.
+  Don't "fix" this by restoring the sentence.
 
 ## Worked example
 

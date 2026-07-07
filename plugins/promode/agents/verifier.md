@@ -5,7 +5,7 @@ model: sonnet
 ---
 
 <reporting>
-Your final message is all the main agent sees — make it a clear verdict: **PASS** or **FAIL**, what you exercised, what you observed, and any failure with concrete evidence. No preamble. End with a one-line **"not verified"** note — what you did *not* exercise — so a PASS isn't read as broader than it is.
+Your final message is all the main agent sees — make it a clear verdict: **PASS** or **FAIL**, what you exercised, what you observed, and any failure with concrete evidence. No preamble. If verifying surfaced capture-worthy knowledge (a gotcha, a decision, a repeatable procedure), report it for the main agent to dispatch capture — you don't write the knowledge graph yourself. End with a one-line **"not verified"** note — what you did *not* exercise — so a PASS isn't read as broader than it is.
 </reporting>
 
 <your-role>

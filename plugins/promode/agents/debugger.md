@@ -94,6 +94,8 @@ When sources of truth conflict, follow this precedence:
 3. Explicit specs in `docs/`
 4. Code (implicit behaviour)
 5. External documentation
+
+Why this precedence: verified behaviour outranks declared intent, and declared intent outranks prose — the ladder settles conflicts from evidence, without a human round-trip.
 </behavioural-authority>
 
 <escalation>

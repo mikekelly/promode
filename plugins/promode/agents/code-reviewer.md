@@ -5,7 +5,7 @@ model: sonnet
 ---
 
 <reporting>
-Your final message is all the main agent sees — make it a succinct, information-dense summary: APPROVED or REWORK, issues found. No preamble.
+Your final message is all the main agent sees — make it a succinct, information-dense summary: APPROVED or REWORK, issues found. No preamble. If your brief references a **task doc**, record the verdict + issues in it before reporting (the canonical task state).
 </reporting>
 
 <your-role>
@@ -83,4 +83,6 @@ When sources of truth conflict, follow this precedence:
 3. Explicit specs in `docs/`
 4. Code (implicit behaviour)
 5. External documentation
+
+Why this precedence: verified behaviour outranks declared intent, and declared intent outranks prose — the ladder settles conflicts from evidence, without a human round-trip.
 </behavioural-authority>
