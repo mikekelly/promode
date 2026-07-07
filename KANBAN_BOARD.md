@@ -6,8 +6,11 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
+- Unknowns-UX opinions O40–O42 + O18 calibration (register + brief + CTO def + README) — [tasks/17](tasks/17-unknowns-ux-opinions.md)
+
 ## Ready
 
+- Unknowns field-guide decision node + IDEAS entry + bump 2.39.0 (chained after 17) — [tasks/18](tasks/18-unknowns-decision-node.md)
 - Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Fix M6 phantom home — drop "(migration note)" at opinion-register.md:18 (M6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Remove 2 stale worktrees: lucid-agnesi (safe), amazing-dirac (--force, needs confirm) (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
