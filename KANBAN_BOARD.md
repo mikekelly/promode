@@ -6,7 +6,7 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-*(empty)*
+- [Skills-elimination design draft (CTO)](tasks/13-skills-elimination-design.md)
 
 ## Ready
 
