@@ -21,4 +21,10 @@
 - **Pending goals / next step** — execute, commit, record Outcome
 
 ## Outcome
-_(filled by the agent on completion)_
+**Done 2026-07-07.** `tasks/09-opinion-inventory.md` committed: **~100 distinct opinions** extracted (grouped M/O/P/K/T/D/R/V/PD/A/E/AN by domain), each with slug, canonical statement, homes (verbatim/calibrated/decision↑/mechanics↓), rationale-attached verdict, flags, and inline stay/go/adjust rec; closing assessment carries the conflict list, coverage matrix, rec roll-up, and register seeds for task 10.
+
+Key findings:
+- **No hard contradictions.** SE↔CTO TDD blocks verified checksum-identical (`8562ef13…`); FW's divergence matches the runbook's documented calibration. 8 tensions/divergences catalogued (C1–C8), most designed or resolved.
+- **Adjust recommendations (7):** within-brief double-statement of steer/resume (O5); CR lacks the task-doc verdict line its five executing peers have (O19); `behavioural-authority` is the only wide duplicate rationale-bare in all five homes (P11, violates rationale-travels); EM writes scripts but has no commit discipline (P12); VER+AA have no knowledge-capture section, plausibly deliberate but undocumented (K1/K2); **FW's agent-knowledge silently lacks the decision-node sentence — the one undocumented divergence in a designed-duplicate family (K3)**; two consider-tier widenings (T18 second-consumer rule, R4 consensus-audit → brief ratification).
+- **Go: none** — every opinion traces to rationale and none is contradicted; harness-pinned opinions (O4, O6, V6, O14) need re-verification cadence, not removal.
+- Corpus read in full (brief 3 chunks + all nine defs); no def/brief/skill changed; no version bump; no push.
