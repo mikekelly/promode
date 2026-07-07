@@ -6,7 +6,7 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-*(empty)*
+- [Fork-and-customise positioning + register component coverage](tasks/12-fork-positioning.md)
 
 ## Ready
 
