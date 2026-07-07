@@ -6,7 +6,7 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-- [Gherkin opinion supersession + style doc](tasks/15-gherkin-opinion.md)
+*(empty)*
 
 ## Ready
 
