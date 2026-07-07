@@ -6,7 +6,7 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-*(empty)*
+- [Def↔register conformance audit (forward pass)](tasks/16-def-conformance-audit.md)
 
 ## Ready
 
