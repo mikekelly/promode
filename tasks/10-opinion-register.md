@@ -1,4 +1,4 @@
-# Opinion register (blocked on 09's assessment being ratified)
+# Opinion register (DONE — v2.33.0)
 
 ## Brief
 - **Orient** — `tasks/09-opinion-inventory.md` (the ratified inventory — this task must not start until the maintainer + main agent have made the stay/go/adjust calls over it), `README.md` ("The opinions" section), root `CLAUDE.md`.
@@ -12,9 +12,18 @@
 
 ## State (Active-State Index)
 - **Unresolved errors** — none
-- **Open constraints** — blocked on 09 ratification; single-source discipline
-- **Established facts** — maintainer intent captured above
-- **Pending goals / next step** — wait for 09; then spec placement + format with the maintainer
+- **Open constraints** — none (complete)
+- **Established facts** — maintainer intent captured above; @-import semantics probed (see Brief)
+- **Pending goals / next step** — done; open questions parked in the register's closing section
 
 ## Outcome
-_(filled on completion)_
+
+**Shipped in one commit, v2.33.0 (2026-07-07).**
+
+- **Register:** `docs/opinion-register.md` — all 126 ratified inventory entries (M1–4, O1–38, P1–17, K1–8, T1–21, D1–6, R1–6, V1–6, PD1–11, A1–4, E1–2, AN1–3; slugs verbatim from `tasks/09-opinion-inventory.md`, which the header cites as audit trail). Per entry: slug + one-line canonical statement + homes with verbatim/calibrated/altitude/enforcement markers; rationale home annotated only where it deviates from the M3 default (travels in every home): `w:X` concentrated, `w:—` bare (T6, E1). Framing sentence is *inside* the file (probe: imports append as a detached labelled block). Dedicated closing sections: documented calibrations (RB-backed), harness-pinned ⚙ set (O4, O6, V6, O14 + the @-import semantics themselves), convergent grep-invisible families (*conv*: V5, R6, O38), and the three **parked** open questions (T18 widening, R4 widening, P11 B/VER coverage) — recorded, not silently decided.
+- **Size:** 28,062 bytes ≈ 7k tokens, imported into every session in this repo. Larger than the ratified "low single-digit k" aspiration; completeness of 126 slug+statement+homes entries priced above squeezing, per the main agent's dispatch ("completeness beats squeezing under an arbitrary size"). If the tax bites, the compression lever is trimming statement tails, not dropping entries.
+- **CLAUDE.md:** 49 lines (under the 50 cap). Register-traceability constraint now names `docs/opinion-register.md` as canonical (README's "The opinions" demoted to human map in the same parenthetical); `@docs/opinion-register.md` import added on its own line (the probed form).
+- **README:** "The opinions" reframed as the map/view — links the register as the canonical, complete index; the eight prose bullets kept intact as the kinds-of-opinionatedness summary.
+- **CI:** `scripts/check-claude-md-imports.sh` (new) — every `@`-import in root CLAUDE.md must resolve to an existing **in-project** file (probe #2: outside-project targets silently fail even when they exist; probe #4: missing targets drop silently). Built TDD: `scripts/test-check-claude-md-imports.sh` written first (11 fixtures: missing target, outside-project, ~/, fenced/inline-code literals, email-like tokens, mid-line import, zero imports, real root) — red, then green; plus an end-to-end red proof (register temporarily renamed → wired suite fails). Wired into `scripts/check-hooks.sh`; full suite green.
+
+**Key decisions:** register path `docs/opinion-register.md`; import-target check also enforces in-project residency (existence alone is not resolvability, per probe); FW/VER/AA/CR deliberate absences recorded as documented calibrations rather than per-row noise.

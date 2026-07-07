@@ -45,7 +45,7 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 
 ## The opinions
 
-Promode is opinionated on purpose. What's baked into the agents:
+Promode is opinionated on purpose — and every opinion is tracked. The canonical, complete index is the [opinion register](docs/opinion-register.md): every opinion the brief and the agent definitions instantiate, each with a stable slug, a one-line statement, and the exact homes that carry it (it's `@`-imported into every agent working on this repo, so the slugs are shared vocabulary). What follows is the map, not the list — the kinds of opinionatedness promode is built around:
 
 - **TDD is not optional.** No implementation without a failing test first. Tests are the specification; behaviour lives in tests, not in prose.
 - **Evidence over assumptions.** Read the code, run it, check the output. State assumptions out loud so they can be challenged.

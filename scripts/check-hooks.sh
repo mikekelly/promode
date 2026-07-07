@@ -13,6 +13,7 @@ for check in \
   check-hook-agent-gating.sh \
   check-hook-chunk-registration.sh \
   check-version-in-context.sh \
+  check-claude-md-imports.sh \
   check-inspect-agent.sh
 do
   echo "==> $check"
