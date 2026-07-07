@@ -7,8 +7,8 @@
 # tool_result) across its compact, step, and full modes. Requires jq. Exit 1 on violation.
 set -uo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SCRIPT="$REPO/plugins/promode/skills/recovering-subagents/scripts/inspect-agent.sh"
-FIXTURE="$REPO/plugins/promode/skills/recovering-subagents/scripts/test-fixtures/sample-transcript.jsonl"
+SCRIPT="$REPO/plugins/promode/scripts/inspect-agent.sh"
+FIXTURE="$REPO/plugins/promode/scripts/test-fixtures/sample-transcript.jsonl"
 fail=0
 
 [ -f "$SCRIPT" ]  || { echo "FAIL  missing script: $SCRIPT"; exit 1; }
