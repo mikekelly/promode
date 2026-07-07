@@ -23,8 +23,8 @@ it reaches the main agent via the SessionStart hook, and the main agent delegate
 2. **Brief — `<delegation-map>`** — `plugins/promode/PROMODE_MAIN_AGENT.md`.
    - Add a routing line under `<delegation-map>`. This is the load-bearing one — it is how the main
      agent learns to delegate to the agent. Without it the agent is defined but never dispatched.
-     (The brief carries no agent *table*; routing is the map. The descriptive tables live in
-     `CLAUDE.md` and `README.md`, below.)
+     (The brief carries no agent *table*; routing is the map. The descriptive mirrors live in
+     `CLAUDE.md` — the agents bullet list — and `README.md`'s table, below.)
    - If you change the brief, re-run `./scripts/check-hooks.sh` (the added text must keep each chunk
      under the 10k cap; add/move a `<!-- CHUNK -->` marker if a chunk goes red, and register the new
      chunk count in `hooks.json`). See [verify-hook-delivery.md](verify-hook-delivery.md).

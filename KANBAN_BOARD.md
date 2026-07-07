@@ -6,7 +6,7 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-- [Apply ratified 09 adjusts + 08 runbook nits](tasks/11-apply-ratified-adjusts.md)
+*(empty)*
 
 ## Ready
 
