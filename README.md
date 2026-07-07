@@ -48,7 +48,7 @@ So promode keeps the main agent thin: it holds the opinions, the plan, and the c
 
 **Subagents execute.** Each delegation is one agent, one deliverable, fresh context. They run in the background — the main agent dispatches and ends its turn, then gets woken when a result lands. Independent work runs in parallel. Subagents commit their changes before reporting, so what comes back is a summary, not a context-bloating dump.
 
-**Model choice is explicit — three tiers by cognitive load.** This is the intro's cost split made mechanical. The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration; execution runs a tier below: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model. The one deliberate exception is `chief-technology-officer`, pinned to the frontier tier itself — crucial, hard-to-reverse design is the execution work that earns frontier reasoning.
+**Model choice is explicit — three tiers by cognitive load.** This is the intro's cost split made mechanical. The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration; execution runs a tier below: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model. The one deliberate exception is `chief-technology-officer`, which *inherits the session's top tier* (Fable→Fable, Opus→Opus) — crucial, hard-to-reverse design is the execution work that earns your top reasoning tier, so it runs at whatever tier you're paying for, honouring your chosen ceiling rather than escalating above it.
 
 **Where the methodology lives is deliberate** — this is the part that's easy to get wrong:
 
@@ -60,7 +60,7 @@ So promode keeps the main agent thin: it holds the opinions, the plan, and the c
 
 | Agent | Job |
 |---|---|
-| `chief-technology-officer` | Crucial, hard-to-reverse design — architecture, entity/domain model, large-refactor strategy, critical product-technical calls; drafts designs and plans the main agent ratifies (pinned to the frontier tier) |
+| `chief-technology-officer` | Crucial, hard-to-reverse design — architecture, entity/domain model, large-refactor strategy, critical product-technical calls; drafts designs and plans the main agent ratifies (inherits the session's top tier) |
 | `senior-engineer` | Reasoning-heavy implementation — architecture-adjacent changes, complex/multi-system work, hard-bug fixes, algorithm design; TDD (pinned to Opus) |
 | `fast-worker` | Mechanical execution — boilerplate, simple edits, formatting, straightforward tests, browser/GUI driving (pinned to Sonnet) |
 | `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) |
