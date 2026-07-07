@@ -6,9 +6,8 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-- [CLAUDE.md alignment review + adjustment](tasks/08-claude-md-align.md)
-- [Opinion extraction: inventory across brief + defs](tasks/09-opinion-extraction.md)
+- [Apply ratified 09 adjusts + 08 runbook nits](tasks/11-apply-ratified-adjusts.md)
 
 ## Ready
 
-- [Opinion register (blocked on 09 ratification)](tasks/10-opinion-register.md)
+- [Opinion register (09 ratified 2026-07-07 — unblocked; @-import probe pending)](tasks/10-opinion-register.md)
