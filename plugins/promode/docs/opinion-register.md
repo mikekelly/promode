@@ -228,7 +228,7 @@ Each subagent, command, and routed mechanics doc is itself an opinion — the cl
 
 | id | why it exists | coordination |
 |---|---|---|
-| DOC-d2d | Mechanics home of crystallisation and the operator-seam / UI-tier doctrine — the entry spans `discovery-to-determinism.md` plus its `ui-state-graph-edt.md` companion (the Explore→Distill→Traverse UI tier) — cross-cutting knowledge several agents need occasionally, which no single def could host without forking it (P7, T12–T17 · w:T17, M5) | Consumed via conditional `${CLAUDE_PLUGIN_ROOT}` reads in the defs: SE builds the seam/UI-harness, VER runs the state-graph tier, FW's GUI driving (T17 also mirrored inline there), PDE's scenario bridge; B§test-strategy routes the *build* to SE and the *run* to VER, naming the work so the conditions fire |
+| DOC-d2d | Mechanics home of crystallisation and the operator-seam / UI-tier doctrine — the entry spans `discovery-to-determinism.md` plus its `ui-state-graph-edt.md` companion (the Explore→Distill→Traverse UI tier) and `operator-seam-and-agent-tools.md` (the one-seam-two-operators mechanics, T13) — cross-cutting knowledge several agents need occasionally, which no single def could host without forking it (P7, T12–T17 · w:T17, M5) | Consumed via conditional `${CLAUDE_PLUGIN_ROOT}` reads in the defs: SE builds the seam/UI-harness, VER runs the state-graph tier, FW's GUI driving (T17 also mirrored inline there), PDE's scenario bridge; B§test-strategy routes the *build* to SE and the *run* to VER, naming the work so the conditions fire |
 | DOC-lookbook | Visual work deserves the same fast deterministic loop as logic — taste crystallised into a renderable source-of-truth (T21, M5) | Consumed by PDE via conditional read; B§test-strategy routes visual-loop establishment to PDE, who owns `DESIGN_SYSTEM.md` + lookbook under `docs/product/` (K8); defers aesthetic taste to the harness's frontend-design skill |
 | DOC-gherkin | The default expression of the headless acceptance tier is cross-cutting mechanics no single def could host — declarative business-language scenarios whose step defs bind to the operator seam, doubling as agent orientation (T22, PD7, M5) | Consumed via conditional `${CLAUDE_PLUGIN_ROOT}` reads: SE writing feature scenarios/step defs, VER running/judging a Gherkin-driven suite, PDE framing needs as scenarios; d2d's `<scenario-vs-seam>` routes to it for style, carrying the superseded-not-overwritten record of the old optionality stance |
 
@@ -241,6 +241,8 @@ Each subagent, command, and routed mechanics doc is itself an opinion — the cl
 - CR has no `<escalation>` section: REWORK is its escalation (O37 row).
 
 ## Harness-pinned (⚙) — re-verify on any Claude Code change
+
+**Currency (2026-07-07):** the probe facts below were live-verified on Claude Code **2.1.201**. The running harness has since advanced to **2.1.202**; the community changelog was reviewed clean through 2.1.202 — no change touches the ⚙ items — but **no re-probe was performed**. The dated probe facts stand as the last *verified* evidence; treat 2.1.202 as changelog-checked, not re-verified.
 
 O4, O6, V6, O14 — plus this register's own delivery mechanism: the root-`CLAUDE.md` `@`-import semantics (in-repo targets only; silent drop on missing target, guarded by `scripts/check-claude-md-imports.sh`; imported content appends as a labelled block after the CLAUDE.md body) were live-probed on Claude Code 2.1.201, 2026-07-07 (`tasks/10-opinion-register.md`).
 
