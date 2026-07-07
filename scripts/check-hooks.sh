@@ -8,7 +8,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fail=0
 for check in \
   check-json-valid.sh \
-  check-skill-frontmatter.sh \
+  check-component-frontmatter.sh \
   check-hook-output-limits.sh \
   check-hook-agent-gating.sh \
   check-hook-chunk-registration.sh \
