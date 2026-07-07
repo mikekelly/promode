@@ -16,3 +16,12 @@ jobs:
         run: command -v jq >/dev/null || sudo apt-get update && sudo apt-get install -y jq
       - name: Check hook-delivery invariants
         run: ./scripts/check-hooks.sh
+      # Unit-test the checkers themselves: a regression in checker LOGIC (a check that
+      # stops catching what it should) would pass check-hooks.sh silently, since that
+      # only runs the checks against the live corpus. These self-tests feed each checker
+      # known-good and known-bad fixtures and assert it passes/fails correctly.
+      - name: Test the checkers
+        run: |
+          ./scripts/test-check-claude-md-imports.sh
+          ./scripts/test-check-component-frontmatter.sh
+          ./scripts/test-check-shared-principle-checksums.sh
