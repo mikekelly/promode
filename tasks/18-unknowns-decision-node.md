@@ -26,4 +26,25 @@
 - **Pending goals / next step** — dispatch to fast-worker after task 17 lands
 
 ## Outcome
-(filled by the agent on completion)
+
+Landed 2026-07-07. Verified task 17's landed register rows (`2bffea5`) against the register before
+citing them — O18/O40/O41/O42 slugs and substance matched the task doc's assumptions exactly, no
+mismatch surfaced.
+
+Deliverables, one commit:
+1. `docs/decisions/2026-07-unknowns-field-guide.md` — new decision node, house style matching
+   `2026-07-skills-elimination.md`: what was adopted (O40/O41/O42 + O18 calibration, with the
+   already-carried-agent-side framing), rejected a–f with why in full (substance preserved
+   verbatim-in-substance per M3, not compressed), parked pitch/explainer packaging, reversibility note.
+2. `IDEAS.md` — one entry for the parked pitch/explainer packaging, linking the new node.
+3. Version bump via `scripts/bump-version.sh 2.39.0` (2.38.7 → 2.39.0, minor: new register opinions
+   landed in task 17; this task only documents/bumps).
+
+`./scripts/check-hooks.sh` green (all 9 checks, including the version-banner check confirming
+"Promode v2.39.0" is model-visible in chunk 1). Did not touch the register, brief, or agent defs —
+none needed touching; no mismatch found.
+
+Not verified / assumptions: relied on task 17's commit (`2bffea5`) and its diff as the source of
+truth for landed wording rather than re-deriving it independently — read the actual register rows
+directly (not just the commit message) before drafting the node, so this is a direct read, not an
+inference from the commit message alone.
