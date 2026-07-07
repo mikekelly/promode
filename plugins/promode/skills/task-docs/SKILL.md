@@ -55,6 +55,6 @@ Write the brief for when it will be read. A dispatch brief consumed immediately 
 <lifecycle>
 1. **Plan** — the main agent writes one doc per task (Brief + initial State), adds a linked card to `KANBAN_BOARD.md` under `## Ready`.
 2. **Delegate** — reference the task doc in the subagent's prompt; move the card to `## Doing`.
-3. **Execute** — the agent reads its doc, does the work, and records the Outcome before reporting (its definition baked this in).
+3. **Execute** — the agent reads its doc, does the work, and records the Outcome before reporting (its definition baked this in). A worktree-isolated agent can't write the shared checkout's copy: it records the Outcome in its **own worktree's tracked copy**, which lands in the canonical doc on merge — dispatch briefs should say so, not point at the shared path.
 4. **Close** — main agent moves the card to done (`DONE.md`), and promotes durable residue into the knowledge graph; the retrospective later mines accumulated docs for recurring patterns.
 </lifecycle>
