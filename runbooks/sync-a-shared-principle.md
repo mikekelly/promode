@@ -56,7 +56,8 @@ Commit **`510b071`** ("Mirror methodology into working agents: runbooks, audit-a
 canonical principle-sync: it introduced the *runbook* principle and updated **both** homes in one
 commit — the brief (`PROMODE_MAIN_AGENT.md`), the producing agent definitions
 (then `implementer.md` — since split into `senior-engineer.md` + `fast-worker.md` — plus `debugger.md`, `environment-manager.md`, `verifier.md`), **and** the audit
-skill that checks for it — so the audit lens and every working agent agreed. Note it also bumped the
+lens that checks for it (then a skill; the audit now lives in `plugins/promode/agents/auditor.md`) —
+so the audit lens and every working agent agreed. Note it also bumped the
 version in the same commit (see [cut-a-release.md](cut-a-release.md)).
 
 ## Steps
@@ -65,8 +66,8 @@ version in the same commit (see [cut-a-release.md](cut-a-release.md)).
 2. Edit the **brief** copy.
 3. Re-grep the agent definitions for the old wording; edit **every** definition that carries it so
    the working agents match the brief. Don't add it to agents the principle doesn't apply to.
-4. If `promode-audit` has a dimension that checks this principle, update that skill too (as `510b071`
-   did) so the audit lens stays consistent.
+4. If the auditor (`plugins/promode/agents/auditor.md`) has a dimension that checks this principle,
+   update it too (as `510b071` did with the audit lens of its day) so auditing and doing stay consistent.
 5. If you edited the brief, re-run `./scripts/check-hooks.sh` — see
    [verify-hook-delivery.md](verify-hook-delivery.md).
 6. Commit both homes **together** (one commit), with the version bump if you're releasing.

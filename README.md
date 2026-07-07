@@ -4,7 +4,7 @@ A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that keep
 
 Instead of one agent doing everything in a single, ever-growing context, the main agent plans, makes decisions, and talks to you, while short-lived subagents start clean, do one job, run in parallel, and report back a short summary.
 
-It's a handful of agent definitions, a few skills, and one hook. No services, no MCP servers, no lock-in — you can read every prompt it ships. And it's built to be forked: methodology is taste, and this repo is the mikekelly fork — install it as-is if that taste fits, or [fork it](#fork-it) and make it yours.
+It's a handful of agent definitions, a couple of slash commands, and one hook. No services, no MCP servers, no lock-in — you can read every prompt it ships. And it's built to be forked: methodology is taste, and this repo is the mikekelly fork — install it as-is if that taste fits, or [fork it](#fork-it) and make it yours.
 
 ## The problem it's built around
 
@@ -42,6 +42,8 @@ Promode's bet is to keep the main agent thin: it should hold the plan and the co
 | `environment-manager` | Docker, services, health checks, scripts |
 | `product-design-expert` | Product and UX decisions, grounded in realistic customer profiles/personas |
 | `agent-analyzer` | Evidence side of after-action reviews — verify an agent's self-debrief against its transcript, autopsy failed/oversized runs, cluster cross-session patterns |
+| `auditor` | Run the promode-alignment audit — fan out parallel assessors (one per dimension), synthesise a prioritised improvement plan for the main agent to ratify |
+| `constraint-reinforcer` | Hoist buried design constraints (ADRs, knowledge docs, tribal knowledge) into the nearest loaded `CLAUDE.md` orientation so agents can't miss them |
 
 ## The opinions
 
@@ -83,20 +85,20 @@ With it installed, promode's main agent treats Codex (`/codex:rescue --backgroun
 
 Promode is intended to be forked and customised. A methodology is mostly taste — how much process, which disciplines are non-negotiable, where judgement sits — and taste differs between people. This repository is the mikekelly fork; installing it as-is means adopting this fork's taste, which is a perfectly good default. Where your taste differs, fork it rather than fight it.
 
-The [opinion register](plugins/promode/docs/opinion-register.md) is the focal point of a fork — the customisation surface. Every opinion has a register row: a stable slug, a one-line statement, and the exact homes (brief sections, agent definitions, skills) that carry it. And because every clause in the shipped prompts must serve a register item, there is no hidden opinion to trip over. Changing promode's mind is mechanical, not archaeological:
+The [opinion register](plugins/promode/docs/opinion-register.md) is the focal point of a fork — the customisation surface. Every opinion has a register row: a stable slug, a one-line statement, and the exact homes (brief sections, agent definitions, commands, routed docs) that carry it. And because every clause in the shipped prompts must serve a register item, there is no hidden opinion to trip over. Changing promode's mind is mechanical, not archaeological:
 
 1. **Change the opinion in the register** — reword it, replace it, or delete the row.
 2. **Sync its homes** — the row names every file that carries it; the [sync runbook](runbooks/sync-a-shared-principle.md) walks the multi-home update.
-3. **The fork is now coherently yours.** Even removing a whole subagent or skill is register-guided: the register's Components section maps which agents and skills exist to serve which opinions, so a component whose opinions you reject is deleted deliberately, not discovered later.
+3. **The fork is now coherently yours.** Even removing a whole component — a subagent, a command, a routed mechanics doc — is register-guided: the register's Components section maps which components exist to serve which opinions, so a component whose opinions you reject is deleted deliberately, not discovered later.
 
-## Skills
+## No skills — by design
 
-- **promode-audit** — assess how well an existing repo matches the methodology (tests and feedback loops, the `CLAUDE.md` knowledge hierarchy, architecture, traceability), flag any stale per-project install leftovers, and produce a prioritised, actionable plan. Fans out parallel assessors and synthesises their findings.
-- **discovery-to-determinism** — design layered acceptance testing and crystallise what agents discover into deterministic code. Most coverage runs fast and headless below the UI, through an "operator seam" that could also serve AI-agent tools; a surgical UI state-graph tier covers only what breaks through the real running GUI.
-- **design-system-lookbook** — give visual work the same fast feedback loop logic already has: a two-layer design source-of-truth (tokens + rationale), a lookbook that renders it, and a live-refresh preview server for design and marketing artifacts. The visual analogue of the operator-seam test loop; defers aesthetic taste to `frontend-design`.
-- **task-docs** — persist a multi-task plan as durable per-task markdown docs (canonical brief + state + outcome) so the plan survives the prompt, hands off to fresh sessions, and feeds durable history. The Kanban board tracks flow; these docs hold the detail.
-- **handoff** — write a handoff document so a fresh agent can continue after a `/clear` or `/compact` (also runs as `/handoff`).
-- **recovering-subagents** — inspect a subagent's transcript compactly, without reading the whole thing: recover from a failure mid-work, or gather after-action-review evidence (verify a self-debrief, autopsy a run, bulk stats across transcripts).
+Promode ships **no skills**. A skill's invocation is voluntary — the model may or may not fire it off a description competing in a listing — and that non-determinism has no place in how a methodology reaches its agents. Every capability lives on a **non-voluntary surface** instead (the full decision, with the rejected alternatives: [`docs/decisions/2026-07-skills-elimination.md`](docs/decisions/2026-07-skills-elimination.md)):
+
+- **Dedicated agents** — big just-in-time mechanics that are one agent's whole job, reached by deterministic delegation-map dispatch: `auditor` and `constraint-reinforcer` (see the agents table above). Same context economics as a skill — the definition loads only when dispatched.
+- **Slash commands** (`plugins/promode/commands/`) — user-typed flows: `/promode:handoff` writes the handoff doc a fresh session resumes from after a `/clear` or `/compact` (the main agent also fires it proactively — that decision is in its brief, not left to listing luck); `/promode:promode-audit` dispatches the auditor.
+- **Routed mechanics docs** (`plugins/promode/docs/`) — cross-cutting knowledge several agents need occasionally: `discovery-to-determinism.md` (layered acceptance testing below the UI, crystallising discovery into deterministic code) and `design-system-lookbook.md` (the visual analogue: design source-of-truth + lookbook + live-refresh preview). Each consuming agent definition carries a conditional "when the dispatch is X, first read …" — an in-system-prompt imperative instead of a listing gamble.
+- **Everything else is guaranteed-loaded** — in the hook-delivered brief (e.g. the task-docs plan-persistence mechanics) or baked into the agent definitions.
 
 ## Recommended settings
 

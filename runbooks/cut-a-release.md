@@ -23,9 +23,9 @@ pushing to the default branch (the marketplace serves the plugin straight from t
 
 ## Steps
 
-1. **Land the substantive change** (skill/agent/brief/script edits) in your working tree, with
+1. **Land the substantive change** (agent/command/doc/brief/script edits) in your working tree, with
    its tests/checks green — including `./scripts/check-hooks.sh` if you touched the brief or hooks.
-2. **Pick the new semver.** Patch for fixes/wording, minor for new skills/agents/capabilities.
+2. **Pick the new semver.** Patch for fixes/wording, minor for new agents/commands/capabilities.
    (No major bump has happened in recent history; treat it as a breaking-change signal.)
 3. **Bump it with the script** (prefer the script over hand-editing):
 
@@ -38,7 +38,7 @@ pushing to the default branch (the marketplace serves the plugin straight from t
 4. **Commit the bump together with the change it ships** (one commit, as the history does), with
    a message that names both the change and the bump. End the message with the repo's
    `Co-Authored-By` trailer (see the convention in the project's commit history).
-5. **Push** to the default branch. That publishes it — enabled installs pick up the new brief/skills
+5. **Push** to the default branch. That publishes it — enabled installs pick up the new brief/agents
    on their next session (the hook reads from the plugin via `${CLAUDE_PLUGIN_ROOT}`).
 
 ## See also

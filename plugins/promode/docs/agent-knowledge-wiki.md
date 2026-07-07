@@ -63,15 +63,15 @@ A **rejected-work KB** records concepts that were considered and rejected, so id
 - **Compact — loaded orientation is context.** Root and subtree `CLAUDE.md` files enter agent context for the work they govern, so every extra line is a tax and dilutes attention. Keep each one a launchpad: prefer a small linked doc over inlined prose; a documented script/make target beats a paragraph.
 - **Distinct from `README.md`.** `README.md` is for humans; this graph is agent-optimised project knowledge (and `CLAUDE.md` doubles as Claude Code's project file and the knowledge root).
 
-## Authoring skills (SKILL.md)
+## Authoring skills (SKILL.md) — and promode's routed mechanics docs
 
-A skill is just-in-time knowledge a coding agent loads on trigger — so the same discipline as a `CLAUDE.md` launchpad applies, sharpened:
+Promode itself ships **no skills** (register opinion M5 `no-voluntary-invocation`): a skill fires voluntarily, off a description competing in a listing, and promode moved its own capabilities to non-voluntary surfaces — dedicated agents, def prompting, def-directed doc reads, and user-typed commands (the decision node `docs/decisions/2026-07-skills-elimination.md` in the promode repo records the trade-off). But the *projects promode works on* may carry their own skills — the auditor's knowledge dimension assesses their quality against these conventions — and the same authoring discipline governs promode's routed mechanics docs (`plugins/promode/docs/`) and command bodies: all are just-in-time knowledge an agent loads on trigger, so the `CLAUDE.md`-launchpad discipline applies, sharpened:
 
 - **Landmines, not docs.** A skill carries the project-specific gotchas, conventions, and decisions an agent *wouldn't know from training* — not a comprehensive manual of what the model already does well. Comprehensive prose dilutes the signal and burns context; an over-stuffed skill can make behaviour *worse*, not better.
 - **Inline the exact conventions at the point of use.** Precise thresholds, formats, and rules (the commit format, the seam shape, a naming rule) belong stated *where the agent acts on them*, not deferred behind a link — progressive disclosure under-performs for exact conventions.
 - **Leading words.** One word already in the model's pretraining (*fog of war*, *tracer bullets*, *tight*) recruits priors a paragraph of instruction can't buy. When a behaviour under-fires, strengthen the word, not the sentence count.
 - **Examples document the problem, not the solution.** A solution example ("so we keyed it on FRONT_ARC") rots as the code moves on; a problem example teaches the shape of the situation the rule exists for, and stays true.
-- **Fix a misfiring skill at the faulty step.** When a skill produces the wrong behaviour, localise the *first* faulty step, make the *minimal* edit, and commit it as a reviewable diff with its rationale — don't rewrite the whole skill. (The cross-session retrospective surfaces these — see the main-agent brief's `<after-action-review>`.)
+- **Fix a misfiring skill (or routed doc) at the faulty step.** When it produces the wrong behaviour, localise the *first* faulty step, make the *minimal* edit, and commit it as a reviewable diff with its rationale — don't rewrite the whole thing. (The cross-session retrospective surfaces these — see the main-agent brief's `<after-action-review>`.)
 
 ## Authoring agent definitions
 

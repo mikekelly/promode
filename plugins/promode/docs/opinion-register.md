@@ -1,9 +1,9 @@
 # Promode opinion register
 
-This is the canonical, complete index of every opinion the promode corpus (the brief + all nine agent defs) instantiates — auto-imported into every agent session in this repo as shared vocabulary. Every clause in a def or the brief must serve an item here (cut the clause or add the item — root `CLAUDE.md`); the register carries slug + one-line statement + homes, while the full opinionated text stays in the homes (one idea, one home — never fork prose into here). Slugs are stable citable IDs, extracted and ratified via `tasks/09-opinion-inventory.md` (2026-07-07); that inventory is this register's audit trail and coverage matrix.
+This is the canonical, complete index of every opinion the promode corpus (the brief, all eleven agent defs, the plugin commands, and the routed mechanics docs) instantiates — auto-imported into every agent session in this repo as shared vocabulary. Every clause in a def or the brief must serve an item here (cut the clause or add the item — root `CLAUDE.md`); the register carries slug + one-line statement + homes, while the full opinionated text stays in the homes (one idea, one home — never fork prose into here). Slugs are stable citable IDs, extracted and ratified via `tasks/09-opinion-inventory.md` (2026-07-07); that inventory is this register's audit trail and coverage matrix.
 
-**Home keys:** B = `plugins/promode/PROMODE_MAIN_AGENT.md` (`§` = its section) · SE FW CTO CR DBG VER EM PDE AA = `plugins/promode/agents/<agent>.md` · CM = root `CLAUDE.md` · W = wiki (`plugins/promode/docs/agent-knowledge-wiki.md`) · RB = `runbooks/sync-a-shared-principle.md` · skills by name (d2d = `discovery-to-determinism`).
-**Markers:** default altitude is decision↑ for B/CM homes and mechanics↓ for def/skill homes (deviations marked). `v` = verbatim family (byte- or sentence-shared) · `c` = calibrated (deliberately refitted to role/pin) · `e` = enforcement home (reviewer/CI checks it). Rationale travels in every home by default (M3); `w:X` = canonical/fullest why lives in X; `w:—` = deliberately bare (accepted per M1). `⚙` = **harness-pinned: re-verify on any Claude Code change** (per CM's optimise-for-current-harness goal). *conv* = convergent family: one stance, no shared wording across homes — invisible to grep, only this register keeps it coherent.
+**Home keys:** B = `plugins/promode/PROMODE_MAIN_AGENT.md` (`§` = its section) · SE FW CTO CR DBG VER EM PDE AA AUD CRF = `plugins/promode/agents/<agent>.md` (AUD = auditor, CRF = constraint-reinforcer) · CM = root `CLAUDE.md` · W = wiki (`plugins/promode/docs/agent-knowledge-wiki.md`) · RB = `runbooks/sync-a-shared-principle.md` · routed docs by name (d2d = `plugins/promode/docs/discovery-to-determinism.md`, lookbook = `plugins/promode/docs/design-system-lookbook.md`) · CMD-<name> = `plugins/promode/commands/<name>.md`.
+**Markers:** default altitude is decision↑ for B/CM homes and mechanics↓ for def/doc/command homes (deviations marked). `v` = verbatim family (byte- or sentence-shared) · `c` = calibrated (deliberately refitted to role/pin) · `e` = enforcement home (reviewer/CI checks it). Rationale travels in every home by default (M3); `w:X` = canonical/fullest why lives in X; `w:—` = deliberately bare (accepted per M1). `⚙` = **harness-pinned: re-verify on any Claude Code change** (per CM's optimise-for-current-harness goal). *conv* = convergent family: one stance, no shared wording across homes — invisible to grep, only this register keeps it coherent.
 
 ## Meta (corpus governance)
 
@@ -13,6 +13,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | M2 `principles-live-in-multiple-homes` | Main agent gets principles from the hook-delivered brief; each subagent carries its own inline; a doc link never substitutes for the inline copy | CM, RB, B-header v |
 | M3 `rationale-travels-with-the-rule` | Never dedupe the *why* out of any copy of a duplicated principle — a rule stripped of its rationale gets misapplied | RB (canonical; maintainer ruling 2026-07-02), manifest corpus-wide · w:RB |
 | M4 `principle-complete-brief` | If the brief exceeds the 10k hook cap, split at section boundaries — never demote a principle to a pointer | B-header v, CM v, `check-hooks.sh` e |
+| M5 `no-voluntary-invocation` | Promode ships no skills: skill invocation is voluntary (a description competing in a listing) and therefore non-determinate — determinism outranks listing convenience, so every capability reaches agents via a non-voluntary surface: dedicated agent (delegation-map dispatch), def prompting, def-directed doc read, or user-typed command (ratified 2026-07-07) | CM, W, B-header, this register's Components · w:`docs/decisions/2026-07-skills-elimination.md` |
 
 ## Orchestration (brief-resident; reach the main agent only, by design)
 
@@ -24,19 +25,19 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | O4 `fire-and-forget-background-delegation` ⚙ | Always `run_in_background: true`, end the turn, let the notification wake you; never TaskOutput, never poll, never foreground | B§background-delegation |
 | O5 `steer-resume-vs-fresh-spawn` | SendMessage-resume an agent when the follow-up builds on context it holds; spawn fresh for uncontaminated perspectives (reviews, verification) | B§background-delegation (full), B§subagent-scoping (cross-ref) |
 | O6 `worktree-isolation-conditional` ⚙ | Worktrees forbidden for chained/dependent work; with `baseRef: head`, right for independent parallel tasks — commit first, merge back deliberately | B§background-delegation |
-| O7 `transcript-recovery-via-inspector` | Never read a raw transcript/`.output` whole; inspect compactly via the recovering-subagents tooling | B§background-delegation; AA c; recovering-subagents skill |
-| O8 `one-dispatch-one-deliverable` | Every delegation states the deliverable, the NOT-do, and the exit condition; prefer two tight agents over one broad one | B§subagent-scoping; task-docs skill |
+| O7 `transcript-recovery-via-inspector` | Never read a raw transcript/`.output` whole; inspect compactly via the inspector tooling (`plugins/promode/scripts/inspect-agent.sh`) | B§background-delegation (routes to AA); AA (mechanics) |
+| O8 `one-dispatch-one-deliverable` | Every delegation states the deliverable, the NOT-do, and the exit condition; prefer two tight agents over one broad one | B§subagent-scoping; B§task-docs |
 | O9 `diagnose-or-fix-never-both` | Diagnosis and fixing are separate dispatches unless trivial | B§subagent-scoping+§debugging-snags; DBG, VER c |
 | O10 `unprimed-dispatch` | Never tell a verifier/reviewer the expected answer — say what to examine, not what to conclude | B§subagent-scoping (receiver side: R3) |
-| O11 `rule-of-two` | No autonomous run lets one agent hold private data + untrusted input + a consequential external action without a human gate | B§subagent-scoping, B§promode-audit; audit skill |
+| O11 `rule-of-two` | No autonomous run lets one agent hold private data + untrusted input + a consequential external action without a human gate | B§subagent-scoping, B§promode-audit; AUD |
 | O12 `lowest-capability-tier` | New capability: primitive → custom tool → subagent → MCP; heavier than the job needs is wasted context and surface | B§delegation-map |
 | O13 `three-model-tiers` | Frontier = orchestration + CTO only; opus = deep-reasoning execution; sonnet = mechanical; never inherit frontier by accident; unsure → prefer opus | B§model-tiers; defs' `model:` frontmatter |
 | O14 `parallel-peer-answers` ⚙ | High-stakes decisions: task the deep tier and Codex in parallel, never showing either the other's answer, then synthesise; Codex is a peer, not a reviewer | B§model-tiers |
-| O15 `brief-not-tutorial` | Subagent prompts give orient / specify / why / verified-vs-assumed — a brief, not a tutorial (methodology is baked into the defs; authoring twin of M1) | B§prompting-subagents; task-docs skill |
+| O15 `brief-not-tutorial` | Subagent prompts give orient / specify / why / verified-vs-assumed — a brief, not a tutorial (methodology is baked into the defs; authoring twin of M1) | B§prompting-subagents; B§task-docs |
 | O16 `condensation-requires-inventory` | Condensing/deleting prose requires an inventory: each rule the cut text carried, shown surviving in a named home | B§prompting-subagents |
 | O17 `typed-returns-for-gather-work` | Gather/structured work returns through a schema validated at the tool layer, not prose to re-parse | B§prompting-subagents |
 | O18 `clarify-outcomes-first` | Pin testable acceptance criteria — what and why, never implementation; one question at a time in dependency order, with your recommended answer; codebase-answerable questions answered there | B§clarifying-outcomes |
-| O19 `plans-persist-as-task-docs` | Multi-task plans persist as one doc per task (brief + state + outcome) — the canonical task state; agents record the Outcome before reporting | B§planning; task-docs skill; SE FW CTO DBG VER v, CR EM c |
+| O19 `plans-persist-as-task-docs` | Multi-task plans persist as one doc per task (brief + state + outcome) — the canonical task state; agents record the Outcome before reporting | B§planning+§task-docs; SE FW CTO DBG VER v, CR EM c |
 | O20 `kanban-flow` | Board = flow view, IDEAS.md raw, DONE.md completed; the column owns status — task docs never carry a competing live status field | B§project-tracking |
 | O21 `frame-plans-as-delegation` | Plans say "delegate X to Y", never "implement X" — recency bias makes what you read your instruction | B§planning |
 | O22 `task-sizing-and-parallelism` | Size each task for one agent; plan upfront before context fills; parallel independents, checkpoints between chained | B§planning; CTO c |
@@ -49,11 +50,11 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | O29 `spikes-answer-questions` | A decision needing a reactable answer gets a throwaway prototype: keep the answer, delete the code; absorbed code re-enters through TDD (family head of T11, PD10) | B§workflow; SE CTO v; PDE c |
 | O30 `aar-meta-and-actionable` | After substantial work, review at the meta level; every finding actionable, acted on now, routed by kind (doc / decision node / runbook / brief-or-def fix) | B§after-action-review; AA |
 | O31 `self-debrief-is-testimony` | Re-wake the agent for a first-person debrief, but treat it as testimony — AA verifies load-bearing testimony against the transcript | B§after-action-review v; AA v |
-| O32 `cross-session-retrospective` | On a recognised stuck→unstuck repeat, dispatch analysis across recent transcripts + task docs; A/B-test doubtful skill sections | B§after-action-review; AA |
+| O32 `cross-session-retrospective` | On a recognised stuck→unstuck repeat, dispatch analysis across recent transcripts + task docs; A/B-test doubtful brief/def sections | B§after-action-review; AA |
 | O33 `propose-never-self-rewrite` | Methodology fixes from retrospectives are report-only — the human stays in the loop of any self-update | B§after-action-review |
 | O34 `tier-upgrade-reaudit` | On a model-tier upgrade, audit in reverse: guardrails tuned for a weaker model can degrade a stronger one | B§after-action-review; W c |
 | O35 `memory-as-capture-buffer` | Auto-memory is a capture buffer: promote worthwhile entries into the graph with provenance, prune the rest; supersede with a pointer; keep the decision log | B§after-action-review |
-| O36 `audit-fan-out` | Full alignment assessment fans out parallel assessors; a light check asks the one owning agent to audit its dimension | B§promode-audit; promode-audit skill |
+| O36 `audit-fan-out` | Full alignment assessment fans out parallel assessors; a light check asks the one owning agent to audit its dimension | B§promode-audit; AUD |
 | O37 `escalate-early-bounded-attempts` | Explicit stop-and-report triggers everywhere; ~3 failed approaches is the shared bound; ambiguity, out-of-scope needs, missing credentials always escalate | SE FW DBG EM VER CTO AA PDE §escalation c (CR: REWORK *is* its escalation) · w:FW |
 | O38 `lane-asymmetry` *conv* | FW bounces design-judgement work up; SE absorbs trivial work; CTO re-dispatches routine implementation — bounce up, absorb down | FW SE CTO c |
 
@@ -67,7 +68,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | P4 `always-explain-the-why` | The why is the frame for judgement calls — in tests, comments, commits, findings, decisions | B SE FW v; DBG CR PDE CTO c |
 | P5 `kiss-small-diffs` | Solve today's problem; the simplest thing that passes the tests; don't scope-creep | B SE FW v; CTO CR DBG PDE c |
 | P6 `constraint-ladder` | Before new code or a new design element: needs to exist? → stdlib? → platform? → existing dep? → smallest extension? Only five nos earn new code | SE FW v; CTO c (B carries only the KISS decision — deliberate altitude split) |
-| P7 `crystallise-discovery` | Agents discover; findings harden into maps/graphs/scripts/tests — never remain prose | B; CR e; FW VER EM c; d2d skill |
+| P7 `crystallise-discovery` | Agents discover; findings harden into maps/graphs/scripts/tests — never remain prose | B; CR e; FW VER EM c; d2d |
 | P8 `crystallised-failure-triage` | A failing crystallised check = flake (harden) / intended change (re-crystallise) / regression (debug) — classify before chasing | B v; DBG v |
 | P9 `traceable-by-construction` | Boundary-crossing code threads a correlation ID logged filterably on both sides — built in with the feature, covered like behaviour | B SE FW v; CTO c (design side); DBG c (use side); CR e |
 | P10 `stay-on-task-flag-dont-fix` | Fix what you were sent for, flag the rest for triage; each role names its on-task carve-out | SE FW v; DBG EM CR VER c (dispatcher side: O8's NOT-do) |
@@ -88,7 +89,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | K3 `decision-nodes` | A decision earns a node when hard to reverse, surprising without context, and a real trade-off — record decided / rejected / why | B; SE DBG v; CTO PDE c; FW omits (RB-documented) |
 | K4 `runbooks-prefer-scripts` | A repeatable operational procedure earns a runbook linked from `RUNBOOKS.md`; prefer a script the runbook links | B; SE FW EM v; DBG c |
 | K5 `one-idea-one-home` | Docs cold-readable, one idea in one place; links carry the graph; cite nodes in briefs, don't paste content | W (canonical); SE FW DBG v; B · w:W |
-| K6 `mirror-critical-rules-inline` | A subtree-critical rule is mirrored into the nearest *loaded* `CLAUDE.md`, not only linked from root | SE FW DBG EM CTO PDE v; CR e; reinforce-design-constraints skill |
+| K6 `mirror-critical-rules-inline` | A subtree-critical rule is mirrored into the nearest *loaded* `CLAUDE.md`, not only linked from root | SE FW DBG EM CTO PDE v; CR e; CRF |
 | K7 `orient-before-acting` | Every agent reads the graph before working; briefs point at nodes | B; SE FW CR DBG EM PDE VER CTO v; AA c |
 | K8 `docs-product-subtree` | Product knowledge lives in `docs/product/` — a named area of the graph, maintained as a unit | PDE; B routes to it |
 
@@ -107,16 +108,16 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | T9 `stochastic-as-distributions` | Stochastic behaviour asserted across seeds/samples with explicit tolerances; a single-sample pin is a blind test | SE CTO FW v |
 | T10 `domain-vocabulary-test-names` | Test names speak the project's canonical domain vocabulary (rationale: P3) | SE CTO FW v |
 | T11 `logic-spikes-exception` | The one sanctioned TDD exception: a pure, portable state module behind a disposable shell; the answer is the deliverable | SE CTO v; FW absence RB-documented (head: O29) |
-| T12 `operator-seam-bulk-below-ui` | The bulk of acceptance coverage runs headless through a below-UI operator seam; building/extending the seam is first-class, test-driven work | B§test-strategy; SE; CTO c (placement); CR e; VER DBG EM c; d2d skill |
+| T12 `operator-seam-bulk-below-ui` | The bulk of acceptance coverage runs headless through a below-UI operator seam; building/extending the seam is first-class, test-driven work | B§test-strategy; SE; CTO c (placement); CR e; VER DBG EM c; d2d |
 | T13 `one-seam-two-operators` | The test seam is the same investment an agent tool could build on — an n=1 prediction: design toward it, never rely on it, never expose test god-mode as an agent surface | B; SE CTO v |
 | T14 `extend-seam-not-parallel` | Expose/clean the existing API/service-layer/CLI rather than invent a second entry point — a parallel seam drifts, and tests exercise the drift | SE CTO v; B · w:CTO |
 | T15 `ui-tier-surgical` | The UI tier is slow, surgical, verification-only; re-testing headless-covered logic there is the central anti-pattern | B; CR e; VER SE DBG c |
 | T16 `seam-changes-are-architectural` | Reshaping a seam beyond a local extension: SE proposes, CTO owns placement, the main agent ratifies | SE; CTO; B |
-| T17 `selectors-never-coordinates` | GUI automation keys off stable selectors/identifiers, never coordinates; validate each step against the live tree | FW; CR e; SE (pointer); d2d skill · w:d2d |
+| T17 `selectors-never-coordinates` | GUI automation keys off stable selectors/identifiers, never coordinates; validate each step against the live tree | FW (inline mirror); CR e; SE (pointer); d2d · w:d2d |
 | T18 `proportionality` | Seam/tier/crystallise checks apply in proportion to the change; no reusable harness/shared library until a second consumer exercises it | CR (single home; widening to SE/CTO **parked**) |
 | T19 `testability-primitives` | The test layer needs automated bring-up to known-good, a real reset, per-test data isolation; hidden shared state reads as flakiness | EM |
 | T20 `reproducible-env-is-the-budget` | Bring-up/reset/isolation flakiness dominates the cost of automated testing; determinism there pays back every run | EM |
-| T21 `design-lookbook-analogue` | Visual work gets the code loop: two-layer design source-of-truth + rendered lookbook + live-refresh preview | B; PDE c; design-system-lookbook skill |
+| T21 `design-lookbook-analogue` | Visual work gets the code loop: two-layer design source-of-truth + rendered lookbook + live-refresh preview | B; PDE c; lookbook |
 
 ## Debugging (single-home in DBG unless noted)
 
@@ -193,7 +194,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 
 ## Components (existence-as-opinion)
 
-Each subagent and skill is itself an opinion — the claim that this need is real and earns a dedicated component — so each entry is a fork decision point: a fork that rejects an entry's underlying opinions deletes or replaces the component rather than carrying dead weight. Entries cite, never duplicate: the brief's `<delegation-map>` stays canonical for routing, each def/`SKILL.md` for mechanics.
+Each subagent, command, and routed mechanics doc is itself an opinion — the claim that this need is real and earns a dedicated component — so each entry is a fork decision point: a fork that rejects an entry's underlying opinions deletes or replaces the component rather than carrying dead weight. There are no skills to list: per M5, every capability lives on a non-voluntary surface. Entries cite, never duplicate: the brief's `<delegation-map>` stays canonical for routing, each def / command / routed doc for mechanics.
 
 ### Agents
 
@@ -207,19 +208,23 @@ Each subagent and skill is itself an opinion — the claim that this need is rea
 | AG-verifier | "Tests pass" is not verification — a change is proven by exercising the real running app from the outside (V1–V6) | Fresh-spawned at checkpoints (O27, O5); drives the app via `/verify`, seam-first (V6, T15); returns PASS/FAIL + evidence + a not-verified line (R6, P14); never fixes — the main agent dispatches the fix (O9) |
 | AG-environment-manager | Reproducible environments are the cost budget of automated testing, held inside a safety envelope (T19, T20, E1) | Dispatched for docker/services/health; supplies the bring-up/reset/isolation primitives the test tiers depend on (T19); commits scripts before reporting (E2, P12); escalates data-loss and credential calls (O37) |
 | AG-product-design-expert | Skeptical, persona-grounded product judgement — cut before add, defaults over settings, user needs as claims (PD1–PD11) | Consulted at brainstorm/clarify/plan per PD9; owns `docs/product/` (K8); returns Approve/Refine/Reject (R6); runs UI-variant spikes whose *answer* survives as a decision node (PD10, O29); crucial product-technical calls go to CTO instead (O2) |
-| AG-agent-analyzer | Self-debriefs are testimony, not evidence — AARs need a transcript-grounded reader (O31, AN1–AN3) | Dispatched during AARs to verify testimony, autopsy runs that can't testify, and cluster cross-session patterns (O30, O32); inspects via the recovering-subagents tooling (O7); reports capture-worthy knowledge for the main agent to dispatch — never writes the graph itself (K1/K2 calibration) |
+| AG-agent-analyzer | Self-debriefs are testimony, not evidence — AARs need a transcript-grounded reader (O31, AN1–AN3) | Dispatched during AARs to verify testimony, autopsy runs that can't testify, and cluster cross-session patterns (O30, O32) — and by B§background-delegation for recovery inspection of failed/stalled runs; carries the inspector mechanics inline (O7); reports capture-worthy knowledge for the main agent to dispatch — never writes the graph itself (K1/K2 calibration) |
+| AG-auditor | Alignment with the methodology is assessable and plannable, not vibes — and the fan-out + synthesis belongs out of the main context (O36, M5; O11 as a dimension) | Dispatched by the main agent (B§promode-audit) or via CMD-promode-audit; fans out parallel assessors as a *foreground* batch (probe P2's why: background children's notifications bubble to the root session — ⚙) and synthesises a prioritised plan the main agent ratifies (O2 pattern); a light check routes to the one owning agent instead (O36); recommends CRF dispatch for buried-constraint findings |
+| AG-constraint-reinforcer | A critical rule an agent never loads is a rule it violates — constraints belong in loaded orientation (K6, M5) | Dispatched when a buried constraint bit, as an AAR graph-health repair (O30, B§agent-knowledge), or off an auditor finding; hoists rules inline or `@import`-transcluded into the nearest *loaded* `CLAUDE.md`, linking the full rationale; CR enforces K6 per-change (`e`), this agent repairs corpus-wide |
 
-### Skills
+### Commands (user-typed flows — kept model-invocable by design, probe P4)
 
 | id | why it exists | coordination |
 |---|---|---|
-| SK-promode-audit | Alignment with the methodology is assessable and plannable, not vibes (O36; O11 as a dimension) | Invoked by the main agent (B§promode-audit); fans out parallel assessors and synthesises a prioritised plan; a light check routes to the one owning agent instead (O36) |
-| SK-d2d | Mechanics home of crystallisation and the operator-seam / UI-tier doctrine (P7, T12–T17 · w:T17) | B§test-strategy dispatches the seam/harness *build* to SE and the *run* to VER, both via this skill; FW's GUI driving and DBG's seam preference lean on it (T17, D1) |
-| SK-design-system-lookbook | Visual work deserves the same fast deterministic loop as logic — taste crystallised into a renderable source-of-truth (T21) | B§test-strategy routes it through PDE, who owns `DESIGN_SYSTEM.md` + lookbook under `docs/product/` (K8); defers aesthetic taste to the harness's frontend-design skill |
-| SK-task-docs | Plans that live only in context evaporate — task state must be durable and canonical (O19, O8, O15) | Main agent writes one doc per task at plan time; delegating = pointing the agent at its doc; every executor records the Outcome before reporting (O19); the board keeps flow, docs keep detail (O20) |
-| SK-handoff | When a session must end, its context survives as a durable doc rather than being re-derived (session-scale kin of O19/K2) | Invoked by the user (`/handoff`) or main agent before `/clear`/`/compact`; produces the orientation doc the next session's main agent resumes from |
-| SK-recovering-subagents | Raw transcripts overflow the reader they're meant to inform — inspection must be compact (O7) | Main agent uses it to recover failed/stalled delegations (B§background-delegation); AA uses its inspector + bulk extractions as the evidence tooling for every AAR job (O30–O32) |
-| SK-reinforce-design-constraints | A critical rule an agent never loads is a rule it violates — constraints belong in loaded orientation (K6) | Invoked when a buried constraint bit, or as a graph-health pass at AAR time (O30); hoists rules into the nearest loaded `CLAUDE.md`; CR enforces K6 per-change (`e`), this skill repairs corpus-wide |
+| CMD-handoff | When a session must end, its context survives as a durable doc rather than being re-derived (session-scale kin of O19/K2) | Typed by the user (`/promode:handoff`) or fired proactively by the main agent — the *decision* lives in B§handoff (about to `/clear`, or context pressure ending the session), so triggering never depends on listing luck; the residual description tax is bought deliberately for that proactive trigger (M5) |
+| CMD-promode-audit | The audit keeps its user-typed slash form (`/promode:promode-audit`) after moving to a dedicated agent | Thin shim: dispatches AUD, then the main agent ratifies the prioritisation, delivers, and offers capture — B§promode-audit stays the canonical routing (O36, O2) |
+
+### Docs (routed mechanics — def-directed conditional reads from `plugins/promode/docs/`, probe P5)
+
+| id | why it exists | coordination |
+|---|---|---|
+| DOC-d2d | Mechanics home of crystallisation and the operator-seam / UI-tier doctrine — cross-cutting knowledge several agents need occasionally, which no single def could host without forking it (P7, T12–T17 · w:T17, M5) | Consumed via conditional `${CLAUDE_PLUGIN_ROOT}` reads in the defs: SE builds the seam/UI-harness, VER runs the state-graph tier, FW's GUI driving (T17 also mirrored inline there), PDE's scenario bridge; B§test-strategy routes the *build* to SE and the *run* to VER, naming the work so the conditions fire |
+| DOC-lookbook | Visual work deserves the same fast deterministic loop as logic — taste crystallised into a renderable source-of-truth (T21, M5) | Consumed by PDE via conditional read; B§test-strategy routes visual-loop establishment to PDE, who owns `DESIGN_SYSTEM.md` + lookbook under `docs/product/` (K8); defers aesthetic taste to the harness's frontend-design skill |
 
 ## Documented calibrations (silent divergence from these is drift — check RB before "fixing")
 
@@ -232,6 +237,14 @@ Each subagent and skill is itself an opinion — the claim that this need is rea
 ## Harness-pinned (⚙) — re-verify on any Claude Code change
 
 O4, O6, V6, O14 — plus this register's own delivery mechanism: the root-`CLAUDE.md` `@`-import semantics (in-repo targets only; silent drop on missing target, guarded by `scripts/check-claude-md-imports.sh`; imported content appends as a labelled block after the CLAUDE.md body) were live-probed on Claude Code 2.1.201, 2026-07-07 (`tasks/10-opinion-register.md`).
+
+The M5 delivery surfaces rest on five probe facts, live-verified on 2.1.201, 2026-07-07 (probe log: `tasks/13-skills-elimination-design.md`; decision node: `docs/decisions/2026-07-skills-elimination.md`):
+
+- **probe P1** — a plugin subagent's tool set includes `Agent`: nested main → plugin-agent → plugin-agent fan-out works (AUD's fan-out relies on it; its def carries the no-Agent-tool fallback in case this regresses).
+- **probe P2** — background fan-out *inside* a subagent works, BUT the children's task-notifications also bubble to the root session (duplicated) — so in-subagent fan-out must be a **foreground parallel batch**; O4 stays a main-agent-only protocol.
+- **probe P3** — plugin `commands/` execute as user-typed flows; `$ARGUMENTS` and `${CLAUDE_PLUGIN_ROOT}` expand in command bodies.
+- **probe P4** — commands remain model-visible/invocable (they share the merged listing + Skill-tool machinery with skills): `commands/` changes convention, not the description tax — the residual tax is bought deliberately (see CMD-handoff).
+- **probe P5** — `${CLAUDE_PLUGIN_ROOT}` expands in plugin **agent defs**: the load-bearing mechanism for def-directed doc reads and the inspector script path.
 
 ## Open questions — parked, not silently decided (ratified 2026-07-07)
 

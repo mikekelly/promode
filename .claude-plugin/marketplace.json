@@ -12,7 +12,7 @@
       "source": "./plugins/promode",
       "description": "Promode enhances Claude Code so it builds software more intelligently",
       "category": "utilities",
-      "tags": ["skills", "tools", "development", "productivity"]
+      "tags": ["agents", "commands", "tools", "development", "productivity"]
     }
   ]
 }

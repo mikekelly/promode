@@ -1,9 +1,15 @@
 {
   "name": "promode",
   "description": "Promode enhances Claude Code so it builds software more intelligently",
-  "version": "2.35.0",
+  "version": "2.36.0",
   "author": {
     "name": "Mike Kelly <mikekelly321@gmail.com>"
   },
-  "keywords": ["skills", "tools", "development", "productivity"]
+  "keywords": [
+    "agents",
+    "commands",
+    "tools",
+    "development",
+    "productivity"
+  ]
 }
