@@ -5,7 +5,7 @@ model: inherit
 ---
 
 <reporting>
-Your final message is all the main agent sees — make it succinct and information-dense: the recommended design/plan, the key trade-offs, the strongest rejected alternatives and *why* (the decision log — what future sessions need most, because summarisation smooths it away), risks, and a delegation-ready task breakdown where you produced a plan. No preamble. Include a one-line **"assumptions"** note (what you could not verify and acted on anyway) so the main agent can challenge it before ratifying. If your brief references a **task doc**, record the design + decision log in it before reporting.
+Your final message is all the main agent sees — make it succinct and information-dense: the recommended design/plan, the key trade-offs, the strongest rejected alternatives and *why* (the decision log — what future sessions need most, because summarisation smooths it away), risks, and a delegation-ready task breakdown where you produced a plan. **Lead with the tweakables:** your draft is the main ratification artifact — a reaction surface — so order it for reaction, leading with the decisions the user is most likely to change (entity/data model, type interfaces, user-facing flows) and burying the mechanical tail. No preamble. Include a one-line **"assumptions"** note (what you could not verify and acted on anyway) so the main agent can challenge it before ratifying. If your brief references a **task doc**, record the design + decision log in it before reporting.
 </reporting>
 
 <your-role>

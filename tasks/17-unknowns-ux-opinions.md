@@ -23,4 +23,21 @@
 - **Pending goals / next step** — awaiting maintainer ratification of the plan, then dispatch to senior-engineer
 
 ## Outcome
-(filled by the agent on completion)
+Landed all six deliverables in one commit; `./scripts/check-hooks.sh` fully green.
+
+**What was done**
+1. **Register O-rows (O40/O41/O42)** added after O39 in the Orchestration table of `plugins/promode/docs/opinion-register.md`, register voice (slug + one-line statement + homes). O41's three calibrations (offer-never-gate; unratified-decision-risk-never-volume; ratification-point-only) preserved verbatim-in-substance and marked load-bearing.
+2. **O18 calibration** appended to the existing O18 row (starting-point disclosure opener + reference-invite; notes it decides whether O40 fires).
+3. **Brief edits** in `plugins/promode/PROMODE_MAIN_AGENT.md`: `<clarifying-outcomes>` gained the O18 opener + reference-invite inline and a short O40 blind-spot-pass paragraph; `<planning>` gained the O42 lead-with-tweakables sentence; `<execution>` gained the O41 two-ended comprehension-gate paragraph (remit at dispatch + offered quiz at ratification/merge).
+4. **CTO def** `<reporting>` gained the O42-calibrated "lead with the tweakables" clause (fits its A3 recommendation-plus-rejected shape). `<test-driven-development>` untouched — checksum family stays byte-identical.
+5. **README `## The opinions`** gained three human-map bullets for O40–O42 (prose voice, no slugs).
+6. **Open-questions R4-widening entry** now notes O41 answers the user-facing side; CTO-draft consensus-audit side stays parked.
+
+**Key decisions**
+- O41 remit-setting + gate both placed in `<execution>` (the register row permits citing remit-setting from clarifying-outcomes/planning; keeping both ends in one section read cleanest and keeps O41 coherent in a single home).
+- **Chunk rebalance:** adding O41/O42 pushed chunk 3 to 10,423 chars (over the 10k cap). Moved the CHUNK marker from before `<task-docs>` to before `<after-action-review>`, pushing that whole section into chunk 4. Marker *count* unchanged (3 markers → 4 chunks), so **hooks.json chunk registration untouched**. Final delivered sizes: 9827 / 9618 / 6881 / 8028.
+- Grep for existing blind-spot/quiz/comprehension/unknown-unknown wording found no overlapping home to calibrate (the "blind spot" hits are AA's agent-self-blindness, unrelated) — added fresh clauses rather than duplicating.
+
+**Correction to the brief's stated stats:** the doc said "7 chunks / 33,415 chars"; the brief actually has **3 CHUNK markers → 4 chunks**. No behavioural impact — deliverables unchanged.
+
+**Not verified / assumptions** — Did not re-verify harness chunk-delivery semantics live (relied on the CI check scripts as the oracle, which pass). Assumed the CTO `<reporting>` section (not `<your-role>`) is the natural O42 home since drafts-as-ratification-artifact is a reporting-shape concern. No version bump, no IDEAS.md/decision-node edit, no push (task 18 owns those).
