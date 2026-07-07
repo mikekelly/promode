@@ -1,6 +1,6 @@
 # Live-reload static preview server
 
-A dependency-light reference implementation for the live-refresh loop in the [design-system-lookbook](../SKILL.md) skill: serve static design/marketing artifacts (lookbook, decks, landing pages), watch the files, and push a reload to the browser on every change.
+A dependency-light reference implementation for the live-refresh loop in [design-system-lookbook.md](design-system-lookbook.md) (beside this doc): serve static design/marketing artifacts (lookbook, decks, landing pages), watch the files, and push a reload to the browser on every change.
 
 **Use this only for static HTML artifacts with no dev server of their own.** If the project already has HMR/live-reload (Vite, Next, etc.), use *that* — don't run a second server.
 

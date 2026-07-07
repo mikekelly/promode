@@ -1,12 +1,11 @@
----
-name: discovery-to-determinism
-description: "Put the bulk of acceptance coverage below the UI through a fast, deterministic headless client driving an operator seam, and reserve a surgical UI state-graph tier for defects that only manifest through the real GUI. Use when a UI fronts real logic and you are designing test/QA or acceptance-testing strategy, automating acceptance, end-to-end (E2E), or QA testing of a running app, deciding what to cover with fast headless tests vs slow UI/E2E, building agent-driven exploration or automation of a running app, or building a below-UI operator seam (interaction layer) or headless client. Also use — UI or not — when crystallising agent-discovered knowledge into reusable deterministic artifacts (maps, graphs, scripts, tests)."
----
+# Discovery → Determinism: layered acceptance testing below the UI
+
+Routed mechanics doc — consuming agent defs direct a read of this file when a dispatch involves designing test/QA/acceptance strategy, building or driving a below-UI operator seam or headless client, automating acceptance/E2E/QA of a running app, or crystallising agent-discovered knowledge into reusable deterministic artifacts (maps, graphs, scripts, tests).
 
 <objective>
 There is an asymmetry at the heart of agent-driven engineering. **Discovery** — perceiving an unknown system, exercising judgement, handling the open-ended — is what *agents* are uniquely good at; it is also expensive and non-deterministic. **Exact repetition** — doing the same thing the same way, fast, every time — is what *code* is uniquely good at; it is cheap and deterministic but discovers nothing new.
 
-This skill teaches how to run that asymmetry as a **flywheel** (discovery hardens into determinism; determinism makes the next discovery cheaper and sharper), and how to cash it out architecturally: by carving a clean **operator seam** below the UI so most behaviour is driven by fast deterministic code instead of the slow, flaky GUI — a seam that, built well, serves both a headless test client and AI-agent tools, because tests and agents are both *non-human operators* needing scriptable access to the real logic.
+This doc teaches how to run that asymmetry as a **flywheel** (discovery hardens into determinism; determinism makes the next discovery cheaper and sharper), and how to cash it out architecturally: by carving a clean **operator seam** below the UI so most behaviour is driven by fast deterministic code instead of the slow, flaky GUI — a seam that, built well, serves both a headless test client and AI-agent tools, because tests and agents are both *non-human operators* needing scriptable access to the real logic.
 
 The principle leads; testing is its first worked embodiment. Keep it general; the worked example illustrates, it does not define.
 </objective>
@@ -15,7 +14,7 @@ The principle leads; testing is its first worked embodiment. Keep it general; th
 1. **Run the applicability gate first** (`<when-this-applies>`) — and STOP if it fails (the UI *is* the logic, a programmatic seam already exists, the app is too small, or no failing test needs the seam yet).
 2. **Default acceptance coverage below the UI** — drive the real logic, persistence, and backend through an **operator seam** with a fast, deterministic headless client; that tier carries the bulk.
 3. **Extract the seam test-first** — RED before any seam code; reuse an existing API / service-layer / CLI / SDK / MCP in preference to inventing one.
-4. **Reserve a small, surgical UI tier** (`references/ui-state-graph-edt.md`) only for defects that *only* surface through the real GUI; never let it re-test what headless covers.
+4. **Reserve a small, surgical UI tier** (`ui-state-graph-edt.md`, beside this doc) only for defects that *only* surface through the real GUI; never let it re-test what headless covers.
 5. **Crystallise every worthwhile discovery** into self-checking code as part of the same effort (see `<disciplines>`).
 </quick_start>
 
@@ -63,11 +62,11 @@ The methodology is not "use a graph." It is the set of disciplines that keep the
 **One seam, two non-human operators.** The same seam that lets a fast headless client drive end-to-end acceptance tests is structurally the seam that exposes the system to **AI-agent tools** — because a test runner and an agent both need a clean, observable, scriptable grip on the real logic with the GUI stripped away. Designing for headless testability and designing for agent-operability **converge on one architectural investment that pays out twice.** This convergence is the load-bearing reason the seam is worth building even before any agent tool exists.
 
 **But it is convergence of the SEAM, not identity of the INTERFACE.** Fence it, or it becomes wrong and dangerous:
-- The two consumers diverge on four axes — **granularity**, **authority/blast-radius**, **self-description** (the `axi` skill's domain; defer to it), and **failure semantics**. Per-axis detail: `references/operator-seam-and-agent-tools.md`.
+- The two consumers diverge on four axes — **granularity**, **authority/blast-radius**, **self-description** (the `axi` skill's domain; defer to it), and **failure semantics**. Per-axis detail: `operator-seam-and-agent-tools.md` (beside this doc).
 - **Hard security rule:** never ship one interface to both, and **never expose test god-mode to a production agent.** An agent surface is a *new external boundary* that earns the same security review as any other.
 - **Honesty:** the testability half of this convergence is evidenced by a real build; the **agent-operability half is, so far, a structural prediction (n=1), never actually shipped.** Treat it as a heuristic to design *toward* and a hypothesis to validate — not a proven law, and not a licence to build a seam speculatively.
 
-**Build the seam by test-driven extraction, never speculative architecture.** Under RED→GREEN→REFACTOR and KISS, the seam is the *thinnest interface a failing test needs* to reach below-UI logic otherwise only reachable through the slow GUI — no wider than the test demands. Prefer **exposing or cleaning an existing programmatic seam** (public API, application/service layer, CLI, SDK, MCP) over inventing a parallel one that drifts. Design its `observe()`/`act()` shape so it *could* serve an agent later, but ship only what the test needs now. See `references/operator-seam-and-agent-tools.md`.
+**Build the seam by test-driven extraction, never speculative architecture.** Under RED→GREEN→REFACTOR and KISS, the seam is the *thinnest interface a failing test needs* to reach below-UI logic otherwise only reachable through the slow GUI — no wider than the test demands. Prefer **exposing or cleaning an existing programmatic seam** (public API, application/service layer, CLI, SDK, MCP) over inventing a parallel one that drifts. Design its `observe()`/`act()` shape so it *could* serve an agent later, but ship only what the test needs now. See `operator-seam-and-agent-tools.md`.
 </the-operator-seam>
 
 <scenario-vs-seam>
@@ -102,7 +101,7 @@ The first embodiment of the principle. Acceptance coverage defaults **below the 
 
 **Same `{arrange, act, assert}` shape on both sides.** Most criteria are verified headless; only the inherently-visual/interactive few are promoted to the UI graph, where the graph makes *arrange* (reach the precondition) nearly free.
 
-The Tier-2 mechanics — modelling the app as a state graph and Explore→Distill→Traverse with the fail-fast contract — live in **`references/ui-state-graph-edt.md`**.
+The Tier-2 mechanics — modelling the app as a state graph and Explore→Distill→Traverse with the fail-fast contract — live in **`ui-state-graph-edt.md`**.
 </layered-acceptance-testing>
 
 <reconciliation>
@@ -119,6 +118,7 @@ So: **do NOT extract a reusable graph/recognizer/traverser library or a standard
 </the-honest-caveat>
 
 <references>
-- `references/ui-state-graph-edt.md` — Tier-2 mechanics: the state-graph model, Explore→Distill→Traverse, recognizers, the fail-fast contract and its lifecycle, the client-adapter seam, the hard-won implementation rules, and the worked example.
-- `references/operator-seam-and-agent-tools.md` — the operator-seam ↔ agent-tool convergence in depth: where it holds, the four divergence axes, the privilege/security fence, and how to shape `observe()`/`act()` so the seam *could* serve an agent without ever becoming one by accident.
+Both live beside this doc in the plugin's `docs/`:
+- `ui-state-graph-edt.md` — Tier-2 mechanics: the state-graph model, Explore→Distill→Traverse, recognizers, the fail-fast contract and its lifecycle, the client-adapter seam, the hard-won implementation rules, and the worked example.
+- `operator-seam-and-agent-tools.md` — the operator-seam ↔ agent-tool convergence in depth: where it holds, the four divergence axes, the privilege/security fence, and how to shape `observe()`/`act()` so the seam *could* serve an agent without ever becoming one by accident.
 </references>

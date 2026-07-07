@@ -18,6 +18,6 @@ The plugin now **ships its own `SessionStart` delivery** of the main-agent brief
 
 - **`promode-audit`** absorbed the only residual setup concern as a **pre-flight check**: flag stale per-project install *leftovers* from the old copy-install (`.claude/PROMODE_MAIN_AGENT.md`, a copied hook, a `settings.json` `SessionStart` entry) that would now **double-inject** alongside the plugin-shipped hook.
 - The brief moved to a clean plugin home: `skills/managing-promode/standard/PROMODE_MAIN_AGENT.md` → `plugins/promode/PROMODE_MAIN_AGENT.md` (hook, `hooks.json`, and self-relative fallback updated to match).
-- The reference docs `agent-knowledge-wiki.md` and `main-agent-delivery.md` relocated into `promode-audit/references/`.
+- The reference docs `agent-knowledge-wiki.md` and `main-agent-delivery.md` relocated into `promode-audit/references/` (and later into `plugins/promode/docs/`, when the plugin's skills were themselves retired in July 2026 — including `promode-audit`, whose audit now runs as the `promode:auditor` agent).
 
 See `main-agent-delivery.md` for *why* the brief is hook-delivered (and never lives in `CLAUDE.md`) — the architectural shift that made this retirement possible.

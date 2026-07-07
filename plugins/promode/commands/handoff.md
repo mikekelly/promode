@@ -6,7 +6,7 @@ argument-hint: "[what the next session will focus on]"
 
 The conversation is about to end or be cleared. A fresh agent will continue **without any of this conversation's history** — write it what it needs to pick up cleanly.
 
-This skill serves the promode principle that **context is precious** and conversation state is ephemeral: when a session ends its working memory is lost, so anything the next agent needs must be persisted — ephemeral state to a handoff doc, durable knowledge into the `CLAUDE.md`-rooted knowledge graph.
+This command serves the promode principle that **context is precious** and conversation state is ephemeral: when a session ends its working memory is lost, so anything the next agent needs must be persisted — ephemeral state to a handoff doc, durable knowledge into the `CLAUDE.md`-rooted knowledge graph.
 
 <where>
 Save to the OS temp directory (`$TMPDIR`, falling back to `/tmp`), e.g. `<tmpdir>/handoff-<feature>.md` — **not** the repo. A handoff is ephemeral conversation state, not durable project knowledge (durable knowledge belongs in the agent-knowledge graph rooted at `CLAUDE.md`). Tell the user the absolute path at the end so they can point the next agent at it.
@@ -20,11 +20,11 @@ Write for an agent with zero context. Be concrete — file paths, not vague desc
 3. **What's pending** — remaining work and the **single next immediate step**; known blockers.
 4. **Orientation** — the few files to read first, non-obvious patterns/gotchas, and any user preferences expressed this session.
 5. **Open questions** — unresolved decisions waiting on the user.
-6. **Suggested skills/agents** — which promode agents or skills the next session should reach for.
+6. **Suggested agents/commands** — which promode agents or commands the next session should reach for.
 </what-to-capture>
 
 <keep-it-lean>
-- **Reference, don't duplicate.** Anything already captured in commits, PRDs, plans, ADRs, issues, **task docs** (`task-docs` skill), or the knowledge graph → link it by path, don't restate it. The handoff is the connective tissue between those artifacts, not a copy of them. If the work used task docs, point the next agent at them — they already carry the live per-task state, so the handoff just names the open loop and where to look.
+- **Reference, don't duplicate.** Anything already captured in commits, PRDs, plans, ADRs, issues, **task docs** (the per-task docs written at planning time), or the knowledge graph → link it by path, don't restate it. The handoff is the connective tissue between those artifacts, not a copy of them. If the work used task docs, point the next agent at them — they already carry the live per-task state, so the handoff just names the open loop and where to look.
 - **Redact secrets** — no API keys, passwords, tokens, or PII in the document.
 - If the user passed an argument, treat it as the next session's focus and tailor the doc to it.
 </keep-it-lean>

@@ -1,12 +1,11 @@
----
-name: design-system-lookbook
-description: "Establish a design source-of-truth (a DESIGN.md-style two-layer doc of tokens + rationale), build a lookbook that renders it, and wire a live-refresh preview server so visual work gets a fast edit→see feedback loop. Use when setting up or restructuring a design system / design tokens, creating a DESIGN.md or design source-of-truth, building a lookbook, or wanting live preview / live reload of design or marketing artifacts — landing pages, decks, one-pagers, marketing material previews."
----
+# Design-system lookbook: the visual feedback loop
+
+Routed mechanics doc — consuming agent defs direct a read of this file when a dispatch involves setting up or restructuring a design system / design tokens, creating a design source-of-truth, building a lookbook, or wiring live preview / live reload of design or marketing artifacts (landing pages, decks, one-pagers).
 
 <objective>
-Promode runs a fast feedback loop for *logic*: the headless operator seam gives an agent a deterministic pass/fail signal, and the discovery⇄determinism flywheel crystallises judgement into checks (see `discovery-to-determinism`). Visual/design work has no such loop by default — only an ad-hoc screenshot diff.
+Promode runs a fast feedback loop for *logic*: the headless operator seam gives an agent a deterministic pass/fail signal, and the discovery⇄determinism flywheel crystallises judgement into checks (see `discovery-to-determinism.md`, beside this doc). Visual/design work has no such loop by default — only an ad-hoc screenshot diff.
 
-This skill extends the **same principle to visual work**. Three artifacts, each the visual analogue of a logic-testing artifact:
+This doc extends the **same principle to visual work**. Three artifacts, each the visual analogue of a logic-testing artifact:
 
 | Logic loop | Visual loop |
 |---|---|
@@ -16,7 +15,7 @@ This skill extends the **same principle to visual work**. Three artifacts, each 
 
 The source-of-truth is to UI what feature-tests are to logic — the persistent, normative reference that kills drift. The live-refresh lookbook is to design what the fast test runner is to code — the instant signal that makes iteration cheap. Together they **crystallise *taste* into *determinism***: capture an aesthetic decision once, replay it deterministically across every prompt and session.
 
-This skill owns **structure & process**. It explicitly defers **aesthetic taste** — what good typography, color, and motion actually *look* like — to the `frontend-design` skill.
+This doc owns **structure & process**. It explicitly defers **aesthetic taste** — what good typography, color, and motion actually *look* like — to the harness's `frontend-design` skill.
 </objective>
 
 <the-source-of-truth>
@@ -63,7 +62,7 @@ The **lookbook** is the rendered visual reference — the source-of-truth made v
 <the-live-refresh-loop>
 **Principle.** Design *and* marketing artifacts — the lookbook, landing-page proposals, decks, one-pagers — need an **edit file → browser updates instantly** loop. That is the fast feedback signal for visual work, and it is what powers the agent's screenshot-diff verification: Anthropic's sanctioned loop is *paste the design target → screenshot the rendered output → list the diffs → fix → repeat*. Without instant refresh, every iteration pays a manual reload tax.
 
-**Mechanics.** A static file server that **watches** the artifact files and **pushes a reload** to the browser over SSE (or websocket) on change. Small, framework-agnostic, dependency-light — see [`references/live-reload-server.md`](references/live-reload-server.md) for a copy-pasteable ~60-line Node implementation plus the browser client snippet.
+**Mechanics.** A static file server that **watches** the artifact files and **pushes a reload** to the browser over SSE (or websocket) on change. Small, framework-agnostic, dependency-light — see [`live-reload-server.md`](live-reload-server.md) (beside this doc) for a copy-pasteable ~60-line Node implementation plus the browser client snippet.
 
 **CRITICAL NUANCE — don't build a second dev server.** If the project's stack already has HMR / live-reload (Vite, Next, etc.), **use that.** The reference implementation is for **static HTML artifacts** — lookbooks, decks, landing pages — that have *no* dev server of their own. Reach for it only there.
 
@@ -74,7 +73,7 @@ The **lookbook** is the rendered visual reference — the source-of-truth made v
 </the-live-refresh-loop>
 
 <boundary-with-frontend-design>
-This skill = **structure & process** (the source-of-truth, the lookbook, the feedback loop). Anthropic's `frontend-design` skill = **aesthetic taste** (what good typography, color, and motion actually look like). **Dispatch to `frontend-design` for the taste; use this skill to capture that taste in the source-of-truth and replay it deterministically** through the lookbook and preview loop.
+This doc = **structure & process** (the source-of-truth, the lookbook, the feedback loop). Anthropic's `frontend-design` skill = **aesthetic taste** (what good typography, color, and motion actually look like). **Dispatch to `frontend-design` for the taste; use this doc's structures to capture that taste in the source-of-truth and replay it deterministically** through the lookbook and preview loop.
 </boundary-with-frontend-design>
 
 <success_criteria>
@@ -85,11 +84,11 @@ This skill = **structure & process** (the source-of-truth, the lookbook, the fee
 </success_criteria>
 
 <references>
-- [`references/live-reload-server.md`](references/live-reload-server.md) — copy-pasteable, dependency-light Node static server + file-watcher + SSE reload endpoint, plus the browser client snippet. For static HTML artifacts only (use the project's HMR if it has one).
+- [`live-reload-server.md`](live-reload-server.md) (beside this doc) — copy-pasteable, dependency-light Node static server + file-watcher + SSE reload endpoint, plus the browser client snippet. For static HTML artifacts only (use the project's HMR if it has one).
 </references>
 
 <related>
-- **`discovery-to-determinism`** — the logic-side flywheel and operator seam this skill is the visual analogue of.
-- **`frontend-design`** (Anthropic) — aesthetic taste; the source of the decisions this skill captures.
+- [`discovery-to-determinism.md`](discovery-to-determinism.md) — the logic-side flywheel and operator seam this doc is the visual analogue of.
+- **`frontend-design`** (Anthropic harness skill) — aesthetic taste; the source of the decisions this doc captures.
 - **`product-design-expert`** agent — maintains `docs/product/` (incl. the design source-of-truth) and traces design to personas/goals.
 </related>

@@ -5,7 +5,7 @@ This is the runbook hub for the promode repo — the single node, reachable in o
 crystallises a recurring how-to that previously lived only in commit history or heads, so a future
 agent reaches it from the knowledge-graph root instead of rediscovering it. Where a procedure can be
 automated, the runbook defers to a script and links to it (per the agent-knowledge conventions in
-`plugins/promode/skills/promode-audit/references/agent-knowledge-wiki.md`).
+`plugins/promode/docs/agent-knowledge-wiki.md`).
 
 Each runbook is a separate file under [`runbooks/`](runbooks/) — kept apart so each stays
 cold-readable and states one idea in one home.

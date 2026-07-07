@@ -1,8 +1,8 @@
 # UI state-graph tier: Explore → Distill → Traverse (EDT)
 
-The Tier-2 mechanics for the [discovery-to-determinism](../SKILL.md) skill — how the flywheel is realised concretely against a running GUI. **Client-agnostic:** everything here sits above a tiny adapter (see *The client-adapter seam*), so the same model serves mobile, web, or any other surface.
+The Tier-2 mechanics for [discovery-to-determinism.md](discovery-to-determinism.md) (beside this doc) — how the flywheel is realised concretely against a running GUI. **Client-agnostic:** everything here sits above a tiny adapter (see *The client-adapter seam*), so the same model serves mobile, web, or any other surface.
 
-This tier is **verification-only and surgical** — it exists for the narrow class of defect that only manifests through the real running GUI. Most coverage belongs in the headless Tier-1 client driving the operator seam; reach for this tier only when the gate in the SKILL is genuinely met.
+This tier is **verification-only and surgical** — it exists for the narrow class of defect that only manifests through the real running GUI. Most coverage belongs in the headless Tier-1 client driving the operator seam; reach for this tier only when the gate in `discovery-to-determinism.md` is genuinely met.
 
 ## Model the app as a state graph
 
@@ -37,7 +37,7 @@ A failed `traverse` is one of three, and only judgement tells them apart — re-
 - **Legitimate change** — the app's flow or labels moved on purpose. Re-explore only the changed fragment (launch from the frontier) and re-distill that edge/recognizer.
 - **Regression** — the app broke. Raise it; the graph just earned its keep as a navigation/regression alarm.
 
-The precise, frozen failure (the recognizer that missed + the on-screen dump) is exactly what makes this triage cheap — it usually tells you which of the three before you touch anything. This is the [closing-the-loop](../SKILL.md) discipline made concrete for the UI tier.
+The precise, frozen failure (the recognizer that missed + the on-screen dump) is exactly what makes this triage cheap — it usually tells you which of the three before you touch anything. This is the [closing-the-loop](discovery-to-determinism.md) discipline made concrete for the UI tier.
 
 ## The client-adapter seam (what makes it generalise)
 
@@ -53,7 +53,7 @@ Implementations:
 - **web** → a browser-automation tool returning the DOM / accessibility tree;
 - **other surfaces** → their own adapter.
 
-Only the adapter is platform-specific; everything above it is reusable. (But per the SKILL's honest caveat, do **not** extract that "reusable above-the-adapter core" into a shared library until a *second* adapter has actually exercised it — one app is not evidence for the abstraction.)
+Only the adapter is platform-specific; everything above it is reusable. (But per the honest caveat in `discovery-to-determinism.md`, do **not** extract that "reusable above-the-adapter core" into a shared library until a *second* adapter has actually exercised it — one app is not evidence for the abstraction.)
 
 ## Hard-won implementation rules (these cost real time)
 

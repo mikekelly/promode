@@ -1,6 +1,6 @@
 # The operator seam ⇄ agent-tool convergence
 
-Depth on the load-bearing claim in the [discovery-to-determinism](../SKILL.md) skill: the below-UI **operator seam** you build for fast, deterministic headless testability is the *same architectural investment* that makes the system AI-agent-operable. This file says exactly where that holds, where it breaks, and how to build a seam that *could* serve an agent without ever becoming an unguarded one by accident.
+Depth on the load-bearing claim in [discovery-to-determinism.md](discovery-to-determinism.md) (beside this doc): the below-UI **operator seam** you build for fast, deterministic headless testability is the *same architectural investment* that makes the system AI-agent-operable. This file says exactly where that holds, where it breaks, and how to build a seam that *could* serve an agent without ever becoming an unguarded one by accident.
 
 ## The defensible claim
 
