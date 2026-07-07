@@ -6,8 +6,11 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-- [Skills-elimination design draft (CTO)](tasks/13-skills-elimination-design.md)
+- [Migration A: agents/commands/docs + delete skills/](tasks/14a-skills-migration.md)
+- [Migration E: repurpose frontmatter check](tasks/14e-skills-migration.md)
 
 ## Ready
 
-*(empty)*
+- [Migration B: consuming-def rewires (behind A)](tasks/14b-skills-migration.md)
+- [Migration C: brief chunk 4 + hooks.json (behind A)](tasks/14c-skills-migration.md)
+- [Migration D: register/README/CLAUDE.md sweep (last)](tasks/14d-skills-migration.md)
