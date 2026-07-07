@@ -73,6 +73,10 @@ A skill is just-in-time knowledge a coding agent loads on trigger — so the sam
 - **Examples document the problem, not the solution.** A solution example ("so we keyed it on FRONT_ARC") rots as the code moves on; a problem example teaches the shape of the situation the rule exists for, and stays true.
 - **Fix a misfiring skill at the faulty step.** When a skill produces the wrong behaviour, localise the *first* faulty step, make the *minimal* edit, and commit it as a reviewable diff with its rationale — don't rewrite the whole skill. (The cross-session retrospective surfaces these — see the main-agent brief's `<after-action-review>`.)
 
+## Authoring agent definitions
+
+Agent defs (`plugins/promode/agents/*.md`) follow the same discipline, with one governing convention (maintainer-ratified, 2026-07-07): **opinions, not tutorials**. An agent def never tells the agent HOW to do things its pinned model tier already knows how to do; it instills promode's specific *opinions* — on product design, software design, architecture, methodology — and houses the doctrine the model can't derive from training. **Calibrate scaffolding to the pin**: the weaker the pinned model, the more operational detail earns its place; the stronger, the more prescription costs. The why: over-prescription actively *degrades* stronger models — the v2.26.0 slimming cut operational scaffolding from the frontier-pinned defs for exactly that reason. Its counterpart is the v2.31.0 CTO expansion, which roughly doubled that def with doctrine: **doctrine is not prescription** — adding opinions and hard-won rules a frontier model can't derive is signal, not bloat, and the size of a def is judged by that distinction, not by line count.
+
 ## Going further
 
 For a heavyweight, source-backed knowledge corpus (citations, freshness discipline, retrieval bundles, audits), see the **`managing-agent-knowledge`** skill. promode's default is deliberately lighter: a self-maintained graph of learned project knowledge.

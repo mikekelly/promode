@@ -32,6 +32,13 @@ ruling, 2026-07-02, after a prompt-corpus review proposed exactly that dedup.)
   `chief-technology-officer.md`, `senior-engineer.md`, `fast-worker.md`, `code-reviewer.md`, `debugger.md`, `verifier.md`, `environment-manager.md`.
   (Re-grep before editing — `grep -ln 'TDD\|operator seam\|Crystallise\|Evidence over assumptions'
   plugins/promode/agents/*.md` — definitions drift.)
+- **The full `<test-driven-development>` section has two verbatim homes** — `senior-engineer.md` and
+  `chief-technology-officer.md` (which carries it to bind its execute-itself exception) — kept
+  **checksum-identical**: after editing one, re-splice or re-verify the other
+  (`awk '$0=="<test-driven-development>"{p=1} p{print} $0=="</test-driven-development>"{p=0}' <file> | shasum -a 256`
+  must match). `fast-worker.md` is *not* a verbatim home: its TDD copy is deliberately calibrated to
+  its weaker pin (fewer design-altitude bullets, no logic-spikes exception) — sync the substance,
+  not the bytes.
 
 ## Worked example
 
