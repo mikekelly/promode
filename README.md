@@ -1,10 +1,10 @@
 # Promode
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that makes Claude Code opinionated, so it operates *your* way — and proactively pushes you, itself, and its subagents to follow your methodology, so you never have to think about it, let alone enforce it. Describe an outcome, and Claude Code starts working towards it under your rules.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin designed to make efficient use of Fable on usage credits. Promode uses Fable to grow high quality codebases fast whilst keeping costs down.
 
-Behind that sits the orchestration: an opinionated main agent holds the methodology, plans, makes decisions, and talks to you, while focused subagents do the actual work. Instead of one agent doing everything in a single, ever-growing context, short-lived subagents start clean, do one job, run in parallel, and report back a short summary.
+Promode makes Claude Code opinionated — via a framework you can customise to your development tastes — so it operates *your* way, and proactively pushes you, itself, and its subagents to follow your methodology, so you never have to think about it, let alone enforce it. Describe an outcome, and Claude Code starts working towards it under your rules.
 
-The economics are part of the design. The methodology is built for a model like Fable — very high quality reasoning, relatively expensive inference compared to Opus and Sonnet. Promode prescribes the frontier tier for the judgement-dense work — brainstorming, planning, designing, reviewing — while more cost-effective models take the context-intensive implementation that gets delegated to subagents. That's the cost logic of the whole architecture: frontier tokens are spent only where whole-picture judgement concentrates; the context-heavy grinding happens on cheaper tiers, in fresh contexts.
+Promode is designed for Fable and its costly inference: very high quality reasoning, relatively expensive compared to Opus and Sonnet. So Promode prescribes Fable for the judgement-dense work — brainstorming, planning, designing, reviewing — while more cost-effective models take the context-intensive implementation that gets delegated to subagents. Frontier tokens are spent only where whole-picture judgement concentrates; the context-heavy grinding happens on cheaper tiers, in fresh contexts.
 
 It's a handful of agent definitions, a couple of slash commands, and one hook. No services, no MCP servers, no lock-in — you can read every prompt it ships. And it's built to be forked: methodology is taste, and this repo is the mikekelly fork — install it as-is if that taste fits, or [fork it](#fork-it) and make it yours.
 
