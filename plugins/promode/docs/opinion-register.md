@@ -57,7 +57,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | O35 `memory-as-capture-buffer` | Auto-memory is a capture buffer: promote worthwhile entries into the graph with provenance, prune the rest; supersede with a pointer; keep the decision log | B§after-action-review; AUD c (checks in-repo auto-memory settings so the loop operates on the right store) |
 | O36 `audit-fan-out` | Full alignment assessment fans out parallel assessors; a light check asks the one owning agent to audit its dimension | B§promode-audit; AUD |
 | O37 `escalate-early-bounded-attempts` | Explicit stop-and-report triggers everywhere; ~3 failed approaches is the shared bound; ambiguity, out-of-scope needs, missing credentials always escalate | SE FW DBG EM VER CTO AA PDE §escalation c; CRF c (ask-before-enshrining an unexplained rule) (CR: REWORK *is* its escalation) · w:FW |
-| O38 `lane-asymmetry` *conv* | FW bounces design-judgement work up; SE absorbs trivial work; CTO re-dispatches routine implementation — bounce up, absorb down | FW SE CTO c |
+| O38 `lane-asymmetry` *conv* | FW bounces design-judgement work up; SE absorbs trivial work; CTO escalates routine implementation for re-dispatch — bounce up, absorb down | FW SE CTO c |
 
 ## Shared working principles
 
