@@ -6,8 +6,9 @@ work in [DONE.md](DONE.md).
 
 ## Doing
 
-*(empty)*
+- [CLAUDE.md alignment review + adjustment](tasks/08-claude-md-align.md)
+- [Opinion extraction: inventory across brief + defs](tasks/09-opinion-extraction.md)
 
 ## Ready
 
-*(empty)*
+- [Opinion register (blocked on 09 ratification)](tasks/10-opinion-register.md)
