@@ -8,7 +8,14 @@
 # both directions against the real hook:
 #   - stdin WITH "agent_id"    -> empty output (brief withheld)
 #   - stdin WITHOUT "agent_id" -> non-empty brief output
-# Runs every command-hook registered on SessionStart. Requires jq. Exit 1 on violation.
+#
+# SCOPE: only BRIEF-DELIVERY hooks (those whose args reference PROMODE_MAIN_AGENT.md),
+# mirroring check-hook-chunk-registration.sh. Other command hooks (e.g. the Stop
+# context-monitor) do not deliver the brief and are legitimately silent on a synthetic
+# no-transcript main stdin — the brief-delivery contract does not apply to them. Their
+# own main-only gating is structural (the context-monitor is Stop-only-registered; Stop
+# fires for the main agent only, subagents fire SubagentStop). Requires jq. Exit 1 on
+# violation.
 set -uo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PLUGIN_ROOT="$REPO/plugins/promode"
@@ -47,7 +54,9 @@ while IFS=$'\t' read -r event command argsjson; do
   fi
 done < <(jq -r '
   .hooks | to_entries[] as $e | $e.value[]? as $entry | $entry.hooks[]?
-  | select(.type == "command") | [$e.key, .command, ((.args // []) | @json)] | @tsv
+  | select(.type == "command")
+  | select(any(.args[]?; type == "string" and contains("PROMODE_MAIN_AGENT.md")))
+  | [$e.key, .command, ((.args // []) | @json)] | @tsv
 ' "$HOOKS" | sort -u)
 
 echo

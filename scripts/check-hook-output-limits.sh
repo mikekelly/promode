@@ -9,6 +9,11 @@
 # Runs each registered command-hook on the main-agent SessionStart path and fails
 # fast if any capped field exceeds the limit, so this can't recur inadvertently
 # when the brief (or any hook output) grows. Requires jq. Exit 1 on violation.
+#
+# The CAP applies to EVERY command hook. The non-empty-additionalContext rule
+# applies ONLY to BRIEF-DELIVERY hooks (args reference PROMODE_MAIN_AGENT.md):
+# other hooks (e.g. the Stop context-monitor) are legitimately silent on a
+# synthetic no-transcript stdin, so empty output from them is not a failure.
 set -uo pipefail
 CAP=10000
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -26,6 +31,8 @@ while IFS=$'\t' read -r event command argsjson; do
     < <(printf '%s' "$argsjson" | jq -r '.[]?')
   out="$(printf '%s' "$STDIN" | CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" "$cmd" "${args[@]}" 2>/dev/null)"
   checked=$((checked + 1))
+  is_brief=0
+  printf '%s' "$argsjson" | grep -q 'PROMODE_MAIN_AGENT.md' && is_brief=1
   if printf '%s' "$out" | jq -e . >/dev/null 2>&1; then
     ac=$(printf '%s' "$out" | jq -r '(.hookSpecificOutput.additionalContext // "") | length')
     sm=$(printf '%s' "$out" | jq -r '(.systemMessage // "") | length')
@@ -40,7 +47,7 @@ while IFS=$'\t' read -r event command argsjson; do
     # absent on every chunk but the first, so empty there is fine — only enforce non-empty
     # on additionalContext (the brief payload).
     if [ "${n:-0}" -le 0 ]; then
-      if [ "$name" = "additionalContext" ]; then
+      if [ "$name" = "additionalContext" ] && [ "$is_brief" = 1 ]; then
         printf 'FAIL  %-12s %-17s %6s chars  (empty brief output — missing file or out-of-range chunk?)\n' "$event" "$name" "${n:-0}"; fail=1
       fi
       continue
