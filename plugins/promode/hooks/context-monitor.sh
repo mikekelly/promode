@@ -12,40 +12,55 @@
 # registered on). Verified live on Claude Code 2.1.202 (2026-07-07): a project
 # `Stop` hook fired only for the main session's transcript across repeated
 # turn-ends and never for a deliberately-spawned subagent's completion. Real
-# `Stop` stdin carries NO `agent_id` field; the earlier doc-research assumption
-# was wrong. Fields observed: session_id, transcript_path, cwd, prompt_id,
+# `Stop` stdin carries NO `agent_id`; the earlier doc-research assumption was
+# wrong. Fields observed: session_id, transcript_path, cwd, prompt_id,
 # permission_mode, effort{level}, hook_event_name, stop_hook_active,
 # last_assistant_message, background_tasks, session_crons.
 #
 # Occupancy = the LATEST assistant message's usage (input_tokens +
 # cache_read_input_tokens), NOT a sum across messages — each message's input
-# already represents the full context fed to it. Denominator is the context
-# window as a named config constant.
+# already represents the full context fed to it. Denominator is a named config
+# constant (the 1M-token window).
 #
-# LOOP SAFETY (load-bearing, live-verified 2026-07-07): emitting
-# `additionalContext` on a `Stop` hook FORCES A CONTINUATION — the main agent is
-# re-invoked for an extra turn, it is NOT a silent next-turn footer. On that
-# continuation-triggered `Stop`, stdin carries `stop_hook_active: true`. The
-# earlier spike ignored this flag and looped (inject -> continue -> inject ...,
-# 13.4% -> 13.7% -> 14.9%). This hook MUST exit silently when stop_hook_active
-# is true, so it injects at most once per stop-sequence and can never loop.
-# UX consequence: the advisory costs one agent turn (the agent surfaces it, then
-# yields) — "agent speaks up", not silent awareness.
+# LOOP SAFETY (load-bearing, live-verified): emitting `additionalContext` on a
+# `Stop` hook FORCES A CONTINUATION — the main agent is re-invoked for an extra
+# turn, it is NOT a silent next-turn footer. On that continuation-triggered
+# `Stop`, stdin carries `stop_hook_active: true`. The retired spike ignored this
+# and looped (13.4% -> 13.7% -> 14.9%). This hook exits silently when
+# stop_hook_active is true -> at most one injection per stop-sequence, no loop.
+# UX consequence: the advisory costs one agent turn ("agent speaks up"), not
+# silent awareness.
 #
-# Pure logic lives in the functions below and is fixture-tested in
-# scripts/test-context-monitor.sh (main() is guarded so sourcing is safe).
+# DEBOUNCE — transcript-derived, LEVEL-TRIGGERED (no external state file):
+# inject the current band iff it is HIGHER than the highest band reached at any
+# prior TURN-ENDING since the last compact_boundary. A turn-ending occupancy is
+# the last assistant `usage` immediately before a GENUINE user-prompt entry; the
+# current turn's own mid-turn readings are excluded (there is no user prompt
+# after it yet). This is level-triggered, not edge-triggered: a band crossing
+# that lands mid-turn (e.g. a big tool result jumps 41%->48% inside one turn)
+# still injects exactly once at the next Stop, instead of being suppressed by a
+# same-turn earlier reading. A `compact_boundary` re-arms all bands (only
+# turn-endings AFTER the last boundary are considered) — live-confirmed to cover
+# both auto and manual compaction, same file.
+#
+# GENUINE user prompt (turn boundary), verified against the real transcript:
+#   type=="user" AND not isMeta AND not isCompactSummary AND not isSidechain AND
+#   message.content is a string (or an array with NO tool_result block).
+# Tool-result user entries (content=[{type:"tool_result"}]) are NOT boundaries;
+# the compaction summary is a string user entry flagged isCompactSummary.
+#
+# All harness facts above are live-observed on 2.1.202 (undocumented — re-verify
+# on any Claude Code change). Pure logic lives in the functions below and is
+# fixture-tested in scripts/test-context-monitor.sh (main() is guarded so
+# sourcing is safe).
 # =============================================================================
 set -uo pipefail
 
 # --- config constants (not magic numbers) -----------------------------------
-# Confirmed 1M-token window for Fable/Opus/Sonnet. Override for tests only.
-CONTEXT_WINDOW_TOKENS="${CONTEXT_WINDOW_TOKENS:-1000000}"
-# Band thresholds (percent of window). Below FLOOR: inject nothing.
-CTX_FLOOR_PCT=40   # first advisory
+CONTEXT_WINDOW_TOKENS="${CONTEXT_WINDOW_TOKENS:-1000000}"   # 1M window (Fable/Opus/Sonnet)
+CTX_FLOOR_PCT=40   # first advisory  (below this: inject nothing)
 CTX_SOON_PCT=55    # "worth raising soon"
 CTX_NOW_PCT=70     # "recommend raising now"
-# Per-session, per-band debounce state (once per band per session).
-PROMODE_CTX_STATE_DIR="${PROMODE_CTX_STATE_DIR:-${TMPDIR:-/tmp}/promode-context-monitor}"
 
 # --- pure logic (sourced by the test; no side effects) ----------------------
 
@@ -56,8 +71,7 @@ latest_usage_tokens() {
   local f="$1"
   [ -r "$f" ] || { echo 0; return; }
   tail -n 400 "$f" | jq -Rn '
-    [ inputs
-      | fromjson? // empty
+    [ inputs | fromjson? // empty
       | select(.type == "assistant" and (.message.usage != null)) ]
     | if length == 0 then 0
       else ( .[-1].message.usage
@@ -72,7 +86,6 @@ tokens_to_pct() {
 }
 
 # pct_to_band <pct>  -> floor | notice | soon | now.
-#   floor = below CTX_FLOOR_PCT (suppress entirely).
 pct_to_band() {
   awk -v p="${1:-0}" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" \
     'BEGIN {
@@ -83,9 +96,12 @@ pct_to_band() {
      }'
 }
 
-# band_message <band> <pct>  -> the injected advisory line (minimal: % + soft
-#   cue). Soft/advisory, escalating emphasis by band; references the doctrine,
-#   does not restate it. Empty for floor.
+# band_rank <band> / band_from_rank <n>  -> total order floor<notice<soon<now.
+band_rank() { case "$1" in now) echo 3;; soon) echo 2;; notice) echo 1;; *) echo 0;; esac; }
+band_from_rank() { case "$1" in 3) echo now;; 2) echo soon;; 1) echo notice;; *) echo floor;; esac; }
+
+# band_message <band> <pct>  -> the injected advisory (minimal: % + soft cue),
+#   escalating emphasis by band; references the doctrine, does not restate it.
 band_message() {
   local band="$1" pct="$2"
   case "$band" in
@@ -96,55 +112,72 @@ band_message() {
   esac
 }
 
-# should_emit_band <state_file> <band>  -> exit 0 if this band has NOT yet been
-#   emitted for the session (debounce: once per band per session); exit 1 if it
-#   already has, or if band is floor.
-should_emit_band() {
-  local state_file="$1" band="$2"
-  [ "$band" = "floor" ] && return 1
-  [ -f "$state_file" ] && grep -qxF "$band" "$state_file" && return 1
-  return 0
-}
-
-# record_band <state_file> <band>  -> mark this band emitted for the session.
-record_band() {
-  local state_file="$1" band="$2"
-  mkdir -p "$(dirname "$state_file")" 2>/dev/null || true
-  printf '%s\n' "$band" >> "$state_file"
+# prior_max_band <transcript_file>  -> highest band among PRIOR TURN-ENDINGS
+#   since the last compact_boundary (current turn excluded). floor if none.
+#   Cheap streaming pass over the post-boundary region (not a full-file parse):
+#   grep locates the last boundary line; one jq reduce emits each turn-ending
+#   occupancy; awk folds them to a max band rank.
+prior_max_band() {
+  local f="$1" bl maxrank
+  [ -r "$f" ] || { echo floor; return; }
+  bl="$(grep -n '"subtype":"compact_boundary"' "$f" | tail -1 | cut -d: -f1)"; bl="${bl:-0}"
+  maxrank="$(tail -n +"$((bl + 1))" "$f" | jq -Rn '
+    # Emit one token count per turn-ending: the last assistant usage seen just
+    # before each GENUINE user prompt. The trailing pending value (current turn)
+    # is never emitted.
+    def is_prompt:
+      (.type == "user")
+      and ((.isMeta // false) | not)
+      and ((.isCompactSummary // false) | not)
+      and ((.isSidechain // false) | not)
+      and ( ((.message.content | type) == "string")
+            or ( (.message.content | type) == "array"
+                 and ([ .message.content[]? | select((.type?) == "tool_result") ] | length) == 0 ) );
+    reduce (inputs | fromjson? // empty) as $o
+      ( { pending: null, endings: [] };
+        if ($o.type == "assistant" and ($o.message.usage != null)) then
+          .pending = (($o.message.usage.input_tokens // 0) + ($o.message.usage.cache_read_input_tokens // 0))
+        elif ($o | is_prompt) then
+          if .pending != null then (.endings += [.pending] | .pending = null) else . end
+        else . end )
+    | .endings[]' 2>/dev/null \
+    | awk -v w="$CONTEXT_WINDOW_TOKENS" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" '
+        BEGIN { max = 0 }
+        { if (w <= 0) w = 1; p = ($1 / w) * 100;
+          r = (p >= no) ? 3 : ((p >= so) ? 2 : ((p >= fl) ? 1 : 0));
+          if (r > max) max = r }
+        END { print max }')"
+  band_from_rank "${maxrank:-0}"
 }
 
 # --- hook entrypoint --------------------------------------------------------
 main() {
   local input; input="$(cat)"
 
-  # Defense in depth: only act on Stop (main-agent turn-end). Never on any
-  # other event that might route here.
+  # Defense in depth: only act on Stop (main-agent turn-end).
   local evt; evt="$(printf '%s' "$input" | jq -r '.hook_event_name // empty' 2>/dev/null)"
   [ -n "$evt" ] && [ "$evt" != "Stop" ] && exit 0
 
-  # LOOP GUARD: never inject on a continuation already triggered by a stop hook.
-  # additionalContext on Stop forces a continuation; stop_hook_active goes true
-  # on that re-fire. Suppressing here caps us at one injection per stop-sequence.
+  # LOOP GUARD: never inject on a stop-hook-triggered continuation.
   local active; active="$(printf '%s' "$input" | jq -r '.stop_hook_active // false' 2>/dev/null)"
   [ "$active" = "true" ] && exit 0
 
-  local sid tpath tokens pct band
-  sid="$(printf '%s' "$input" | jq -r '.session_id // "unknown"' 2>/dev/null)"
+  local tpath tokens pct band
   tpath="$(printf '%s' "$input" | jq -r '.transcript_path // empty' 2>/dev/null)"
   [ -n "$tpath" ] || exit 0
 
   tokens="$(latest_usage_tokens "$tpath")"
   pct="$(tokens_to_pct "$tokens")"
   band="$(pct_to_band "$pct")"
+  [ "$band" = "floor" ] && exit 0
 
-  # Below the floor, or already advised for this band this session -> stay silent.
-  local state_file="$PROMODE_CTX_STATE_DIR/${sid}.bands"
-  should_emit_band "$state_file" "$band" || exit 0
+  # Level-triggered debounce: inject iff we have reached a HIGHER band than at
+  # any prior turn-ending since the last compaction.
+  local prior; prior="$(prior_max_band "$tpath")"
+  [ "$(band_rank "$band")" -gt "$(band_rank "$prior")" ] || exit 0
 
   local msg; msg="$(band_message "$band" "$pct")"
   [ -n "$msg" ] || exit 0
-
-  record_band "$state_file" "$band"
   jq -n --arg c "$msg" '{hookSpecificOutput:{hookEventName:"Stop",additionalContext:$c}}'
   exit 0
 }
