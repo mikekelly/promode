@@ -40,7 +40,7 @@ Concepts considered and **rejected** — check before proposing methodology idea
 
 ### Where the brief + hook live; keeping principles in sync
 
-The plugin ships its own `SessionStart` delivery — nothing is copied into a project: `plugins/promode/hooks/` (`hooks.json` + `promode-main-context.sh`) injects the brief from `plugins/promode/PROMODE_MAIN_AGENT.md`, read via `${CLAUDE_PLUGIN_ROOT}`, so a plugin update delivers the new brief automatically (`promode-audit` flags stale leftovers from the retired per-project copy-install).
+The plugin ships its own `SessionStart` delivery — nothing is copied into a project: `plugins/promode/hooks/` (`hooks.json` + `promode-main-context.sh`) injects the brief from `plugins/promode/PROMODE_MAIN_AGENT.md`, read via `${CLAUDE_PLUGIN_ROOT}`, so a plugin update delivers the new brief automatically (`promode-audit` flags stale leftovers from the retired per-project copy-install). The same `hooks.json` also wires a `Stop` hook (`context-monitor.sh`) that surfaces the main agent's live context occupancy — design + harness facts: [`docs/decisions/2026-07-context-monitor.md`](docs/decisions/2026-07-context-monitor.md).
 
 Principles are deliberately duplicated — the inline copy is load-bearing in each home, and the rationale travels with the rule (never dedupe the *why* out of a copy): a shared principle lives in the brief (main agent) **and** every relevant agent definition (subagents), some blocks in several defs at once. When you change one, sync **all** its homes — runbook: [`sync-a-shared-principle.md`](runbooks/sync-a-shared-principle.md).
 

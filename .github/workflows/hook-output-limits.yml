@@ -25,3 +25,7 @@ jobs:
           ./scripts/test-check-claude-md-imports.sh
           ./scripts/test-check-component-frontmatter.sh
           ./scripts/test-check-shared-principle-checksums.sh
+      # Unit-test the context-monitor Stop hook's pure logic (occupancy %, rank ladder,
+      # transcript-derived level-triggered debounce, loop guard, prompt discriminator).
+      - name: Test the context-monitor hook
+        run: ./scripts/test-context-monitor.sh
