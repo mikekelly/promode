@@ -58,9 +58,12 @@ set -uo pipefail
 
 # --- config constants (not magic numbers) -----------------------------------
 CONTEXT_WINDOW_TOKENS="${CONTEXT_WINDOW_TOKENS:-1000000}"   # 1M window (Fable/Opus/Sonnet)
-CTX_FLOOR_PCT=40   # first advisory  (below this: inject nothing)
-CTX_SOON_PCT=55    # "worth raising soon"
-CTX_NOW_PCT=70     # "recommend raising now"
+# Ordered re-notify thresholds (%). This single ascending array is the whole
+# ladder — changing the notification points is a one-line edit here. A band
+# RANK = the count of thresholds <= the current occupancy %:
+#   rank 0 = below 40 (floor, silent) · 1 = >=40 · 2 = >=55 · 3 = >=70 ·
+#   4 = >=80 · 5 = >=90 (covers 90-100; no degenerate literal-100 threshold).
+CTX_BANDS=(40 55 70 80 90)
 
 # --- pure logic (sourced by the test; no side effects) ----------------------
 
@@ -87,41 +90,35 @@ tokens_to_pct() {
     'BEGIN { if (w <= 0) w = 1; printf "%.1f", (t / w) * 100 }'
 }
 
-# pct_to_band <pct>  -> floor | notice | soon | now.
-pct_to_band() {
-  LC_ALL=C awk -v p="${1:-0}" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" \
-    'BEGIN {
-       if (p >= no)      print "now";
-       else if (p >= so) print "soon";
-       else if (p >= fl) print "notice";
-       else              print "floor";
-     }'
+# pct_to_rank <pct>  -> band rank = count of CTX_BANDS thresholds <= pct.
+#   0 = floor (silent). The thresholds come from the single CTX_BANDS array, so
+#   this is the one place the ladder is interpreted. pct is rounded to 1 decimal
+#   first (matching tokens_to_pct and the prior-turn fold) so an exact-threshold
+#   value like 80.0 ranks identically wherever it is computed.
+pct_to_rank() {
+  LC_ALL=C awk -v p="${1:-0}" -v ths="${CTX_BANDS[*]}" \
+    'BEGIN { n = split(ths, a, " "); p = sprintf("%.1f", p) + 0; r = 0;
+             for (i = 1; i <= n; i++) if (p >= a[i]) r++; print r }'
 }
 
-# band_rank <band> / band_from_rank <n>  -> total order floor<notice<soon<now.
-band_rank() { case "$1" in now) echo 3;; soon) echo 2;; notice) echo 1;; *) echo 0;; esac; }
-band_from_rank() { case "$1" in 3) echo now;; 2) echo soon;; 1) echo notice;; *) echo floor;; esac; }
-
-# band_message <band> <pct>  -> the injected advisory: ONE neutral factual line
-#   for every non-floor band (user-ratified). The hook states only the fact (the
-#   %); ALL whether/when-to-raise judgement is the agent's and lives in the brief
-#   doctrine, not here. Escalation across the 40/55/70 bands is carried by the
-#   rising number (each band re-fires once via the debounce), not by wording.
-#   Empty for floor.
+# band_message <pct>  -> the injected advisory: ONE neutral factual line for
+#   every non-floor band (user-ratified). The hook states only the fact (the %);
+#   ALL whether/when-to-raise judgement is the agent's and lives in the brief
+#   doctrine, not here. Escalation across the ladder is carried by the rising
+#   number (each rank re-fires once via the debounce), not by wording. The
+#   caller gates on rank>0, so this is only ever called above the floor.
 band_message() {
-  local band="$1" pct="$2"
-  [ "$band" = "floor" ] && { printf ''; return; }
-  printf 'promode context-monitor: context ~%s%% of the window.' "$pct"
+  printf 'promode context-monitor: context ~%s%% of the window.' "$1"
 }
 
-# prior_max_band <transcript_file>  -> highest band among PRIOR TURN-ENDINGS
-#   since the last compact_boundary (current turn excluded). floor if none.
+# prior_max_rank <transcript_file>  -> highest band RANK among PRIOR TURN-ENDINGS
+#   since the last compact_boundary (current turn excluded). 0 if none.
 #   Cheap streaming pass over the post-boundary region (not a full-file parse):
 #   grep locates the last boundary line; one jq reduce emits each turn-ending
-#   occupancy; awk folds them to a max band rank.
-prior_max_band() {
+#   occupancy; awk folds them to a max rank using the same CTX_BANDS ladder.
+prior_max_rank() {
   local f="$1" bl maxrank
-  [ -r "$f" ] || { echo floor; return; }
+  [ -r "$f" ] || { echo 0; return; }
   # ⚙ HARNESS-SERIALIZATION ASSUMPTION (re-verify on any Claude Code change): the
   #   compact_boundary marker is matched by a tolerant line-grep. We allow
   #   optional whitespace after the colon; if the harness ever reorders keys or
@@ -148,13 +145,13 @@ prior_max_band() {
           if .pending != null then (.endings += [.pending] | .pending = null) else . end
         else . end )
     | .endings[]' 2>/dev/null \
-    | LC_ALL=C awk -v w="$CONTEXT_WINDOW_TOKENS" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" '
-        BEGIN { max = 0 }
-        { if (w <= 0) w = 1; p = ($1 / w) * 100;
-          r = (p >= no) ? 3 : ((p >= so) ? 2 : ((p >= fl) ? 1 : 0));
+    | LC_ALL=C awk -v w="$CONTEXT_WINDOW_TOKENS" -v ths="${CTX_BANDS[*]}" '
+        BEGIN { n = split(ths, a, " "); max = 0 }
+        { if (w <= 0) w = 1; p = sprintf("%.1f", ($1 / w) * 100) + 0;
+          r = 0; for (i = 1; i <= n; i++) if (p >= a[i]) r++;
           if (r > max) max = r }
         END { print max }')"
-  band_from_rank "${maxrank:-0}"
+  echo "${maxrank:-0}"
 }
 
 # --- hook entrypoint --------------------------------------------------------
@@ -169,23 +166,22 @@ main() {
   local active; active="$(printf '%s' "$input" | jq -r '.stop_hook_active // false' 2>/dev/null)"
   [ "$active" = "true" ] && exit 0
 
-  local tpath tokens pct band
+  local tpath tokens pct rank
   tpath="$(printf '%s' "$input" | jq -r '.transcript_path // empty' 2>/dev/null)"
   [ -n "$tpath" ] || exit 0
 
   tokens="$(latest_usage_tokens "$tpath")"
   pct="$(tokens_to_pct "$tokens")"
-  band="$(pct_to_band "$pct")"
-  [ "$band" = "floor" ] && exit 0
+  rank="$(pct_to_rank "$pct")"
+  [ "${rank:-0}" -lt 1 ] && exit 0   # floor -> silent
 
-  # Level-triggered debounce: inject iff we have reached a HIGHER band than at
+  # Level-triggered debounce: inject iff we have reached a HIGHER rank than at
   # any prior turn-ending since the last compaction.
-  local prior; prior="$(prior_max_band "$tpath")"
-  [ "$(band_rank "$band")" -gt "$(band_rank "$prior")" ] || exit 0
+  local prior; prior="$(prior_max_rank "$tpath")"
+  [ "$rank" -gt "${prior:-0}" ] || exit 0
 
-  local msg; msg="$(band_message "$band" "$pct")"
-  [ -n "$msg" ] || exit 0
-  jq -n --arg c "$msg" '{hookSpecificOutput:{hookEventName:"Stop",additionalContext:$c}}'
+  jq -n --arg c "$(band_message "$pct")" \
+    '{hookSpecificOutput:{hookEventName:"Stop",additionalContext:$c}}'
   exit 0
 }
 

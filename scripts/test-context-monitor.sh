@@ -48,68 +48,81 @@ bndws(){ printf '{"type":"system","subtype": "compact_boundary","content":"x"}\n
 tok()  { echo $(( $1 * 10000 )); }   # tokens for a given occupancy % (window = 1_000_000)
 
 # ===========================================================================
-# 1. Transferable pure logic (unchanged by the debounce rewrite)
+# 1. Pure logic — config-driven rank ladder
 # ===========================================================================
 TR="$tmproot/t.jsonl"
 { rd 950000; up; rd 465000; } > "$TR"   # latest = 465000; earlier huge one guards sum-vs-latest
 eq "latest_usage_tokens = latest not sum" "465000" "$(latest_usage_tokens "$TR")"
 eq "465000 -> 46.5%" "46.5" "$(tokens_to_pct 465000)"
-eq "39.9% -> floor"  "floor"  "$(pct_to_band 39.9)"
-eq "40.0% -> notice" "notice" "$(pct_to_band 40.0)"
-eq "54.9% -> notice" "notice" "$(pct_to_band 54.9)"
-eq "55.0% -> soon"   "soon"   "$(pct_to_band 55.0)"
-eq "69.9% -> soon"   "soon"   "$(pct_to_band 69.9)"
-eq "70.0% -> now"    "now"    "$(pct_to_band 70.0)"
+
+# The ladder is one ordered array; ranks are derived from it (count of
+# thresholds <= pct). This pins the single-source-of-truth config intent.
+eq "ladder is the single CTX_BANDS array" "40 55 70 80 90" "${CTX_BANDS[*]}"
+
+# rank at each threshold boundary and just below it — hand-derived from the array
+eq "39.9% -> rank 0 (floor)"                 "0" "$(pct_to_rank 39.9)"
+eq "40.0% -> rank 1 (exact boundary)"        "1" "$(pct_to_rank 40.0)"
+eq "54.9% -> rank 1"                         "1" "$(pct_to_rank 54.9)"
+eq "55.0% -> rank 2 (exact boundary)"        "2" "$(pct_to_rank 55.0)"
+eq "69.9% -> rank 2"                         "2" "$(pct_to_rank 69.9)"
+eq "70.0% -> rank 3 (exact boundary)"        "3" "$(pct_to_rank 70.0)"
+eq "79.9% -> rank 3"                         "3" "$(pct_to_rank 79.9)"
+eq "80.0% -> rank 4 (new, exact boundary)"   "4" "$(pct_to_rank 80.0)"
+eq "89.9% -> rank 4"                         "4" "$(pct_to_rank 89.9)"
+eq "90.0% -> rank 5 (new, covers 90-100)"    "5" "$(pct_to_rank 90.0)"
+eq "99.9% -> rank 5 (no literal-100 band)"   "5" "$(pct_to_rank 99.9)"
+
+# config-driven: overriding the array changes the ranks (pins that the ladder,
+# not hardcoded constants, drives ranking). Restore after.
+_saved_bands=("${CTX_BANDS[@]}")
+CTX_BANDS=(50)
+eq "override CTX_BANDS=(50): 40 -> rank 0" "0" "$(pct_to_rank 40)"
+eq "override CTX_BANDS=(50): 60 -> rank 1" "1" "$(pct_to_rank 60)"
+CTX_BANDS=("${_saved_bands[@]}")
+
 # User-ratified wording: ONE neutral factual line for every non-floor band —
-# only the fact (the %), no urgency clauses; escalation is carried by the number
-# (each band still fires once, per the debounce). floor -> empty.
+# only the fact (the %), no urgency clauses. Escalation is carried by the number.
 UNIFORM="promode context-monitor: context ~%s%% of the window."
-eq "floor -> empty message" "" "$(band_message floor 30.0)"
-eq "notice message uniform"           "$(printf "$UNIFORM" 46.5)" "$(band_message notice 46.5)"
-eq "soon message uniform (no urgency)" "$(printf "$UNIFORM" 58.0)" "$(band_message soon 58.0)"
-eq "now message uniform (no urgency)"  "$(printf "$UNIFORM" 72.0)" "$(band_message now 72.0)"
-case "$(band_message soon 58.0)" in *soon*|*raising*|*recommend*) eq "no urgency words in message" clean dirty;; *) eq "no urgency words in message" clean clean;; esac
+eq "message uniform at 46.5" "$(printf "$UNIFORM" 46.5)" "$(band_message 46.5)"
+eq "message uniform at 58.0" "$(printf "$UNIFORM" 58.0)" "$(band_message 58.0)"
+eq "message uniform at 82.0" "$(printf "$UNIFORM" 82.0)" "$(band_message 82.0)"
+case "$(band_message 58.0)" in *soon*|*raising*|*recommend*|*worth*) eq "no urgency words in message" clean dirty;; *) eq "no urgency words in message" clean clean;; esac
 
 # ===========================================================================
-# 2. Debounce internals: band_rank + prior_max_band over TURN-ENDINGS
+# 2. Debounce internals: prior_max_rank over TURN-ENDINGS (integers now)
 # ===========================================================================
-eq "band_rank floor=0"  "0" "$(band_rank floor)"
-eq "band_rank notice=1" "1" "$(band_rank notice)"
-eq "band_rank soon=2"   "2" "$(band_rank soon)"
-eq "band_rank now=3"    "3" "$(band_rank now)"
-
 # turn-endings are the last reading before each genuine prompt; current excluded
 P1="$tmproot/p1.jsonl"; { up; rd "$(tok 38)"; up; rd "$(tok 45)"; } > "$P1"
-eq "prior_max [t:38 | cur:45] -> floor" "floor" "$(prior_max_band "$P1")"
+eq "prior_max_rank [t:38 | cur:45] -> 0" "0" "$(prior_max_rank "$P1")"
 P2="$tmproot/p2.jsonl"; { up; rd "$(tok 38)"; up; rd "$(tok 45)"; up; rd "$(tok 50)"; } > "$P2"
-eq "prior_max [t:38,45 | cur:50] -> notice" "notice" "$(prior_max_band "$P2")"
+eq "prior_max_rank [t:38,45 | cur:50] -> 1" "1" "$(prior_max_rank "$P2")"
 P3="$tmproot/p3.jsonl"; { up; rd "$(tok 45)"; up; rd "$(tok 56)"; up; rd "$(tok 42)"; } > "$P3"
-eq "prior_max [t:45,56 | cur:42] -> soon" "soon" "$(prior_max_band "$P3")"
+eq "prior_max_rank [t:45,56 | cur:42] -> 2" "2" "$(prior_max_rank "$P3")"
 P4="$tmproot/p4.jsonl"; { up; rd "$(tok 45)"; up; rd "$(tok 56)"; bnd; up; rd "$(tok 42)"; } > "$P4"
-eq "prior_max after compact_boundary re-arms -> floor" "floor" "$(prior_max_band "$P4")"
+eq "prior_max_rank after compact_boundary re-arms -> 0" "0" "$(prior_max_rank "$P4")"
 
 # Non-prompt user entries are NOT turn boundaries. Each fixture puts the excluded
 # entry between two same-turn readings (41 then 48); if it were wrongly treated as
-# a boundary it would close pending=41 -> prior_max notice. Correct -> floor (only
-# the earlier real turn-end of 35). Each pins one is_prompt exclusion branch; the
-# rework verified each goes RED when its guard is removed from the script.
+# a boundary it would close pending=41 -> prior_max_rank 1. Correct -> 0 (only the
+# earlier real turn-end of 35 counts). Each pins one is_prompt exclusion branch;
+# the rework verified each goes RED when its guard is removed from the script.
 TRB="$tmproot/trb.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; trr;  rd "$(tok 48)"; } > "$TRB"
-eq "tool_result not a boundary -> prior_max floor" "floor" "$(prior_max_band "$TRB")"
+eq "tool_result not a boundary -> prior_max_rank 0" "0" "$(prior_max_rank "$TRB")"
 MET="$tmproot/met.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; meta; rd "$(tok 48)"; } > "$MET"
-eq "isMeta not a boundary -> prior_max floor" "floor" "$(prior_max_band "$MET")"
+eq "isMeta not a boundary -> prior_max_rank 0" "0" "$(prior_max_rank "$MET")"
 CSM="$tmproot/csm.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; csum; rd "$(tok 48)"; } > "$CSM"
-eq "isCompactSummary not a boundary -> prior_max floor" "floor" "$(prior_max_band "$CSM")"
+eq "isCompactSummary not a boundary -> prior_max_rank 0" "0" "$(prior_max_rank "$CSM")"
 SID="$tmproot/sid.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; side; rd "$(tok 48)"; } > "$SID"
-eq "isSidechain not a boundary -> prior_max floor" "floor" "$(prior_max_band "$SID")"
+eq "isSidechain not a boundary -> prior_max_rank 0" "0" "$(prior_max_rank "$SID")"
 
 # compact_boundary match is whitespace-tolerant (serialization robustness)
 P4WS="$tmproot/p4ws.jsonl"; { up; rd "$(tok 45)"; up; rd "$(tok 56)"; bndws; up; rd "$(tok 42)"; } > "$P4WS"
-eq "compact_boundary w/ space after colon still re-arms -> floor" "floor" "$(prior_max_band "$P4WS")"
+eq "compact_boundary w/ space after colon still re-arms -> 0" "0" "$(prior_max_rank "$P4WS")"
 
 # continuation-turn grouping: reading after an injection (no prompt before it)
 # belongs to the segment ending at the next real prompt -> ending occupancy = 46
 CNT="$tmproot/cnt.jsonl"; { up; rd "$(tok 45)"; rd "$(tok 46)"; up; rd "$(tok 48)"; } > "$CNT"
-eq "continuation grouped: prior_max = notice (segment ends at 46)" "notice" "$(prior_max_band "$CNT")"
+eq "continuation grouped: prior_max_rank = 1 (segment ends at 46)" "1" "$(prior_max_rank "$CNT")"
 
 # ===========================================================================
 # 3. End-to-end main() — the ratified level-triggered climb
@@ -132,6 +145,17 @@ O="$(run_hook "$C3")"; case "$(ctx_of "$O")" in *56.0%*) eq "cross soon threshol
 C4="$tmproot/c4.jsonl"; { up; rd "$(tok 38)"; up; rd "$(tok 45)"; up; rd "$(tok 50)"; up; rd "$(tok 56)"; up; rd "$(tok 72)"; } > "$C4"
 O="$(run_hook "$C4")"; case "$(ctx_of "$O")" in *72.0%*) eq "cross now threshold (72%) re-pings once" y y;; *) eq "cross now threshold (72%) re-pings once" y "n[$O]";; esac
 eq "emitted hookEventName is Stop" "Stop" "$(printf '%s' "$O" | jq -r '.hookSpecificOutput.hookEventName // ""')"
+
+# --- new thresholds: 80% (rank 4) and 90% (rank 5) --------------------------
+LADDER="up; rd $(tok 38); up; rd $(tok 45); up; rd $(tok 50); up; rd $(tok 56); up; rd $(tok 72)"
+C6="$tmproot/c6.jsonl";  eval "{ $LADDER; up; rd $(tok 82); }" > "$C6"
+O="$(run_hook "$C6")"; case "$(ctx_of "$O")" in *82.0%*) eq "cross 80 threshold (82%) re-pings once (rank 4)" y y;; *) eq "cross 80 threshold (82%) re-pings once (rank 4)" y "n[$O]";; esac
+C6b="$tmproot/c6b.jsonl"; eval "{ $LADDER; up; rd $(tok 82); up; rd $(tok 85); }" > "$C6b"
+eq "82->85 (still rank 4) silent" "" "$(run_hook "$C6b")"
+C7="$tmproot/c7.jsonl";  eval "{ $LADDER; up; rd $(tok 82); up; rd $(tok 92); }" > "$C7"
+O="$(run_hook "$C7")"; case "$(ctx_of "$O")" in *92.0%*) eq "cross 90 threshold (92%) re-pings once (rank 5)" y y;; *) eq "cross 90 threshold (92%) re-pings once (rank 5)" y "n[$O]";; esac
+C7b="$tmproot/c7b.jsonl"; eval "{ $LADDER; up; rd $(tok 82); up; rd $(tok 92); up; rd $(tok 96); }" > "$C7b"
+eq "92->96 (still rank 5) silent" "" "$(run_hook "$C7b")"
 
 # --- mid-turn crossing (the CORRECTED behaviour) ----------------------------
 # One turn climbs 41(notice)->48(notice) with a tool call in between. The old
