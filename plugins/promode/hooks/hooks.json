@@ -1,31 +1,6 @@
 {
-  "description": "promode: inject the main-agent orchestration brief at session start (main agent only), split into self-contained chunks to stay under the 10k hook-output cap",
+  "description": "promode: SessionStart auto-injection is DISABLED in this fork. promode no longer fires in every session; it is activated on demand via the /promode command, which reads PROMODE_MAIN_AGENT.md and adopts the orchestration brief for that session only.",
   "hooks": {
-    "SessionStart": [
-      { "matcher": "startup", "hooks": [
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "1"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "2"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "3"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "4"] }
-      ] },
-      { "matcher": "resume", "hooks": [
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "1"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "2"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "3"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "4"] }
-      ] },
-      { "matcher": "clear", "hooks": [
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "1"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "2"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "3"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "4"] }
-      ] },
-      { "matcher": "compact", "hooks": [
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "1"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "2"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "3"] },
-        { "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/promode-main-context.sh", "${CLAUDE_PLUGIN_ROOT}/PROMODE_MAIN_AGENT.md", "4"] }
-      ] }
-    ]
+    "SessionStart": []
   }
 }
