@@ -27,6 +27,7 @@ Undocumented unless noted; re-verify on any Claude Code / model change.
 - **(d) `compact_boundary`** — a `system` entry `subtype:"compact_boundary"` (`content:"Conversation compacted"`, `compactMetadata.trigger`) — is the re-arm backstop; live-confirmed for **both** `auto` and `manual` compaction, in the **same file** (followed by a `user` entry `isCompactSummary:true`). This is the one documented fact.
 - **(e) Genuine-prompt discriminator** (turn boundary): `type=="user"` AND not `isMeta`/`isCompactSummary`/`isSidechain` AND `message.content` is a string (or an array with no `tool_result` block). Tool-result user entries and the compaction summary are NOT boundaries.
 - **(f) Per-model windows + effort levels** (docs-confirmed): Fable 5 / Opus 4.8 / Sonnet 5 each 1M-token window, effort low/med/high(default)/xhigh/max.
+- **(g) List pricing per MTok (in/out)** — verified 2026-07-08 from the official Anthropic pricing page: Fable 5 **$10/$50**, Opus 4.8 **$5/$25**, Sonnet 5 **$2/$10**. Ratios: Opus÷Sonnet **2.5×**, Fable÷Opus **2.0×**, Fable÷Sonnet **5.0×** — confirming the corpus's "cheaper tiers" framing (Sonnet is meaningfully cheaper than Opus), so **no corpus wording change was made**. ⚙ **Sonnet 5's $2/$10 is introductory through Aug 31 2026**; after Sept 1 the Opus gap narrows to ~1.67× — re-verify pricing then.
 
 ## Decision log — rejected alternatives (durable reasons; don't re-suggest)
 
