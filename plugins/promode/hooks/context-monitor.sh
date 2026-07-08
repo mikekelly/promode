@@ -80,14 +80,16 @@ latest_usage_tokens() {
 }
 
 # tokens_to_pct <tokens>  -> occupancy as % of the window, 1 decimal.
+#   LC_ALL=C pins '.' as the decimal separator so a comma-decimal locale can't
+#   corrupt the number we format here and re-parse in awk downstream.
 tokens_to_pct() {
-  awk -v t="${1:-0}" -v w="$CONTEXT_WINDOW_TOKENS" \
+  LC_ALL=C awk -v t="${1:-0}" -v w="$CONTEXT_WINDOW_TOKENS" \
     'BEGIN { if (w <= 0) w = 1; printf "%.1f", (t / w) * 100 }'
 }
 
 # pct_to_band <pct>  -> floor | notice | soon | now.
 pct_to_band() {
-  awk -v p="${1:-0}" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" \
+  LC_ALL=C awk -v p="${1:-0}" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" \
     'BEGIN {
        if (p >= no)      print "now";
        else if (p >= so) print "soon";
@@ -100,16 +102,16 @@ pct_to_band() {
 band_rank() { case "$1" in now) echo 3;; soon) echo 2;; notice) echo 1;; *) echo 0;; esac; }
 band_from_rank() { case "$1" in 3) echo now;; 2) echo soon;; 1) echo notice;; *) echo floor;; esac; }
 
-# band_message <band> <pct>  -> the injected advisory (minimal: % + soft cue),
-#   escalating emphasis by band; references the doctrine, does not restate it.
+# band_message <band> <pct>  -> the injected advisory: ONE neutral factual line
+#   for every non-floor band (user-ratified). The hook states only the fact (the
+#   %); ALL whether/when-to-raise judgement is the agent's and lives in the brief
+#   doctrine, not here. Escalation across the 40/55/70 bands is carried by the
+#   rising number (each band re-fires once via the debounce), not by wording.
+#   Empty for floor.
 band_message() {
   local band="$1" pct="$2"
-  case "$band" in
-    notice) printf 'promode context-monitor: context ~%s%% of the window.' "$pct" ;;
-    soon)   printf 'promode context-monitor: context ~%s%% of the window — worth raising with the user soon.' "$pct" ;;
-    now)    printf 'promode context-monitor: context ~%s%% of the window — recommend raising with the user now.' "$pct" ;;
-    *)      printf '' ;;
-  esac
+  [ "$band" = "floor" ] && { printf ''; return; }
+  printf 'promode context-monitor: context ~%s%% of the window.' "$pct"
 }
 
 # prior_max_band <transcript_file>  -> highest band among PRIOR TURN-ENDINGS
@@ -120,7 +122,12 @@ band_message() {
 prior_max_band() {
   local f="$1" bl maxrank
   [ -r "$f" ] || { echo floor; return; }
-  bl="$(grep -n '"subtype":"compact_boundary"' "$f" | tail -1 | cut -d: -f1)"; bl="${bl:-0}"
+  # ⚙ HARNESS-SERIALIZATION ASSUMPTION (re-verify on any Claude Code change): the
+  #   compact_boundary marker is matched by a tolerant line-grep. We allow
+  #   optional whitespace after the colon; if the harness ever reorders keys or
+  #   pretty-prints entries across lines, this single-line match must be revisited
+  #   (route via jq at that point). Live-observed compact form on 2.1.x.
+  bl="$(grep -nE '"subtype":[[:space:]]*"compact_boundary"' "$f" | tail -1 | cut -d: -f1)"; bl="${bl:-0}"
   maxrank="$(tail -n +"$((bl + 1))" "$f" | jq -Rn '
     # Emit one token count per turn-ending: the last assistant usage seen just
     # before each GENUINE user prompt. The trailing pending value (current turn)
@@ -141,7 +148,7 @@ prior_max_band() {
           if .pending != null then (.endings += [.pending] | .pending = null) else . end
         else . end )
     | .endings[]' 2>/dev/null \
-    | awk -v w="$CONTEXT_WINDOW_TOKENS" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" '
+    | LC_ALL=C awk -v w="$CONTEXT_WINDOW_TOKENS" -v fl="$CTX_FLOOR_PCT" -v so="$CTX_SOON_PCT" -v no="$CTX_NOW_PCT" '
         BEGIN { max = 0 }
         { if (w <= 0) w = 1; p = ($1 / w) * 100;
           r = (p >= no) ? 3 : ((p >= so) ? 2 : ((p >= fl) ? 1 : 0));

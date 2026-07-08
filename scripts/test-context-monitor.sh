@@ -40,7 +40,11 @@ source "$SCRIPT"
 rd()   { printf '{"type":"assistant","message":{"role":"assistant","usage":{"input_tokens":0,"cache_read_input_tokens":%s}}}\n' "$1"; }  # assistant usage reading
 up()   { printf '{"type":"user","message":{"role":"user","content":"go on please"}}\n'; }                                                 # GENUINE user prompt (turn boundary)
 trr()  { printf '{"type":"user","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t","content":"ok"}]}}\n'; }      # tool-result user entry (NOT a boundary)
+meta() { printf '{"type":"user","isMeta":true,"message":{"role":"user","content":"<local-command-caveat>"}}\n'; }                          # meta user entry (NOT a boundary)
+csum() { printf '{"type":"user","isCompactSummary":true,"message":{"role":"user","content":"This session is being continued..."}}\n'; }    # post-compaction summary (NOT a boundary)
+side() { printf '{"type":"user","isSidechain":true,"message":{"role":"user","content":"subagent prompt"}}\n'; }                            # sidechain user entry (NOT a boundary)
 bnd()  { printf '{"type":"system","subtype":"compact_boundary","content":"Conversation compacted"}\n'; }                                   # re-arm marker
+bndws(){ printf '{"type":"system","subtype": "compact_boundary","content":"x"}\n'; }                                                       # re-arm marker w/ whitespace after colon
 tok()  { echo $(( $1 * 10000 )); }   # tokens for a given occupancy % (window = 1_000_000)
 
 # ===========================================================================
@@ -56,10 +60,15 @@ eq "54.9% -> notice" "notice" "$(pct_to_band 54.9)"
 eq "55.0% -> soon"   "soon"   "$(pct_to_band 55.0)"
 eq "69.9% -> soon"   "soon"   "$(pct_to_band 69.9)"
 eq "70.0% -> now"    "now"    "$(pct_to_band 70.0)"
+# User-ratified wording: ONE neutral factual line for every non-floor band —
+# only the fact (the %), no urgency clauses; escalation is carried by the number
+# (each band still fires once, per the debounce). floor -> empty.
+UNIFORM="promode context-monitor: context ~%s%% of the window."
 eq "floor -> empty message" "" "$(band_message floor 30.0)"
-case "$(band_message notice 46.5)" in *46.5%*) eq "notice message carries %" y y;; *) eq "notice message carries %" y n;; esac
-case "$(band_message soon 58.0)"   in *soon*)  eq "soon message says soon"   y y;; *) eq "soon message says soon"   y n;; esac
-case "$(band_message now 72.0)"    in *now*)   eq "now message says now"     y y;; *) eq "now message says now"     y n;; esac
+eq "notice message uniform"           "$(printf "$UNIFORM" 46.5)" "$(band_message notice 46.5)"
+eq "soon message uniform (no urgency)" "$(printf "$UNIFORM" 58.0)" "$(band_message soon 58.0)"
+eq "now message uniform (no urgency)"  "$(printf "$UNIFORM" 72.0)" "$(band_message now 72.0)"
+case "$(band_message soon 58.0)" in *soon*|*raising*|*recommend*) eq "no urgency words in message" clean dirty;; *) eq "no urgency words in message" clean clean;; esac
 
 # ===========================================================================
 # 2. Debounce internals: band_rank + prior_max_band over TURN-ENDINGS
@@ -79,9 +88,23 @@ eq "prior_max [t:45,56 | cur:42] -> soon" "soon" "$(prior_max_band "$P3")"
 P4="$tmproot/p4.jsonl"; { up; rd "$(tok 45)"; up; rd "$(tok 56)"; bnd; up; rd "$(tok 42)"; } > "$P4"
 eq "prior_max after compact_boundary re-arms -> floor" "floor" "$(prior_max_band "$P4")"
 
-# tool-result user entries are NOT boundaries: mid-turn reading must NOT count
-TRB="$tmproot/trb.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; trr; rd "$(tok 48)"; } > "$TRB"
-eq "tool_result not a boundary: prior_max = floor (only the 35 turn-end)" "floor" "$(prior_max_band "$TRB")"
+# Non-prompt user entries are NOT turn boundaries. Each fixture puts the excluded
+# entry between two same-turn readings (41 then 48); if it were wrongly treated as
+# a boundary it would close pending=41 -> prior_max notice. Correct -> floor (only
+# the earlier real turn-end of 35). Each pins one is_prompt exclusion branch; the
+# rework verified each goes RED when its guard is removed from the script.
+TRB="$tmproot/trb.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; trr;  rd "$(tok 48)"; } > "$TRB"
+eq "tool_result not a boundary -> prior_max floor" "floor" "$(prior_max_band "$TRB")"
+MET="$tmproot/met.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; meta; rd "$(tok 48)"; } > "$MET"
+eq "isMeta not a boundary -> prior_max floor" "floor" "$(prior_max_band "$MET")"
+CSM="$tmproot/csm.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; csum; rd "$(tok 48)"; } > "$CSM"
+eq "isCompactSummary not a boundary -> prior_max floor" "floor" "$(prior_max_band "$CSM")"
+SID="$tmproot/sid.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 41)"; side; rd "$(tok 48)"; } > "$SID"
+eq "isSidechain not a boundary -> prior_max floor" "floor" "$(prior_max_band "$SID")"
+
+# compact_boundary match is whitespace-tolerant (serialization robustness)
+P4WS="$tmproot/p4ws.jsonl"; { up; rd "$(tok 45)"; up; rd "$(tok 56)"; bndws; up; rd "$(tok 42)"; } > "$P4WS"
+eq "compact_boundary w/ space after colon still re-arms -> floor" "floor" "$(prior_max_band "$P4WS")"
 
 # continuation-turn grouping: reading after an injection (no prompt before it)
 # belongs to the segment ending at the next real prompt -> ending occupancy = 46
@@ -104,10 +127,10 @@ C2="$tmproot/c2.jsonl"; { up; rd "$(tok 38)"; up; rd "$(tok 45)"; up; rd "$(tok 
 eq "45->50 (still notice) silent" "" "$(run_hook "$C2")"
 
 C3="$tmproot/c3.jsonl"; { up; rd "$(tok 38)"; up; rd "$(tok 45)"; up; rd "$(tok 50)"; up; rd "$(tok 56)"; } > "$C3"
-O="$(run_hook "$C3")"; case "$(ctx_of "$O")" in *soon*) eq "->56 injects soon" y y;; *) eq "->56 injects soon" y "n[$O]";; esac
+O="$(run_hook "$C3")"; case "$(ctx_of "$O")" in *56.0%*) eq "cross soon threshold (56%) re-pings once" y y;; *) eq "cross soon threshold (56%) re-pings once" y "n[$O]";; esac
 
 C4="$tmproot/c4.jsonl"; { up; rd "$(tok 38)"; up; rd "$(tok 45)"; up; rd "$(tok 50)"; up; rd "$(tok 56)"; up; rd "$(tok 72)"; } > "$C4"
-O="$(run_hook "$C4")"; case "$(ctx_of "$O")" in *now*) eq "->72 injects now" y y;; *) eq "->72 injects now" y "n[$O]";; esac
+O="$(run_hook "$C4")"; case "$(ctx_of "$O")" in *72.0%*) eq "cross now threshold (72%) re-pings once" y y;; *) eq "cross now threshold (72%) re-pings once" y "n[$O]";; esac
 eq "emitted hookEventName is Stop" "Stop" "$(printf '%s' "$O" | jq -r '.hookSpecificOutput.hookEventName // ""')"
 
 # --- mid-turn crossing (the CORRECTED behaviour) ----------------------------
@@ -119,7 +142,7 @@ O="$(run_hook "$MT1")"; case "$(ctx_of "$O")" in *48.0%*) eq "mid-turn 41->48 in
 
 # One turn crosses TWO bands at once (38->58) -> inject once at the higher band.
 MT2="$tmproot/mt2.jsonl"; { up; rd "$(tok 35)"; up; rd "$(tok 38)"; trr; rd "$(tok 58)"; } > "$MT2"
-O="$(run_hook "$MT2")"; case "$(ctx_of "$O")" in *soon*) eq "two-band mid-turn 38->58 injects soon once" y y;; *) eq "two-band mid-turn 38->58 injects soon once" y "n[$O]";; esac
+O="$(run_hook "$MT2")"; case "$(ctx_of "$O")" in *58.0%*) eq "two-band mid-turn 38->58 injects once (at 58%)" y y;; *) eq "two-band mid-turn 38->58 injects once (at 58%)" y "n[$O]";; esac
 
 # --- compact_boundary re-arm + contrast -------------------------------------
 C5="$tmproot/c5.jsonl"; { up; rd "$(tok 45)"; up; rd "$(tok 56)"; bnd; up; rd "$(tok 42)"; } > "$C5"
