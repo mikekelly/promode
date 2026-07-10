@@ -21,4 +21,19 @@
 - **Open constraints** — task 29 (register homes) chains after this and depends on which section each R-clause landed in — state placements precisely in your report.
 
 ## Outcome
-(filled by the agent on completion)
+All eight ratified edits applied to `plugins/promode/PROMODE_MAIN_AGENT.md`; `scripts/check-hooks.sh` fully green (5 chunks, all <10k, all registered, gating intact).
+
+**R-clause placements (task 29 chains on these):**
+- **R1 (A3, ratify against rejected alternatives)** → **§execution**, first paragraph, immediately after the R2 skepticism clause: "A C-suite draft (`chief-technology-officer`/`chief-product-officer`) arrives as a recommendation plus its strongest rejected alternatives — ratify against the rejected, not just the recommendation." *Placed in §execution rather than §role: it is receiver-side ratification discipline (grouped with R2), and §role/chunk-1 was the tightest chunk (H1 already added mandatory content there).*
+- **R2 (P14, missing not-verified/assumptions line)** → **§execution**, rework clause: "…gets rework, not acceptance — and a report with no \"not verified / assumptions\" line earns that same skepticism."
+- **R3 (T16, seam reshaping is architectural)** → **§test-strategy**, after "Build seams test-first…": "reshaping a seam beyond a local extension is architectural: `promode:senior-engineer` proposes, `promode:chief-technology-officer` owns placement, you ratify."
+
+**O16 condensation inventory (cut sentence → surviving home):**
+- C1a: "(move the card to `## Doing`); the agent records its Outcome in the doc before reporting; on close, retire the card to `DONE.md` and promote durable residue into the knowledge graph." → §task-docs **Lifecycle** steps 2/3/4 (intact). §planning now points at `<task-docs>` for the full lifecycle.
+- C1b: §task-docs **Fog of war** paragraph deleted whole → survives in §planning **Fog discipline**, into which its one unique sentence ("a named unknown spawns real tasks only once the work that resolves it lands") was folded.
+- C1c: §task-docs "Where." clause "carries flow — a one-line card per task linking to its doc; the **doc** carries detail" + the whole "Single source of status." paragraph ("Status lives in exactly one place: the board column… never a competing live `status:` field… don't duplicate state into the doc") → §project-tracking (registered O20 home: board=flow view + "Single source of status: the column owns status…"). §task-docs reduced to a one-line "No `status:` field." pointing at `<project-tracking>`.
+- C4: §feature-knowledge-base "Personas supply the *who*; goals supply the *why*; marketing and feature definitions trace to both." → carried by the two preceding sentences (persona = who) + the up-front hierarchy "goals… → marketing → feature definitions" earlier in the same section.
+
+**Chunk sizes** (delivered `additionalContext`, cap 10000): 8852 / 6784 / 6470 / 8227 / 8461. Chunks 3 and 5 (previously ~9092/8990) are now well under. **Chunk 1 = 8852 (88.5%)** exceeds the ~85% soft target: it carries the mandatory H1 generalization and gets no C1 cut, so it can't be brought under 85% without cutting content (forbidden) — reported per brief, not forced.
+
+Other edits: H3 moved the model-reference table inside `</model-tiers>`; H2 moved the CHUNK marker from above `<prompting-subagents>` to below `</subagent-scoping>` (marker count still 4 → 5 chunks; hooks.json untouched).
