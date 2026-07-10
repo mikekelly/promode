@@ -33,5 +33,4 @@ this agent's, even though `runbooks/cut-a-release.md` step 5 says to push. Every
 **No content changes** to any agent def, the brief, or the register — scope was version bump +
 DONE/board bookkeeping only, per the brief's Not/exit line.
 
-Release commit: see report (hash filled in after commit, since Outcome is written pre-commit in
-the same changeset).
+Release commit: `122e110` ("Release v3.0.0: agent-roster restructure (major, breaking)").
