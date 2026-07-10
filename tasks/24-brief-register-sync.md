@@ -14,4 +14,29 @@
 - **Open constraints** — blocked on tasks 19–23 merging to the working branch.
 
 ## Outcome
-(filled by the agent on completion)
+**Done (2026-07-10).** Brief + register synced to the 17-agent roster; committed.
+
+**Brief (`PROMODE_MAIN_AGENT.md`):**
+- `<model-tiers>` rewritten as the pre-baked config ladder (inherit seats CTO/CPO/elite-worker · opus/high SE/HW/SPD/hard-debugger · sonnet/medium ME/FW/GD · haiku CW); added the ⚙ **never-pass-`effort`-per-dispatch** warning (accepted+silently-discarded; effort lives in def frontmatter; Workflow `agent()` is the exception); added the **frontier-lift** move (senior-engineer + per-call `model` override to your tier, read from preamble, never fabricated); Haiku 4.5 row added to the model table (200K/no-effort — verified via claude-api skill).
+- `<delegation-map>` rewritten: implementation → engineer rungs (SE opus/high, ME sonnet/medium); generic-execution-by-stakes worker row (EW/HW/FW/CW); GUI → gui-driver; product → CPO (crucial, draft-for-ratify) / SPD (execution consults); `general-purpose` demoted to "the rare thing no promode def should own — prefer a worker rung" (my judgement: kept only as the last-resort non-methodology fallback).
+- O39 informed-tier-consent extended to CPO dispatch. Swept all other mentions: `<principles>` engineer-mechanics home (SE/FW→SE/ME), `<workflow>` spike routing (PDE→SPD), `<clarifying-outcomes>` blind-spot (PDE→SPD), `<feature-knowledge-base>` persona-maintainer (→SPD) + user-need consult (→CPO), `<product-considerations>` split SPD/CPO, `<test-strategy>` visual-loop (→SPD). `<background-delegation>` merge dispatch left as `fast-worker`+`verifier` (fast-worker is now a valid worker; bounces if a merge hits code conflicts — the designed behaviour).
+- **Hook caps:** chunk 3 went to 10021 after edits (over cap). Rebalanced by **moving** the CHUNK marker from after `</product-considerations>` to before it (section-boundary move, still 5 chunks → hooks.json registration unchanged). Final sizes: 8642 / 4262 / 9092 / 7812 / 8990 — all under 10k.
+
+**Register (`opinion-register.md`):**
+- Home-keys line rewritten: added ME/EW/HW/FW/CW/GD/CPO/SPD + `WK` shorthand (worker family = EW/HW/FW/CW, one byte-identical body); retired PDE key with pointer; documented that **FW's meaning changed** (old TDD engineer → now the sonnet/medium generic worker; the engineer role is now ME).
+- O13 rewritten as `model-effort-ladder` ⚙ (slug renamed — materially restructured 3→4 tiers; cites the roster node). New rows **O44 `frontier-lift-execution`** ⚙ and **O45 `effort-pinned-per-def`** ⚙ (both `w:` the effort-dispatch node). O2 extended to CPO. O37/O38/O39 rewordings (O38 now pin-relative: ME bounces up, SE absorbs, workers bounce all code). Home keys updated corpus-wide (FW-engineer→ME across P/T/K families; PDE→SPD/CPO across PD/A/V5/R6/T21).
+- PD rows redistributed per task 23's report; the **three flagged duplications recorded** in Documented-calibrations: (1) PD4/A1 claim-side CPO(fullest)+SPD(execution), (2) PD1/PD6 SPD+CPO decision-altitude, (3) K3 SPD+CPO. New byte-identity families recorded (engineer body ×2, worker body ×4 shasum a636eb56…, reporting block across all). FW-calibration superseded-with-pointer (M3, not deleted).
+- Components: AG-senior-engineer updated (opus/high + frontier-lift target); added AG-mid-level-engineer, AG-worker-family (four configs, listing-tax-bought-deliberately note), AG-gui-driver, AG-chief-product-officer, AG-senior-product-designer; AG-product-design-expert → struck-through superseded pointer. AG-cto SE/FW→SE/ME; DOC-d2d/lookbook/gherkin PDE→SPD, FW→GD.
+- Harness-pinned: added the effort-dispatch fact block (a)–(f) citing the node; O13/O44/O45 added to the pinned list; inherit-frontmatter note extended to CPO+elite-worker.
+
+**O16 inventory (condensed/deleted prose → surviving home):**
+- O13 old "three-tier CTO-only" statement → survives *expanded* in the new O13 ladder (inherit seats now = CTO+CPO+EW) + O45 (effort-per-def mechanism) + O44 (frontier-lift replacing a standing inherit engineer). Nothing dropped.
+- Old FW-as-engineer homes (P1–P17, T1–T17, K-family) → moved to ME (the engineer role fast-worker used to fill); worker-carried subset (P1/P10/P12/P13/P14/O19/O37/K1-report/K2-report) → WK. Nothing lost — every engineer principle survives in SE+ME; every worker principle in WK.
+- PDE homes → CPO (claim-side/crucial) + SPD (execution), per the PD/A/V5/R6/T21/K8/DOC rows. The old AG-product-design-expert row → struck-through pointer (M3).
+- FW/ME TDD-calibration + K3-omission + T4/T11-omission → moved from old fast-worker to mid-level-engineer, recorded superseded-with-pointer in Documented-calibrations (M3, not silently deleted).
+
+**Verified vs assumed / not verified:**
+- `scripts/check-claude-md-imports.sh` **green**. `scripts/check-hooks.sh`: **8 of 9 sub-checks green** (output-limits, chunk-registration, agent-gating, version, component-frontmatter [confirms 17 agents], json-valid, claude-md-imports, inspect-agent). The **1 failure is pre-existing and task-26-owned**: `check-shared-principle-checksums.sh` flags `fast-worker.md`'s absent `<behavioural-authority>` (task 21 made fast-worker a worker; empty-string sha) vs `senior-engineer.md`. I did **not** touch any def or checksum script (forbidden by this task); task 26 retargets that script fast-worker→mid-level-engineer. Failing identically at my baseline before any edit.
+- Haiku 4.5 specs (200K window, no effort control) taken from the claude-api skill catalog, not independently probed.
+- Did not verify the seven def files' internal contents beyond frontmatter/descriptions; homes assigned from the task-21/23 outcomes + decision nodes as ground truth (no def↔brief disagreement found to flag).
+- Assumption: `general-purpose` retained as a genuine non-promode fallback row (stated in the delegation-map) rather than fully deleted — my judgement per the brief's latitude.
