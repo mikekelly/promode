@@ -28,4 +28,12 @@
 - **Open constraints** — worktree-isolated task: record the Outcome in YOUR worktree's copy of this doc; it lands on merge.
 
 ## Outcome
-(filled by the agent on completion)
+
+Both decision nodes written and committed:
+
+- `docs/decisions/2026-07-effort-dispatch-constraint.md` — harness facts (⚙, live-verified 2026-07-10 on Claude Code 2.1.202): no per-invocation `effort` param on Agent/Task (silent-strip trap on unknown fields), effort settable only via def frontmatter (enum or undocumented integer, inherits session effort if omitted), `model` override works and is honoured, `Workflow.agent()` DOES take per-call `effort`, Haiku 4.5 has no effort control, docs cross-check (sub-agents.md, model-config.md — all three default `high`). Consequence recorded: model+effort combos must be pre-baked as named defs.
+- `docs/decisions/2026-07-agent-roster-restructure.md` — the ratified roster (maintainer-ratified 2026-07-10): engineers (senior-engineer opus/high, mid-level-engineer sonnet/medium), workers (elite-worker inherit, high-level-worker opus/high, fast-worker sonnet/medium, cheap-worker haiku/no-effort), specialist gui-driver (sonnet/medium), product split (product-design-expert retires; chief-product-officer inherit + senior-product-designer opus/high). Four rejected alternatives with why (merged def w/ per-dispatch effort; principal-engineer on inherit; six defs one shared body; hardcoded fable). Explicitly marked "ratified design, not yet implemented" — implementation lands in tasks 20-27; migration-note flags the fast-worker species change + PDE retirement as corpus-wide scrubs, and that old FW calibration records in the sync runbook are superseded-with-pointer, never silently deleted.
+
+Verified root `CLAUDE.md` already links `docs/decisions/` generically (line 39, in the "Concepts considered and rejected" sentence) — both new nodes are reachable without a root edit, per the brief. No other files touched (agent defs, register, brief, sync runbook all left untouched — those are owned by tasks 20-27).
+
+Not verified / assumptions: I did not independently re-verify any of the ⚙ harness facts myself (dispatch-schema extraction, live dispatch probes) — I copied them faithfully from the brief as instructed ("copy them faithfully, do not re-derive or soften"). I did not check whether tasks 20-27 already exist as task docs; this task's scope was the two decision nodes only.
