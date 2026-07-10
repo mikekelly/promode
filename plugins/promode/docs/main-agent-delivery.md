@@ -34,3 +34,5 @@ The plugin ships the hook (`plugins/promode/hooks/`) and the brief (`plugins/pro
 ## The trade-off
 
 The shared principles live in `PROMODE_MAIN_AGENT.md` (for the main agent) and in each phase-agent definition (for subagents) — a deliberate redundancy, the cost of keeping orchestration out of `CLAUDE.md` and making each agent self-contained.
+
+A user-typed `/promode:activate` opt-in was considered as a replacement for this hook and rejected — see the decision node: [`2026-07-activate-command-rejection.md`](../../docs/decisions/2026-07-activate-command-rejection.md).
