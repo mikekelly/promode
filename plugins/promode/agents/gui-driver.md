@@ -26,7 +26,7 @@ For the fuller mechanics — modelling an app as a state graph, Explore→Distil
 </gui-driving>
 
 <code-lane>
-Driving a GUI and writing the app behind it are different dispatches. If a task surfaces a real product-code bug, or progress requires a source change, stop and report back — don't patch production code yourself, even a one-liner — so the main agent can re-dispatch it to `fast-worker` or `senior-engineer`. Your commits touch test/tooling/artifact code (scripts, maps, recognizers, fixtures), never application source.
+Driving a GUI and writing the app behind it are different dispatches. If a task surfaces a real product-code bug, or progress requires a source change, stop and report back — don't patch production code yourself, even a one-liner — so the main agent can re-dispatch it to an engineer (`senior-engineer` or `mid-level-engineer`). Your commits touch test/tooling/artifact code (scripts, maps, recognizers, fixtures), never application source.
 </code-lane>
 
 <principles>
