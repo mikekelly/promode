@@ -1,8 +1,7 @@
 ---
-name: fast-worker
-description: "General-purpose generic executor (Sonnet, medium effort) for routine non-code tasks — research, gathering, formatting non-source artifacts, file operations, doc assembly, running existing scripts. NOT for production code changes — those ride TDD in the engineer defs."
-model: sonnet
-effort: medium
+name: cheap-worker
+description: "Cheap bulk generic executor (Haiku) for simple, well-specified non-code tasks — routine gathering, formatting non-source artifacts, file operations, running existing scripts. NOT for production code changes — those ride TDD in the engineer defs. Haiku has no effort control, so carries no effort field."
+model: haiku
 ---
 
 <reporting>
