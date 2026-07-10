@@ -15,7 +15,20 @@ it reaches the main agent via the SessionStart hook, and the main agent delegate
 ## Checklist (touch all of these)
 
 1. **Create the definition** — `plugins/promode/agents/<name>.md`.
-   - YAML frontmatter: `name`, `description`, `model` (e.g. `sonnet` for routine work; `inherit` for hard/judgement-heavy work — never name the top-tier model, it goes stale).
+   - YAML frontmatter: `name`, `description`, `model` (e.g. `sonnet` for routine work; `inherit` for hard/judgement-heavy work — never name the top-tier model, it goes stale), and `effort`
+     (`low|medium|high|xhigh|max` or an integer; omit for Haiku models, which have no effort control).
+   - **`effort` MUST be pinned here, in the frontmatter — it is the *only* lever that works.** The
+     Agent/Task dispatch tool has no per-call `effort` parameter; one passed on a dispatch is silently
+     discarded, not rejected, so a dispatcher gets no signal it didn't apply. This is exactly why the
+     roster is a set of named defs each pre-baking a model+effort pair rather than one generic def
+     dispatched with per-call effort — see [`docs/decisions/2026-07-effort-dispatch-constraint.md`](../docs/decisions/2026-07-effort-dispatch-constraint.md)
+     and [`docs/decisions/2026-07-agent-roster-restructure.md`](../docs/decisions/2026-07-agent-roster-restructure.md).
+   - **Does the new def join a checksummed byte-identical family?** If it is another engineer or worker
+     rung (shares the engineer/worker body), or carries the shared `<reporting>` /
+     `<behavioural-authority>` / `<test-driven-development>` block, add it to the relevant family list
+     in `scripts/check-shared-principle-checksums.sh` and make its block byte-identical — the sync
+     mechanics are in [`sync-a-shared-principle.md`](sync-a-shared-principle.md). A new rung that
+     silently diverges is drift the check exists to catch.
    - Body carries the agent's own methodology (it gets nothing from `CLAUDE.md`'s methodology — see
      the existing agents for the section shape: `<reporting>`, `<your-role>`, principles, etc.).
    - Match an existing sibling in `plugins/promode/agents/` for structure.
@@ -35,6 +48,7 @@ it reaches the main agent via the SessionStart hook, and the main agent delegate
 ## Verify
 
 - `./scripts/check-hooks.sh` is green (if you edited the brief/hooks).
+- `./scripts/check-shared-principle-checksums.sh` is green (if the new def joined a byte-identical family).
 - The brief's `<delegation-map>` actually routes work to the new agent (not just a table mention).
 
 ## See also

@@ -48,7 +48,7 @@ So promode keeps the main agent thin: it holds the opinions, the plan, and the c
 
 **Subagents execute.** Each delegation is one agent, one deliverable, fresh context. They run in the background — the main agent dispatches and ends its turn, then gets woken when a result lands. Independent work runs in parallel. Subagents commit their changes before reporting, so what comes back is a summary, not a context-bloating dump.
 
-**Model choice is explicit — three tiers by cognitive load.** This is the intro's cost split made mechanical. The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration; execution runs a tier below: `senior-engineer` is pinned to Opus for reasoning-heavy work, `fast-worker` to Sonnet for mechanical work, and hard jobs sent to other agents (multi-system debugging, architectural review) are dispatched on the Opus tier rather than inheriting the orchestrator's model. The one deliberate exception is `chief-technology-officer`, which *inherits the session's top tier* (Fable→Fable, Opus→Opus) — crucial, hard-to-reverse design is the execution work that earns your top reasoning tier, so it runs at whatever tier you're paying for, honouring your chosen ceiling rather than escalating above it.
+**Model choice is explicit — a pre-baked model+effort ladder.** This is the intro's cost split made mechanical. The main agent runs on the top frontier model (Fable 5 today; allow Opus where it's unavailable — set it with `/model`) and reserves it for orchestration; execution runs on named rungs a tier below, each pre-baking a fixed model+effort combo: engineers `senior-engineer` (Opus / high) and `mid-level-engineer` (Sonnet / medium); the generic worker family from `elite-worker` down to `cheap-worker`; `gui-driver` (Sonnet / medium). Reasoning effort can only be pinned per agent *definition* — the Agent dispatch tool has no per-call effort parameter, and one passed anyway is silently discarded ([`docs/decisions/2026-07-effort-dispatch-constraint.md`](docs/decisions/2026-07-effort-dispatch-constraint.md)) — so each model+effort pair earns its own named def rather than a dispatch-time argument. The **inherit seats** — `chief-technology-officer`, `chief-product-officer`, and `elite-worker` — run the session's top tier (Fable→Fable, Opus→Opus): the crucial drafting calls and judge-grade grunt-work that earn your top reasoning tier, running at whatever tier you're paying for, honouring your chosen ceiling rather than escalating above it.
 
 **Where the methodology lives is deliberate** — this is the part that's easy to get wrong:
 
@@ -60,14 +60,17 @@ So promode keeps the main agent thin: it holds the opinions, the plan, and the c
 
 | Agent | Job |
 |---|---|
-| `chief-technology-officer` | Crucial, hard-to-reverse design — architecture, entity/domain model, large-refactor strategy, critical product-technical calls; drafts designs and plans the main agent ratifies (inherits the session's top tier) |
-| `senior-engineer` | Reasoning-heavy implementation — architecture-adjacent changes, complex/multi-system work, hard-bug fixes, algorithm design; TDD (pinned to Opus) |
-| `fast-worker` | Mechanical execution — boilerplate, simple edits, formatting, straightforward tests, browser/GUI driving (pinned to Sonnet) |
+| `chief-technology-officer` | Crucial, hard-to-reverse *technical* design — architecture, entity/domain model, large-refactor strategy, technology selection; drafts designs and plans the main agent ratifies (inherits the session's top tier) |
+| `chief-product-officer` | Crucial, hard-to-reverse *product* one-way doors — goal hierarchy, personas, positioning, growth strategy; drafts for ratification (inherits the session's top tier) |
+| `senior-engineer` | Reasoning-heavy implementation via TDD — architecture-adjacent changes, complex/multi-system work, hard-bug fixes, algorithm design (Opus / high effort) |
+| `mid-level-engineer` | Well-specified implementation via TDD — the same engineer body calibrated to a lighter pin (Sonnet / medium effort) |
+| `senior-product-designer` | Product/UX execution grounded in personas — cut before add, defaults over settings; owns `docs/product/` and the design lookbook (Opus / high effort) |
+| worker family — `elite-worker` / `high-level-worker` / `fast-worker` / `cheap-worker` | Generic *non-code* execution — research, gathering, formatting non-source artifacts, file ops, running existing scripts; one shared body, four pre-baked tiers (elite inherits the top tier, high-level = Opus/high, fast = Sonnet/medium, cheap = Haiku); production-code work bounces up to an engineer |
+| `gui-driver` | Browser/GUI driving off stable selectors, never coordinates (Sonnet / medium effort) |
 | `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) |
 | `debugger` | Find the root cause, reproduce with a test, report (doesn't fix unless asked) |
 | `verifier` | Exercise the running app from the outside; PASS/FAIL with evidence |
 | `environment-manager` | Docker, services, health checks, scripts |
-| `product-design-expert` | Product and UX decisions, grounded in realistic customer profiles/personas |
 | `agent-analyzer` | Evidence side of after-action reviews — verify an agent's self-debrief against its transcript, autopsy failed/oversized runs, cluster cross-session patterns |
 | `auditor` | Run the promode-alignment audit — fan out parallel assessors (one per dimension), synthesise a prioritised improvement plan for the main agent to ratify |
 | `constraint-reinforcer` | Hoist buried design constraints (ADRs, knowledge docs, tribal knowledge) into the nearest loaded `CLAUDE.md` orientation so agents can't miss them |
