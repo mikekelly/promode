@@ -15,4 +15,14 @@
 - **Open constraints** — worktree-isolated: Outcome goes in YOUR worktree's copy of this doc.
 
 ## Outcome
-(filled by the agent on completion)
+**Done (2026-07-10).** PDE split into two defs, both committed.
+
+- `git mv product-design-expert.md senior-product-designer.md` (history follows the heir). Frontmatter → `name: senior-product-designer`, `model: opus`, `effort: high` (the old "defaults to Opus" now an explicit pin), description rewritten (execution tier; crucial calls → CPO, deep-technical-trade-off calls → CTO). Body: `<your-role>` opening rewritten to execution altitude + an "Altitude — you execute, you don't draft the one-way doors" paragraph routing crucial product one-way doors to `chief-product-officer` and deep-technical-trade-off product calls to CTO; `<escalation>` gained a route-up trigger for those calls. All execution mechanics retained verbatim (see inventory).
+- `chief-product-officer.md` (new): `model: inherit`, NO effort field. Contract mirrors CTO — `<reporting>` (recommendation + strongest rejected alternatives + decision log + lead-with-tweakables + assumptions line + task-doc record), `<your-role>` (inherit + cost-ceiling rationale, draft-for-ratification, skeptical-core-sharpened-at-altitude with PD6 post-hoc trap, PD4/A1 claim-side ownership, decide-others-execute), `<boundaries>` (both directions incl. parallel-unprimed-draft with CTO for genuinely-joint calls), `<decision-nodes>` (K3), `<escalation>`.
+
+**Duplications to flag for register sync (task 24), per M2/M3 (both homes, why travels):**
+1. **PD4/A1 claim-side** (user needs as graded evidence-bearing claims; unvalidated need propagates into the entity model, costliest to unwind): fullest copy now in CPO `<your-role>` at decision altitude; a calibrated execution-altitude copy retained in SPD `<lenses>` ("Why getting the user need right…"). Genuinely both — do not collapse.
+2. **PD1 skeptical default / PD6 post-hoc-justification trap**: retained in SPD (`<how-you-think>`, `<red-flags>`) at execution altitude; a decision-altitude copy added to CPO `<your-role>` ("default answer is no… defend the goal, not the feature"). Both homes.
+3. **K3 decision-node discipline + capture rule**: SPD `<agent-knowledge>` (unchanged); CPO `<decision-nodes>` (CTO-style, decision-altitude). Both.
+
+**Register/brief/README/CTO/other defs untouched** (tasks 24/25). `product-design-expert` is now dangling in the register `<delegation-map>`, README table, brief, and register rows — expected, out of my scope.
