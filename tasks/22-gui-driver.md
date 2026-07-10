@@ -17,4 +17,17 @@
 - **Open constraints** — worktree-isolated: Outcome goes in YOUR worktree's copy of this doc.
 
 ## Outcome
-(filled by the agent on completion)
+Created `plugins/promode/agents/gui-driver.md` (new def only — no other file touched, verified via `git status --porcelain`).
+
+Frontmatter exactly as specified: `name: gui-driver`, `model: sonnet`, `effort: medium`, plus a description (drives browsers/GUIs with selector discipline; leaves deterministic artifacts; does not change production code — flags for engineer re-dispatch).
+
+Body sections, in the order the brief specified:
+1. `<reporting>` — copied verbatim from `fast-worker.md`; verified byte-identical with `diff` (`awk` slice of both files between `<reporting>` markers, zero diff output).
+2. `<your-role>` — GUI/browser-driving specialist framing: traversals/form-driving/visual checks/exploratory driving whose deliverable is a deterministic artifact (script/map edge/recognizer), not the traversal itself; task-doc Outcome discipline carried in "Done means".
+3. `<gui-driving>` — transplanted fast-worker's one-paragraph version, expanded to three bullets (selector-not-coordinates + why, validate-against-live-tree, leave-behind-the-artifact) so it stands alone as the T17 inline home; closes with the `${CLAUDE_PLUGIN_ROOT}/docs/discovery-to-determinism.md` conditional read (plus its `ui-state-graph-edt.md` companion), read first to get the framing right per the brief.
+4. `<code-lane>` — new section name (brief called it "code-lane rule" without giving a tag); states the driving-vs-writing-the-app distinction and routes production-code needs back to `fast-worker`/`senior-engineer`.
+5. `<principles>` (evidence-over-assumptions, stay-on-task) + `<escalation>` (code-lane trigger, ambiguity, ~3 approaches, credentials/access) + a commit-before-reporting bullet folded into `<principles>` rather than a separate section, since the brief listed it as part of item 5's cluster rather than its own numbered section.
+
+**Wording changed from the transplanted section, and why:** fast-worker's `<gui-driving>` was one paragraph (fits alongside its other worker sections); here it's split into three bullets and loses the "When driving a browser or GUI" lead-in (redundant once this whole def is GUI-driving) — done because this def *is* the T17 inline home per the brief (item 3), so the mechanics needed to read as complete and skimmable on their own rather than as one clause among many worker disciplines. The "why coordinates drift" parenthetical was expanded into a full clause per the brief's explicit ask ("+ why: coordinates drift, stable selectors/identifiers don't").
+
+**Not verified / assumptions:** the `effort: medium` frontmatter field has no precedent elsewhere in `plugins/promode/agents/*.md` (checked via `grep -rl "effort:"` — no hits) — included exactly as the brief's "frontmatter ratified and exact" instructed, on the assumption the harness accepts an `effort` key in subagent frontmatter (not independently verified against harness docs, per the register's O13 model-tier language which mentions "effort levels" as a documented concept). Did not verify the file renders/loads correctly as a live plugin subagent (no harness restart/dispatch test performed) — static content review only.
