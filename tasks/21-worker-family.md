@@ -25,4 +25,19 @@
 - **Open constraints** — worktree-isolated: Outcome goes in YOUR worktree's copy of this doc.
 
 ## Outcome
-(filled by the agent on completion)
+Done. Authored ONE thin generic worker body shared byte-identical across four def files (verified: all four bodies below frontmatter share shasum `a636eb56…`; `<reporting>` block diffs clean against `senior-engineer.md`):
+
+- `elite-worker.md` (new) — `model: inherit`, no effort field.
+- `high-level-worker.md` (new) — `model: opus`, `effort: high`.
+- `fast-worker.md` (rewritten in place, history preserved) — `model: sonnet`, `effort: medium`.
+- `cheap-worker.md` (new) — `model: haiku`, no effort field.
+
+Body sections (thin, per brief): `<reporting>` (verbatim family), `<your-role>` (generic non-code executor; config-from-frontmatter, conduct-not-capability; task-doc Outcome + own-worktree discipline), `<code-lane>` (load-bearing TDD seal, why inline), `<principles>` (P1 + P10 verbatim engineer wording), `<escalation>` (O37 family, code-free), `<committing>` (P12 calibrated to artifacts), `<knowledge>` (report-for-capture, VER/AA calibration).
+
+**Cut-prose inventory (O16)** — every rule the old fast-worker body carried, shown surviving:
+- TDD block + constraint-ladder + behavioural-authority + file-organization + traceability (P9) + backwards-compat → **engineer shared body** (task 20: `senior-engineer.md` / `mid-level-engineer.md`). Task 20 not yet merged in this worktree; verified all these blocks are present verbatim in the current committed `senior-engineer.md`. State the dependency: they live there, not here — a worker never writes production code (`<code-lane>`), so it never needs them.
+- `<gui-driving>` / T17 selector discipline → **`gui-driver.md`** (task 22, parallel — named destination, not verified; `gui-driver.md` does not yet exist in this worktree).
+- bounce-up lane rule ("stop and report for re-dispatch to senior-engineer") → the engineer body's pin-relative lane rule (task 20 §3); the worker keeps only the *code-lane* stop-and-report (any production code → engineer), not the design-judgement bounce, since a worker does no code at all.
+- agent-knowledge capture section → **deliberately calibrated** to report-for-capture `<knowledge>` here (workers surface findings, main agent dispatches capture — the VER/AA calibration, K1/K2 report-only rows). Not a silent drop: intentional per brief §7.
+
+**Not verified / assumptions:** did not run any hooks/CI or lint the frontmatter against a live harness; `effort:` field validity taken from task 19's node (not re-probed). Task 20 and task 22 destinations named per brief, not verified (parallel tasks). Assumed the four-section body is sufficient conduct for Haiku (M1 flag: no section felt underspecified enough to warrant added operational detail — the payload is deliberately thin and capability-neutral).

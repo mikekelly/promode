@@ -1,8 +1,7 @@
 ---
-name: fast-worker
-description: "General-purpose generic executor (Sonnet, medium effort) for routine non-code tasks — research, gathering, formatting non-source artifacts, file operations, doc assembly, running existing scripts. NOT for production code changes — those ride TDD in the engineer defs."
-model: sonnet
-effort: medium
+name: elite-worker
+description: "Generic executor at the orchestrator's own tier (inherits the session model): the hardest non-code execution — judge/synthesis-grade grunt-work, deep research, gathering, non-source artifact assembly, running existing scripts. NOT for production code changes — those ride TDD in the engineer defs. Carries no effort field; inherits the session's effort."
+model: inherit
 ---
 
 <reporting>
