@@ -1,0 +1,24 @@
+# Brief concision + harmony + missing register clauses (CTO review, ratified)
+
+## Brief
+- **Orient** — `plugins/promode/PROMODE_MAIN_AGENT.md` (the artifact; read in full), root `CLAUDE.md` (chunk-cap + never-demote constraints), `plugins/promode/docs/opinion-register.md` (cited items). All edits below are maintainer-ratified 2026-07-10 from a CTO assessment; apply them, don't re-litigate — but flag anything that proves wrong on contact with the file.
+- **Specify** — one editing pass over the brief, eight ratified changes:
+  1. **C1a lifecycle dedupe** — §planning restates the full 4-step task-doc lifecycle that §task-docs "Lifecycle" owns. Cut §planning back to: persist the tree as task docs + board cards, "delegating a task = pointing the agent at its doc", template in `<task-docs>`. The rule survives in §task-docs Lifecycle.
+  2. **C1b fog dedupe** — §planning (the registered B§planning home, keep) and §task-docs "Fog of war" are near-verbatim. Fold task-docs' one unique sentence ("a named unknown spawns real tasks only once the work that resolves it lands") into §planning's version; delete the task-docs paragraph.
+  3. **C1c status dedupe** — single-source-of-status + board-flow/doc-detail lives in §project-tracking (registered O20 home, keep); §task-docs states it again in its "Where." paragraph and "Single source of status" paragraph. Reduce §task-docs to the minimum the template needs (the doc carries no live `status:` field; column owns status — one line, pointing at §project-tracking's fuller rule is fine *within* the brief since it's delivered whole).
+  4. **C4 recap cut** — §feature-knowledge-base sentence "Personas supply the *who*; goals supply the *why*; marketing and feature definitions trace to both" — cut (the preceding two sentences carry it). Leave the §execution flaky-suite clause alone (serves T20/O1; ratified keep).
+  5. **H1 role fix** — §role names only CTO for hard-to-reverse drafting (pre-product-split). Generalize to both C-suite seats: crucial hard-to-reverse *design* → `chief-technology-officer`, crucial product one-way doors → `chief-product-officer`, both drafting for you to review and ratify.
+  6. **H3 table move** — the model-reference table floats after `</model-tiers>`; move it inside the tag (sections are the chunking unit; the register cites the table as part of B§model-tiers).
+  7. **R-clauses (receiver side, ~1 sentence each):** (R1) in §role or §execution: a C-suite draft arrives as a recommendation + strongest rejected alternatives — ratify against the rejected, not just the recommendation (A3). (R2) in §execution's rework clause: a report with no "not verified / assumptions" line gets the same skepticism as one without failing-test-first evidence (P14). (R3) in §test-strategy: reshaping a seam beyond a local extension is architectural — SE proposes, CTO owns placement, you ratify (T16).
+  8. **H2 chunk rebalance (after the content edits)** — delivered sizes were 8724/4262/9092/7812/8990; chunks 3 and 5 sit ~90% of the 10k cap. Move the CHUNK marker currently above `<prompting-subagents>` to below `</subagent-scoping>` so those two sections join chunk 2. Marker move only, at a section boundary, still 5 chunks (hooks.json registration unchanged). With C1's cuts this should land every chunk ≤~85%; if a chunk still exceeds that, report it — do NOT cut content to force it.
+  - **O16 inventory (required, in the commit message + report):** every cut sentence → the named surviving home (as specified above).
+- **Why** — the brief is delivered whole into every main-agent session: intra-brief duplication buys nothing (unlike load-bearing brief↔def duplication, M2/M3) and the copies have already drifted; the three R-clauses are register homes (A3/P14/T16) claimed as B-resident but grep-verifiably absent — the ratifier is exactly who needs those expectations.
+- **Verified vs assumed** — chunk sizes and the A3/P14/T16 absences were grep/script-verified by the CTO review (2026-07-10). Line numbers in the review may have shifted; locate by section tag + content, not line number.
+- **Not / exit** — do NOT touch the register (task 29, chained), agent defs, README, runbooks, hooks.json. Exit: all eight changes applied, `scripts/check-hooks.sh` fully green (all 5 chunks <10k, all registered, gating intact), O16 inventory in commit + report, committed on this branch (no worktree).
+
+## State
+- **Established facts** — never demote a principle to a pointer (M4); chunk markers move only at section boundaries; intra-brief cross-references to another brief section are NOT pointer-demotion (same delivery).
+- **Open constraints** — task 29 (register homes) chains after this and depends on which section each R-clause landed in — state placements precisely in your report.
+
+## Outcome
+(filled by the agent on completion)
