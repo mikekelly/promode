@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 # Test harness for check-shared-principle-checksums.sh. Self-contained: copies the real
 # agents dir into a temp fixture, points the check at it (via AGENTS_DIR override), and
-# asserts:
-#   (a) PASS on the pristine current tree (both verbatim families identical, FW divergent)
-#   (b) FAIL when a sibling <behavioural-authority> block is mutated (drift undetected today)
-#   (c) FAIL when the <test-driven-development> SE/CTO pair is broken
-#   (d) PASS still holds when FW's <test-driven-development> is mutated — its deliberate
-#       divergence must NOT trip the guard, and a wrong assertion would turn that valid
-#       calibration into a false failure
-#   (e) FAIL if FW's <test-driven-development> is made byte-identical to SE's (the
-#       assert_differs half must catch a lost-calibration mistake, not just drift)
+# asserts, for every invariant the check enforces, that it PASSES on the pristine tree and
+# FAILS on a deliberately-broken sibling. One fixture per family so a red states which one.
+#
+# Families under guard (membership re-derived from the committed defs, tasks 20–23):
+#   - engineer-body:  senior-engineer.md == mid-level-engineer.md  (whole body, below frontmatter)
+#   - worker-body:    elite/high-level/fast/cheap-worker.md        (whole body)
+#   - reporting:      the generic <reporting> block shared by the engineer + worker + gui-driver
+#                     defs (the specialised defs carry a role-calibrated payload and are NOT members)
+#   - behavioural-authority: senior-engineer, mid-level-engineer, chief-technology-officer,
+#                     code-reviewer, debugger  (five verbatim homes, why-line included)
+#   - test-driven-development: senior-engineer, mid-level-engineer, chief-technology-officer
+#                     (CTO is not a body-family member, so this ties its TDD copy in explicitly)
 # Run directly; exits non-zero if any expectation is unmet.
 set -uo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -48,7 +51,7 @@ expect_fail() {
 
 # --- (a) pristine copy passes ---
 d=$(fresh_copy)
-expect_pass "pristine agents dir (both families consistent)" "$d"
+expect_pass "pristine agents dir (all families consistent)" "$d"
 
 # --- (b) mutate a sibling behavioural-authority block -> five-home family drifts ---
 d=$(fresh_copy)
@@ -56,26 +59,27 @@ d=$(fresh_copy)
 perl -0pi -e 's{(</behavioural-authority>)}{DRIFT-INJECTED-LINE\n$1}' "$d/debugger.md"
 expect_fail "mutated sibling behavioural-authority (5-home family)" "$d"
 
-# --- (c) break the SE/CTO test-driven-development pair ---
+# --- (c) break the SE/mid/CTO test-driven-development family ---
 d=$(fresh_copy)
 perl -0pi -e 's{(</test-driven-development>)}{DRIFT-INJECTED-LINE\n$1}' "$d/chief-technology-officer.md"
-expect_fail "mutated CTO test-driven-development (SE/CTO pair)" "$d"
+expect_fail "mutated CTO test-driven-development (SE/mid/CTO family)" "$d"
 
-# --- (d) mutate FW's test-driven-development: its deliberate divergence must stay green ---
+# --- (d) mutate a sibling engineer BODY -> engineer-body family drifts ---
 d=$(fresh_copy)
-perl -0pi -e 's{(</test-driven-development>)}{FW-LOCAL-CALIBRATION-TWEAK\n$1}' "$d/fast-worker.md"
-expect_pass "FW test-driven-development mutation (deliberate divergence, not a family member)" "$d"
+# Append a stray line at end of mid-level-engineer.md: touches the body checksum only
+# (after every close tag), so it isolates the engineer-body family from the tag families.
+printf '\nBODY-DRIFT-INJECTED-LINE\n' >> "$d/mid-level-engineer.md"
+expect_fail "mutated mid-level-engineer body (engineer-body family)" "$d"
 
-# --- (e) make FW's test-driven-development byte-identical to SE's -> lost calibration ---
+# --- (e) mutate a sibling worker BODY -> worker-body family drifts ---
 d=$(fresh_copy)
-# Replace FW's whole <test-driven-development> block with SE's, verbatim.
-awk '$0=="<test-driven-development>"{p=1} p{print} $0=="</test-driven-development>"{p=0}' \
-  "$SRC/senior-engineer.md" > "$tmproot/se-tdd.txt"
-perl -0pi -e '
-  BEGIN { local $/; open(F,"<","'"$tmproot"'/se-tdd.txt"); $blk=<F>; close(F); chomp $blk; }
-  s{<test-driven-development>.*?</test-driven-development>}{$blk}s;
-' "$d/fast-worker.md"
-expect_fail "FW test-driven-development made identical to SE (calibration lost)" "$d"
+printf '\nBODY-DRIFT-INJECTED-LINE\n' >> "$d/cheap-worker.md"
+expect_fail "mutated cheap-worker body (worker-body family)" "$d"
+
+# --- (f) mutate a sibling <reporting> block -> reporting family drifts ---
+d=$(fresh_copy)
+perl -0pi -e 's{(</reporting>)}{REPORTING-DRIFT-INJECTED-LINE\n$1}' "$d/gui-driver.md"
+expect_fail "mutated gui-driver reporting block (reporting family)" "$d"
 
 echo
 if [ "$fail" -ne 0 ]; then

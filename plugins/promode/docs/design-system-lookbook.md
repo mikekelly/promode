@@ -41,7 +41,7 @@ This doc owns **structure & process**. It explicitly defers **aesthetic taste** 
 </the-source-of-truth>
 
 <where-it-lives-in-promode>
-**This is promode's divergence from the community convention — load-bearing.** The community calls the file `DESIGN.md` at the repo root. **In promode it is `docs/product/DESIGN_SYSTEM.md`** — the existing file the `product-design-expert` agent already maintains — restructured into the two-layer format above and framed as "promode's `DESIGN.md`." It is a **node in the agent-knowledge graph, linked from `CLAUDE.md`**. Explicitly **not** a project-root `DESIGN.md`, and **not** inlined into `CLAUDE.md`.
+**This is promode's divergence from the community convention — load-bearing.** The community calls the file `DESIGN.md` at the repo root. **In promode it is `docs/product/DESIGN_SYSTEM.md`** — the existing file the `senior-product-designer` agent already maintains — restructured into the two-layer format above and framed as "promode's `DESIGN.md`." It is a **node in the agent-knowledge graph, linked from `CLAUDE.md`**. Explicitly **not** a project-root `DESIGN.md`, and **not** inlined into `CLAUDE.md`.
 
 Why placement matters:
 - **Promode's discipline is "link from `CLAUDE.md`, don't proliferate root files / don't bloat the always-loaded root."** A design system is a cohesive body that lives as a subtree under `docs/product/` (alongside `PERSONAS.md`, `DECISIONS.md`), reachable from the root — not scattered, not crammed into the launchpad.
@@ -68,7 +68,7 @@ The **lookbook** is the rendered visual reference — the source-of-truth made v
 
 **Who runs it in promode:**
 - **`environment-manager`** owns the preview server as a **managed dev service** (starts it, keeps it healthy, reports its URL).
-- **`senior-engineer`** builds the lookbook and any static artifacts from the reference, test-first where there's logic to test (mechanical assembly can go to **`fast-worker`**).
+- **`senior-engineer`** builds the lookbook and any static artifacts from the reference, test-first where there's logic to test (mechanical assembly can go to **`mid-level-engineer`**).
 - **`verifier`** screenshots the rendered output **against the lookbook / source-of-truth** as the visual acceptance check.
 </the-live-refresh-loop>
 
@@ -90,5 +90,5 @@ This doc = **structure & process** (the source-of-truth, the lookbook, the feedb
 <related>
 - [`discovery-to-determinism.md`](discovery-to-determinism.md) — the logic-side flywheel and operator seam this doc is the visual analogue of.
 - **`frontend-design`** (Anthropic harness skill) — aesthetic taste; the source of the decisions this doc captures.
-- **`product-design-expert`** agent — maintains `docs/product/` (incl. the design source-of-truth) and traces design to personas/goals.
+- **`senior-product-designer`** agent — maintains `docs/product/` (incl. the design source-of-truth) and traces design to personas/goals.
 </related>

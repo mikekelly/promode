@@ -70,7 +70,7 @@ The methodology is not "use a graph." It is the set of disciplines that keep the
 </the-operator-seam>
 
 <scenario-vs-seam>
-**The product story is the seam to code — but the scenario and the operator seam are orthogonal and compose.** An evidence-based user story (top of the knowledge graph, traceable up to a cited or explicitly-flagged user need — see the main brief's `<feature-knowledge-base>` and `promode:product-design-expert`) becomes the bottom-layer acceptance test by being expressed as a **high-level executable scenario**. That single artifact bridges product docs and the executable suite: it is the *what* — the user-visible behaviour and its acceptance criteria, in the user's language, traceable to *why* it matters and *who* it serves.
+**The product story is the seam to code — but the scenario and the operator seam are orthogonal and compose.** An evidence-based user story (top of the knowledge graph, traceable up to a cited or explicitly-flagged user need — see the main brief's `<feature-knowledge-base>` and `promode:senior-product-designer`) becomes the bottom-layer acceptance test by being expressed as a **high-level executable scenario**. That single artifact bridges product docs and the executable suite: it is the *what* — the user-visible behaviour and its acceptance criteria, in the user's language, traceable to *why* it matters and *who* it serves.
 
 Keep the two axes separate:
 - **The scenario is the *what*** — a behaviour specification (Given/When/Then is one readable shape) that traces *up* to a user need.

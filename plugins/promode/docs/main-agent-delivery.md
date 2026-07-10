@@ -8,7 +8,7 @@ Promode keeps its **main-agent orchestration brief out of `CLAUDE.md`** and deli
 
 ## Why the brief can't just go in CLAUDE.md
 
-Subagents **do** load `CLAUDE.md`. (Verified: every custom/plugin subagent inherits both the project and user `CLAUDE.md`; only the built-in `Explore` and `Plan` agents skip it.) So if the main-agent orchestration — "you are a team lead, delegate everything, never do the work yourself" — lived in `CLAUDE.md`, it would leak into the phase agents, where it's actively wrong for an implementing agent (`senior-engineer`, `fast-worker`) whose whole job is to do the work.
+Subagents **do** load `CLAUDE.md`. (Verified: every custom/plugin subagent inherits both the project and user `CLAUDE.md`; only the built-in `Explore` and `Plan` agents skip it.) So if the main-agent orchestration — "you are a team lead, delegate everything, never do the work yourself" — lived in `CLAUDE.md`, it would leak into the phase agents, where it's actively wrong for an implementing agent (`senior-engineer`, `mid-level-engineer`) whose whole job is to do the work.
 
 That's the crux: **orchestration** must not reach subagents. **Project knowledge** (the graph rooted at `CLAUDE.md`) is the opposite — it's meant for everyone. So orchestration goes to the hook; knowledge stays in `CLAUDE.md`.
 
@@ -34,3 +34,5 @@ The plugin ships the hook (`plugins/promode/hooks/`) and the brief (`plugins/pro
 ## The trade-off
 
 The shared principles live in `PROMODE_MAIN_AGENT.md` (for the main agent) and in each phase-agent definition (for subagents) — a deliberate redundancy, the cost of keeping orchestration out of `CLAUDE.md` and making each agent self-contained.
+
+A user-typed `/promode:activate` opt-in was considered as a replacement for this hook and rejected — see the decision node: [`2026-07-activate-command-rejection.md`](../../docs/decisions/2026-07-activate-command-rejection.md).
