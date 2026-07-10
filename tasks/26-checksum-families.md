@@ -16,4 +16,34 @@
 - **Open constraints** — blocked on tasks 20–23 merging.
 
 ## Outcome
-(filled by the agent on completion)
+
+Done. `scripts/check-shared-principle-checksums.sh` rewritten (test-first) to guard five
+byte-identity families, membership re-derived from the committed defs (tasks 20–23 reorganised
+the roster into engineer/worker rungs; the old SE/FW/CTO membership was stale — the old script
+in fact FAILED against the committed tree because `fast-worker.md` no longer carries
+`<behavioural-authority>`):
+
+- **engineer-body** (whole body below frontmatter): `senior-engineer.md` == `mid-level-engineer.md` ✓
+- **worker-body** (whole body): `elite-worker.md` == `high-level-worker.md` == `fast-worker.md` == `cheap-worker.md` ✓
+- **`<reporting>`** (generic block, 7 homes): `senior-engineer`, `mid-level-engineer`, `elite-worker`,
+  `high-level-worker`, `fast-worker`, `cheap-worker`, `gui-driver` ✓ — the 10 specialised defs
+  (reviewer, verifier, debugger, CTO, CPO, SPD, auditor, agent-analyzer, environment-manager,
+  constraint-reinforcer) carry role-calibrated payloads (P13) and are deliberately NOT members.
+- **`<behavioural-authority>`** (5 verbatim homes, membership changed): `senior-engineer`,
+  `mid-level-engineer`, `chief-technology-officer`, `code-reviewer`, `debugger` ✓ (was SE/FW/CTO/CR/DBG).
+- **`<test-driven-development>`** (3 homes): `senior-engineer`, `mid-level-engineer`,
+  `chief-technology-officer` ✓ — SE↔CTO still match (kept, per brief); the old `assert_differs
+  SE/FW` half is retired (fast-worker no longer carries a TDD block).
+
+Test harness extended: obsolete FW-TDD fixtures (d)/(e) removed; new per-family drift fixtures
+added for engineer-body, worker-body, and reporting. Each fixture verified to trip its OWN family
+line (non-vacuous). No family failed byte-identity — no FINDING against the defs.
+
+Green: `check-shared-principle-checksums.sh`, `test-check-shared-principle-checksums.sh`,
+`check-hooks.sh` (invokes the check at line 17), and all four `test-*` harnesses. CI workflow
+(`hook-output-limits.yml`) runs both check-hooks.sh and the test harness.
+
+**Did NOT touch defs, brief, register, README, runbooks.** FINDING: `runbooks/sync-a-shared-principle.md`
+is now stale — it still documents the old FW-based TDD/behavioural-authority families (lines 33–51)
+and predates the engineer/worker/reporting families. Out of scope here (do-not-touch), flagged for
+the main agent to route as a runbook-sync task.
