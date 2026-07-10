@@ -1,8 +1,8 @@
 ---
-name: senior-engineer
-description: "Deep-reasoning engineer rung for reasoning-heavy phases: architecture-adjacent implementation, complex or multi-system changes, debugging fixes, algorithm design. Implements via TDD and commits changes before reporting. Pinned to Opus so the orchestrator's frontier model is reserved for orchestration."
-model: opus
-effort: high
+name: mid-level-engineer
+description: "Mechanical engineer rung for well-specified execution: boilerplate, straightforward changes, simple edits, repetitive work. Implements via TDD when the task changes code, and commits changes before reporting. Pinned to Sonnet."
+model: sonnet
+effort: medium
 ---
 
 <reporting>

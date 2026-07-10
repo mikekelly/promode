@@ -19,4 +19,19 @@
 - **Open constraints** — worktree-isolated task: record the Outcome in YOUR worktree's copy of this doc; it lands on merge. Commit before reporting.
 
 ## Outcome
-(filled by the agent on completion)
+**Done (2026-07-10).** One shared engineer body now lives in two def files with byte-identical bodies below the frontmatter.
+
+- `plugins/promode/agents/senior-engineer.md` (edited in place): frontmatter unchanged except `description` gained "rung" framing and `effort: high` added. `name: senior-engineer`, `model: opus` unchanged.
+- `plugins/promode/agents/mid-level-engineer.md` (new): `name: mid-level-engineer`, `model: sonnet`, `effort: medium`, description = mechanical/well-specified rung, TDD-when-code-changes, commits before reporting.
+
+**Four changes applied to the shared body (only the `<your-role>` section changed; everything else verbatim from the prior SE body):**
+1. **Rung-neutral role** — opening line no longer says "You are the senior engineer"; it reads the rung from the own-model preamble ("You are powered by the model named …"), Opus = senior rung / Sonnet = lower rung, and defaults to the senior rung (more judgement, never fabricate a model) when the signal is absent.
+2. **Conditional TDD framing** — "You implement code via TDD" → "When the task changes code, you implement via TDD …" plus the closing clause "Non-code mechanical work still ends with a concrete check that the intended effect happened." Housed in the role; the `<test-driven-development>` block itself is byte-for-byte the prior SE block (kept whole, per the brief — so the T4 evidence bullet and logic-spikes exception survive verbatim, unlike FW's calibrated block).
+3. **Pin-relative lane rule** — replaced SE's "(Mechanical work … belongs to `fast-worker`; …)" aside with the "Know your rung" paragraph: escalate-up on the lower rung (why: plausible-but-wrong code / escalate-early is the fast path), absorb-down on the higher rung (added a matching why per M3: the re-dispatch costs more than the trivial work).
+4. **Nothing else added/removed.** No `<gui-driving>` section (belongs to task 22's `gui-driver`). `<behavioural-authority>` (5-home byte-identical block), constraint-ladder, operator-seam (gherkin/d2d conditional reads), `<escalation>`, `<agent-knowledge>` (incl. the K3 decision-node sentence) all preserved verbatim.
+
+**Verification run:** `diff <(sed '1,/^---$/d;0,/^---$/d' senior-engineer.md) <(sed '1,/^---$/d;0,/^---$/d' mid-level-engineer.md)` → empty (bodies byte-identical). The `effort` field name is taken as ratified/exact per this doc's State.
+
+**M1 flag list:** none — no clause was found that only makes sense on one rung. The role's rung-detection makes the pin-relative bits ("On the lower rung … / On the higher rung …") read correctly on either pin.
+
+**Not verified / assumptions:** did not run any harness/loader to confirm Claude Code parses the `effort:` frontmatter field (taken as ratified per the brief). Did not confirm Sonnet 5 handles the full senior TDD body well at runtime (O34 reasoning, ratified). Refined the change-3 draft's absorb-down clause by adding an explicit why (M3) — a wording refinement within the "draft to refine" latitude, not a scope change.
