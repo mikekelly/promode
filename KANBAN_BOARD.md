@@ -4,9 +4,6 @@ Flow view only — one-line cards (title + link to the task's doc where one exis
 status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ideas in [IDEAS.md](IDEAS.md), completed
 work in [DONE.md](DONE.md).
 
-## Doing
-- Mine marketingskills → candidate MK opinions for ratification — [task 30](tasks/30-mk-opinion-mining.md)
-
 ## Ready
 - CMO def (inherit) + CPO remit carve — [task 31](tasks/31-cmo-def-cpo-carve.md) (chained on 30 + maintainer ratification)
 - senior-marketer def + marketing routed docs — [task 32](tasks/32-senior-marketer-def-routed-docs.md) (chained on 30 + ratification; parallel with 31)
