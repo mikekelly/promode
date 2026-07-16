@@ -5,10 +5,9 @@ status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ide
 work in [DONE.md](DONE.md).
 
 ## Doing
-- Reconstruct rounds 2+3: refcon doctrine T23–T29 + anti-slop PD12 — [task 31](tasks/31-reference-conformance-reconstruction.md)
+- Reconstruct round 4: refcon methodological thinning — [task 32](tasks/32-refcon-thinning-reconstruction.md)
 
 ## Ready
-- Reconstruct round 4: refcon methodological thinning — [task 32](tasks/32-refcon-thinning-reconstruction.md)
 - Fresh review of the reconstruction diff — [task 33](tasks/33-recovery-review.md)
 - (master/provenance: [task 30](tasks/30-design-thinking-recovery.md) — lost-session recovery record)
 - Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
