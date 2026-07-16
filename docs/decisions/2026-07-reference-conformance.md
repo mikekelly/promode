@@ -4,6 +4,8 @@ A decision node (conventions: [agent-knowledge-wiki.md](../../plugins/promode/do
 
 > **Reconstruction provenance:** Reconstructed 2026-07-16 from the session transcript (session_01GrFCMrJXRCos7saa5G2Dbf) after the original unpushed branch `claude/design-thinking-promode-2bc555` was lost with its device. The decisions and rejected-alternative reasons below are verbatim-sourced from that transcript's recovery record (`tasks/30-design-thinking-recovery.md`); the prose is recomposed. Where an entry is recast from a recorded ratified stance rather than a verbatim "rejected: X" quote, it says so.
 
+> **Revised in place by the round-4 thinning** ([`2026-07-refcon-thinning.md`](2026-07-refcon-thinning.md)): the storage topology this round hardcoded — per-area mirror, sync transport, etag guard, drift lockfile — was demoted to explicitly-conditional hosting patterns (T25/T27), with T27's storage-agnostic core extracted as T30 and "deterministic offline renders" corrected to "deterministic, version-pinned renders". The rest of the doctrine below (T23/T24/T26/T28/T29, the O16 inventory, the rejected alternatives) stands.
+
 ## What was decided
 
 The visual truth moves out of a repo-maintained token doc and into **reference screens**:

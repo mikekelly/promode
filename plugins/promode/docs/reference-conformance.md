@@ -1,13 +1,15 @@
 # Reference conformance: reference screens are the visual truth
 
-Routed mechanics doc — consuming agent defs direct a read of this file when a dispatch involves curating or mirroring design reference screens, building or running a visual conformance gate, reconciling a design-system/token doc, governing copy voice, triaging generated design/copy output for machine defaults (anti-slop), or wiring preview/render services for visual work. (Supersedes `design-system-lookbook.md` + `live-reload-server.md`, 2026-07 — decision node: `docs/decisions/2026-07-reference-conformance.md`.)
+Routed mechanics doc — consuming agent defs direct a read of this file when a dispatch involves curating, obtaining, or hosting design reference screens, building or running a visual conformance gate, reconciling a design-system/token doc, governing copy voice, triaging generated design/copy output for machine defaults (anti-slop), or wiring preview/render services for visual work. (Supersedes `design-system-lookbook.md` + `live-reload-server.md`, 2026-07 — decision node: `docs/decisions/2026-07-reference-conformance.md`.)
 
 <objective>
 Promode runs a fast feedback loop for *logic*: the headless operator seam gives an agent a deterministic pass/fail signal, and the discovery⇄determinism flywheel crystallises judgement into checks (`discovery-to-determinism.md`, beside this doc). This doc is the visual analogue — and its load-bearing move is where the truth lives:
 
-**Reference screens are the truth for layout, styling, and copy.** Design is *decided* in reference artboards, in a real design venue (claude.ai/design today — venue ⚙, re-verify on ecosystem change), mirrored deterministically into the repo, and *enforced* by a conformance gate that scores implemented screens against them. The mapping to the logic loop: references ≈ the executable spec, the mirror ≈ the crystallised map, the gate ≈ the test runner. Taste is decided once, in the references, and replayed deterministically — never re-decided ad hoc per session, and never fabricated (a hex here, a spacing value there) by an agent working from prose.
+**Reference screens are the truth for layout, styling, and copy.** Design is *decided* in reference artboards, in a real design venue (claude.ai/design today — venue ⚙, re-verify on ecosystem change), deterministically obtainable at pinned versions, and *enforced* by a conformance gate that scores implemented screens against them. The mapping to the logic loop: references ≈ the executable spec, the pinned obtainable reference ≈ the crystallised map, the gate ≈ the test runner. Taste is decided once, in the references, and replayed deterministically — never re-decided ad hoc per session, and never fabricated (a hex here, a spacing value there) by an agent working from prose.
 
-What this *replaces*: the previous doctrine made a repo-maintained token doc (`DESIGN_SYSTEM.md`) the source of truth, rendered by a lookbook, with a live-refresh loop as the feedback signal. That inverted the real authority — designers (human or agent) decide in screens, not in YAML — and left conformance to eyeballing. The token doc survives, demoted (below); the lookbook does not — the mirrored references *are* the rendered truth, and curated screenshots live inside the mirror.
+**The doctrinal spine:** product design docs (personas, feature definitions, Gherkin scenarios) → **reference screens** → **deterministic comparison gate with calibrated tolerance**. The scenario names the *behaviour*, the reference names the *appearance*, and both trace up to the same feature — a reference nothing upstream explains is a **visual orphan**, the same finding class as an orphaned feature test.
+
+What this *replaces*: the previous doctrine made a repo-maintained token doc (`DESIGN_SYSTEM.md`) the source of truth, rendered by a lookbook, with a live-refresh loop as the feedback signal. That inverted the real authority — designers (human or agent) decide in screens, not in YAML — and left conformance to eyeballing. The token doc survives, demoted (below); the lookbook does not — the references *are* the rendered truth, and curated screenshots live among them as ordinary reference content.
 </objective>
 
 <references-are-truth>
@@ -20,34 +22,40 @@ Every product area keeps its reference screens in the design venue; an implement
 **Ecosystem note — recognise and demote.** The community convention (Google Labs' `design.md` spec, VoltAgent's variant) puts a normative `DESIGN.md` at the repo root. Recognise it when you meet it: it is this doctrine's *advisory predecessor*. Don't delete it — reconcile it under the references (fold it into the advisory `docs/product/DESIGN_SYSTEM.md`, linked from `CLAUDE.md`) and strip it of gate authority. A token doc that gates is the drift bug this doctrine exists to kill: two truths, and the cheaper-to-edit one wins.
 </token-doc-advisory>
 
-<per-area-mirror>
-References reach the repo through a **deterministic per-area mirror**: a CLI sync, etag-guarded (fetch only what changed), landing under `docs/product/references/<area>/`. Two hard rules:
+<venue-agnosticism>
+**Where references live is a per-project hosting choice, not doctrine. The doctrine is three minimum properties any venue must satisfy:**
 
-- **No LLM anywhere in the transport.** The mirror is dumb, deterministic plumbing — an agent judging, resizing, "cleaning up", or summarising in the sync path turns the truth channel into a game of telephone.
-- **The mirror is never hand-edited.** It is a cache of the venue's state; fixing a mirrored file instead of the venue reference forks the truth.
+1. **Discoverable and addressable from the knowledge graph** — every implemented screen can name its governing reference *and the version of it* it conforms to; an agent starting from `CLAUDE.md` can reach the reference for any screen.
+2. **Deterministically obtainable at an exact version** — some mechanical means the project wires (a CLI fetch, a sync, an export) retrieves the reference bytes for a named version, identically every time, with **no LLM anywhere in any transport** — an agent judging, resizing, "cleaning up", or summarising in the path turns the truth channel into a game of telephone. This rule is doctrine regardless of hosting.
+3. **Movement is observable** — when a reference changes, the project can notice: some signal (version id, etag, checksum, dated snapshot) distinguishes "the reference moved" from "it didn't". Some venues expose only coarse movement signals; be honest about the granularity rather than inventing precision (see the approvals pinning below).
 
-Curated screenshots (real-product inspiration, pre-system reference material) live *inside* the mirror as ordinary reference content — they need no separate lookbook artifact.
-</per-area-mirror>
+Cloud-resident references satisfying these three need no local copy at all; a repo-mirrored layout satisfies them trivially. Both are hosting *patterns* (below). Curated screenshots (real-product inspiration, pre-system reference material) live wherever the project's references live, as ordinary reference content — they need no separate lookbook artifact.
+</venue-agnosticism>
+
+<approvals-pin-reference-version>
+**Sign-offs record the exact reference version they were judged against.** An approval of a screen is an approval *against reference version V*, recorded — so when the reference moves, every screen approved against the old version flips to **stale-approval**, and re-baselining is a deliberate act, never a side effect of a green sync or a fresh fetch. This matters most for cloud-resident references, where a reference can move with **no repo event** to notice. Where the venue offers only a coarse movement signal (no per-file version/etag), pin the best honest proxy — a content checksum of the obtained bytes, a dated snapshot — rather than pretending to precision the venue doesn't offer.
+</approvals-pin-reference-version>
 
 <conformance-gate>
 Implemented screens are scored against their references by a deterministic gate producing a **Design Fidelity Score**: content-cropped, text-masked pixel diff plus ΔE2000 perceptual colour difference, with **named profiles** (`strict` | `dev` | `lenient`) so the required fidelity is a declared, reviewable choice — and a **per-screen contact sheet** (reference / render / diff side by side) so a failure is judged in seconds, not re-investigated.
 
-The gate consumes **deterministic offline renders** — pinned viewport, fonts, and data — never a live preview (see below).
+The gate consumes **deterministic, version-pinned renders** — pinned viewport, fonts, and data, compared against a reference at a pinned version — never a live preview (see below). (A cloud-fetched pinned reference isn't *offline*, but it is deterministic — the pin is what matters.)
+
+**Tolerance is first-class, and it is engineered.** The gate's characteristic failure mode is the **false negative**: font rasterisation, anti-aliasing, and platform rendering differences failing screens that genuinely conform. An over-strict gate trains everyone to bypass it — worse than no gate. The leeway is *engineered* — masking, perceptual metrics (ΔE2000), the named profiles — and calibrated per project; it is never eyeball judgement and never verdict-softening after the fact.
 
 **Promode ships no gate implementation.** The gate is per-project, built by the engineer lane **test-first** like any other production code. Tool names here are swappable defaults, not doctrine: Playwright for renders, pixelmatch for the diff — replace freely per stack; the doctrine is the score's shape and determinism, not the tools.
 </conformance-gate>
 
-<two-guards>
-Two failure modes, two **separate** guards — never merged into one check, because they ask different questions of different people:
+<hosting-patterns>
+**Explicitly conditional — proven patterns, not doctrine** (demoted from doctrine 2026-07: the original doctrine hardcoded one project's storage topology — `docs/decisions/2026-07-refcon-thinning.md`). Each satisfies the three venue-agnosticism properties; adopt, adapt, or replace per project:
 
-- **Drift sign-off ledger** (`design-pins.lock.json`) — records which reference version each implemented screen was approved against. Answers "has *our approval* gone stale?" A reference change flips its screens to needing re-approval; signing off is a deliberate act, not a side effect of a green sync.
-- **Sync etag guard** — answers "has the *mirror* fallen behind the venue?" Purely mechanical freshness; no judgement content.
-
-Merging them is the classic error: a sync that auto-blesses new references destroys the ledger's meaning, and a ledger that blocks syncing hides upstream movement.
-</two-guards>
+- **Per-area repo mirror** (T25) — references synced under `docs/product/references/<area>/` by a deterministic CLI, etag-guarded (fetch only what changed), **never hand-edited** (a mirror is a cache of the venue's state; patching a mirrored file instead of the venue reference forks the truth). Right where the project wants references reviewable in diffs and available offline.
+- **Two separated guards** (T27) — where a mirror and an approval ledger coexist, keep them separate, because they ask different questions of different people: the **drift sign-off ledger** (`design-pins.lock.json` — the approvals-pinning above, per screen) answers "has *our approval* gone stale?"; the **sync etag guard** answers "has the *mirror* fallen behind the venue?" Merging them is the classic error — a sync that auto-blesses new references destroys the ledger's meaning, and a ledger that blocks syncing hides upstream movement.
+- **Cloud-resident** — references stay in the venue, addressed by project+path and obtained at a pinned version per gate run; no local sync exists to guard, so the approvals pinning carries the whole staleness story.
+</hosting-patterns>
 
 <preview-out-of-gate-path>
-**Live preview serves iteration; the gate consumes deterministic offline renders. Keep the paths separate.** An edit→see-instantly loop (the project's own dev server / HMR) is the right signal while *working*; it is never evidence. Wiring preview output into verification imports its nondeterminism (timing, fonts, live data) into the gate and trains everyone to distrust red. The previously shipped static live-reload server (`live-reload-server.md`) is retired **without successor** — use the project's dev server; a project with none can spin up any static server, which is not doctrine worth carrying.
+**Live preview serves iteration; the gate consumes deterministic, version-pinned renders. Keep the paths separate.** An edit→see-instantly loop (the project's own dev server / HMR) is the right signal while *working*; it is never evidence. Wiring preview output into verification imports its nondeterminism (timing, fonts, live data) into the gate and trains everyone to distrust red. The previously shipped static live-reload server (`live-reload-server.md`) is retired **without successor** — use the project's dev server; a project with none can spin up any static server, which is not doctrine worth carrying.
 </preview-out-of-gate-path>
 
 <copy-is-design>
@@ -62,8 +70,8 @@ Copy voice is governed, not improvised: **`docs/product/VOCABULARY.md`** owns th
 
 <who-does-what>
 - **`senior-product-designer`** — curates the references per area, reconciles `DESIGN_SYSTEM.md` up from them, owns `VOCABULARY.md`.
-- **Engineer lane** (dispatched by the main agent) — builds the mirror CLI and the conformance gate, test-first.
-- **`environment-manager`** — runs the mirror sync and any preview server as managed dev services; keeps the preview out of the gate path.
-- **`verifier`** — judges visual conformance from the gate's output (score, profiles, contact sheet) against the mirror; a missing gate or mirror is a *finding*, not a licence to eyeball.
+- **Engineer lane** (dispatched by the main agent) — builds the reference-obtainment tooling and the conformance gate, test-first.
+- **`environment-manager`** — runs the reference-obtainment mechanism (mirror sync, pinned fetch — whichever the project wired) and any preview server as managed dev services; keeps the preview out of the gate path.
+- **`verifier`** — judges visual conformance from the gate's output (score, profiles, contact sheet) against the references at their pinned versions; a missing gate or unobtainable reference is a *finding*, not a licence to eyeball.
 - **`auditor`** — assesses the whole loop as the "Design references & visual conformance" dimension.
 </who-does-what>
