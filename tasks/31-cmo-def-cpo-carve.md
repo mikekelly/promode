@@ -14,4 +14,27 @@
 - **Open constraints** — which MK items are strategy-grade (CMO) vs execution-grade (senior-marketer) follows from the ratified list, not the candidates doc's proposals alone.
 
 ## Outcome
-_(filled by the agent on completion)_
+**Done (2026-07-16).** Both files committed.
+
+- **`plugins/promode/agents/chief-marketing-officer.md`** (new): `model: inherit`, NO effort field. Description mirrors CTO/CPO (cost-ceiling rationale, "inherits the session's top model…"; names the pricing-level → CPO/CTO boundary; hands execution to senior-marketer). Structure mirrors the C-suite contract: `<reporting>` (recommendation + strongest rejected alternatives + decision log + lead-with-tweakables calibrated to positioning/channel/growth/budget + assumptions line flagging un-currency-checked platform claims + task-doc record), `<your-role>` (inherit + cost-ceiling rationale, draft-for-ratification, orient on `docs/marketing/`, ownership of the marketing layer of PD5 with cite-goals-and-personas-never-fork, reversibility weighting, skeptical core at decision altitude incl. the PD6 **fourth guise**, honesty-as-strategic-asset, decide-others-execute), `<marketing-doctrine>` (the ~15 decision-altitude MK stances clustered: growth&budget, channel portfolio, offer/positioning/pricing-presentation, the M0 marketing-lane thesis, and `mk-platform-doctrine-time-pinned`), `<boundaries>` (all three directions incl. the parallel-unprimed joint-growth-call rule with CPO), `<decision-nodes>` (K3, `docs/marketing/`), `<escalation>`.
+- **`chief-product-officer.md` carve**: removed positioning + growth strategy from the remit lines (description + `<your-role>` opening); removed "positioning" from the `docs/product/` orient parenthetical (positioning now lives in `docs/marketing/`); added a **Marketing one-way doors → chief-marketing-officer** boundary (incl. the growth-is-the-shared-seam parallel-unprimed-draft rule); extended the `<escalation>` joint-door trigger to cover the joint product+marketing growth case. Everything else untouched.
+
+### O16 cut/moved-prose inventory (every removed/moved CPO clause)
+| CPO clause removed/changed | where it survives |
+|---|---|
+| "positioning" (description remit list) | → CMO description + `<marketing-doctrine>` (offer/positioning cluster) + `<your-role>` remit line |
+| "growth strategy" (description remit list) | → CMO description + `<marketing-doctrine>` (growth&budget cluster) + `<your-role>` remit line |
+| "positioning, growth strategy" (`<your-role>` opening remit) | → CMO `<your-role>` opening + `<marketing-doctrine>`; CPO opening now routes them to CMO by name |
+| "positioning" in `docs/product/` orient parenthetical `(personas, decisions, positioning)` | → CMO `<your-role>` orient line names `docs/marketing/` (positioning, messaging, channel, launch nodes) as positioning's home; CPO parenthetical now `(personas, decisions)`. Deliberate: positioning docs move product→marketing subtree. |
+| — (addition, not removal) CPO `<boundaries>` gained the CMO row + joint-growth-call rule; `<escalation>` joint-door trigger widened | new in CPO |
+
+**Nothing deliberately retired** — all removed CPO remit language is marketing doctrine that moves wholesale to the CMO; no CPO clause was dropped without a home.
+
+### Duplications to flag for register sync (task 33), per M2/M3 (both homes, why travels)
+1. **Skeptical core / PD6 post-hoc trap** — CPO carries it at product decision altitude (goal stretched / persona flattered / citation fabricated); CMO carries a calibrated copy with the **fourth guise** added (campaign/channel/positioning retro-fitted to a goal it never served). Both homes; the fourth guise is CMO-only.
+2. **Skeptical-default reframe** (`mk-offer-is-the-thing` / PD1 family) — CMO's "most 'better copy' requests are 'better offer' requests" is the marketing instantiation of PD1's default-no; register sync should record it as a PD1 kin, not a rival slug.
+3. **`mk-marketing-context-file` → K7/K8** — resolved in the CMO def as orient-on-`docs/marketing/`-graph-nodes (no new file convention), per ratification point 2. Register sync should land it under K7/K8.
+4. **Parallel-unprimed joint-draft rule** — now lives in three homes (CTO↔CPO, and CPO↔CMO / CMO↔CPO for growth). Same O2/O14-family rule, calibrated per pair.
+
+### Ambiguity flagged (did NOT pick silently)
+- **`mk-net-cash-over-roas`, `mk-kill-criteria-everywhere`, `mk-diagnose-before-distributing`, `mk-organic-before-paid`, `mk-search-harvests-demand`** were homed CMO **and** SM in the candidates doc. I placed the *decision-altitude stance* in the CMO `<marketing-doctrine>` (the strategic "what/why") and left the *execution mechanics* (thresholds, formulas, the 4-component retargeting layer, cadence tables) for the SM def (task 32). This is the intended decision↑/mechanics↓ split, but the SM-side copies do not exist yet — task 32 must carry the calibrated execution copies, and task 33 should record these as genuine both-homes duplications (M2/M3), not collapse them.
