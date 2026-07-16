@@ -2,7 +2,7 @@
 
 A decision node (conventions: [agent-knowledge-wiki.md](../../plugins/promode/docs/agent-knowledge-wiki.md) → decision/rejected-work capture). Owner-ratified and fresh-review APPROVED (zero findings) in the design-thinking session; prompted by `github.com/yetone/kill-ai-slop` (unlicensed — read, never vendor). Register opinion: **PD12 `decisions-not-defaults`** (with the copy-tells clause riding **T29 `copy-is-design`** — no separate row). Homes: SPD `<decisions-not-defaults>` + red flag, auditor refcon-check items 5–6, the refcon doc's rewritten `frontend-design` boundary.
 
-> **Reconstruction provenance:** Reconstructed 2026-07-16 from the session transcript (session_01GrFCMrJXRCos7saa5G2Dbf) after the original unpushed branch `claude/design-thinking-promode-2bc555` was lost with its device. The decisions and rejected-alternative reasons below are verbatim-sourced from that transcript's recovery record (`tasks/30-design-thinking-recovery.md`); the prose is recomposed. Where an entry is recast from a recorded ratified stance rather than a verbatim "rejected: X" quote, it says so.
+> **Reconstruction provenance:** Reconstructed 2026-07-16 from the session transcript (session_01GrFCMrJXRCos7saa5G2Dbf) after the original unpushed branch `claude/design-thinking-promode-2bc555` was lost with its device. The decisions and rejected-alternative reasons below are verbatim-sourced from that transcript's recovery record (`tasks/34-design-thinking-recovery.md`); the prose is recomposed. Where an entry is recast from a recorded ratified stance rather than a verbatim "rejected: X" quote, it says so.
 
 ## What was decided
 

@@ -1,7 +1,7 @@
-# Task 33 — Fresh review of the reconstruction diff (tasks 31–32)
+# Task 37 — Fresh review of the reconstruction diff (tasks 35–36)
 
 ## Brief
-- **Orient** — diff: everything on this branch since commit `3f8f80f` (merge of PR #4). Spec of record: `tasks/30-design-thinking-recovery.md`.
+- **Orient** — diff: everything on this branch since commit `3f8f80f` (merge of PR #4). Spec of record: `tasks/34-design-thinking-recovery.md`.
 - **Specify** — fresh, unprimed review of the reconstruction against the recovery record: (1) spec fidelity — every recorded ratified fact present and honoured; (2) register discipline — M3 supersession (T21/DOC-lookbook superseded not deleted; T25/T27 demoted in place; T30 added), M1 (no tell-catalog in defs), K5 (kill-ai-slop cited in exactly one live home), O16 inventory for the deleted docs; (3) re-run the guards yourself (`scripts/check-hooks.sh`, `scripts/check-claude-md-imports.sh`) rather than trusting the implementer; (4) scope — nothing touched beyond the recorded rounds; engineer/worker checksum families intact. Verdict: APPROVED / REWORK with findings.
 - **Why** — the reconstruction composes lost prose from a ratified spec; fresh eyes catch fidelity drift the composer can't see (O10, R3).
 - **Not / exit** — do not fix; report. Exit: verdict + findings recorded in Outcome.
@@ -13,7 +13,7 @@
 
 **Verdict: APPROVED.**
 
-Fresh, unprimed review of the full diff `3f8f80f..HEAD` against the spec of record (`tasks/30-design-thinking-recovery.md`). Verified programmatically (grep/diff/direct script runs), not by eyeballing narration.
+Fresh, unprimed review of the full diff `3f8f80f..HEAD` against the spec of record (`tasks/34-design-thinking-recovery.md`). Verified programmatically (grep/diff/direct script runs), not by eyeballing narration.
 
 **(1) Spec fidelity — every recorded fact walked and confirmed present:**
 - Round 2: T23–T29 all present in the register with correct statements/homes; new `reference-conformance.md` (incl. DESIGN.md recognise-and-demote note) replaces `design-system-lookbook.md`; both old docs (`design-system-lookbook.md`, `live-reload-server.md`) fully deleted (94+80 lines removed, zero stray references left in any live surface — checked via repo-wide grep, only historical task docs/decision nodes/annotated skills-elimination note remain, as expected); decision node `docs/decisions/2026-07-reference-conformance.md` carries exactly 6 rejected alternatives (matches recovered count) + verbatim provenance note; O16 inventory cross-checked rule-by-rule against the actual deleted files' content (`git show 3f8f80f:...`) — all 12 rules from the lookbook doc and all 4 from the live-reload doc accounted for (survives/superseded/retired-with-why), nothing silently dropped.
@@ -32,11 +32,11 @@ Fresh, unprimed review of the full diff `3f8f80f..HEAD` against the spec of reco
 - `scripts/check-claude-md-imports.sh` — green independently.
 - Also ran the checker unit-test suites (`test-check-claude-md-imports.sh`, `test-check-component-frontmatter.sh`, `test-check-shared-principle-checksums.sh`, `test-context-monitor.sh`) — all green, nothing regressed.
 
-**(4) Scope:** diff touches exactly the files the spec named (register, refcon doc + deletions, brief §test-strategy, SPD/VER/EM/AUD/CPO defs, 3 new decision nodes + skills-elimination annotation, CLAUDE.md/README pointer updates, tasks 30–33, board/DONE) — no edits to `senior-engineer`/`mid-level-engineer`/CTO/the worker family/`gui-driver`/`debugger`/`code-reviewer`/`agent-analyzer`/`constraint-reinforcer`. Checksum families confirmed intact by the guard run above.
+**(4) Scope:** diff touches exactly the files the spec named (register, refcon doc + deletions, brief §test-strategy, SPD/VER/EM/AUD/CPO defs, 3 new decision nodes + skills-elimination annotation, CLAUDE.md/README pointer updates, tasks 34–37, board/DONE) — no edits to `senior-engineer`/`mid-level-engineer`/CTO/the worker family/`gui-driver`/`debugger`/`code-reviewer`/`agent-analyzer`/`constraint-reinforcer`. Checksum families confirmed intact by the guard run above.
 
 **Minor findings — noted, not blocking (dismissed with reason per R5):**
-- Tasks 31 and 32's Outcome sections self-report brief chunk-4 sizes (8,874 and 8,921 respectively) that don't match the actual measured value (8,708, confirmed by running the hook script directly for all 5 chunks). Not blocking: guards pass regardless (well under the 10,000 cap either way), and this is a self-report bookkeeping slip, not a corpus defect — but it's exactly the kind of narration the review process distrusts by design, so flagging for a quick correction on O46 task-doc-hygiene grounds.
-- `KANBAN_BOARD.md`'s "Ready" column carries an odd annotation-style entry for task 30 ("master/provenance" note) rather than reflecting that task 30 is still open (its own exit condition — task 33 APPROVED + board closed — hasn't fired yet). Cosmetic; doesn't violate O20 (no competing status field, just an unusual placement).
-- The round-2 decision node (`docs/decisions/2026-07-reference-conformance.md`) deliberately retains the pre-correction "deterministic offline renders" wording in its own historical bullets/O16 table, with a "revised in place" annotation pointing to the round-4 correction rather than rewriting history. This is disclosed transparently in task 32's own Outcome and is the correct M3 behaviour (decision nodes are historical record; the correction travels alongside, not overwriting it) — not a fidelity gap.
+- Tasks 35 and 36's Outcome sections self-report brief chunk-4 sizes (8,874 and 8,921 respectively) that don't match the actual measured value (8,708, confirmed by running the hook script directly for all 5 chunks). Not blocking: guards pass regardless (well under the 10,000 cap either way), and this is a self-report bookkeeping slip, not a corpus defect — but it's exactly the kind of narration the review process distrusts by design, so flagging for a quick correction on O46 task-doc-hygiene grounds.
+- `KANBAN_BOARD.md`'s "Ready" column carries an odd annotation-style entry for task 34 ("master/provenance" note) rather than reflecting that task 34 is still open (its own exit condition — task 37 APPROVED + board closed — hasn't fired yet). Cosmetic; doesn't violate O20 (no competing status field, just an unusual placement).
+- The round-2 decision node (`docs/decisions/2026-07-reference-conformance.md`) deliberately retains the pre-correction "deterministic offline renders" wording in its own historical bullets/O16 table, with a "revised in place" annotation pointing to the round-4 correction rather than rewriting history. This is disclosed transparently in task 36's own Outcome and is the correct M3 behaviour (decision nodes are historical record; the correction travels alongside, not overwriting it) — not a fidelity gap.
 
 No blocking issues found across spec fidelity, register discipline, guards, or scope.

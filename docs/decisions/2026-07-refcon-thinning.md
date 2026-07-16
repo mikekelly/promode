@@ -2,7 +2,7 @@
 
 A decision node (conventions: [agent-knowledge-wiki.md](../../plugins/promode/docs/agent-knowledge-wiki.md) → decision/rejected-work capture). Owner correction, ratified in the design-thinking session as drafted **plus the probe-record amendment below**; the session died before the apply/review chain ran, so this was ratified-unapplied work. Register: T23 (spine + venue-agnosticism clauses), T25/T27 (demoted in place), **T30 `approvals-pin-reference-version`** (new), T26 (tolerance first-class), T28 (wording). Revises [`2026-07-reference-conformance.md`](2026-07-reference-conformance.md) in place.
 
-> **Reconstruction provenance:** Reconstructed 2026-07-16 from the session transcript (session_01GrFCMrJXRCos7saa5G2Dbf) after the original unpushed branch `claude/design-thinking-promode-2bc555` was lost with its device. The decisions below are verbatim-sourced from that transcript's recovery record (`tasks/30-design-thinking-recovery.md`); the prose is recomposed.
+> **Reconstruction provenance:** Reconstructed 2026-07-16 from the session transcript (session_01GrFCMrJXRCos7saa5G2Dbf) after the original unpushed branch `claude/design-thinking-promode-2bc555` was lost with its device. The decisions below are verbatim-sourced from that transcript's recovery record (`tasks/34-design-thinking-recovery.md`); the prose is recomposed.
 
 ## What was decided
 

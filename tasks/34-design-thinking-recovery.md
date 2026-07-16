@@ -1,19 +1,19 @@
-# Task 30 — Design-thinking session recovery (master doc + recovery record)
+# Task 34 — Design-thinking session recovery (master doc + recovery record)
 
 ## Brief
 - **Orient** — this doc IS the spec: a recovery record distilled from the lost session's full claude.ai transcript. The corpus to change: `plugins/promode/docs/opinion-register.md`, `plugins/promode/docs/design-system-lookbook.md` + `live-reload-server.md` (both to be superseded), `plugins/promode/PROMODE_MAIN_AGENT.md` (§test-strategy), agent defs (SPD, VER, EM, AUD, CPO), `docs/decisions/`.
-- **Specify** — reconstruct the three owner-ratified doctrine rounds below onto this branch (`gallant-mclaren-71e822`), as three round-commits via tasks 31 (rounds 2+3) and 32 (round 4), then a fresh unprimed review (task 33). Success: every recorded ratified fact honoured; guards green (`scripts/check-hooks.sh`, `scripts/check-claude-md-imports.sh`); M3 supersession discipline throughout.
+- **Specify** — reconstruct the three owner-ratified doctrine rounds below onto this branch (`gallant-mclaren-71e822`), as three round-commits via tasks 35 (rounds 2+3) and 36 (round 4), then a fresh unprimed review (task 37). Success: every recorded ratified fact honoured; guards green (`scripts/check-hooks.sh`, `scripts/check-claude-md-imports.sh`); M3 supersession discipline throughout.
 - **Why** — the original branch was lost with the device; the *decisions* survived in the transcript. Reconstruction re-executes ratified decisions; it must NOT re-litigate them.
 - **Verified vs assumed** — every quoted decision below is verbatim-sourced from the transcript (verified). Exact original prose of the applied edits is LOST (assumed): where the record under-specifies wording, compose in the corpus's existing register/style. The recorded "fifteen per-home edits" of round 2 is a count, not an enumeration — derive a coherent home set from the recorded facts.
-- **Not / exit** — do not fake the lost audit trail (task docs 30–39 of the original branch are not recreated; decision nodes carry a reconstruction-provenance note instead). Exit: task 33 review APPROVED, board closed.
+- **Not / exit** — do not fake the lost audit trail (task docs 30–39 of the original branch are not recreated; decision nodes carry a reconstruction-provenance note instead). Exit: task 37 review APPROVED, board closed.
 
 ## State
 - **Established facts** — recovery record below; local corpus is at pre-session state (T21/DOC-lookbook intact).
 - **Open constraints** — provenance note in every reconstructed decision node: "Reconstructed 2026-07-16 from the session transcript (session_01GrFCMrJXRCos7saa5G2Dbf) after the original unpushed branch `claude/design-thinking-promode-2bc555` was lost with its device."
-- **Pending goals** — task 31 → task 32 → task 33 → push/PR (user decides).
+- **Pending goals** — task 35 → task 36 → task 37 → push/PR (user decides).
 
 ## Outcome
-Closed 2026-07-16. All three ratified rounds reconstructed on this branch (commits `51105df`, `59e95fc`, `cbd53cd`); fresh unprimed review (task 33) returned **APPROVED, no blocking findings** (`3176326`), with guards re-run independently. The exact original prose remains unrecoverable by design — decision nodes carry the reconstruction-provenance note, and the lost cloud session (unarchived, still live on claude.ai) can later serve as a diff oracle if the CLI is re-authed and teleport becomes possible. Two reviewer bookkeeping findings corrected at closure (chunk-4 size narration slips in tasks 31/32). Parked follow-ups re-recorded below (§Pending work) remain open: perception-gap/memorability check, voice-before-visuals, derived design-system kit.
+Closed 2026-07-16. All three ratified rounds reconstructed on this branch (commits `51105df`, `59e95fc`, `cbd53cd`); fresh unprimed review (task 37) returned **APPROVED, no blocking findings** (`3176326`), with guards re-run independently. The exact original prose remains unrecoverable by design — decision nodes carry the reconstruction-provenance note, and the lost cloud session (unarchived, still live on claude.ai) can later serve as a diff oracle if the CLI is re-authed and teleport becomes possible. Two reviewer bookkeeping findings corrected at closure (chunk-4 size narration slips in tasks 35/36). Parked follow-ups re-recorded below (§Pending work) remain open: perception-gap/memorability check, voice-before-visuals, derived design-system kit. *(These four recovery docs were numbered 30–33 until the rebase onto origin/main, whose `tasks/30-reviewer-opus-high.md` landed concurrently — renumbered 34–37 for id uniqueness; commit messages predating the rebase cite the old numbers. Task numbers inside the recovery record below are the lost session's own and are untouched.)*
 
 ---
 
