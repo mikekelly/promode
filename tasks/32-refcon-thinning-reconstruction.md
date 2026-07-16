@@ -1,0 +1,22 @@
+# Task 32 — Reconstruct round 4: refcon methodological thinning (ratified task 37 + probe amendment)
+
+## Brief
+- **Orient** — spec: `tasks/30-design-thinking-recovery.md` §Round 4. Base: the corpus as left by task 31 (T23–T29 + PD12 applied).
+- **Specify** — one commit applying the owner's ratified thinning correction (the original session died before this apply — it is ratified, unapplied work):
+  - New doctrinal spine stated in `reference-conformance.md`: product design docs (personas, feature definitions, Gherkin scenarios) → reference screens → deterministic comparison gate with calibrated tolerance. Upstream link = one clause on T23, not a new row (scenario names the behaviour, reference names the appearance, both trace to the same feature; a reference nothing upstream explains is the "visual orphan" finding).
+  - Venue-agnosticism as three minimum properties replacing storage-topology doctrine: (1) discoverable/addressable from the knowledge graph — each implemented screen can name its governing reference + version; (2) deterministically obtainable at an exact version — no LLM in any transport; (3) movement is observable.
+  - Row fates: T25 (per-area mirror) and T27 (two guards) demoted **in place** to explicitly-conditional hosting-pattern rows (slugs kept; strikethrough stays reserved for abolished concepts). Extract the storage-agnostic core of T27 as new row **T30 `approvals-pin-reference-version`**: sign-offs record the exact reference version judged against; reference movement flips affected screens to stale-approval; re-baseline is deliberate. Matters most cloud-resident, where a reference can move with no repo event.
+  - T26 tolerance goes first-class: false negatives from font rasterisation / anti-aliasing / platform rendering are the gate's characteristic failure mode (an over-strict gate trains everyone to bypass it); the leeway is engineered — masking, perceptual metrics, named profiles — never eyeball judgement or verdict-softening.
+  - Wording fix everywhere: "deterministic offline renders" → "deterministic, version-pinned renders" (a cloud-fetched pinned reference isn't offline but is deterministic).
+  - Decision node `docs/decisions/2026-07-refcon-thinning.md` carrying: the revise-in-place-vs-formal-supersession call (rows are days-old on this reconstruction — revise in place, per the original draft's argued call), the DesignSync probe record amendment — dated 2026-07-10, ⚙-flagged: (a) claude.ai/design references are directly addressable/fetchable by project+path (list_files, get_file; plan-gated incremental writes) — no local sync need exist; (b) the visible schema exposes no per-file version/etag parameter, so T30's pinning must be honest that some venues offer only coarse movement signals; (c) the tool is exposed to the MAIN session but not to subagents — an argument for "deterministically obtainable by some mechanical means the project wires", never naming a tool. Replaces any "not present in this environment" negative. Plus the reconstruction-provenance note (task 30).
+  Success: all recorded facts honoured; guards green; register/homes coherent after the demotions and T30 addition.
+- **Why** — owner correction, ratified verbatim in the lost session: round 2 hardcoded overlay-mono's storage topology (mirror, sync transport, etag guard, drift lockfile) — one project's implementation choices, not methodology; cloud-resident-reference projects (arguably DesignSync's intended model) couldn't follow half of it.
+- **Verified vs assumed** — as task 31: facts verified, prose lost.
+- **Not / exit** — no re-litigation; do not weaken the no-LLM-in-transport stance (it survives venue-agnosticism explicitly). Exit: commit landed, guards green, Outcome recorded.
+
+## State
+- **Open constraints** — chains on task 31; same provenance note.
+- **Pending goals / next step** — task 33 fresh review over the whole reconstruction diff.
+
+## Outcome
+(filled by the agent on completion)

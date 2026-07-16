@@ -4,7 +4,13 @@ Flow view only — one-line cards (title + link to the task's doc where one exis
 status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ideas in [IDEAS.md](IDEAS.md), completed
 work in [DONE.md](DONE.md).
 
+## Doing
+- Reconstruct rounds 2+3: refcon doctrine T23–T29 + anti-slop PD12 — [task 31](tasks/31-reference-conformance-reconstruction.md)
+
 ## Ready
+- Reconstruct round 4: refcon methodological thinning — [task 32](tasks/32-refcon-thinning-reconstruction.md)
+- Fresh review of the reconstruction diff — [task 33](tasks/33-recovery-review.md)
+- (master/provenance: [task 30](tasks/30-design-thinking-recovery.md) — lost-session recovery record)
 - Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Fix M6 phantom home — drop "(migration note)" at opinion-register.md:18 (M6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Remove 2 stale worktrees: lucid-agnesi (safe), amazing-dirac (--force, needs confirm) (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
