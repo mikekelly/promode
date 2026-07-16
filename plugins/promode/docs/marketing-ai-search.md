@@ -17,7 +17,7 @@ The strategic facts that separate this discipline from SEO priors (durable in sh
 </the-frame>
 
 <what-earns-citations>
-- **The GEO evidence stack, ranked** (Princeton GEO study, per the repo): cite sources > add statistics > expert quotes > authoritative tone. **Keyword stuffing actively hurts** AI visibility. Fluency + statistics is the best combination, and low-ranking sites gain the most. *(⚙ boost figures +40%/+37%/+30% are the repo's, unverified; re-verify on replication/engine drift.)*
+- **The GEO evidence stack, ranked** (Princeton GEO study, per the repo): cite sources > add statistics > expert quotes > authoritative tone. **Keyword stuffing actively hurts** AI visibility. Fluency + statistics is the best combination, and low-ranking sites gain the most. *(⌛ boost figures +40%/+37%/+30% are the repo's, unverified; re-verify on replication/engine drift.)*
 - **Honesty is now mechanically enforced.** AI engines cross-reference: biased comparisons get penalized, misrepresenting competitor features gets de-ranked, and duplicate descriptions across surfaces get down-weighted. Honesty and *variation* are self-interest, not just ethics.
 - **Fan out to topical clusters.** Google's AI generates concurrent related queries under the hood, so single-page-per-keyword targeting is fading — brainstorm the 5–10 fan-out queries and cover the full cluster so you're retrievable for the variants.
 - **Content is a decaying asset.** Schedule per-type refresh cadences (pricing quarterly, comparisons 3–6 months, evergreen annually), refresh-vs-rewrite by signal, and *show* freshness — undated content loses to dated content in AI-weighted retrieval.
@@ -26,7 +26,7 @@ The strategic facts that separate this discipline from SEO priors (durable in sh
 <machine-readable-for-agents>
 AI agents are becoming *buyers* — a concrete structural bet on agentic commerce:
 - **Opaque pricing gets filtered out** of AI-mediated buying journeys (JS-rendered prices, "contact sales"). Ship `/pricing.md`, `llms.txt`, semantic HTML, and visible specs so an agent can parse and recommend you — but **stale pricing files are worse than none.**
-- **Allow the search-and-cite bots** (GPTBot, PerplexityBot, ClaudeBot, Google-Extended) — blocking them means those platforms literally *cannot* cite you. Block training-only crawlers (CCBot) if you must. *(⚙ bot names/roles drift — verify current bot identities before writing robots rules; see engine-mechanics.)*
+- **Allow the search-and-cite bots** (GPTBot, PerplexityBot, ClaudeBot, Google-Extended) — blocking them means those platforms literally *cannot* cite you. Block training-only crawlers (CCBot) if you must. *(⌛ bot names/roles drift — verify current bot identities before writing robots rules; see engine-mechanics.)*
 </machine-readable-for-agents>
 
 <engine-mechanics>

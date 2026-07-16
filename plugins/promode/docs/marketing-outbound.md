@@ -12,16 +12,16 @@ Provenance: distilled 2026-07-15 from the `cold-email` skill of coreyhaines31/ma
 </voice>
 
 <subject-lines>
-**2–4 words, lowercase, internal-looking** — like it came from a colleague, not a campaign. No product pitch, no urgency, no prospect first name. *(⚙ behavioural data drifts — the repo's figure: a first name in the subject costs ~12% of replies because it signals automation; verified-as-of 2026-07-15, re-verify against current deliverability behaviour.)* The stance is durable even if the number moves: the subject line's job is to look like a message a human colleague would send, which is the opposite of the "compelling subject line" prior.
+**2–4 words, lowercase, internal-looking** — like it came from a colleague, not a campaign. No product pitch, no urgency, no prospect first name. *(⌛ behavioural data drifts — the repo's figure: a first name in the subject costs ~12% of replies because it signals automation; verified-as-of 2026-07-15, re-verify against current deliverability behaviour.)* The stance is durable even if the number moves: the subject line's job is to look like a message a human colleague would send, which is the opposite of the "compelling subject line" prior.
 </subject-lines>
 
 <follow-ups>
 - **Each follow-up adds something new** — a fresh angle, proof, or resource. "Just checking in" gives no reason to respond.
-- **Cap the sequence at ~5 total.** Most replies come from follow-ups, but past the 4th, replies drop and spam complaints spike — and **honor the breakup email** (the final "I'll assume the timing's off" often out-performs the middle touches). *(⚙ thresholds: the repo claims ~55% of replies come from follow-ups; verified-as-of 2026-07-15, re-verify.)*
+- **Cap the sequence at ~5 total.** Most replies come from follow-ups, but past the 4th, replies drop and spam complaints spike — and **honor the breakup email** (the final "I'll assume the timing's off" often out-performs the middle touches). *(⌛ thresholds: the repo claims ~55% of replies come from follow-ups; verified-as-of 2026-07-15, re-verify.)*
 </follow-ups>
 
 <shrinking-window>
-**Cold-email reply rates are structurally declining** (the repo's figures: ~7–8% → ~4–5.8%, 2020→2025), and the gap between average and excellent is *widening* — so craft matters **more**, not less, and volume matters less. **Tight targeting beats volume**: ≤50 contacts per campaign, 1–2 people per company. *(⚙ postdates training — verified-as-of 2026-07-15; re-verify on deliverability/benchmark shifts and Google/Yahoo sender-policy changes, which move this materially.)* The reframe: don't respond to falling reply rates by sending more; respond by targeting tighter and writing better.
+**Cold-email reply rates are structurally declining** (the repo's figures: ~7–8% → ~4–5.8%, 2020→2025), and the gap between average and excellent is *widening* — so craft matters **more**, not less, and volume matters less. **Tight targeting beats volume**: ≤50 contacts per campaign, 1–2 people per company. *(⌛ postdates training — verified-as-of 2026-07-15; re-verify on deliverability/benchmark shifts and Google/Yahoo sender-policy changes, which move this materially.)* The reframe: don't respond to falling reply rates by sending more; respond by targeting tighter and writing better.
 </shrinking-window>
 
 <cites>

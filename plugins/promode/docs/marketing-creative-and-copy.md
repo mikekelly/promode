@@ -35,12 +35,12 @@ Creative direction **triangulates three independent signals — account performa
 </evidence-ranked-creative>
 
 <production-notes>
-Durable production opinions (the ⚙ tool/model-behaviour claims below are dated — currency-check before relying on them):
+Durable production opinions (the ⌛ tool/model-behaviour claims below are dated — currency-check before relying on them):
 
-- **Statics often beat polished video** and enable the volume the algorithm needs (cheaper to deliver, ~10× cheaper to produce). Volume > polish — budget ~1 hr/week producing fresh creative for the winning offer. *(⚙ delivery-bias claim, verified-as-of 2026-07-15; re-verify on Meta delivery changes.)*
+- **Statics often beat polished video** and enable the volume the algorithm needs (cheaper to deliver, ~10× cheaper to produce). Volume > polish — budget ~1 hr/week producing fresh creative for the winning offer. *(⌛ delivery-bias claim, verified-as-of 2026-07-15; re-verify on Meta delivery changes.)*
 - **Ads shouldn't look like ads.** Study what *natively* performs in the niche (burner-account technique), match that aesthetic, and run proven *organic* content as paid — proven content + paid distribution is the highest-leverage move.
-- **Generated motion is animated poster design, not filmmaking** — the still carries the idea, motion only makes it breathe; one visual style per campaign. Split the pipeline: AI generators for exploratory hero creative, code-based rendering (e.g. Remotion) for deterministic brand-exact variations at scale. **Negative prompts backfire on video models** — "no hands" is an attention trap; describe motion as belonging to objects instead. *(⚙ video-model behaviour, verified-as-of 2026-07-15; re-verify on generation-model change.)*
-- **Borrowed-UI reveal formats** (iMessage/ChatGPT/Notes/AirDrop) work by borrowing a familiar high-attention UI so the pitch lands before the ad-skip reflex — run **only as labeled paid, never seeded as "real leaked" content**; borrowed authority raises the compliance bar (a fabricated ChatGPT answer is ad copy wearing a lab coat). Pick the angle before the script; reveal the brand once, late. *(⚙ format performance is dated.)*
+- **Generated motion is animated poster design, not filmmaking** — the still carries the idea, motion only makes it breathe; one visual style per campaign. Split the pipeline: AI generators for exploratory hero creative, code-based rendering (e.g. Remotion) for deterministic brand-exact variations at scale. **Negative prompts backfire on video models** — "no hands" is an attention trap; describe motion as belonging to objects instead. *(⌛ video-model behaviour, verified-as-of 2026-07-15; re-verify on generation-model change.)*
+- **Borrowed-UI reveal formats** (iMessage/ChatGPT/Notes/AirDrop) work by borrowing a familiar high-attention UI so the pitch lands before the ad-skip reflex — run **only as labeled paid, never seeded as "real leaked" content**; borrowed authority raises the compliance bar (a fabricated ChatGPT answer is ad copy wearing a lab coat). Pick the angle before the script; reveal the brand once, late. *(⌛ format performance is dated.)*
 </production-notes>
 
 <copy-editing>

@@ -15,7 +15,7 @@ Provenance: distilled 2026-07-15 from the `marketing-council` skill of coreyhain
 <simulation-grounding>
 The integrity envelope that makes persona-simulation usable at all — **simulation is labeled as simulation, grounded in documented positions only:**
 - **No fabricated quotes.** Never state or imply that a real person *endorses* the user's product.
-- **A living advisor's stored positions are a snapshot** — run a research pass for anything recent before leaning on their view. *(⚙ living advisors' positions drift by design — re-verify recent stances.)*
+- **A living advisor's stored positions are a snapshot** — run a research pass for anything recent before leaning on their view. *(⌛ living advisors' positions drift by design — re-verify recent stances.)*
 - **Never launder an advisor's self-reported marketing claims into facts**, and **attribute borrowed frameworks to their true originators.**
 - **Private-person advisors get positions only from the user, never invented.**
 </simulation-grounding>

@@ -13,7 +13,7 @@ Provenance: distilled 2026-07-15 from the `directory-submissions` and `launch` s
 </directories-are-foundation>
 
 <reviews-gate>
-**Zero-review listings are dead — run the review gate or don't list.** The 10-in-30 protocol: 20 personal asks, direct review links, a modest thank-you, one follow-up. If you can't clear a minimum review threshold, **don't submit to G2/Capterra at all** — a zero-review listing is worse than absence. *(⚙ thresholds/report-inclusion cutoffs drift — verify current site minimums.)*
+**Zero-review listings are dead — run the review gate or don't list.** The 10-in-30 protocol: 20 personal asks, direct review links, a modest thank-you, one follow-up. If you can't clear a minimum review threshold, **don't submit to G2/Capterra at all** — a zero-review listing is worse than absence. *(⌛ thresholds/report-inclusion cutoffs drift — verify current site minimums.)*
 </reviews-gate>
 
 <orb-and-launches>
@@ -26,7 +26,7 @@ Provenance: distilled 2026-07-15 from the `directory-submissions` and `launch` s
 </orb-and-launches>
 
 <product-hunt>
-*(⚙ Product Hunt algorithm — verified-as-of 2026-07-15; re-verify before a launch, the algorithm changes.)*
+*(⌛ Product Hunt algorithm — verified-as-of 2026-07-15; re-verify before a launch, the algorithm changes.)*
 - **Comment quality outweighs upvote count** — and **never ask for upvotes, ask for feedback** (converts better *and* avoids the anti-manipulation filters).
 - **Launch 12:01 AM PT, Tue–Thu**; the first ~2 hours decide algorithmic distribution.
 - **Most failed launches launched without a warm audience** (the repo claims ~80%; unverified) — build the audience *before* the launch, not on launch day.
