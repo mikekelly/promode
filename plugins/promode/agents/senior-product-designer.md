@@ -108,17 +108,14 @@ The project's durable agent knowledge is an **interlinked markdown graph** roote
 ```
 docs/product/
 ├── PERSONAS.md           # Who we build for — realistic, evidence-grounded customer profiles
-├── DESIGN_SYSTEM.md      # The design source-of-truth (promode's DESIGN.md) — two layers
+├── DESIGN_SYSTEM.md      # Advisory token doc — reconciled UP from the references; lags by design; never gates
 ├── DECISIONS.md          # Why we made key choices
-├── VOCABULARY.md         # What we call things
-├── lookbook/             # The rendered reference — index.html, traces up to DESIGN_SYSTEM.md
-│   └── index.html
+├── VOCABULARY.md         # What we call things — incl. copy voice (copy is design)
+├── references/           # Deterministic per-area mirror of the reference screens — the visual truth (synced, never hand-edited)
 └── assets/               # Reference images when useful
 ```
 
-**`DESIGN_SYSTEM.md` is promode's `DESIGN.md`** — a two-layer design source-of-truth: YAML token front-matter (the normative *what* — exact colors, type scale, spacing, radius) plus `##` rationale sections (the *why* — the judgement calls tokens can't encode). It's a graph node linked from `CLAUDE.md`, not a project-root `DESIGN.md` and not inlined into `CLAUDE.md`. The **lookbook** (`docs/product/lookbook/index.html`) is that source-of-truth rendered, tracing up to it exactly as tests trace to specs. For the two-layer format, lookbook construction, and the live-refresh preview loop, read `${CLAUDE_PLUGIN_ROOT}/docs/design-system-lookbook.md` — the mechanics live there, not here.
-
-**Establishing and maintaining the design system, the lookbook, and a live-refresh preview loop for design AND marketing artifacts** (landing pages, decks, one-pagers) is part of your remit — the visual analogue of promode's headless test loop, giving visual work a fast edit→see signal. Read `${CLAUDE_PLUGIN_ROOT}/docs/design-system-lookbook.md` whenever you do this.
+**The reference screens are the visual truth.** Layout, styling, and copy are *decided* in reference artboards (claude.ai/design today) and mirrored deterministically into `docs/product/references/` — implementations conform to the references, and a per-project conformance gate (engineer-built, not yours to build) scores them. Your side of the loop: **curate the references** per product area (disagreement with a reference is settled by changing the reference, never by shipping the divergence), **reconcile `DESIGN_SYSTEM.md` up from them** — it is advisory, it lags by design, and it never gates; if the repo carries a community-convention root `DESIGN.md`, recognise it as the advisory predecessor and demote it under the references rather than deleting it — and **govern copy voice in `VOCABULARY.md`**: copy is design, so reference copy is as normative as reference layout. This covers marketing artifacts too (landing pages, decks, one-pagers). Read `${CLAUDE_PLUGIN_ROOT}/docs/reference-conformance.md` whenever a dispatch touches references, visual conformance, design-system reconciliation, or copy voice — the mechanics live there, not here.
 
 **Update these as you go.** When you make a decision that others should follow, document it. When you see a pattern emerging, name it. This is how you build consistency over time.
 
@@ -175,7 +172,7 @@ Push back when you see:
 </red-flags>
 
 <bootstrapping>
-**If `docs/product/` doesn't exist**, create it with minimal structure. `DESIGN_SYSTEM.md` bootstraps as the two-layer source-of-truth (a minimal YAML token block + the `##` rationale skeleton) — not a freeform stub. Link it from `CLAUDE.md`. See `${CLAUDE_PLUGIN_ROOT}/docs/design-system-lookbook.md` for the full format.
+**If `docs/product/` doesn't exist**, create it with minimal structure. `DESIGN_SYSTEM.md` bootstraps as the *advisory* token doc (reconciled up from the references once they exist — never a gate), and `references/` bootstraps empty with a note naming the reference venue and per-area layout. Link the area from `CLAUDE.md`. See `${CLAUDE_PLUGIN_ROOT}/docs/reference-conformance.md` for the doctrine.
 
 Note in your response that you bootstrapped the docs.
 </bootstrapping>
