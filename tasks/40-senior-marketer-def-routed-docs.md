@@ -1,7 +1,7 @@
 # senior-marketer def (opus/high) + marketing routed docs
 
 ## Brief
-- **Orient** — `plugins/promode/agents/senior-product-designer.md` (the execution-rung template: opus/high pin, Approve/Refine/Reject-style judgement, docs-subtree ownership, route-up escalation). Ratified MK items from `tasks/30-mk-opinion-candidates.md`. Routed-doc exemplars: `plugins/promode/docs/discovery-to-determinism.md`, `design-system-lookbook.md`, `gherkin-style.md` (style + the `${CLAUDE_PLUGIN_ROOT}` conditional-read mechanism). CMO def (task 31) for boundary text.
+- **Orient** — `plugins/promode/agents/senior-product-designer.md` (the execution-rung template: opus/high pin, Approve/Refine/Reject-style judgement, docs-subtree ownership, route-up escalation). Ratified MK items from `tasks/38-mk-opinion-candidates.md`. Routed-doc exemplars: `plugins/promode/docs/discovery-to-determinism.md`, `design-system-lookbook.md`, `gherkin-style.md` (style + the `${CLAUDE_PLUGIN_ROOT}` conditional-read mechanism). CMO def (task 39) for boundary text.
 - **Specify** — two deliverables:
   - **`plugins/promode/agents/senior-marketer.md`** (new): `model: opus`, `effort: high`. Execution rung for marketing artifacts: campaigns, ads, copy/copy-editing, email (incl. cold email), landing-page content, SEO/AI-SEO artifacts, launches at execution level, customer/VOC research runs. Execution-grade ratified MK items land here — tier-1 items as opinions wrapping bare framework names, tier-2/3 mechanics behind def-directed conditional reads. Carries the knit discipline execution-side (its artifacts cite the `docs/marketing/` strategy node + persona they serve; an artifact that can't name either is a red flag to surface, not paper over). Escalation: marketing one-way doors → CMO; visual/brand artifacts route through the design lookbook loop (senior-product-designer owns it); production-code work (site/app changes a campaign needs) bounces up for engineer re-dispatch (O38 analogue). Reporting block per house pattern (P13/P14).
   - **Routed mechanics docs** under `plugins/promode/docs/` — the set follows the ratified tier-2/3 items (expected shape: copy-editing/Seven Sweeps, grounded-inputs creative workflow, the 2026 paid-ads playbook with verified-as-of currency dates; do not pre-create docs no ratified item needs). Each doc cold-readable, one idea one home (K5); tier-3 claims carry verified-as-of + re-verify trigger.
@@ -10,11 +10,11 @@
 - **Not / exit** — do NOT edit the register, brief, README, CPO/CMO defs, or the auditor. Exit: def + routed docs committed, an inventory mapping each ratified execution-grade MK item → its home (def clause or doc) in report + Outcome.
 
 ## State
-- **Established facts** — chained on task 30's ratification; can run in parallel with task 31 (disjoint files) once ratification lands.
+- **Established facts** — chained on task 38's ratification; can run in parallel with task 39 (disjoint files) once ratification lands.
 - **Open constraints** — routed-doc set is fog until ratification: named unknown, not pre-sliced.
 
 ## Outcome
-**Done (2026-07-16).** Def + 10 routed docs committed. No register/brief/README/CPO/CMO/auditor edits (task 33 owns register sync).
+**Done (2026-07-16).** Def + 10 routed docs committed. No register/brief/README/CPO/CMO/auditor edits (task 41 owns register sync).
 
 ### Deliverables
 - **`plugins/promode/agents/senior-marketer.md`** (new): `model: opus`, `effort: high`. Structure: `<reporting>` (P13/P14 pattern, calibrated payload — artifacts + which strategy node/persona each cites + source material + a not-verified line that specifically names any un-currency-checked platform claim), `<your-role>` (execution rung; orient on `docs/marketing/` + `docs/product/PERSONAS.md`; the knit discipline execution-side — every artifact cites a strategy node + persona or the gap is the finding; never fork/invent; hand-off boundaries), `<house-doctrine>` (the ~10 cross-cutting execution stances inline — see inventory), `<specialism-docs>` (10 def-directed `${CLAUDE_PLUGIN_ROOT}` conditional reads), `<escalation>` (marketing one-way doors→CMO, persona gaps→SPD/CPO, production code→engineer re-dispatch per O38, visual/brand→SPD lookbook, un-currency-checkable platform claim→flag).
@@ -22,7 +22,7 @@
 
 ### Routed-doc consolidation (11 placeholder RDs → 10 docs), and why
 - **RD-creative + RD-copy → `marketing-creative-and-copy.md`** (the one substantive merge): generate→curate→edit is one continuous content-craft surface sharing the grounded-inputs corpus, the evidence ladder, and the house voice; splitting them would fork the grounded-inputs discipline across two homes (K5 violation).
-- **Perishable platform payloads are NOT separate docs** — they're dated, upstream-linking *sections* inside their domain doc (Meta/Google/LinkedIn → `marketing-paid-ads.md` §platform-playbooks; engine-specific AI-search mechanics → `marketing-ai-search.md` §engine-mechanics). Rationale: one specialism, one home (K5) + a single def-directed read gives the durable doctrine *and* the current-platform payload in one shot; the perishable part is clearly quarantined + dated so it can't rot the durable doctrine. This is my reading of ratification Decision A ("link upstream, don't vendor") — the ratified constraint is link-not-vendor; whether the link lives in a standalone doc or a dated section was left to task 32. Reversible if the maintainer wanted literally standalone platform docs.
+- **Perishable platform payloads are NOT separate docs** — they're dated, upstream-linking *sections* inside their domain doc (Meta/Google/LinkedIn → `marketing-paid-ads.md` §platform-playbooks; engine-specific AI-search mechanics → `marketing-ai-search.md` §engine-mechanics). Rationale: one specialism, one home (K5) + a single def-directed read gives the durable doctrine *and* the current-platform payload in one shot; the perishable part is clearly quarantined + dated so it can't rot the durable doctrine. This is my reading of ratification Decision A ("link upstream, don't vendor") — the ratified constraint is link-not-vendor; whether the link lives in a standalone doc or a dated section was left to task 40. Reversible if the maintainer wanted literally standalone platform docs.
 - **Resisted further merges** (offers/paid-ads/ai-search/outbound/research/distribution/planning/loops/council each kept distinct): each is a recognized marketing specialism with its own def-directed-read trigger; forcing them together (e.g. a 3-domain "assets" doc) would bloat past cold-readable and blur one-idea-one-home. `mk-okf-protocol-bet` correctly omitted (NOT ratified — deferred to IDEAS.md per ratification point 5).
 
 ### Cold-probe verdicts (fresh opus agents, context-free questions, synchronous parallel batch)
@@ -49,10 +49,10 @@
 **`marketing-council.md`:** `mk-value-is-the-disagreement`, `mk-simulation-grounding`, `mk-council-decides-not-executes`.
 *(† = ⚙ time-pinned, carries verified-as-of + re-verify trigger.)*
 
-**Items deliberately NOT here (CMO-only, task 31):** `mk-founder-reviews-the-numbers`, `mk-agentic-stack-thesis`, `mk-forecasts-are-guesses`, `mk-offers-vs-pricing-boundary` (decision), and the decision-altitude copies of the 5 dual-homed items. **NOT ratified:** `mk-okf-protocol-bet` (IDEAS.md).
+**Items deliberately NOT here (CMO-only, task 39):** `mk-founder-reviews-the-numbers`, `mk-agentic-stack-thesis`, `mk-forecasts-are-guesses`, `mk-offers-vs-pricing-boundary` (decision), and the decision-altitude copies of the 5 dual-homed items. **NOT ratified:** `mk-okf-protocol-bet` (IDEAS.md).
 
-### For task 33 (register sync) — flags
-- The 5 dual-homed items (`mk-net-cash-over-roas`, `mk-kill-criteria-everywhere`, `mk-diagnose-before-distributing`, `mk-organic-before-paid`, `mk-search-harvests-demand`) now have their **execution copies** placed (def house-doctrine + paid-ads/planning docs) alongside task 31's CMO decision copies — record as genuine both-homes duplications (M2/M3), not collapse.
+### For task 41 (register sync) — flags
+- The 5 dual-homed items (`mk-net-cash-over-roas`, `mk-kill-criteria-everywhere`, `mk-diagnose-before-distributing`, `mk-organic-before-paid`, `mk-search-harvests-demand`) now have their **execution copies** placed (def house-doctrine + paid-ads/planning docs) alongside task 39's CMO decision copies — record as genuine both-homes duplications (M2/M3), not collapse.
 - `mk-orb-channels` reclassified **tier 1 substance** by cold probe (proposed t2) — register entry should reflect name-only stance + doc-resident phasing mechanics.
 - New homes key entries needed: **SM** = `senior-marketer.md`; the 10 `marketing-*.md` routed docs (suggest keys like `mkt-offers`, `mkt-creative`, etc.). `mk-platform-doctrine-time-pinned` is realised as a def house-doctrine stance + dated upstream-linking sections in the paid-ads/ai-search/distribution/outbound/planning docs.
 - `mk-persona-proxy-ladder` placed as PD3 marketing-lane mechanics (SPD keeps `PERSONAS.md`); `mk-two-tier-loop-actions` as O11 instantiation; `mk-expert-panel-scoring` as R4 instantiation; `mk-value-is-the-disagreement` as O14/R4 kin — per ratification point 2, these are extensions of existing items, not parallel MK items.
@@ -62,4 +62,4 @@
 - **Cold probes were mildly primed** for `mk-hook-is-three-components` (I stated "three simultaneous components" in the question), so its tier-2 verdict leans on the non-derivable *mechanics* rather than pure ignorance of the framework; the other four probes were clean.
 - The **standalone-doc-vs-dated-section** choice for perishable platform payloads is my reading of Decision A (link-not-vendor is the ratified constraint); flagged reversible.
 - Assumed no sonnet marketing rung is needed (ratified) — nothing in the execution-grade items implied one; the mechanical tail (bulk variants, form submission, visual artifacts) routes to existing roster (workers/gui-driver/SPD) via the def's hand-off boundaries.
-- Register/README/homes-key updates deferred to task 33 by scope (not done here).
+- Register/README/homes-key updates deferred to task 41 by scope (not done here).

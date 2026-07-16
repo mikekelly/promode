@@ -1,7 +1,7 @@
 # Auditor: marketing-traceability (knit) dimension
 
 ## Brief
-- **Orient** — `plugins/promode/agents/auditor.md` (dimension structure, fan-out mechanics, light-check routing, R8 slug-tagging). Register state from task 33 (PD5/PD6/MK rows). The CMO/senior-marketer defs (what the owning agents uphold in-flight — the audit dimension mirrors it, per O36's design).
+- **Orient** — `plugins/promode/agents/auditor.md` (dimension structure, fan-out mechanics, light-check routing, R8 slug-tagging). Register state from task 41 (PD5/PD6/MK rows). The CMO/senior-marketer defs (what the owning agents uphold in-flight — the audit dimension mirrors it, per O36's design).
 - **Specify** — extend the auditor with a **marketing-traceability assessor dimension** checking the knit across the PD5 hierarchy:
   - every `docs/marketing/` doc cites the goal it serves and the `docs/product/PERSONAS.md` persona it targets (citations, not forked copies — K5);
   - no cross-layer contradictions: positioning in marketing docs vs product docs; personas targeted vs personas established; features the marketing strategy leans on vs features actually defined;
@@ -14,7 +14,7 @@
 - **Not / exit** — do NOT edit the brief, README, CMO/senior-marketer defs, or other register rows. Exit: auditor def + register-home touch committed + Outcome.
 
 ## State
-- **Established facts** — chained on task 33; can run in parallel with task 34 (disjoint files).
+- **Established facts** — chained on task 41; can run in parallel with task 42 (disjoint files).
 
 ## Outcome
 **Done — 2026-07-16.** Added the **Marketing traceability (knit)** dimension to `plugins/promode/agents/auditor.md`:

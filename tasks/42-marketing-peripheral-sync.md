@@ -1,7 +1,7 @@
 # Peripheral sync: brief + README for the marketing lane
 
 ## Brief
-- **Orient** — `plugins/promode/PROMODE_MAIN_AGENT.md` (the brief; note the `<!-- CHUNK -->` mechanics), `plugins/promode/hooks/hooks.json`, `scripts/check-hooks.sh`, README (agents table + opinions map). Precedent: `tasks/25-peripheral-sync.md`. The committed register state from task 33 is the source of truth.
+- **Orient** — `plugins/promode/PROMODE_MAIN_AGENT.md` (the brief; note the `<!-- CHUNK -->` mechanics), `plugins/promode/hooks/hooks.json`, `scripts/check-hooks.sh`, README (agents table + opinions map). Precedent: `tasks/25-peripheral-sync.md`. The committed register state from task 41 is the source of truth.
 - **Specify** — one consistent brief+README pass:
   - **Brief** — `<delegation-map>`: add the CMO line (crucial hard-to-reverse *marketing* one-way doors → `promode:chief-marketing-officer`, inherit, drafts for ratification) and the senior-marketer line (marketing execution, opus/high); adjust the CPO line for the carve. `<product-considerations>` (or a sibling marketing block if it reads better — smallest change wins): route marketing one-way doors to CMO, execution to senior-marketer. `<model-tiers>`: CMO joins the inherit-seats list + the informed-tier-consent trigger list (O39). `<feature-knowledge-base>`: one sentence making the marketing layer's knit concrete (marketing docs in `docs/marketing/` cite goals + personas) — only if it earns its words; the hierarchy sentence already names marketing.
   - **README** — agents table rows for CMO + senior-marketer; "The opinions" human map gains the MK section pointer; recommended-settings untouched.
@@ -11,7 +11,7 @@
 - **Not / exit** — do NOT edit the register, defs, or decision nodes. Exit: brief + README committed, both check scripts shown green in the report + Outcome.
 
 ## State
-- **Established facts** — chained on task 33.
+- **Established facts** — chained on task 41.
 
 ## Outcome
 Done. One consistent brief + README pass syncing the marketing lane to the peripheral homes, per the post-task-33 register (source of truth).
@@ -29,4 +29,4 @@ Done. One consistent brief + README pass syncing the marketing lane to the perip
 
 **Decisions/notes:** (1) Carved the CPO README row for table consistency even though the task named only "add CMO+SM rows" — leaving `positioning, growth strategy` on CPO would contradict the new CMO row in the same table. (2) Chunk 1 is the tight one (9199 payload, ~800 headroom); left un-split per minimal-diff since it's under cap.
 
-**Not verified / assumptions:** treated the committed register (task 33/35 state) as final per the brief; did NOT re-derive register correctness. No register divergence found while syncing (O2/O13/O39/PD5/PD9/K8 B-cited homes matched what I wrote). Gates are the only verification run — no runtime/agent-dispatch check of the brief's live delivery.
+**Not verified / assumptions:** treated the committed register (task 41/43 state) as final per the brief; did NOT re-derive register correctness. No register divergence found while syncing (O2/O13/O39/PD5/PD9/K8 B-cited homes matched what I wrote). Gates are the only verification run — no runtime/agent-dispatch check of the brief's live delivery.

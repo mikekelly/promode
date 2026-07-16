@@ -15,7 +15,7 @@
 - **Not / exit** — do NOT restructure sections beyond the findings, rename tags, or touch agent defs; register edits ONLY the two wording syncs named above (O13, O1 markers). Exit: brief + register wording committed, `scripts/check-hooks.sh` green (state the chunk sizes in the report), O16 inventory in report + Outcome.
 
 ## State
-- **Established facts** — XML tag convention: KEEP (ratified 2026-07-16). Marketing-lane task 34 will later edit the brief's `<delegation-map>`/`<product-considerations>` — this task lands FIRST so 34 rebases on the deduped text.
+- **Established facts** — XML tag convention: KEEP (ratified 2026-07-16). Marketing-lane task 42 will later edit the brief's `<delegation-map>`/`<product-considerations>` — this task lands FIRST so 42 rebases on the deduped text.
 - **Open constraints** — worktree-isolated agents record the Outcome in their own worktree's copy.
 
 ## Outcome
