@@ -10,6 +10,7 @@
 - **Why** — the register is the single evolvable home (M0); defs shipped in 31/32 are drift until their clauses trace to register items and the carve's row homes are consistent.
 - **Verified vs assumed** — assumed the ratified-candidates doc and the two def outcomes are consistent; a mismatch (a def clause serving no ratified item, or a ratified item with no home) is a finding to surface in the report, not silently reconcile.
 - **Not / exit** — do NOT edit the brief, README, defs, or hooks. Exit: register + node committed + Outcome.
+- **Opportunistic (from task 37):** sync O4's literal register statement — it still reads "Always `run_in_background: true`" but the harness now backgrounds by default and the brief (post-37) says "never pass `run_in_background: false`"; update O4's wording to match (semantics unchanged — currently equivalent-but-stale, not drift).
 
 ## State
 - **Established facts** — chained on tasks 31 AND 32 (needs their flagged duplications and final doc set).
