@@ -4,9 +4,6 @@ Flow view only — one-line cards (title + link to the task's doc where one exis
 status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ideas in [IDEAS.md](IDEAS.md), completed
 work in [DONE.md](DONE.md).
 
-## Doing
-- Move code-reviewer to Opus/high (O13) — [task doc](tasks/30-reviewer-opus-high.md)
-
 ## Ready
 - Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Fix M6 phantom home — drop "(migration note)" at opinion-register.md:18 (M6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
