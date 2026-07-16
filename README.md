@@ -67,7 +67,7 @@ So promode keeps the main agent thin: it holds the opinions, the plan, and the c
 | `senior-product-designer` | Product/UX execution grounded in personas — cut before add, defaults over settings; owns `docs/product/` and the design lookbook (Opus / high effort) |
 | worker family — `elite-worker` / `high-level-worker` / `fast-worker` / `cheap-worker` | Generic *non-code* execution — research, gathering, formatting non-source artifacts, file ops, running existing scripts; one shared body, four pre-baked tiers (elite inherits the top tier, high-level = Opus/high, fast = Sonnet/medium, cheap = Haiku); production-code work bounces up to an engineer |
 | `gui-driver` | Browser/GUI driving off stable selectors, never coordinates (Sonnet / medium effort) |
-| `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) |
+| `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) (Opus / high effort) |
 | `debugger` | Find the root cause, reproduce with a test, report (doesn't fix unless asked) |
 | `verifier` | Exercise the running app from the outside; PASS/FAIL with evidence |
 | `environment-manager` | Docker, services, health checks, scripts |

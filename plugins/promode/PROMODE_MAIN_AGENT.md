@@ -55,7 +55,7 @@ Orchestrate in roughly this order, iterating as you learn: (1) **brainstorm** wi
 - Generic *non-code* execution (research, gathering, formatting non-source artifacts, file ops, doc assembly, running existing scripts) — pick the rung by stakes: `promode:elite-worker` (inherits *your* tier — judge/synthesis-grade), `promode:high-level-worker` (opus/high — strong judgement), `promode:fast-worker` (sonnet/medium — routine), `promode:cheap-worker` (haiku — simple bulk). A worker that hits production code stops and bounces it up for re-dispatch to an engineer (code rides TDD)
 - Browser / GUI driving → `promode:gui-driver` (selector discipline; sonnet/medium)
 - Debugging → `promode:debugger` (pass `model: opus` for hard/multi-system bugs, `model: sonnet` for simple ones)
-- Code review (not test-running) → `promode:code-reviewer`
+- Code review (not test-running) → `promode:code-reviewer` (opus/high)
 - Verifying the running app → `promode:verifier` (via `/verify`)
 - Environment / docker / services → `promode:environment-manager`
 - AAR evidence (verify a self-debrief, autopsy a dead/oversized run, cross-session patterns) → `promode:agent-analyzer`
@@ -72,7 +72,7 @@ Orchestrate in roughly this order, iterating as you learn: (1) **brainstorm** wi
 **The roster is a pre-baked model+effort ladder.** Reasoning effort can only be pinned in an agent *definition*, never per dispatch (⚙ below), so each rung is a named def you pick by cognitive load:
 
 - **Inherit seats (your tier).** `chief-technology-officer`, `chief-product-officer`, and `elite-worker` all run `model: inherit` — *your* model. The two C-suite agents draft the crucial, hard-to-reverse one-way doors worth your tier (design → CTO, product → CPO; each drafts for you to ratify); `elite-worker` is the single *generic non-code* rung worth it (judge/synthesis-grade grunt-work). Inherit honours your cost ceiling (Fable→Fable, Opus→Opus) — never hardcoded above what you're paying for.
-- **opus / high** — deep-reasoning execution: `senior-engineer`, `high-level-worker`, `senior-product-designer`, hard `debugger` dispatches (`model: opus`).
+- **opus / high** — deep-reasoning execution: `senior-engineer`, `high-level-worker`, `senior-product-designer`, `code-reviewer`, hard `debugger` dispatches (`model: opus`).
 - **sonnet / medium** — mechanical execution: `mid-level-engineer`, `fast-worker`, `gui-driver`, routine `debugger` dispatches.
 - **haiku** — simple bulk generic work: `cheap-worker` (Haiku has no effort control).
 
