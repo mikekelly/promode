@@ -17,4 +17,12 @@
 - **Established facts** — chained on task 33; can run in parallel with task 34 (disjoint files).
 
 ## Outcome
-_(filled by the agent on completion)_
+**Done — 2026-07-16.** Added the **Marketing traceability (knit)** dimension to `plugins/promode/agents/auditor.md`:
+- New `<dimensions>` table row (conditional, suggested assessor `promode:senior-marketer`), placed after the Design row (both conditional).
+- New `<marketing-traceability>` detail block (after `<design-system-visual-loop>`), mirroring `<framing-traceability>`, with five checks: (1) strategy nodes cite (never fork) goal + persona — `K5`; (2) no cross-layer contradictions (positioning / personas-targeted-vs-established / features-leaned-on-vs-defined); (3) orphans both directions are findings — `V5` (downward = stale strategy/goal proliferation, upward = goal/shipped feature with no GTM); (4) no post-hoc campaign justification — `PD6` fourth guise; (5) platform-pinned doctrine currency-checked — `mk-platform-doctrine-time-pinned` (dated sections aged past their re-verify trigger = findings). Closes with the light-check route (targeted knit spot-check → CMO for strategy layer / senior-marketer for execution, not a fan-out) and R8 slug-tagging (already carried by the assessor brief).
+
+Register-home touches (AUD `e` enforcement marker) in `opinion-register.md`: **PD5** (audits the marketing-layer knit corpus-wide), **PD6** (checks the fourth guise corpus-wide), **`mk-platform-doctrine-time-pinned`** (currency-audit).
+
+Invariant checks green: `scripts/check-hooks.sh` (full suite) + `scripts/check-component-frontmatter.sh` (21 components valid). No auditor restructure was needed — the dimension list was extensible as assumed; fan-out mechanics untouched.
+
+**Decisions-as-constraints for later agents:** the dimension is a *reusable lens* (three cadences), not a full-sweep-only step — its light-check owner is CMO (strategy) / senior-marketer (execution). The AUD `e` homes on PD5/PD6/mk-platform-doctrine are the enforcement record; do not add a rival knit slug — this dimension enforces existing items.
