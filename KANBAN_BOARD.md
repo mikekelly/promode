@@ -5,10 +5,9 @@ status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ide
 work in [DONE.md](DONE.md).
 
 ## Doing
-- senior-marketer def + marketing routed docs — [task 32](tasks/32-senior-marketer-def-routed-docs.md)
+- Register sync: MK section + Components + decision node — [task 33](tasks/33-marketing-register-sync.md)
 
 ## Ready
-- Register sync: MK section + Components + decision node — [task 33](tasks/33-marketing-register-sync.md) (chained on 31+32)
 - Peripheral sync: brief + README for the marketing lane — [task 34](tasks/34-marketing-peripheral-sync.md) (chained on 33)
 - Auditor marketing-traceability (knit) dimension — [task 35](tasks/35-auditor-knit-dimension.md) (chained on 33; parallel with 34)
 - Review the whole marketing lane — [task 36](tasks/36-marketing-lane-review.md) (chained on 34+35)
