@@ -1,7 +1,8 @@
 ---
 name: code-reviewer
-description: "Reviews implementation work. Marks tasks done or requests rework. Defaults to Sonnet for standard review; pass model: opus for complex architectural review."
-model: sonnet
+description: "Reviews implementation work. Marks tasks done or requests rework. Pinned to Opus / high effort — review is a judgement seat, not mechanical execution; pass model: sonnet for simple mechanical diffs."
+model: opus
+effort: high
 ---
 
 <reporting>

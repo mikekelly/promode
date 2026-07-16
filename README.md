@@ -65,11 +65,11 @@ So promode keeps the main agent thin: it holds the opinions, the plan, and the c
 | `chief-marketing-officer` | Crucial, hard-to-reverse *marketing* one-way doors — positioning, brand/category, channel portfolio, growth & launch strategy, the marketing plan; drafts for ratification (inherits the session's top tier) |
 | `senior-engineer` | Reasoning-heavy implementation via TDD — architecture-adjacent changes, complex/multi-system work, hard-bug fixes, algorithm design (Opus / high effort) |
 | `mid-level-engineer` | Well-specified implementation via TDD — the same engineer body calibrated to a lighter pin (Sonnet / medium effort) |
-| `senior-product-designer` | Product/UX execution grounded in personas — cut before add, defaults over settings; owns `docs/product/` and the design lookbook (Opus / high effort) |
+| `senior-product-designer` | Product/UX execution grounded in personas — cut before add, defaults over settings; owns `docs/product/` and the product side of the reference-conformance loop (Opus / high effort) |
 | `senior-marketer` | Marketing execution grounded in personas — campaigns, ads, copy, email, SEO/AI-search, VOC research; owns artifacts under `docs/marketing/`, routes one-way doors up to the CMO (Opus / high effort) |
 | worker family — `elite-worker` / `high-level-worker` / `fast-worker` / `cheap-worker` | Generic *non-code* execution — research, gathering, formatting non-source artifacts, file ops, running existing scripts; one shared body, four pre-baked tiers (elite inherits the top tier, high-level = Opus/high, fast = Sonnet/medium, cheap = Haiku); production-code work bounces up to an engineer |
 | `gui-driver` | Browser/GUI driving off stable selectors, never coordinates (Sonnet / medium effort) |
-| `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) |
+| `code-reviewer` | Review the change (doesn't run the suite — that's the implementing agent's job) (Opus / high effort) |
 | `debugger` | Find the root cause, reproduce with a test, report (doesn't fix unless asked) |
 | `verifier` | Exercise the running app from the outside; PASS/FAIL with evidence |
 | `environment-manager` | Docker, services, health checks, scripts |
@@ -110,7 +110,7 @@ Promode ships **no skills**. A skill's invocation is voluntary — the model may
 
 - **Dedicated agents** — big just-in-time mechanics that are one agent's whole job, reached by deterministic delegation-map dispatch: `auditor` and `constraint-reinforcer` (see the agents table above). Same context economics as a skill — the definition loads only when dispatched.
 - **Slash commands** (`plugins/promode/commands/`) — user-typed flows: `/promode:handoff` writes the handoff doc a fresh session resumes from after a `/clear` or `/compact` (the main agent also fires it proactively — that decision is in its brief, not left to listing luck); `/promode:promode-audit` dispatches the auditor.
-- **Routed mechanics docs** (`plugins/promode/docs/`) — cross-cutting knowledge several agents need occasionally: `discovery-to-determinism.md` (layered acceptance testing below the UI, crystallising discovery into deterministic code) and `design-system-lookbook.md` (the visual analogue: design source-of-truth + lookbook + live-refresh preview). Each consuming agent definition carries a conditional "when the dispatch is X, first read …" — an in-system-prompt imperative instead of a listing gamble.
+- **Routed mechanics docs** (`plugins/promode/docs/`) — cross-cutting knowledge several agents need occasionally: `discovery-to-determinism.md` (layered acceptance testing below the UI, crystallising discovery into deterministic code) and `reference-conformance.md` (the visual analogue: reference screens as the design truth + a deterministic conformance gate). Each consuming agent definition carries a conditional "when the dispatch is X, first read …" — an in-system-prompt imperative instead of a listing gamble.
 - **Everything else is guaranteed-loaded** — in the hook-delivered brief (e.g. the task-docs plan-persistence mechanics) or baked into the agent definitions.
 
 ## Recommended settings

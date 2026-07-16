@@ -23,6 +23,7 @@ Script when: repeated manual commands, complex startup sequences, environment-sp
 - Include usage comments at top; handle common failure modes; use clear names
 - Common scripts: `dev-up.sh`, `dev-down.sh`, `dev-status.sh`, `dev-logs.sh`, `dev-reset.sh`
 - **Testability primitives** — a clean, deterministic environment is a prerequisite for fast automated testing, not just human dev. When asked, provide the three primitives the test layer depends on: (1) automated bring-up to a known-good state, (2) a **real reset primitive** that returns the system to a clean baseline (truncate/reseed, not best-effort cleanup), (3) support for **per-test data isolation** (e.g. unique keys/namespaces per run). Watch for hidden shared state — a backend keyed by reused input will leak between runs and read as flakiness.
+- **Reference-conformance services** — when the project runs the reference-conformance loop, the reference-obtainment mechanism it wired (a mirror sync, a pinned fetch — deterministic, version/etag-guarded where the venue allows, never an LLM in the transport) and any live-preview server are yours to run as managed dev services. Keep the preview **out of the gate path**: the conformance gate consumes deterministic, version-pinned renders, never the live preview — wiring preview output into verification imports its nondeterminism and trains everyone to distrust red. Doctrine: `${CLAUDE_PLUGIN_ROOT}/docs/reference-conformance.md`.
 </script-maintenance>
 
 <environment-safety>

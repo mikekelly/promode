@@ -48,3 +48,11 @@ Fast-worker's species change (TDD engineer → generic worker) and product-desig
 ## Verified vs assumed
 
 This node's roster is ratified design (maintainer decision, 2026-07-10), not a harness fact — nothing here needs re-verification on a harness change. It rests on node 1's harness facts, which do need re-verification per that node's own instructions.
+
+## Amendment (2026-07-16, owner call): code-reviewer moves sonnet → opus/high
+
+`code-reviewer` was originally left off this roster's fixed-tier list (`## What was decided` above), instead running `model: sonnet` by default with a per-dispatch upgrade lever ("pass `model: opus` for complex architectural review") — the one execution role never folded into the pre-baked ladder. That stance is **superseded, not silently deleted**: the reviewer is now a pinned **opus/high** rung, like `senior-engineer` and `high-level-worker`, with the lever inverted — `model: sonnet` is now the *opt-down* for simple mechanical diffs, not the default.
+
+Why: review is a judgement seat, not mechanical execution — its APPROVED/REWORK verdict gates merges and it's the enforcement home for the seam/tier/tracer/crystallise checks (register O13/AG-code-reviewer). A misjudged approval costs far more than the sonnet→opus delta, and the old "remember to pass `model: opus` when it's architectural" made the upgrade a forgettable dispatch decision — exactly what the pre-baked ladder (this node's whole point) exists to avoid.
+
+Homes synced: `plugins/promode/agents/code-reviewer.md` frontmatter (`model: opus`, `effort: high`, description rewritten with the inverted lever) · brief `<model-tiers>` opus/high bullet + `<delegation-map>` annotation · register O13 statement + AG-code-reviewer row · README agents table.
