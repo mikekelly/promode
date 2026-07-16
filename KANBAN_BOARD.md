@@ -5,10 +5,9 @@ status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ide
 work in [DONE.md](DONE.md).
 
 ## Doing
-- CMO def (inherit) + CPO remit carve — [task 31](tasks/31-cmo-def-cpo-carve.md)
+- senior-marketer def + marketing routed docs — [task 32](tasks/32-senior-marketer-def-routed-docs.md)
 
 ## Ready
-- senior-marketer def + marketing routed docs — [task 32](tasks/32-senior-marketer-def-routed-docs.md) (ratification landed; runs after 31 — same-checkout commit safety, worktree baseRef not yet set)
 - Register sync: MK section + Components + decision node — [task 33](tasks/33-marketing-register-sync.md) (chained on 31+32)
 - Peripheral sync: brief + README for the marketing lane — [task 34](tasks/34-marketing-peripheral-sync.md) (chained on 33)
 - Auditor marketing-traceability (knit) dimension — [task 35](tasks/35-auditor-knit-dimension.md) (chained on 33; parallel with 34)
