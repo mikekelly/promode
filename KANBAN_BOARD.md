@@ -5,10 +5,9 @@ status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ide
 work in [DONE.md](DONE.md).
 
 ## Doing
-- Reconstruct round 4: refcon methodological thinning — [task 32](tasks/32-refcon-thinning-reconstruction.md)
+- Fresh review of the reconstruction diff — [task 33](tasks/33-recovery-review.md)
 
 ## Ready
-- Fresh review of the reconstruction diff — [task 33](tasks/33-recovery-review.md)
 - (master/provenance: [task 30](tasks/30-design-thinking-recovery.md) — lost-session recovery record)
 - Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Fix M6 phantom home — drop "(migration note)" at opinion-register.md:18 (M6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)

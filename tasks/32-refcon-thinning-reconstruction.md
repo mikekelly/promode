@@ -19,4 +19,10 @@
 - **Pending goals / next step** — task 33 fresh review over the whole reconstruction diff.
 
 ## Outcome
-(filled by the agent on completion)
+Completed 2026-07-16 as commit `cbd53cd` (single round-commit; board hygiene in `c882564` and the closure commit around it). All recorded round-4 facts applied without re-litigation.
+
+- Refcon doc restructured: spine + visual-orphan clause; `<venue-agnosticism>` (three properties, no-LLM-in-transport carried undiluted inside property 2) + `<approvals-pin-reference-version>` + `<hosting-patterns>` (mirror/two-guards explicitly conditional, cloud-resident pattern added) replace the mirror/two-guards doctrine; T26 tolerance first-class; wording fix applied in every live home (brief, register, refcon, SPD/VER/EM/AUD).
+- Register: T23 carries spine + venue-agnosticism clauses; T25/T27 demoted in place with the demotion note citing the node; T30 added; DOC-refcon, the T21-supersession row, and the harness-pinned section reconciled.
+- Decision node `docs/decisions/2026-07-refcon-thinning.md`: revise-in-place ruling, the dated 2026-07-10 ⚙ DesignSync probe record (a/b/c, replacing the "not present in this environment" negative), rejected alternatives, provenance note. Round-2 node annotated as revised-in-place (M3), its historical record text left intact.
+- **Composition calls** (record under-specified, flagged): (a) venue-agnosticism's three properties homed in T23's statement (the record adds no new row for them and demotes T25, so T23 + refcon is the only coherent doctrine home); (b) SPD's mirror-flavoured copy softened to hosting-pattern-conditional under the "wording fix everywhere" + venue-agnosticism rulings, though the record's round-4 edit list didn't enumerate defs; (c) the rejected-alternatives log is derived from the recorded ruling + probe facts (formal-supersession, mirror-as-doctrine, tool-naming, no-LLM weakening) — round 4's record enumerated no separate rejection list.
+- Guards green: `check-hooks.sh` (chunk 4 = 8,921/10,000; checksum families untouched) + `check-claude-md-imports.sh`. Next: task 33 fresh unprimed review over the whole reconstruction diff.
