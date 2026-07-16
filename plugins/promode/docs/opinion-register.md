@@ -42,7 +42,7 @@ This is the canonical, complete index of every opinion the promode corpus (the b
 | O19 `plans-persist-as-task-docs` | Multi-task plans persist as one doc per task (brief + state + outcome) — the canonical task state; agents record the Outcome before reporting | B§planning+§task-docs; SE ME CTO DBG VER v; WK GD c (Outcome for produced artifacts); CR EM c |
 | O20 `kanban-flow` | Board = flow view, IDEAS.md raw, DONE.md completed; the column owns status — task docs never carry a competing live status field | B§project-tracking |
 | O21 `frame-plans-as-delegation` | Plans say "delegate X to Y", never "implement X" — recency bias makes what you read your instruction | B§planning |
-| O22 `task-sizing-and-parallelism` | Size each task for one agent; plan upfront before context fills; parallel independents, checkpoints between chained | B§planning; CTO c |
+| O22 `task-sizing-and-parallelism` | Size each task for one agent; plan upfront before context fills; parallel independents, checkpoints between chained; a task minting a corpus-wide convention (marker/naming/layout) is decided at plan time or sequenced before its consumers — convention-after-content forces a retrofit sweep the review is the only gate for | B§planning; CTO c |
 | O23 `slice-by-verifiability` | Every task independently verifiable: one question, one seam, one review surface, one verdict | B§planning |
 | O24 `fog-discipline` | Plan only to the fog edge; keep unknowns as named, precisely stated questions — never pre-sliced fake tasks | B§planning |
 | O25 `reslicing-is-progress` | Adjust the plan the moment the work proves it stale; reslicing is not failure | B§execution |
