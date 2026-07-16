@@ -1,6 +1,6 @@
 # Reference conformance: reference screens are the visual truth
 
-Routed mechanics doc — consuming agent defs direct a read of this file when a dispatch involves curating or mirroring design reference screens, building or running a visual conformance gate, reconciling a design-system/token doc, governing copy voice, or wiring preview/render services for visual work. (Supersedes `design-system-lookbook.md` + `live-reload-server.md`, 2026-07 — decision node: `docs/decisions/2026-07-reference-conformance.md`.)
+Routed mechanics doc — consuming agent defs direct a read of this file when a dispatch involves curating or mirroring design reference screens, building or running a visual conformance gate, reconciling a design-system/token doc, governing copy voice, triaging generated design/copy output for machine defaults (anti-slop), or wiring preview/render services for visual work. (Supersedes `design-system-lookbook.md` + `live-reload-server.md`, 2026-07 — decision node: `docs/decisions/2026-07-reference-conformance.md`.)
 
 <objective>
 Promode runs a fast feedback loop for *logic*: the headless operator seam gives an agent a deterministic pass/fail signal, and the discovery⇄determinism flywheel crystallises judgement into checks (`discovery-to-determinism.md`, beside this doc). This doc is the visual analogue — and its load-bearing move is where the truth lives:
@@ -55,7 +55,9 @@ Copy voice is governed, not improvised: **`docs/product/VOCABULARY.md`** owns th
 </copy-is-design>
 
 <boundary-with-frontend-design>
-This doc = the **conformance discipline** (references, mirror, gate, guards). Anthropic's `frontend-design` skill = **aesthetic generation** — what good typography, colour, and motion actually look like. Dispatch to `frontend-design` for the taste; capture the result **in the references**, where the mirror and gate replay it deterministically.
+**The boundary with `frontend-design` is decided-vs-default triage, not structure-vs-taste.** Anthropic's `frontend-design` skill generates aesthetic direction; this doc governs what that output must clear before it becomes truth. Every element of a candidate reference — layout, type, colour, motion, spacing, copy voice — is triaged **decided vs default**, and only decided elements enter a reference. AI slop is a machine default nobody chose (PD12 `decisions-not-defaults`), and the failure mode this triage exists for sits upstream: **the conformance gate replays whatever the reference contains, so an undecided reference crystallises slop and enforces it forever.** Unchosen minimalism counts — stripping to the model's tasteful-safe house style is the newest default, not a decision. Dispatch to `frontend-design` for generation; decide, then capture the result in the references, where the mirror and gate replay it deterministically.
+
+**Time-bound orientation (dated 2026-07; tells drift with model generations — treat as orientation, never doctrine):** `github.com/yetone/kill-ai-slop` catalogues the current machine-default tells in visual style and copy voice. It is **unlicensed — read it, never vendor it.** Projects crystallise their *own* dated tell-scan — a grep over the repo's copy for the patterns `VOCABULARY.md` bans — **detection-only, never auto-fix** (an auto-fixer swaps one undecided output for another). This paragraph is the catalog's single home in the promode corpus (K5): defs carry the discipline, never the tells.
 </boundary-with-frontend-design>
 
 <who-does-what>
