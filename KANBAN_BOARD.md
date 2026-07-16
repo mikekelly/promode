@@ -5,10 +5,8 @@ status. Detail lives in task docs (the brief's `<task-docs>` mechanics), raw ide
 work in [DONE.md](DONE.md).
 
 ## Doing
-- Fresh review of the reconstruction diff — [task 33](tasks/33-recovery-review.md)
 
 ## Ready
-- (master/provenance: [task 30](tasks/30-design-thinking-recovery.md) — lost-session recovery record)
 - Add worktree.baseRef: "head" to .claude/settings.json (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Fix M6 phantom home — drop "(migration note)" at opinion-register.md:18 (M6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)
 - Remove 2 stale worktrees: lucid-agnesi (safe), amazing-dirac (--force, needs confirm) (O6) — see [audit](docs/audits/2026-07-07-methodology-audit.md)

@@ -13,7 +13,7 @@
 - **Pending goals** — task 31 → task 32 → task 33 → push/PR (user decides).
 
 ## Outcome
-(filled on completion)
+Closed 2026-07-16. All three ratified rounds reconstructed on this branch (commits `51105df`, `59e95fc`, `cbd53cd`); fresh unprimed review (task 33) returned **APPROVED, no blocking findings** (`3176326`), with guards re-run independently. The exact original prose remains unrecoverable by design — decision nodes carry the reconstruction-provenance note, and the lost cloud session (unarchived, still live on claude.ai) can later serve as a diff oracle if the CLI is re-authed and teleport becomes possible. Two reviewer bookkeeping findings corrected at closure (chunk-4 size narration slips in tasks 31/32). Parked follow-ups re-recorded below (§Pending work) remain open: perception-gap/memorability check, voice-before-visuals, derived design-system kit.
 
 ---
 
